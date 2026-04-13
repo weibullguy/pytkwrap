@@ -1,0 +1,378 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pytkwrap"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Doyle Rowland", email = "weibullguy@protonmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/Doyle Rowland/pytkwrap#readme"
+Issues = "https://github.com/Doyle Rowland/pytkwrap/issues"
+Source = "https://github.com/Doyle Rowland/pytkwrap"
+
+[tool.hatch.version]
+path = "src/pytkwrap/__about__.py"
+
+[tool.hatch.envs.default]
+python = "3.12"
+dependencies = [
+  "matplotlib>=3.10.8",
+  "pycairo>=1.29",
+  "pygobject>=3.54",
+  "pypubsub>=4.0",
+  "python-dateutil",
+]
+[tool.hatch.envs.default.scripts]
+install = "pip install -e ."
+
+[[tool.hatch.envs.text.matrix]]
+python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
+
+[tool.hatch.envs.test]
+extra-dependencies = [
+  "coveralls",
+  "coverage[toml]",
+  "pytest",
+  "pytest-cov",
+  "pytest-icdiff",
+  "pytest-order",
+  "pytest-sugar",
+]
+
+[tool.hatch.envs.test.scripts]
+update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
+install = "pip install ."
+clean-test = "rm -f .coverage* cobertura.xml && rm -fr .pytest_cache"
+unit = "pytest -x -s -vvv -m unit --no-cov --cache-clear tests/common/ tests/gtk3/"
+unit-coverage = "COVERAGE_FILE='.coverage.unit' pytest -m unit --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/ tests/gtk3/"
+integration = "pytest -x -s -v -m integration --no-cov --cache-clear tests/common/ tests/gtk3/"
+integration-coverage = "COVERAGE_FILE='.coverage.integration' pytest -m integration --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/ tests/gtk3/"
+coverage-combine = "coverage combine .coverage.unit .coverage.integration"
+coverage-report = "coverage html --rcfile=pyproject.toml"
+test-unit = [
+    "install",
+    "unit",
+]
+test-unit-cov = [
+    "install",
+    "unit-coverage",
+]
+test-integration = [
+  "install",
+  "integration",
+]
+test-integration-cov = [
+  "install",
+  "integration-coverage",
+]
+test-all = [
+  "install",
+  "unit-coverage",
+  #"integration-coverage",
+  "coverage-combine",
+  "coverage-report",
+]
+
+[tool.hatch.envs.lint]
+extra-dependencies = [
+  "bandit",
+  "docformatter[tomli]>=1.7",
+  "mccabe",
+  "pylint",
+  "radon",
+  "ruff",
+]
+[tool.hatch.envs.lint.scripts]
+update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
+fix = "ruff check --preview --fix {args}"
+format = [
+  "ruff format --preview {args}",
+  "docformatter --in-place --config ./pyproject.toml {args}",
+]
+lint = "ruff check --preview {args}"
+maintain = [
+  "radon hal {args}",
+  "radon cc --show-complexity {args}",
+  "radon mi --show {args}",
+]
+all = [
+  "format",
+  "fix",
+  "pylint --rcfile ./pyproject.toml {args}",
+  "lint",
+  "maintain",
+]
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+  "ty",
+]
+[tool.hatch.envs.types.scripts]
+check = [
+  "mypy --install-types --non-interactive {args}",
+  "ty check {args}",
+]
+make-stub = "stubgen --include-private -o src {args}"
+
+[tool.coverage.run]
+source_pkgs = ["pytkwrap", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/pytkwrap/__about__.py",
+]
+
+[tool.coverage.paths]
+pytkwrap = ["src/pytkwrap", "*/pytkwrap/src/pytkwrap"]
+tests = ["tests", "*/pytkwrap/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.docformatter]
+non-cap = [
+  "pytkwrap",
+]
+wrap-summaries = 88
+wrap-descriptions = 88
+
+[tool.pylint.master]
+ignore-paths = [
+  'tests*'
+]
+ignore-patterns = [
+  '\S*.pyi'
+]
+persistent = true
+
+[tool.pylint.basic]
+attr-rgx = '^_{0,2}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}$'
+good-names = [
+  '_'
+]
+variable-rgx = '^_{0,2}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}$'
+
+[tool.pylint.format]
+max-line-length = 88
+indent-string = '    '
+max-module-lines = 5000
+
+[tool.pylint.messages_control]
+disable = [
+  "fixme",
+  "too-many-arguments",
+  "too-many-positional-arguments",
+  "wrong-import-position",
+]
+
+[tool.pylint.miscellaneous]
+notes = [
+  'FIXME',
+  'ISSUE',
+  'TODO'
+]
+
+[tool.pylint.reports]
+reports = true
+
+[tool.pylint.similarities]
+min-similarity-lines = 100
+ignore-comments = true
+ignore-docstrings = true
+ignore-imports = true
+
+[tool.pylint.typecheck]
+ignore-mixin-members = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--ignore=build --ignore=data --ignore=docs --ignore=locale --ignore=__init__.py"
+norecursedirs = [
+    ".git",
+    ".pytest_cache",
+    ".tox",
+    "build",
+    "dist",
+]
+testpaths = ["tests", "tests/common"]
+markers = [
+    "unit: marks the test as a unit test.",
+    "integration: marks the test as an integration test.",
+]
+
+[tool.ruff]
+builtins = [
+  "_",
+]
+extend-exclude = [
+  ".idea",
+  ".pytest_cache",
+  "htmlcov",
+  "tests",
+]
+indent-width = 4
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.analyze]
+type-checking-imports = false
+
+[tool.ruff.format]
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+dummy-variable-rgx = '^_{0,2}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}$'
+fixable = ["ALL"]
+ignore = [
+  "D203",
+  "D204",
+  "D213",
+]
+select = [
+  "B",
+  "D",
+  "DOC",
+  "E",
+  "F",
+  "I",
+  "N",
+  "PLC",
+  "PLR",
+  "S",
+  "SIM",
+  "UP",
+]
+task-tags = [
+  "BUG",
+  "FIXME",
+  "TODO",
+]
+unfixable = []
+
+[tool.ruff.lint.isort]
+case-sensitive = false
+classes = []
+combine-as-imports = false
+constants = []
+default-section = "third-party"
+detect-same-package = true
+extra-standard-library = []
+force-single-line = false
+force-sort-within-sections = false
+force-to-top = []
+force-wrap-aliases = false
+forced-separate = []
+from-first = false
+known-first-party = ["pytkwrap"]
+known-local-folder = []
+known-third-party = [
+  'gi',
+  'pubsub',
+  'pytest',
+]
+length-sort = false
+length-sort-straight = false
+lines-after-imports = 2
+lines-between-types = 0
+no-lines-before = []
+no-sections = false
+order-by-type = true
+relative-imports-order = "furthest-to-closest"
+required-imports = []
+section-order = [
+  "future",
+  "standard-library",
+  "third-party",
+  "first-party",
+  "local-folder",
+]
+single-line-exclusions = []
+split-on-trailing-comma = true
+variables = []
+
+[tool.ruff.lint.isort.import-heading]
+first-party = 'pytkwrap Package Imports'
+future = "Future Imports"
+standard-library = "Standard Library Imports"
+third-party = 'Third Party Imports'
+local-folder = 'pytkwrap Local Imports'
+
+[tool.ruf.lint.mccabe]
+max-complexity = 8
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+  "D205",
+  "DOC201",
+  "DOC402",
+  "PLC1901",
+  "PLC2701",
+  "PLR0904",
+  "PLR2004",
+  "PLR6301",
+  "S101",
+]
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 88
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+ignore-decorators = []
+ignore-var-parameters = true
+property-decorators = []
+
+[tool.ruff.lint.pylint]
+max-args = 8
+max-positional-args = 6
+
+[tool.ty.analysis]
+allowed-unresolved-imports = [
+  "gi.overrides.*"
+]
+respect-type-ignore-comments = true
+
+[tool.ty.environment]
+python-version = "3.12"
+root = [
+  "./src"
+]
+
+[tool.ty.src]
+exclude = [
+  "tests"
+]
+include = [
+  "examples",
+  "src"
+]
