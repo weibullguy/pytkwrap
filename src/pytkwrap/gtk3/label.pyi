@@ -1,16 +1,15 @@
 from _typeshed import Incomplete
 from datetime import date
-from pytkwrap.common import DataWidgetAttributes as DataWidgetAttributes
 from pytkwrap.gtk3._libs import Gtk as Gtk, Pango as Pango
 from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes as GTK3DataWidgetAttributes
-from pytkwrap.gtk3.widget import GTK3BaseWidget as GTK3BaseWidget, GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.gtk3.widget import GTK3BaseDataWidget as GTK3BaseDataWidget, GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3Label(Gtk.Label, GTK3BaseWidget):
+class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
-    _LABEL_ATTRIBUTES: Incomplete
-    _LABEL_PROPERTIES: Incomplete
-    _LABEL_SIGNALS: Incomplete
+    _GTK3_LABEL_ATTRIBUTES: Incomplete
+    _GTK3_LABEL_PROPERTIES: Incomplete
+    _GTK3_LABEL_SIGNALS: Incomplete
     default: str
     font_allow_breaks: str
     font_bgalpha: str
@@ -43,6 +42,8 @@ class GTK3Label(Gtk.Label, GTK3BaseWidget):
     def do_set_attributes(self, attributes: GTK3DataWidgetAttributes) -> None: ...
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None: ...
     def do_update(self, package: dict[str, bool | date | float | int | str | None]) -> None: ...
+    def do_get_value(self) -> str | None: ...
     def do_set_font_description(self) -> None: ...
+    def do_set_value(self, value: bool | date | float | int | str) -> None: ...
 
 def do_make_label_group(label_text: list[str]) -> tuple[int, list[GTK3Label]]: ...
