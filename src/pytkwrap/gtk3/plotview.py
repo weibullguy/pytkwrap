@@ -15,7 +15,7 @@ from pytkwrap.gtk3.widget import GTK3BaseWidget
 
 try:
     # Third Party Imports
-    import matplotlib
+    from matplotlib.backend_bases import MouseEvent
     from matplotlib.backends.backend_gtk3cairo import (
         FigureCanvasGTK3Cairo as FigureCanvas,
     )
@@ -29,7 +29,7 @@ except RuntimeError:
 class GTK3PlotView(GTK3BaseWidget, PlotWidgetMixin):
     """The GTK3PlotView class."""
 
-    _PLOTVIEW_ATTRIBUTES = PlotWidgetAttributes(
+    _GTK3_PLOTVIEW_ATTRIBUTES = PlotWidgetAttributes(
         axis=None,
         canvas=None,
         figure=None,
@@ -45,10 +45,10 @@ class GTK3PlotView(GTK3BaseWidget, PlotWidgetMixin):
         self._min_values: list[float] = [0.0]
 
         # Initialize public instance attributes.
-        self.dic_attributes.update(self._PLOTVIEW_ATTRIBUTES)
+        self.dic_attributes.update(self._GTK3_PLOTVIEW_ATTRIBUTES)
 
-        self.figure: matplotlib.figure.Figure = Figure()
-        self.canvas = FigureCanvas(self.figure)
+        self.figure: Figure = Figure()
+        self.canvas: FigureCanvas = FigureCanvas(self.figure)
         self.axis = self.figure.add_subplot(111)
 
     # ----- ----- PlotView specific methods. ----- ----- #
@@ -147,7 +147,7 @@ class GTK3PlotView(GTK3BaseWidget, PlotWidgetMixin):
         """
         self.canvas.reparent(parent)
 
-    def do_expand_plot(self, event: matplotlib.backend_bases.MouseEvent) -> None:
+    def do_expand_plot(self, event: MouseEvent) -> None:
         """Display a GTK3PlotView in its own window.
 
         Parameters
@@ -158,7 +158,7 @@ class GTK3PlotView(GTK3BaseWidget, PlotWidgetMixin):
         self.canvas = event.canvas
         _parent = self.canvas.get_parent()
 
-        if event.button == matplotlib.backend_bases.MouseEvent.RIGHT:
+        if event.button == MouseEvent.RIGHT:  # pylint: disable=no-member
             _window = Gtk.Window()
             _window.set_skip_pager_hint(True)
             _window.set_skip_taskbar_hint(True)
