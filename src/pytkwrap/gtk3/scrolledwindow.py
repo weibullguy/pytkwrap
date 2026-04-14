@@ -4,8 +4,6 @@
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
 """The pytkwrap GTK3 ScrolledWindow module."""
 
-# Standard Library Imports
-
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.widget import GTK3BaseWidget, GTK3WidgetProperties
@@ -14,7 +12,7 @@ from pytkwrap.gtk3.widget import GTK3BaseWidget, GTK3WidgetProperties
 class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3BaseWidget):
     """The GTK3ScrolledWindow class."""
 
-    _SCROLLEDWINDOW_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_SCROLLEDWINDOW_PROPERTIES = GTK3WidgetProperties(
         border_width=0,
         hadjustment=None,
         hscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
@@ -31,7 +29,7 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3BaseWidget):
         vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
         window_placement=Gtk.CornerType.TOP_LEFT,
     )
-    _SCROLLEDWINDOW_SIGNALS = [
+    _GTK3_SCROLLEDWINDOW_SIGNALS = [
         "edge-overshot",
         "edge-reached",
         "move-focus-out",
@@ -50,9 +48,9 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3BaseWidget):
         GTK3BaseWidget.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_properties.update(self._SCROLLEDWINDOW_PROPERTIES)
+        self.dic_properties.update(self._GTK3_SCROLLEDWINDOW_PROPERTIES)
         self.dic_handler_id.update({
-            _signal: -1 for _signal in self._SCROLLEDWINDOW_SIGNALS
+            _signal: -1 for _signal in self._GTK3_SCROLLEDWINDOW_SIGNALS
         })
 
         if child is not None:
@@ -84,5 +82,5 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3BaseWidget):
             self.dic_properties["propagate_natural_height"]
         )
         self.set_propagate_natural_width(self.dic_properties["propagate_natural_width"])
-        self.set_shadow_type(self.dic_properties["shadow_type"])  # type: ignore[attr-defined]
+        self.set_shadow_type(self.dic_properties["shadow_type"])
         self.set_vadjustment(self.dic_properties["vadjustment"])
