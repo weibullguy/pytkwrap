@@ -12,7 +12,6 @@ from abc import abstractmethod
 from datetime import date
 from typing import TYPE_CHECKING, TypedDict
 
-
 if TYPE_CHECKING:
     # Standard Library Imports
     from types import FunctionType
@@ -355,7 +354,7 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
     _DEFAULT_WIDTH: int = -1
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3 BaseWidget."""
+        """Initialize an instance of the GTK3BaseWidget."""
         Gtk.Widget.__init__(self)
         WidgetMixin.__init__(self)
 
@@ -367,7 +366,7 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
 
     # ----- ----- Standard widget methods. ----- ----- #
     def do_set_callbacks(self, signal: str, callback: FunctionType) -> None:
-        """Set the callback method for the BaseWidget.
+        """Set the callback method for the GTK3BaseWidget.
 
         Parameters
         ----------
@@ -413,7 +412,7 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
         Parameters
         ----------
         properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the BaseWidget.
+            The typed dict with the property values to set for the GTK3BaseWidget.
         """
         # Update the property dictionary.
         self.dic_properties |= properties
@@ -488,7 +487,7 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
         Raises
         ------
         UnkSignalError
-            If the signal name is not valid for this widget.
+            If the signal name is not valid for the widget.
         """
         _field, _value = next(iter(package.items()))
         _value = none_to_default(_value, self.default)
@@ -519,7 +518,7 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
 
         Parameters
         ----------
-        __widget : BaseWidget
+        __widget : GTK3BaseWidget
             The widget that was changed. Unused but required to satisfy the Gtk.Widget()
             callback method structure.
 

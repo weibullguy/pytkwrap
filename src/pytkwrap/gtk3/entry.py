@@ -252,10 +252,10 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
 
     # ----- ----- Entry specific methods. ----- ----- #
     def do_get_value(self) -> float | int | str | None:  # type: ignore[override]
-        """Retrieve the text displayed in the Entry.
+        """Retrieve the text displayed in the GTK3Entry.
 
         This method will return the correct datatype (float, int, str) associated with
-        the database field associated with the Entry.
+        the database field associated with the GTK3Entry.
 
         Returns
         -------
@@ -284,7 +284,7 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
         variant: str = "",
         weight: str = "Regular",
     ) -> None:
-        """Set the Pango.FontDescription for the Entry.
+        """Set the Pango.FontDescription for the GTK3Entry.
 
         :param family: comma separated list of fonts.
         :param gravity:
@@ -305,12 +305,12 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
         )
 
     def do_set_value(self, value: bool | date | float | int | str) -> None:
-        """Set the Entry active value.
+        """Set the GTK3Entry active value.
 
         Parameters
         ----------
         value : bool | date | float | int | str
-            The data to display in the Entry.
+            The data to display in the GTK3Entry.
         """
         if value is None:
             value = ""

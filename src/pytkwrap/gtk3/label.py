@@ -9,22 +9,24 @@
 from datetime import date
 
 # pytkwrap Package Imports
-from pytkwrap.common import DataWidgetAttributes
 from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
-from pytkwrap.gtk3.widget import GTK3BaseWidget, GTK3WidgetProperties
+from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
 
 
-class GTK3Label(Gtk.Label, GTK3BaseWidget):
+# pylint: disable-next=too-many-instance-attributes
+class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
     """The GTK3Label class."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 25
     _DEFAULT_WIDTH = 200
-    _GTK3_LABEL_ATTRIBUTES = DataWidgetAttributes(
+    _GTK3_LABEL_ATTRIBUTES = GTK3DataWidgetAttributes(
+        column_types=None,
         font_allow_breaks="false",
         font_bgalpha="100%",
         font_bgcolor="white",
+        font_description=None,
         font_family="",
         font_features="",
         font_fgalpha="100%",
@@ -88,7 +90,7 @@ class GTK3Label(Gtk.Label, GTK3BaseWidget):
             The text to display in the GTK3Label.
         """
         Gtk.Label.__init__(self)
-        GTK3BaseWidget.__init__(self)
+        GTK3BaseDataWidget.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_LABEL_ATTRIBUTES)
@@ -187,7 +189,7 @@ class GTK3Label(Gtk.Label, GTK3BaseWidget):
                 ) from exc
             return getattr(self, attribute)
 
-    def do_set_attributes(self, attributes: GTK3DataWidgetAttributes) -> None:  # type: ignore[override]
+    def do_set_attributes(self, attributes: GTK3DataWidgetAttributes) -> None:
         """Set the attributes of the GTK3Label.
 
         Parameters
@@ -302,6 +304,16 @@ class GTK3Label(Gtk.Label, GTK3BaseWidget):
         self.set_text(_value)
 
     # ----- ----- Label specific methods. ----- ----- #
+    def do_get_value(self) -> str | None:  # type: ignore[override]
+        """Retrieve the text displayed in the GTK3Label.
+
+        Returns
+        -------
+        str or None
+            The value displayed in the GTK3Label.
+        """
+        return self.get_text()
+
     def do_set_font_description(self) -> None:
         """Set the font description for the GTK3Label."""
         # TODO: Fix this so existing font description is updated/overwritten even if
@@ -324,6 +336,19 @@ class GTK3Label(Gtk.Label, GTK3BaseWidget):
                 f"underline_color={self.font_underline_color} "
                 f"variant={self.font_variant} weight={self.font_weight}"
             )
+
+    def do_set_value(self, value: str | None) -> None:
+        """Set the GTK3Label active value.
+
+        Parameters
+        ----------
+        value : str or None
+            The data to display in the GTK3Label.
+        """
+        if value is None:
+            value = ""
+
+        self.set_text(str(value))
 
 
 def do_make_label_group(
