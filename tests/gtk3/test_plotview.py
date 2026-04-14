@@ -1,11 +1,10 @@
 # pylint: skip-file
 # type: ignore
-# -*- coding: utf-8 -*-
 #
 #       tests.gtk3.test_plotview.py is part of the pytkwrap project
 #
 # All rights reserved.
-"""Test class for the GTK3 PlotView module algorithms and models."""
+"""Test class for the GTK3PlotView module algorithms and models."""
 
 # Third Party Imports
 import matplotlib
@@ -13,36 +12,39 @@ import pytest
 from matplotlib.backends.backend_gtk3cairo import FigureCanvasGTK3Cairo
 from matplotlib.figure import Figure
 
-#  Package Imports
-from pytkwrap.gtk3 import PlotView
-from .conftest import CommonWidgetTests
+# pytkwrap Package Imports
+from pytkwrap.gtk3.plotview import GTK3PlotView
+
+# pytkwrap Local Imports
+from .conftest import BaseGTK3DataWidgetTests
 
 
-class TestPlotView(CommonWidgetTests):
-    """Test class for the PlotView."""
+class TestPlotView(BaseGTK3DataWidgetTests):
+    """Test class for the GTK3PlotView."""
 
-    widget_class = PlotView
+    widget_class = GTK3PlotView
     expected_default_height = -1
     expected_default_value = None
     expected_default_width = -1
 
     def no_signal_error_handler(self, message):
+        """Error handler for do_set_callbacks() errors."""
         assert (
             message
-            == "PlotView.do_set_callbacks(): Unknown signal name 'value-changed'."
+            == "GTK3PlotView.do_set_callbacks(): Unknown signal name 'value-changed'."
         )
 
     @pytest.mark.unit
     def test_init(self):
-        """__init__() should create a PlotView object."""
+        """Should create a GTK3PlotView object."""
         super().test_init()
 
         dut = self.make_dut()
 
         # PlotView-specific attributes should be registered.
-        for _attribute in PlotView._PLOTVIEW_ATTRIBUTES:
+        for _attribute in GTK3PlotView._GTK3_PLOTVIEW_ATTRIBUTES:
             assert _attribute in dut.dic_attributes
-        assert isinstance(dut, PlotView)
+        assert isinstance(dut, GTK3PlotView)
         assert isinstance(dut.figure, Figure)
         assert isinstance(dut.canvas, FigureCanvasGTK3Cairo)
         assert dut._max_values == []
@@ -50,7 +52,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_make_date_plot(self):
-        """do_load_plot() should create a date plot when passed a plot_type of date."""
+        """Should create a date plot when passed a plot_type of date."""
         dut = self.make_dut()
 
         _x_values = [
@@ -67,7 +69,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_make_histogram(self):
-        """do_load_plot() should create a histogram when passed a plot_type of histogram."""
+        """Should create a histogram when passed a plot_type of histogram."""
         dut = self.make_dut()
 
         _x_values = [1.4, 1.2, 2.8, 4.9, 1.3, 3.2, 3.4, 2.6]
@@ -82,7 +84,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_make_scatter_plot(self):
-        """do_load_plot() should create a histogram when passed a plot_type of scatter."""
+        """Should create a scatter plot when passed a plot_type of scatter."""
         dut = self.make_dut()
 
         _x_values = [1.4, 1.2, 2.8, 4.9]
@@ -97,7 +99,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_make_step_plot(self):
-        """do_load_plot() should create a histogram when passed a plot_type of step."""
+        """Should create a step plot when passed a plot_type of step."""
         dut = self.make_dut()
 
         _x_values = [1.4, 1.2, 2.8, 4.9]
@@ -109,7 +111,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_make_default_plot(self):
-        """do_load_plot() should create a scatter when not passed a plot_type."""
+        """Should create a scatter plot when not passed a plot_type."""
         dut = self.make_dut()
 
         _x_values = [1.4, 1.2, 2.8, 4.9]
@@ -121,7 +123,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_make_plot_no_y_data(self):
-        """do_load_plot() should not create a plot when passed an empty y-value list."""
+        """Should not create a plot when passed an empty y-value list."""
         dut = self.make_dut()
 
         _x_values = [1.4, 1.2, 2.8, 4.9]
@@ -133,7 +135,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_make_plot_unknown_type(self):
-        """do_load_plot() should not create a plot when passed an unknown plot_type."""
+        """Should NOT create a plot when passed an unknown plot_type."""
         dut = self.make_dut()
 
         _x_values = [1.4, 1.2, 2.8, 4.9]
@@ -145,7 +147,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_add_line_to_scatter_plot(self):
-        """do_add_line() should add a line to a scatter plot."""
+        """Should add a line to a scatter plot."""
         dut = self.make_dut()
 
         _x_values = [1.4, 1.2, 2.8, 4.9]
@@ -160,7 +162,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_get_minimax_ordinates(self):
-        """_get_minimax_ordinates() should return a tuple (min_value, max_value)."""
+        """Should return a tuple (min_value, max_value)."""
         dut = self.make_dut()
 
         dut._min_values = [0.0, 1.0]
@@ -172,7 +174,7 @@ class TestPlotView(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_get_minimax_ordinates_inf_y(self):
-        """_get_minimax_ordinates() should return a tuple (min_value, max_value)."""
+        """Should return a tuple (min_value, max_value)."""
         dut = self.make_dut()
 
         dut._min_values = [0.0, 1.0, 3.2]
