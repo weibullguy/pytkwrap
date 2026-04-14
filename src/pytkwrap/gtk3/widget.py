@@ -350,8 +350,6 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
         "visibility-notify-event",
         "window-state-event",
     ]
-    _DEFAULT_HEIGHT: int = -1
-    _DEFAULT_WIDTH: int = -1
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3BaseWidget."""

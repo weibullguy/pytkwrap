@@ -83,6 +83,8 @@ class WidgetMixin:
         x_pos=0,
         y_pos=0,
     )
+    _DEFAULT_HEIGHT = -1
+    _DEFAULT_WIDTH = -1
 
     def __init__(self) -> None:
         """Initialize an instance of the WidgetMixin."""
@@ -193,6 +195,7 @@ class DataWidgetMixin(WidgetMixin):  # pylint: disable=too-many-instance-attribu
         record_id=-1,
         send_topic="send_topic",
     )
+    _DEFAULT_EDIT_SIGNAL: str = ""
 
     def __init__(self) -> None:
         """Initialize an instance of the DataWidgetMixin."""

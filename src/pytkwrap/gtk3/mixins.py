@@ -22,7 +22,6 @@ class GTK3DataWidgetAttributes(DataWidgetAttributes, total=False):
 class GTK3DataWidgetMixin(DataWidgetMixin):
     """Adds GTK3-specific data widget attributes."""
 
-    _DEFAULT_EDIT_SIGNAL: str = ""
     _GTK3_DATA_WIDGET_ATTRIBUTES = GTK3DataWidgetAttributes(column_types=None,
                                                        font_description=None,)
 

@@ -6,17 +6,15 @@
 
 # Standard Library Imports
 from datetime import date
-from typing import Dict, List, Union
 
 # Third Party Imports
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.exceptions import UnkSignalError
-
-# pytkwrap Local Imports
+from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
+from pytkwrap.utilities import none_to_default
 
 
 class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
@@ -26,7 +24,7 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
     _DEFAULT_EDIT_SIGNAL: str = "changed"
     _DEFAULT_HEIGHT: int = 100
     _DEFAULT_WIDTH: int = 200
-    _TEXTVIEW_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_TEXTVIEW_PROPERTIES = GTK3WidgetProperties(
         accepts_tab=True,
         border_width=0,
         bottom_margin=0,
@@ -37,7 +35,7 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         hscroll_policy=Gtk.ScrollablePolicy.MINIMUM,
         im_module=None,
         indent=0,
-        input_hints=Gtk.InputHints.NONE,
+        input_hints=Gtk.InputHints.NONE,  # pylint: disable=no-member
         input_purpose=Gtk.InputPurpose.FREE_FORM,
         justification=Gtk.Justification.LEFT,
         left_margin=0,
@@ -54,7 +52,7 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         vscroll_policy=Gtk.ScrollablePolicy.MINIMUM,
         wrap_mode=Gtk.WrapMode.NONE,
     )
-    _TEXTVIEW_SIGNALS: List[str] = [
+    _GTK3_TEXTVIEW_SIGNALS: list[str] = [
         "backspace",
         "copy-clipboard",
         "cut-clipboard",
@@ -85,8 +83,10 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         GTK3BaseDataWidget.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_properties.update(self._TEXTVIEW_PROPERTIES)
-        self.dic_handler_id.update({_signal: -1 for _signal in self._TEXTVIEW_SIGNALS})
+        self.dic_properties.update(self._GTK3_TEXTVIEW_PROPERTIES)
+        self.dic_handler_id.update({
+            _signal: -1 for _signal in self._GTK3_TEXTVIEW_SIGNALS
+        })
 
         self.default = ""
         self.dic_properties["buffer"] = txtbuffer
@@ -145,21 +145,23 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
 
-    def do_update(self, package: Dict[str, Union[bool, date, float, int, str]]) -> None:
+    def do_update(self, package: dict[str, str]) -> None:
         """Update the GTK3TextView with a new value.
 
         Parameters
         ----------
         package : dict
             The date package to use to update the GTK3TextView.
+
+        Raises
+        ------
+        UnkSignalError
+            If the signal name is not in the handler_id dict.
         """
         _field, _value = next(iter(package.items()))
+        _value = none_to_default(_value, self.default)
 
         if _field != self.field:
-            return
-
-        if _value is None:
-            self.dic_properties["buffer"].set_text("")
             return
 
         try:
@@ -168,7 +170,7 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
                 self.dic_properties["buffer"].set_text(str(_value))
         except (KeyError, OverflowError) as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
-                "TextView.do_update()",
+                f"{type(self).__name__}.do_update()",
                 self.edit_signal,
             )
             pub.sendMessage(
@@ -188,8 +190,13 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         __buffer : Gtk.TextBuffer
             The Gtk.Buffer whose signal called this method. Unused but required to
             satisfy the Gtk.Widget() callback method structure.
+
+        Raises
+        ------
+        UnkSignalError
+            If the signal name is not in the handler_id dict.
         """
-        _package = {self.field: self.do_get_text()}
+        _package = {self.field: self.do_get_value()}
         try:
             _hid = self.dic_handler_id[self.edit_signal]
             with self.dic_properties["buffer"].handler_block(_hid):
@@ -200,7 +207,7 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
                 )
         except KeyError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
-                "TextView.on_changed()",
+                f"{type(self).__name__}.on_changed()",
                 self.edit_signal,
             )
             pub.sendMessage(
@@ -209,8 +216,7 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
             )
             raise UnkSignalError(_error_msg) from exc
 
-    # ----- ----- TextView specific methods. ----- ----- #
-    def do_get_text(self) -> str:
+    def do_get_value(self) -> str:
         """Retrieve the text from the embedded Gtk.TextBuffer.
 
         Returns
@@ -221,3 +227,16 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         return self.dic_properties["buffer"].get_text(
             *self.dic_properties["buffer"].get_bounds(), True
         )
+
+    def do_set_value(self, value: bool | date | float | int | str) -> None:
+        """Set the GTK3TextView active value.
+
+        Parameters
+        ----------
+        value : bool | date | float | int | str
+            The data to display in the GTK3TextView.
+        """
+        if value is None:
+            value = ""
+
+        self.dic_properties["buffer"].set_text(str(value))
