@@ -9,7 +9,7 @@ from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject, Gtk
-from pytkwrap.gtk3.buttons import GTK3CheckButton #, GTK3SpinButton
+from pytkwrap.gtk3.buttons import GTK3CheckButton  # , GTK3SpinButton
 from pytkwrap.gtk3.combo import GTK3ComboBox
 from pytkwrap.gtk3.entry import GTK3Entry
 from pytkwrap.gtk3.label import GTK3Label
@@ -21,18 +21,18 @@ from pytkwrap.gtk3.widget import GTK3BaseWidget, GTK3WidgetProperties
 class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
     """The GTK3MatrixView class."""
 
-    _MATRIXVIEW_ATTRIBUTES = GTK3DataWidgetAttributes(
+    _GTK3_MATRIXVIEW_ATTRIBUTES = GTK3DataWidgetAttributes(
         n_columns=0,
         n_rows=0,
     )
-    _MATRIXVIEW_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_MATRIXVIEW_PROPERTIES = GTK3WidgetProperties(
         baseline_row=0,
         column_homogeneous=False,
         column_spacing=0,
         row_homogeneous=False,
         row_spacing=0,
     )
-    _MATRIXVIEW_SIGNALS = [
+    _GTK3_MATRIXVIEW_SIGNALS = [
         "add",
         "check-resize",
         "remove",
@@ -42,14 +42,14 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
     def __init__(self) -> None:
         """Initialize an instance of the GTK3MatrixView widget."""
         Gtk.Grid.__init__(self)
-        GObject.GObject.__init__(self)
+        # GObject.GObject.__init__(self)
         GTK3BaseWidget.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_attributes.update(self._MATRIXVIEW_ATTRIBUTES)
-        self.dic_properties.update(self._MATRIXVIEW_PROPERTIES)
+        self.dic_attributes.update(self._GTK3_MATRIXVIEW_ATTRIBUTES)
+        self.dic_properties.update(self._GTK3_MATRIXVIEW_PROPERTIES)
         self.dic_handler_id.update({
-            _signal: -1 for _signal in self._MATRIXVIEW_SIGNALS
+            _signal: -1 for _signal in self._GTK3_MATRIXVIEW_SIGNALS
         })
         self.n_columns: int = 0
         self.n_rows: int = 0
@@ -61,7 +61,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
         self,
         attribute: str,
     ) -> bool | date | float | int | str | None:
-        """Get the value of the requested BaseWidget attribute.
+        """Get the value of the requested GTK3MatrixView attribute.
 
         Parameters
         ----------
@@ -96,7 +96,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
 
         Parameters
         ----------
-        attributes : GTK3WidgetAttributes
+        attributes : GTK3DataWidgetAttributes
             The typed dict with the attribute values to set for the GTK3MatrixView.
         """
         super().do_set_attributes(attributes)
@@ -105,7 +105,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
         self.n_rows = attributes.get("n_rows", self.n_rows)
 
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
-        """Set the properties of the MatrixView.
+        """Set the properties of the GTK3MatrixView.
 
         Parameters
         ----------
@@ -199,11 +199,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
     # TODO: Add the spinbutton to this method once their classes are written.
     def do_add_widget(
         self,
-        widget: GTK3CheckButton
-        | GTK3ComboBox
-        | GTK3Entry
-        | GTK3Label
-        | GTK3TextView,
+        widget: GTK3CheckButton | GTK3ComboBox | GTK3Entry | GTK3Label | GTK3TextView,
         left: int,
         top: int,
         height: int,
