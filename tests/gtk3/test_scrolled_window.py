@@ -4,6 +4,7 @@
 #       tests.gtk3.test_scrolledw_indow.py is part of the pytkwrap project
 #
 # All rights reserved.
+# Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
 """Test class for the GTK3ScrolledWindow module algorithms and models."""
 
 # Third Party Imports
