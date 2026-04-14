@@ -1,51 +1,54 @@
 # pylint: skip-file
 # type: ignore
-# -*- coding: utf-8 -*-
 #
-#       tests.gtk3.test_scrolledwindow.py is part of the pytkwrap project
+#       tests.gtk3.test_scrolledw_indow.py is part of the pytkwrap project
 #
 # All rights reserved.
-"""Test class for the GTK3 ScrolledWindow module algorithms and models."""
+"""Test class for the GTK3ScrolledWindow module algorithms and models."""
 
 # Third Party Imports
 import pytest
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3 import ScrolledWindow, WidgetProperties
-from pytkwrap.gtk3._libs import Gdk, GdkPixbuf, Gio, GObject, Gtk, Pango, _
+from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.scrolledwindow import GTK3ScrolledWindow
+from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import CommonWidgetTests
+from .conftest import BaseGTK3WidgetTests
 
 
-class TestScrolledWindow(CommonWidgetTests):
-    """Test class for the ScrolledWindow."""
+class TestScrolledWindow(BaseGTK3WidgetTests):
+    """Test class for the GTK3ScrolledWindow."""
 
-    widget_class = ScrolledWindow
+    widget_class = GTK3ScrolledWindow
     expected_default_height = -1
     expected_default_value = None
     expected_default_width = -1
 
     def make_dut(self, child=None):
+        """Create a device under test for the GTK3ScrolledWindow."""
         return self.widget_class(child)
 
     def no_signal_error_handler(self, message):
+        """Error handler for do_set_callbacks() errors."""
         assert (
-            message == "ScrolledWindow.do_set_callbacks(): Unknown signal name "
+            message == "GTK3ScrolledWindow.do_set_callbacks(): Unknown signal name "
             "'value-changed'."
         )
 
     @pytest.mark.unit
     def test_init(self):
+        """Should create a GTK3ScrolledWindow with default values for attributes."""
         super().test_init()
 
         dut = self.make_dut()
 
         # ScrolledWindow-specific properties should be registered.
-        for _property in ScrolledWindow._SCROLLEDWINDOW_PROPERTIES:
+        for _property in GTK3ScrolledWindow._GTK3_SCROLLEDWINDOW_PROPERTIES:
             assert _property in dut.dic_properties
         # ScrolledWindow-specific signals should be registered.
-        for _signal in ScrolledWindow._SCROLLEDWINDOW_SIGNALS:
+        for _signal in GTK3ScrolledWindow._GTK3_SCROLLEDWINDOW_SIGNALS:
             assert _signal in dut.dic_handler_id
 
     @pytest.mark.unit
@@ -53,16 +56,17 @@ class TestScrolledWindow(CommonWidgetTests):
         """__init__() should create a ScrolledWindow with a Gtk.Fixed child widget."""
         dut = self.make_dut(child=Gtk.Fixed())
 
-        assert isinstance(dut, ScrolledWindow)
+        assert isinstance(dut, GTK3ScrolledWindow)
         assert isinstance(dut.get_children()[0], Gtk.Viewport)
         assert isinstance(dut.get_children()[0].get_children()[0], Gtk.Fixed)
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """do_set_properties() should set the default properties of a ScrolledWindow
-        when an empty WidgetProperties is passed to the method."""
+        when an empty WidgetProperties is passed to the method.
+        """
         dut = self.make_dut()
-        dut.do_set_properties(WidgetProperties())
+        dut.do_set_properties(GTK3WidgetProperties())
 
         assert dut.get_property("border_width") == 0
         assert isinstance(dut.get_property("hadjustment"), Gtk.Adjustment)
@@ -88,10 +92,11 @@ class TestScrolledWindow(CommonWidgetTests):
     @pytest.mark.unit
     def test_do_set_properties(self):
         """do_set_properties() should set the properties of a ScrolledWindow to the
-        values found in the passed WidgetProperties."""
+        values found in the passed WidgetProperties.
+        """
         dut = self.make_dut()
         dut.do_set_properties(
-            WidgetProperties(
+            GTK3WidgetProperties(
                 kinetic_scrolling=False,
                 propagate_natural_height=True,
                 propagate_natural_width=True,
