@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from datetime import date
 from matplotlib.axes import Axes
-from matplotlib.backends.backend_gtk3cairo import FigureCanvasGTK3Cairo as FigureCanvasGTK3Cairo
+from matplotlib.backend_bases import FigureCanvasBase
 from matplotlib.figure import Figure
 from typing import TypedDict
 
@@ -52,11 +52,13 @@ class DataWidgetAttributes(WidgetAttributes, total=False):
 
 class PlotWidgetAttributes(DataWidgetAttributes, total=False):
     axis: Axes | None
-    canvas: FigureCanvasGTK3Cairo | None
+    canvas: FigureCanvasBase | None
     figure: Figure | None
 
 class WidgetMixin:
     _WIDGET_ATTRIBUTES: Incomplete
+    _DEFAULT_HEIGHT: int
+    _DEFAULT_WIDTH: int
     dic_attributes: Incomplete
     dic_error_message: dict[str, str]
     label_text: str
@@ -70,6 +72,7 @@ class WidgetMixin:
 
 class DataWidgetMixin(WidgetMixin):
     _DATA_WIDGET_ATTRIBUTES: DataWidgetAttributes
+    _DEFAULT_EDIT_SIGNAL: str
     datatype: bool | date | float | int | str | None
     default: bool | date | float | int | str | None
     edit_signal: str
@@ -118,7 +121,7 @@ class WidgetConfig(TypedDict):
 class PlotWidgetMixin(DataWidgetMixin):
     _PLOT_WIDGET_ATTRIBUTES: Incomplete
     axis: Axes | None
-    canvas: FigureCanvasGTK3Cairo | None
+    canvas: FigureCanvasBase | None
     figure: Figure | None
     def __init__(self) -> None: ...
     def do_get_attribute(self, attribute: str) -> object | None: ...

@@ -6,7 +6,7 @@ from pytkwrap.common import PlotWidgetAttributes as PlotWidgetAttributes, PlotWi
 from pytkwrap.gtk3._libs import Gdk as Gdk, Gtk as Gtk, _ as _
 from pytkwrap.gtk3.widget import GTK3BaseWidget as GTK3BaseWidget
 
-class GTK3PlotView(GTK3BaseWidget, PlotWidgetMixin):
+class GTK3PlotView(Gtk.HBox, GTK3BaseWidget, PlotWidgetMixin):
     _GTK3_PLOTVIEW_ATTRIBUTES: Incomplete
     _max_values: list[float]
     _min_values: list[float]

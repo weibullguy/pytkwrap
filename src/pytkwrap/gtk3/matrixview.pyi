@@ -1,5 +1,5 @@
+import abc
 from _typeshed import Incomplete
-from datetime import date
 from pytkwrap.gtk3._libs import GObject as GObject, Gtk as Gtk
 from pytkwrap.gtk3.buttons import GTK3CheckButton as GTK3CheckButton
 from pytkwrap.gtk3.combo import GTK3ComboBox as GTK3ComboBox
@@ -7,17 +7,14 @@ from pytkwrap.gtk3.entry import GTK3Entry as GTK3Entry
 from pytkwrap.gtk3.label import GTK3Label as GTK3Label
 from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes as GTK3DataWidgetAttributes
 from pytkwrap.gtk3.textview import GTK3TextView as GTK3TextView
-from pytkwrap.gtk3.widget import GTK3BaseWidget as GTK3BaseWidget, GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.gtk3.widget import GTK3BaseDataWidget as GTK3BaseDataWidget, GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
-    _GTK3_MATRIXVIEW_ATTRIBUTES: Incomplete
+class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget, metaclass=abc.ABCMeta):
     _GTK3_MATRIXVIEW_PROPERTIES: Incomplete
     _GTK3_MATRIXVIEW_SIGNALS: Incomplete
     n_columns: int
     n_rows: int
     def __init__(self) -> None: ...
-    def do_get_attribute(self, attribute: str) -> bool | date | float | int | str | None: ...
-    def do_set_attributes(self, attributes: GTK3DataWidgetAttributes) -> None: ...
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None: ...
     def do_add_column(self, position: int) -> None: ...
     def do_add_label(self, angle: float, heading: str, height: int, position: tuple[int, int], tooltip: str, width: int) -> None: ...
