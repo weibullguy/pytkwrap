@@ -10,7 +10,7 @@ from typing import TypedDict
 
 # Third Party Imports
 from matplotlib.axes import Axes
-from matplotlib.backends.backend_gtk3cairo import FigureCanvasGTK3Cairo
+from matplotlib.backend_bases import FigureCanvasBase
 from matplotlib.figure import Figure
 
 
@@ -69,7 +69,7 @@ class PlotWidgetAttributes(DataWidgetAttributes, total=False):
     """Type for widget plotting attributes."""
 
     axis: Axes | None
-    canvas: FigureCanvasGTK3Cairo | None
+    canvas: FigureCanvasBase | None
     figure: Figure | None
 
 
@@ -321,7 +321,7 @@ class PlotWidgetMixin(DataWidgetMixin):
         self.dic_attributes.update(self._PLOT_WIDGET_ATTRIBUTES)
 
         self.axis: Axes | None = None
-        self.canvas: FigureCanvasGTK3Cairo | None = None
+        self.canvas: FigureCanvasBase | None = None
         self.figure: Figure | None = None
 
     def do_get_attribute(

@@ -22,8 +22,10 @@ class GTK3DataWidgetAttributes(DataWidgetAttributes, total=False):
 class GTK3DataWidgetMixin(DataWidgetMixin):
     """Adds GTK3-specific data widget attributes."""
 
-    _GTK3_DATA_WIDGET_ATTRIBUTES = GTK3DataWidgetAttributes(column_types=None,
-                                                       font_description=None,)
+    _GTK3_DATA_WIDGET_ATTRIBUTES = GTK3DataWidgetAttributes(
+        column_types=None,
+        font_description=None,
+    )
 
     def __init__(self) -> None:
         """Initialize a new GTK3DataWidgetMixin."""
@@ -33,5 +35,5 @@ class GTK3DataWidgetMixin(DataWidgetMixin):
         self.dic_attributes.update(self._GTK3_DATA_WIDGET_ATTRIBUTES)
 
         self.column_types: list[EllipsisType] | list[GObject.GType] | None = None
-        self.edit_signal: str=self._DEFAULT_EDIT_SIGNAL
+        self.edit_signal: str = self._DEFAULT_EDIT_SIGNAL
         self.font_description: Pango.FontDescription | str | None = None

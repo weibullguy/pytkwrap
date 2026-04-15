@@ -13,8 +13,8 @@ from pubsub import pub
 # pytkwrap Package Imports
 from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gtk, Pango
+from pytkwrap.gtk3.scrolledwindow import GTK3ScrolledWindow
 from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
-from pytkwrap.utilities import none_to_default
 
 
 class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
@@ -95,9 +95,7 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         )
         self.set_buffer(self.dic_properties["buffer"])
 
-        # TODO: Replace this with a pytkwrap scrolledwindow.
-        self.scrollwindow = Gtk.ScrolledWindow()
-        self.scrollwindow.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        self.scrollwindow = GTK3ScrolledWindow()
         self.scrollwindow.add(self)
 
     # ----- ----- Standard widget methods. ----- ----- #
@@ -158,17 +156,9 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         UnkSignalError
             If the signal name is not in the handler_id dict.
         """
-        _field, _value = next(iter(package.items()))
-        _value = none_to_default(_value, self.default)
-
-        if _field != self.field:
-            return
-
         try:
-            _hid = self.dic_handler_id.get(self.edit_signal, -1)
-            with self.dic_properties["buffer"].handler_block(_hid):
-                self.dic_properties["buffer"].set_text(str(_value))
-        except (KeyError, OverflowError) as exc:
+            super().do_update(package)
+        except OverflowError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
                 f"{type(self).__name__}.do_update()",
                 self.edit_signal,
@@ -240,3 +230,16 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
             value = ""
 
         self.dic_properties["buffer"].set_text(str(value))
+
+    def _get_signal_owner(self) -> Gtk.TextBuffer:
+        """Return the object whose signal handler should be blocked.
+
+        Override in subclasses where the signal is owned by a child object rather than
+        the widget itself (e.g. GTK3TextView's TextBuffer).
+
+        Returns
+        -------
+        object : Gtk.TextBuffer
+            The Gtk.TextBuffer associated with the GTK3TextView.
+        """
+        return self.dic_properties["buffer"]

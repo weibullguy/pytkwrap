@@ -126,9 +126,9 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_ENTRY_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_ENTRY_PROPERTIES)
-        self.dic_handler_id.update(
-            {_signal: -1 for _signal in self._GTK3_ENTRY_SIGNALS}
-        )
+        self.dic_handler_id.update({
+            _signal: -1 for _signal in self._GTK3_ENTRY_SIGNALS
+        })
 
         self.default = ""
         self.font_description = font_description
@@ -151,23 +151,10 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
         -------
         bool or date or float or int or str or None
             The value of the requested attribute.
-
-        Raises
-        ------
-        KeyError
-            If the requested attribute does not exist.
         """
-        try:
-            return super().do_get_attribute(attribute)
-        except KeyError as exc:
-            _valid = {
-                "font_description",
-            }
-            if attribute not in _valid:
-                raise KeyError(
-                    f"Entry.do_get_attribute(): Unknown attribute {attribute}."
-                ) from exc
+        if attribute in self._GTK3_ENTRY_ATTRIBUTES:
             return getattr(self, attribute)
+        return super().do_get_attribute(attribute)
 
     def do_set_attributes(self, attributes: GTK3DataWidgetAttributes) -> None:
         """Set the attributes of the Entry.

@@ -12,6 +12,7 @@ from abc import abstractmethod
 from datetime import date
 from typing import TYPE_CHECKING, TypedDict
 
+
 if TYPE_CHECKING:
     # Standard Library Imports
     from types import FunctionType
@@ -251,7 +252,7 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
         app_paintable=True,
         can_default=True,
         can_focus=True,
-        events=Gdk.EventMask.ALL_EVENTS_MASK,
+        events=Gdk.EventMask.ALL_EVENTS_MASK,  # pylint: disable=no-member
         expand=True,
         focus_on_click=True,
         halign=Gtk.Align.FILL,
@@ -421,7 +422,9 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
             self.dic_properties["width_request"] = self._DEFAULT_WIDTH
 
         # Set the value of each of the widget properties.
+        # pylint: disable-next=line-too-long
         self.set_app_paintable(self.dic_properties["app_paintable"])  # type: ignore[attr-defined]
+        # pylint: disable-next=line-too-long
         self.set_can_default(self.dic_properties["can_default"])  # type: ignore[attr-defined]
         self.set_can_focus(self.dic_properties["can_focus"])
         self.set_focus_on_click(self.dic_properties["focus_on_click"])
@@ -434,6 +437,7 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
         self.set_margin_start(self.dic_properties["margin_start"])
         self.set_margin_top(self.dic_properties["margin_top"])
         self.set_name(self.dic_properties["name"])
+        # pylint: disable-next=line-too-long
         self.set_no_show_all(self.dic_properties["no_show_all"])  # type: ignore[attr-defined]
         self.set_opacity(self.dic_properties["opacity"])
         self.set_receives_default(self.dic_properties["receives_default"])
@@ -495,7 +499,7 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
 
         try:
             _hid = self.dic_handler_id[self.edit_signal]
-            with self.handler_block(_hid):
+            with self._get_signal_owner().handler_block(_hid):
                 self.do_set_value(_value)
         except KeyError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
@@ -528,7 +532,7 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
         _package = {self.field: self.do_get_value()}
         try:
             _hid = self.dic_handler_id[self.edit_signal]
-            with self.handler_block(_hid):
+            with self._get_signal_owner().handler_block(_hid):
                 pub.sendMessage(
                     self.send_topic,
                     node_id=self.record_id,
@@ -544,3 +548,15 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
                 message=_error_msg,
             )
             raise UnkSignalError(_error_msg) from exc
+
+    def _get_signal_owner(self) -> GTK3BaseDataWidget:
+        """Return the object whose signal handler should be blocked.
+
+        Override in subclasses where the signal is owned by a child object rather than
+        the widget itself (e.g. GTK3TextView's TextBuffer).
+
+        Returns
+        -------
+        GTK3BaseDataWidget
+        """
+        return self

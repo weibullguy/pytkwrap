@@ -128,23 +128,10 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
         -------
         bool or date or float or int or str or None
             The value of the requested attribute.
-
-        Raises
-        ------
-        KeyError
-            If the requested attribute does not exist.
         """
-        try:
-            return super().do_get_attribute(attribute)
-        except KeyError as exc:
-            _valid = {
-                "column_types",
-            }
-            if attribute not in _valid:
-                raise KeyError(
-                    f"ComboBox.do_get_attribute(): Unknown attribute {attribute}."
-                ) from exc
+        if attribute in self._GTK3_COMBO_ATTRIBUTES:
             return getattr(self, attribute)
+        return super().do_get_attribute(attribute)
 
     def do_set_attributes(self, attributes: GTK3DataWidgetAttributes) -> None:
         """Set the attributes of the GTK3ComboBox.

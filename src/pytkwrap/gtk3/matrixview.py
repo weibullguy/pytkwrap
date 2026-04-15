@@ -5,7 +5,6 @@
 """The pytkwrap GTK3 MatrixView module."""
 
 # Standard Library Imports
-from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject, Gtk
@@ -15,16 +14,12 @@ from pytkwrap.gtk3.entry import GTK3Entry
 from pytkwrap.gtk3.label import GTK3Label
 from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
 from pytkwrap.gtk3.textview import GTK3TextView
-from pytkwrap.gtk3.widget import GTK3BaseWidget, GTK3WidgetProperties
+from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
 
 
-class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
+class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
     """The GTK3MatrixView class."""
 
-    _GTK3_MATRIXVIEW_ATTRIBUTES = GTK3DataWidgetAttributes(
-        n_columns=0,
-        n_rows=0,
-    )
     _GTK3_MATRIXVIEW_PROPERTIES = GTK3WidgetProperties(
         baseline_row=0,
         column_homogeneous=False,
@@ -42,11 +37,9 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
     def __init__(self) -> None:
         """Initialize an instance of the GTK3MatrixView widget."""
         Gtk.Grid.__init__(self)
-        # GObject.GObject.__init__(self)
-        GTK3BaseWidget.__init__(self)
+        GTK3BaseDataWidget.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_attributes.update(self._GTK3_MATRIXVIEW_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_MATRIXVIEW_PROPERTIES)
         self.dic_handler_id.update({
             _signal: -1 for _signal in self._GTK3_MATRIXVIEW_SIGNALS
@@ -57,53 +50,6 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseWidget):
         self.show()
 
     # ----- ----- Standard widget methods. ----- ----- #
-    def do_get_attribute(
-        self,
-        attribute: str,
-    ) -> bool | date | float | int | str | None:
-        """Get the value of the requested GTK3MatrixView attribute.
-
-        Parameters
-        ----------
-        attribute : str
-            The name of the attribute to retrieve.
-
-        Returns
-        -------
-        bool or date or float or int or str or None
-            The value of the requested attribute.
-
-        Raises
-        ------
-        KeyError
-            If the requested attribute does not exist.
-        """
-        try:
-            return super().do_get_attribute(attribute)
-        except KeyError as exc:
-            _valid = {
-                "n_columns",
-                "n_rows",
-            }
-            if attribute not in _valid:
-                raise KeyError(
-                    f"MatrixView.do_get_attribute(): Unknown attribute {attribute}."
-                ) from exc
-            return getattr(self, attribute)
-
-    def do_set_attributes(self, attributes: GTK3DataWidgetAttributes) -> None:
-        """Set the attributes of the GTK3MatrixView.
-
-        Parameters
-        ----------
-        attributes : GTK3DataWidgetAttributes
-            The typed dict with the attribute values to set for the GTK3MatrixView.
-        """
-        super().do_set_attributes(attributes)
-
-        self.n_columns = attributes.get("n_columns", self.n_columns)
-        self.n_rows = attributes.get("n_rows", self.n_rows)
-
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
         """Set the properties of the GTK3MatrixView.
 

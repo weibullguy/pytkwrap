@@ -47,15 +47,6 @@ class GTK3Frame(Gtk.Frame, GTK3BaseWidget):
         """
         super().do_set_properties(properties)
 
-        self.dic_properties["label"] = properties.get("label", "")
-        self.dic_properties["label_widget"] = properties.get("label_widget", None)
-        self.dic_properties["label_xalign"] = properties.get("label_xalign", 0.0)
-        self.dic_properties["label_yalign"] = properties.get("label_yalign", 0.5)
-        self.dic_properties["shadow_type"] = properties.get(
-            "shadow_type",
-            Gtk.ShadowType.ETCHED_IN,
-        )
-
         if self.dic_properties["label_widget"] is not None:
             self.set_label_widget(self.dic_properties["label_widget"])
         self.set_label(self.dic_properties["label"])

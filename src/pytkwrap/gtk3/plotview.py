@@ -26,7 +26,7 @@ except RuntimeError:
     pass
 
 
-class GTK3PlotView(GTK3BaseWidget, PlotWidgetMixin):
+class GTK3PlotView(Gtk.HBox, GTK3BaseWidget, PlotWidgetMixin):
     """The GTK3PlotView class."""
 
     _GTK3_PLOTVIEW_ATTRIBUTES = PlotWidgetAttributes(
@@ -37,6 +37,7 @@ class GTK3PlotView(GTK3BaseWidget, PlotWidgetMixin):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3PlotView widget."""
+        Gtk.HBox.__init__(self, orientation=Gtk.Orientation.VERTICAL)
         GTK3BaseWidget.__init__(self)
         PlotWidgetMixin.__init__(self)
 
@@ -50,6 +51,8 @@ class GTK3PlotView(GTK3BaseWidget, PlotWidgetMixin):
         self.figure: Figure = Figure()
         self.canvas: FigureCanvas = FigureCanvas(self.figure)
         self.axis = self.figure.add_subplot(111)
+
+        self.pack_start(self.canvas, True, True, 0)
 
     # ----- ----- PlotView specific methods. ----- ----- #
     def do_load_plot(
