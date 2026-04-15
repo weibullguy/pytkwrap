@@ -44,6 +44,10 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
     expected_default_value = None
     expected_default_width = -1
 
+    def mock_callback(self, matrixview) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(matrixview, GTK3MatrixView)
+
     def no_signal_error_handler(self, message):
         """Error handler for do_set_callbacks() errors."""
         assert (

@@ -124,14 +124,14 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
 class BaseGTK3DataWidgetTests(BaseGTK3WidgetTests, TestDataWidgetMixin):
     """Adds data widget assertions for GTK3 data widgets."""
 
-    @pytest.mark.unit
+    @pytest.mark.skip
     def test_do_update(self):
         pass
 
-    @pytest.mark.unit
+    @pytest.mark.skip
     def test_do_update_wrong_field(self):
         pass
 
-    @pytest.mark.unit
+    @pytest.mark.skip
     def test_on_changed(self):
         pass

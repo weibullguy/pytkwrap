@@ -54,6 +54,10 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         """Create a device under test for the GTK3Label."""
         return self.widget_class(text)
 
+    def mock_callback(self, label) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(label, GTK3Label)
+
     def no_signal_error_handler(self, message):
         """Error handler for do_set_callbacks() errors."""
         assert (

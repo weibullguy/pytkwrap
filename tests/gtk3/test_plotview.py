@@ -27,6 +27,10 @@ class TestPlotView(BaseGTK3DataWidgetTests):
     expected_default_value = None
     expected_default_width = -1
 
+    def mock_callback(self, plotview) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(plotview, GTK3PlotView)
+
     def no_signal_error_handler(self, message):
         """Error handler for do_set_callbacks() errors."""
         assert (

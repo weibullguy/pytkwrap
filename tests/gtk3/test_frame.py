@@ -36,6 +36,10 @@ class TestFrame(BaseGTK3WidgetTests):
             "'value-changed'."
         )
 
+    def mock_callback(self, frame) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(frame, GTK3Frame)
+
     @pytest.mark.unit
     def test_init(self):
         """Should create a GTK3Frame with default values for attributes."""

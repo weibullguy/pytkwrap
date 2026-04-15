@@ -55,6 +55,10 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         """Create a device under test for the GTK3Entry."""
         return self.widget_class(font_description)
 
+    def mock_callback(self, entry) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(entry, GTK3Entry)
+
     @staticmethod
     def no_signal_error_handler(message):
         """Error handler for do_set_callbacks() errors."""

@@ -41,11 +41,6 @@ def do_update_error_handler(message):
     assert message == "GTK3ComboBox.do_update(): Unknown signal name 'edit_signal'."
 
 
-def mock_callback(combobox) -> None:
-    """Mock callback to attach dut signals to."""
-    assert isinstance(combobox, GTK3ComboBox)
-
-
 def mock_handler(node_id, package) -> None:
     """Mock message handler."""
     if node_id == 0:
@@ -86,6 +81,11 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
             column_types=column_types,
             has_entry=has_entry,
         )
+
+
+    def mock_callback(self, combobox) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(combobox, GTK3ComboBox)
 
     @pytest.fixture
     def compound_combo(self):
@@ -366,14 +366,14 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_do_load_combobox_simple(self):
         """Load a list of string values into a simple GTK3ComboBox."""
         dut = self.make_dut()
-        dut.do_set_callbacks("changed", mock_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
 
     @pytest.mark.unit
     def test_do_load_combobox_compound(self):
         """Load a list of string values into a non-simple GTK3ComboBox."""
         dut = self.make_dut(index=1, simple=False, n_items=3)
-        dut.do_set_callbacks("changed", mock_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(COMPOUND_TEST_LIST)
 
     @pytest.mark.unit
@@ -383,7 +383,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         """
         _test_list = [0, 1, 2, 3, 4]
         dut = self.make_dut()
-        dut.do_set_callbacks("changed", mock_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
 
         with pytest.raises(TypeError):
             dut.do_load_combo(_test_list)
@@ -396,7 +396,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         entries.
         """
         dut = self.make_dut()
-        dut.do_set_callbacks("changed", mock_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
 
         _options = dut.do_get_options()
@@ -408,7 +408,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         entries.
         """
         dut = self.make_dut(index=1, simple=False, n_items=3)
-        dut.do_set_callbacks("changed", mock_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(COMPOUND_TEST_LIST)
 
         _options = dut.do_get_options()
@@ -418,7 +418,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_do_load_combobox_clears_previous_entries(self):
         """Clear the model before loading new entries."""
         dut = self.make_dut()
-        dut.do_set_callbacks("changed", mock_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
         dut.do_load_combo(["Only Entry"])
 
@@ -437,7 +437,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_do_get_options_simple(self):
         """Return a dict of all the options available in a simple GTK3ComboBox."""
         dut = self.make_dut()
-        dut.do_set_callbacks("changed", mock_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
 
         _options = dut.do_get_options()
@@ -453,7 +453,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_do_get_options_compound(self):
         """Return a dict of all the options available in a non-simple GTK3ComboBox."""
         dut = self.make_dut(index=1, simple=False, n_items=3)
-        dut.do_set_callbacks("changed", mock_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(COMPOUND_TEST_LIST)
 
         _options = dut.do_get_options()

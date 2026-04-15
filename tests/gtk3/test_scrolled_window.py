@@ -31,6 +31,10 @@ class TestScrolledWindow(BaseGTK3WidgetTests):
         """Create a device under test for the GTK3ScrolledWindow."""
         return self.widget_class(child)
 
+    def mock_callback(self, scrolledwindow) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(scrolledwindow, GTK3ScrolledWindow)
+
     def no_signal_error_handler(self, message):
         """Error handler for do_set_callbacks() errors."""
         assert (
