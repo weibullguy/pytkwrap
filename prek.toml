@@ -1,0 +1,44 @@
+default_language_version.python = "3.12"
+
+[[repos]]
+repo = "git@github.com:pre-commit/pre-commit-hooks.git"
+rev = "v6.0.0"
+hooks = [
+    {id = "check-merge-conflict"},
+    {id = "check-toml"},
+    {id = "check-xml"},
+    {id = "check-yaml"},
+    {id = "debug-statements"},
+    {id = "detect-private-key"},
+    {id = "end-of-file-fixer"},
+    {id = "no-commit-to-branch"},
+    {id = "trailing-whitespace"},
+]
+
+[[repos]]
+repo = "local"
+hooks =[
+    {id = "pylint", name = "pylint", entry = "pylint", language = "python", files = "\\.py$", args = ["--rcfile=./pyproject.toml"]},
+]
+
+[[repos]]
+repo = "git@github.com:pre-commit/mirrors-mypy.git"
+rev = "v1.20.0"
+hooks = [
+    {id = "mypy", args = ["--install-types", "--non-interactive"]},
+]
+
+[[repos]]
+repo = "git@github.com:PyCQA/docformatter.git"
+rev = "v1.7.7"
+hooks = [
+    {id = "docformatter", args = ["--in-place", "--config", "./pyproject.toml"]}
+]
+
+[[repos]]
+repo = "git@github.com:astral-sh/ruff-pre-commit.git"
+rev = "v0.15.10"
+hooks = [
+    {id = "ruff-check", args = ["--preview", "--fix"]},
+    {id = "ruff-format", args = ["--preview"]},
+]

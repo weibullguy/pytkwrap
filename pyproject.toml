@@ -38,8 +38,10 @@ path = "src/pytkwrap/__about__.py"
 python = "3.12"
 dependencies = [
   "matplotlib>=3.10.8",
+  "prek>=0.3.9",
   "pycairo>=1.29",
   "pygobject>=3.54",
+  "pylint",
   "pypubsub>=4.0",
   "python-dateutil",
 ]
@@ -105,22 +107,21 @@ extra-dependencies = [
 ]
 [tool.hatch.envs.lint.scripts]
 update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
-fix = "ruff check --preview --fix {args}"
+fix = "prek run ruff-check --files {args}"
 format = [
-  "ruff format --preview {args}",
+  "prek run ruff-format --files {args}",
   "docformatter --in-place --config ./pyproject.toml {args}",
 ]
-lint = "ruff check --preview {args}"
+lint = "pylint --rcfile ./pyproject.toml {args}"
 maintain = [
   "radon hal {args}",
   "radon cc --show-complexity {args}",
   "radon mi --show {args}",
 ]
 all = [
-  "format",
-  "fix",
-  "pylint --rcfile ./pyproject.toml {args}",
   "lint",
+  "fix",
+  "format",
   "maintain",
 ]
 
@@ -131,7 +132,7 @@ extra-dependencies = [
 ]
 [tool.hatch.envs.types.scripts]
 check = [
-  "mypy --install-types --non-interactive {args}",
+  "prek run mypy --files {args}",
   "ty check {args}",
 ]
 make-stub = "stubgen --include-private -o src {args}"
