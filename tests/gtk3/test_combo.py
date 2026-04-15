@@ -82,7 +82,6 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
             has_entry=has_entry,
         )
 
-
     def mock_callback(self, combobox) -> None:
         """Mock callback to attach dut signals to."""
         assert isinstance(combobox, GTK3ComboBox)

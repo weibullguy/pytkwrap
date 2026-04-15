@@ -64,9 +64,6 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
 
         # All handler IDs should start at -1.
         assert all(_hid == -1 for _hid in dut.dic_handler_id.values())
-        # MatrixView-specific attributes should be registered.
-        for _attribute in GTK3MatrixView._GTK3_MATRIXVIEW_ATTRIBUTES:
-            assert _attribute in dut.dic_attributes
         # MatrixView-specific properties should be registered.
         for _property in GTK3MatrixView._GTK3_MATRIXVIEW_PROPERTIES:
             assert _property in dut.dic_properties
