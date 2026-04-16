@@ -1,5 +1,4 @@
 # pylint: skip-file
-# ruff: noqa: S101
 # type: ignore
 #
 #       tests.gtk3.test_button.py is part of the pytkwrap project
@@ -20,11 +19,11 @@ from pytkwrap.gtk3.buttons import (
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import CommonWidgetTests
+from .conftest import BaseGTK3WidgetTests
 
 
-class TestBaseButton(CommonWidgetTests):
-    """Test class for the BaseButton."""
+class TestBaseButton(BaseGTK3WidgetTests):
+    """Test class for the GTK3BaseButton."""
 
     widget_class = GTK3BaseButton
     expected_default_height = 30
@@ -32,17 +31,23 @@ class TestBaseButton(CommonWidgetTests):
     expected_default_width = 200
 
     def make_dut(self, label="..."):
+        """Create a device under test for the GTK3BaseButton."""
         return self.widget_class(label)
 
+    def mock_callback(self, basebutton) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(basebutton, GTK3BaseButton)
+
     def no_signal_error_handler(self, message):
+        """Error handler for do_set_callbacks() errors."""
         assert (
             message
-            == "BaseButton.do_set_callbacks(): Unknown signal name 'value-changed'."
+            == "GTK3BaseButton.do_set_callbacks(): Unknown signal name 'value-changed'."
         )
 
     @pytest.mark.unit
     def test_init_with_label(self):
-        """__init__() should create a Button."""
+        """Should create a GTK3BaseButton with default values for attributes."""
         dut = self.make_dut("Test Label")
 
         assert isinstance(dut, GTK3BaseButton)
@@ -51,11 +56,10 @@ class TestBaseButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
-        """do_set_properties() should set the default properties of a GTK3BaseButton
-        when no keywords are passed to the method.
-        """
+        """Should set the default properties of a GTK3BaseButton when passed an empty
+        GTK3WidgetProperties."""
         dut = self.make_dut()
-        dut.do_set_properties(WidgetProperties())
+        dut.do_set_properties(GTK3WidgetProperties())
 
         assert dut.get_property("action_name") is None
         assert dut.get_property("action_target") is None
@@ -68,9 +72,8 @@ class TestBaseButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_set_properties(self):
-        """do_set_properties() should set the properties of a GTK3BaseButton when passed
-        a GTK3WidgetProperties with values.
-        """
+        """Should set the properties of a GTK3BaseButton to the values passed in a
+        GTK3WidgetProperties dict."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
@@ -90,9 +93,8 @@ class TestBaseButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_set_properties_image(self, image_file):
-        """do_set_properties() should set the properties of a GTK3BaseButton when passed
-        a GTK3WidgetProperties with values.
-        """
+        """Should set the properties of a GTK3BaseButton to the values passed in a
+        GTK3WidgetProperties dict."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
@@ -113,6 +115,7 @@ class TestBaseButton(CommonWidgetTests):
 
 @pytest.mark.integration
 def test_do_make_buttonbox_vertical(image_file):
+    """Should make a vertical buttonbox with a single button."""
     _buttonbox = do_make_buttonbox(
         icons=[image_file],
         tooltips=["Test tooltip"],
@@ -124,6 +127,7 @@ def test_do_make_buttonbox_vertical(image_file):
 
 @pytest.mark.integration
 def test_do_make_buttonbox_horizontal(image_file):
+    """Should make a horizontal buttonbox with a single button."""
     _buttonbox = do_make_buttonbox(
         icons=[image_file],
         tooltips=["Test tooltip"],
@@ -136,6 +140,7 @@ def test_do_make_buttonbox_horizontal(image_file):
 
 @pytest.mark.integration
 def test_do_make_buttonbox_no_tooltip(image_file):
+    """Should make a vertical buttonbox with a single button with no tooltip."""
     _buttonbox = do_make_buttonbox(
         icons=[image_file],
         tooltips=[],
