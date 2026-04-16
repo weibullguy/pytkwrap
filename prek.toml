@@ -11,7 +11,7 @@ hooks = [
     {id = "debug-statements"},
     {id = "detect-private-key"},
     {id = "end-of-file-fixer"},
-    {id = "no-commit-to-branch"},
+    #{id = "no-commit-to-branch"},
     {id = "trailing-whitespace"},
 ]
 

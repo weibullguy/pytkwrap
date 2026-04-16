@@ -95,7 +95,7 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseWidget):
         "clicked",
         # "remove", # TODO: The callback for this signal needs to accept two arguments.
         # "set-focus-child", # TODO: The callback for this signal needs to accept two
-                             #  arguments.
+        #  arguments.
     ]
     _DEFAULT_HEIGHT = 30
     _DEFAULT_WIDTH = 200
