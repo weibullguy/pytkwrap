@@ -1,12 +1,11 @@
 # pylint: skip-file
-# ruff: noqa: S101
 # type: ignore
 #
 #       tests.gtk3.test_color_button.py is part of the pytkwrap project
 #
 # All rights reserved.
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""Test class for the GTK3 color button module algorithms and models."""
+"""Test class for the GTK3ColorButton module algorithms and models."""
 
 # Third Party Imports
 import pytest
@@ -21,54 +20,39 @@ from pytkwrap.gtk3.buttons import (
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import CommonWidgetTests
+from .conftest import BaseGTK3DataWidgetTests
 
 
 @pytest.mark.usefixtures("suppress_stderr")
-class TestColorButton(CommonWidgetTests):
+class TestColorButton(BaseGTK3DataWidgetTests):
     """Test class for the GTK3ColorButton."""
 
     widget_class = GTK3ColorButton
     expected_default_height = 30
     expected_default_value = None
     expected_default_width = 60
-
-    def do_update_error_handler(self, message):
-        assert message == "ColorButton.do_update(): Unknown signal name 'edit_signal'."
-
-    def mock_handler(self, node_id, package) -> None:
-        if node_id == 0:
-            assert package == {"test_field": True}
-
-    def no_signal_error_handler(self, message):
-        assert (
-            message == "ColorButton.do_set_callbacks(): Unknown signal name "
-            "'value-changed'."
-        )
-
-    def on_changed_error_handler(self, message):
-        assert message == "ColorButton.on_changed(): Unknown signal name 'edit_signal'."
+    expected_package = {0:{"test_field": True}}
 
     @pytest.mark.unit
     def test_set_properties_default(self):
-        """do_set_properties() should set the default properties of a GTK3ColorButton
-        when no keywords are passed to the method.
-        """
+        """Should set the default properties of a GTK3ColorButton when passed an empty
+        GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
         assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
         assert dut.get_property("rgba").alpha == 1.0
-        assert dut.get_property("rgba").blue == 1.0
-        assert dut.get_property("rgba").green == 1.0
-        assert dut.get_property("rgba").red == 1.0
+        assert dut.get_property("rgba").blue == 0.0
+        assert dut.get_property("rgba").green == 0.0
+        assert dut.get_property("rgba").red == 0.0
         assert not dut.get_property("show-editor")
         assert dut.get_property("title") == "Pick a Color"
         assert dut.get_property("use-alpha")
 
     @pytest.mark.unit
     def test_set_properties(self):
-        """do_set_properties() should set the properties of a GTK3ColorButton."""
+        """Should set the properties to the values in the passed
+        GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
@@ -90,9 +74,7 @@ class TestColorButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_update(self):
-        """do_update() should update the GTK3ColorButton with the data in the passed
-        package.
-        """
+        """Should update the GTK3ColorButton with the data package value."""
         dut = self.make_dut()
         dut.field = "test_field"
         dut.do_set_callbacks(dut.edit_signal, dut.do_update)
@@ -111,9 +93,8 @@ class TestColorButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_update_none_value(self):
-        """do_update() should update the GTK3ColorButton with the default RGBA values
-        when passed None.
-        """
+        """Should update the GTK3ColorButton properties with the default values when
+        passed a data package with a value of None."""
         dut = self.make_dut()
         dut.field = "test_field"
         dut.do_set_callbacks(dut.edit_signal, dut.do_update)
@@ -124,13 +105,13 @@ class TestColorButton(CommonWidgetTests):
         assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
         assert isinstance(dut.get_rgba(), Gdk.RGBA)
         assert dut.get_property("rgba").alpha == 1.0
-        assert dut.get_property("rgba").blue == 1.0
-        assert dut.get_property("rgba").green == 1.0
-        assert dut.get_property("rgba").red == 1.0
+        assert dut.get_property("rgba").blue == 0.0
+        assert dut.get_property("rgba").green == 0.0
+        assert dut.get_property("rgba").red == 0.0
 
     @pytest.mark.unit
     def test_do_update_unknown_signal(self):
-        """do_update() should raise a key error with an unknown edit signal name."""
+        """Should raise an UnkSignalError with an unknown edit signal name."""
         dut = self.make_dut()
         dut.field = "test_field"
         dut.do_set_callbacks(dut.edit_signal, dut.do_update)
@@ -150,7 +131,8 @@ class TestColorButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_update_wrong_field(self):
-        """do_update() should do nothing when the package field doesn't match."""
+        """Should do nothing when the data package key doesn't match the GTK3ColorButton
+        field name."""
         dut = self.make_dut()
         dut.field = "test_field"
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
@@ -179,7 +161,7 @@ class TestColorButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_on_changed_unknown_signal(self):
-        """on_changed() should raise a KeyError with an unknown edit signal name."""
+        """Should raise a KeyError with an unknown edit signal name."""
         dut = self.make_dut()
         dut.field = "test_field"
         dut.record_id = 0
