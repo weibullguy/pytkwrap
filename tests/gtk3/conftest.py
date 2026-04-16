@@ -124,6 +124,29 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
 class BaseGTK3DataWidgetTests(BaseGTK3WidgetTests, TestDataWidgetMixin):
     """Adds data widget assertions for GTK3 data widgets."""
 
+    def do_update_error_handler(self, message):
+        """Error handler for do_update() errors."""
+        assert message == (
+            f"{self.widget_class.__name__}.do_update(): Unknown signal name "
+            f"'edit_signal'."
+        )
+
+    def mock_callback(self, widget) -> None:
+        """Mock callback to attach dut signals to."""
+        assert isinstance(widget, self.widget_class)
+
+    def no_signal_error_handler(self, message):
+        """Error handler for do_set_callbacks() errors."""
+        assert (
+                message == f"{self.widget_class.__name__}.do_set_callbacks(): Unknown signal name "
+                           "'value-changed'."
+        )
+
+    def on_changed_error_handler(self, message):
+        """Error handler for on_changed() errors."""
+        assert message == (f"{self.widget_class.__name__}.on_changed(): Unknown signal name "
+                           f"'edit_signal'.")
+
     @pytest.mark.skip
     def test_do_update(self):
         pass
