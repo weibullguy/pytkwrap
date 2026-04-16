@@ -48,7 +48,7 @@ dependencies = [
 [tool.hatch.envs.default.scripts]
 install = "pip install -e ."
 
-[[tool.hatch.envs.text.matrix]]
+[[tool.hatch.envs.test.matrix]]
 python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
 [tool.hatch.envs.test]
@@ -72,33 +72,22 @@ integration = "pytest -x -s -v -m integration --no-cov --cache-clear tests/commo
 integration-coverage = "COVERAGE_FILE='.coverage.integration' pytest -m integration --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/ tests/gtk3/"
 coverage-combine = "coverage combine .coverage.unit .coverage.integration"
 coverage-report = "coverage html --rcfile=pyproject.toml"
-test-unit = [
-    "install",
-    "unit",
-]
-test-unit-cov = [
-    "install",
-    "unit-coverage",
-]
-test-integration = [
+test = [
   "install",
+  "unit",
   "integration",
 ]
-test-integration-cov = [
-  "install",
-  "integration-coverage",
-]
-test-all = [
+test-coverage = [
   "install",
   "unit-coverage",
-  #"integration-coverage",
+  "integration-coverage",
   "coverage-combine",
   "coverage-report",
 ]
 
 [tool.hatch.envs.lint]
 extra-dependencies = [
-  "bandit",
+  "bandit[toml]",
   "docformatter[tomli]>=1.7",
   "mccabe",
   "pylint",
@@ -118,10 +107,11 @@ maintain = [
   "radon cc --show-complexity {args}",
   "radon mi --show {args}",
 ]
+security = "bandit -c pyproject.toml -b .bandit.baseline -r {args}"
 all = [
-  "lint",
   "fix",
   "format",
+  "lint",
   "maintain",
 ]
 
@@ -132,13 +122,21 @@ extra-dependencies = [
 ]
 [tool.hatch.envs.types.scripts]
 check = [
-  "prek run mypy --files {args}",
+  "mypy --install-types --non-interactive {args}",
   "ty check {args}",
 ]
 make-stub = "stubgen --include-private -o src {args}"
 
+[tool.bandit]
+exclude_dirs = [
+  "tests/",
+]
+skips = [
+  "B105",
+]
+
 [tool.coverage.run]
-source_pkgs = ["pytkwrap", "tests"]
+source_pkgs = ["pytkwrap"]
 branch = true
 parallel = true
 omit = [
