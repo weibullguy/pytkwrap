@@ -21,11 +21,6 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
 
-def mock_handler(node_id, package) -> None:
-    """Mock message handler."""
-    if node_id == 0:
-        assert package == {"test_field": True}
-
 @pytest.mark.usefixtures("suppress_stderr")
 class TestCheckButton(BaseGTK3DataWidgetTests):
     """Test class for the GTK3CheckButton."""
@@ -34,6 +29,7 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
     expected_default_height = 40
     expected_default_value = False
     expected_default_width = 200
+    expected_package = {0:{"test_field": True}}
 
     def make_dut(self, label="..."):
         """Create a device under test for the GTK3CheckButton."""
@@ -143,7 +139,7 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
         dut.send_topic = "button_toggled"
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
 
-        pub.subscribe(mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.send_topic)
 
         dut.set_active(True)
 
@@ -157,6 +153,6 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
         dut.edit_signal = "edit_signal"
-        pub.subscribe(mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.send_topic)
 
         dut.set_active(True)

@@ -21,11 +21,6 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 from .conftest import BaseGTK3DataWidgetTests
 
 
-def do_update_error_handler(message):
-    """Error handler for do_update() errors."""
-    assert message == "GTK3Label.do_update(): Unknown signal name 'edit_signal'."
-
-
 @pytest.mark.unit
 def test_do_make_label_group():
     """Should return the maximum x-position and the list of GTK3Labels created."""
@@ -53,17 +48,6 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     def make_dut(self, text="Test Label Text"):
         """Create a device under test for the GTK3Label."""
         return self.widget_class(text)
-
-    def mock_callback(self, label) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(label, GTK3Label)
-
-    def no_signal_error_handler(self, message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-            message == "GTK3Label.do_set_callbacks(): Unknown signal name "
-            "'value-changed'."
-        )
 
     @pytest.mark.unit
     def test_init(self):
@@ -116,8 +100,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set the default attributes of a GTK3Label when passed an empty
-        WidgetAttributes.
-        """
+        WidgetAttributes."""
         dut = self.make_dut()
         dut.do_set_attributes(GTK3DataWidgetAttributes())
 
@@ -241,8 +224,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set the default properties of a GTK3Label when no keywords are passed
-        to the method.
-        """
+        to the method."""
         dut = self.make_dut("Test Label Text")
         dut.do_set_properties(GTK3WidgetProperties())
 
@@ -407,8 +389,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_update_wrong_field(self):
         """Should not update the GTK3Label when the data package key doesn't mathc the
-        field.
-        """
+        field."""
         dut = self.make_dut()
         dut.field = "test_field"
         dut.do_set_callbacks("focus-in-event", dut.do_update)
@@ -497,8 +478,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_font_description_preserves_existing(self):
         """Should make no changes to the font description when already set and passed no
-        arguments.
-        """
+        arguments."""
         dut = self.make_dut()
         dut.font_description = "<span face=Arial size=12pt"
         dut.do_set_font_description()

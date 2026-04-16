@@ -25,21 +25,6 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 from .conftest import BaseGTK3DataWidgetTests
 
 
-def do_update_error_handler(message) -> None:
-    """Error handler for do_update() errors."""
-    assert message == "GTK3Entry.do_update(): Unknown signal name 'edit_signal'."
-
-
-def mock_handler(node_id, package) -> None:
-    """Mock message handler."""
-    if node_id == 0:
-        assert package == {"test_field": "Test Text"}
-
-
-def on_changed_error_handler(message):
-    """Error handler for on_changed() errors."""
-    assert message == "GTK3Entry.on_changed(): Unknown signal name 'edit_signal'."
-
 
 @pytest.mark.order(4)
 @pytest.mark.usefixtures("suppress_stderr")
@@ -50,22 +35,11 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     expected_default_height = 25
     expected_default_value = ""
     expected_default_width = 200
+    expected_package = {0:{"test_field": "Test Text"}}
 
     def make_dut(self, font_description=None):
         """Create a device under test for the GTK3Entry."""
         return self.widget_class(font_description)
-
-    def mock_callback(self, entry) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(entry, GTK3Entry)
-
-    @staticmethod
-    def no_signal_error_handler(message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-            message
-            == "GTK3Entry.do_set_callbacks(): Unknown signal name 'value-changed'."
-        )
 
     @pytest.mark.unit
     def test_init(self):
@@ -94,8 +68,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set the default attributes of a GTK3Entry when passed an empty
-        WidgetAttributes.
-        """
+        WidgetAttributes."""
         super().test_do_set_attributes_default()
 
         dut = self.make_dut()
@@ -106,8 +79,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes(self):
         """Should set the GTKEntry attributes to the values passed in a WidgetAttributes
-        dict.
-        """
+        dict."""
         super().test_do_set_attributes()
 
         dut = self.make_dut()
@@ -131,8 +103,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes_preserves_font_description(self):
         """Should not override column_types set in __init__ when no column_types key is
-        passed in WidgetAttributes.
-        """
+        passed in WidgetAttributes."""
         dut = self.make_dut(
             Pango.FontDescription("Sans,Serif,Monospace Normal Not-Rotated Bold 10")
         )
@@ -182,8 +153,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Set the default properties of a GTK3Entry when passed an empty
-        GTK3WidgetProperties.
-        """
+        GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
@@ -412,7 +382,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.field = "test_field"
         dut.do_set_callbacks(dut.edit_signal, dut.do_update)
-        pub.subscribe(do_update_error_handler, "do_log_error")
+        pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(dut.do_update, "rootTopic")
         dut.edit_signal = "edit_signal"
 
@@ -443,7 +413,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut.send_topic = "entry_changed"
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
 
-        pub.subscribe(mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.send_topic)
 
         dut.set_text("Test Text")
 
@@ -455,9 +425,9 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut.record_id = 0
         dut.send_topic = "entry_changed"
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
-        pub.subscribe(on_changed_error_handler, "do_log_error")
+        pub.subscribe(self.on_changed_error_handler, "do_log_error")
         dut.edit_signal = "edit_signal"
-        pub.subscribe(mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.send_topic)
 
         dut.set_text("Test Text")
 
@@ -494,8 +464,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_font_description_default(self):
         """Set a new font description with default values when no arguments are
-        passed.
-        """
+        passed."""
         dut = self.make_dut()
         dut.do_set_font_description()
 

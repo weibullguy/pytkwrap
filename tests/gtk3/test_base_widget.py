@@ -22,10 +22,6 @@ from pytkwrap.gtk3.widget import (
 from .conftest import BaseGTK3WidgetTests
 
 
-def example_callback():
-    pass
-
-
 @pytest.mark.order(3)
 class TestBaseWidget(BaseGTK3WidgetTests):
     """Test class for the BaseWidget."""
@@ -34,13 +30,6 @@ class TestBaseWidget(BaseGTK3WidgetTests):
     expected_default_height = -1
     expected_default_value = None
     expected_default_width = -1
-
-    def no_signal_error_handler(self, message):
-        """Mock error handling method."""
-        assert (
-            message
-            == "GTK3BaseWidget.do_set_callbacks(): Unknown signal name 'value-changed'."
-        )
 
     @pytest.mark.unit
     def test_widget_do_set_properties_default(self):
@@ -173,7 +162,7 @@ class TestBaseWidget(BaseGTK3WidgetTests):
         dut = self.make_dut()
         _buffer = Gtk.TextBuffer()
         dut.dic_properties["buffer"] = _buffer
-        dut.do_set_callbacks("changed", example_callback)
+        dut.do_set_callbacks("changed", self.mock_callback)
 
         assert dut.dic_handler_id["changed"] != -1
 

@@ -36,24 +36,6 @@ COMPOUND_TEST_LIST = [
 ]
 
 
-def do_update_error_handler(message):
-    """Error handler for do_update() errors."""
-    assert message == "GTK3ComboBox.do_update(): Unknown signal name 'edit_signal'."
-
-
-def mock_handler(node_id, package) -> None:
-    """Mock message handler."""
-    if node_id == 0:
-        assert package == {"test_field": "Index 1"}
-
-    if node_id == 1:
-        assert package == {"test_field": "is"}
-
-
-def on_changed_error_handler(message):
-    """Error handler for on_changed() errors."""
-    assert message == "GTK3ComboBox.on_changed(): Unknown signal name 'edit_signal'."
-
 
 @pytest.mark.order(4)
 @pytest.mark.usefixtures("suppress_stderr")
@@ -64,6 +46,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     expected_default_height = 30
     expected_default_value = -1
     expected_default_width = 200
+    expected_package = {0:{"test_field": "Index 1"},1:{"test_field": "is"}}
 
     def make_dut(
         self,
@@ -217,8 +200,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Set the default attributes of a GTK3ComboBox when passed an empty
-        WidgetAttributes.
-        """
+        WidgetAttributes."""
         super().test_do_set_attributes_default()
 
         dut = self.make_dut()
@@ -229,8 +211,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes(self):
         """Set the GTK3ComboBox attributes to the values passed in a
-        WidgetAttributes.
-        """
+        WidgetAttributes."""
         super().test_do_set_attributes()
 
         dut = self.make_dut()
@@ -245,8 +226,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes_preserves_column_types(self):
         """Should not override column_types set in __init__ when no column_types key is
-        passed in attributes.
-        """
+        passed in attributes."""
         dut = self.make_dut(
             n_items=2,
             column_types=[GObject.TYPE_INT, GObject.TYPE_STRING],
@@ -282,8 +262,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Set the default properties of a GTK3ComboBox when passed an empty
-        GTK3WidgetProperties.
-        """
+        GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
@@ -378,8 +357,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_load_combobox_simple_not_string_list(self):
         """Raise a TypeError when passed a list of other than strings to load or a
-        single non-string value.
-        """
+        single non-string value."""
         _test_list = [0, 1, 2, 3, 4]
         dut = self.make_dut()
         dut.do_set_callbacks("changed", self.mock_callback)
@@ -392,8 +370,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_load_combobox_simple_contents(self):
         """Populate the model with a blank first entry followed by the provided
-        entries.
-        """
+        entries."""
         dut = self.make_dut()
         dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
@@ -404,8 +381,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_load_combobox_compound_contents(self):
         """Populate the model with a blank first row followed by the provided
-        entries.
-        """
+        entries."""
         dut = self.make_dut(index=1, simple=False, n_items=3)
         dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(COMPOUND_TEST_LIST)
@@ -540,7 +516,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_update_simple_unknown_signal(self, simple_combo):
         """Raise a key error with an unknown edit signal name."""
-        pub.subscribe(do_update_error_handler, "do_log_error")
+        pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(simple_combo.do_update, "rootTopic")
         simple_combo.edit_signal = "edit_signal"
 
@@ -593,22 +569,22 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_on_changed_simple(self, simple_combo):
         """Call on_changed() when a simple GTK3ComboBox value changes."""
-        pub.subscribe(mock_handler, simple_combo.send_topic)
+        pub.subscribe(self.mock_handler, simple_combo.send_topic)
 
         simple_combo.set_active(1)
 
     @pytest.mark.unit
     def test_on_changed_unknown_signal(self, simple_combo):
         """Raise a KeyError with an unknown edit signal name."""
-        pub.subscribe(on_changed_error_handler, "do_log_error")
+        pub.subscribe(self.on_changed_error_handler, "do_log_error")
         simple_combo.edit_signal = "edit_signal"
-        pub.subscribe(mock_handler, simple_combo.send_topic)
+        pub.subscribe(self.mock_handler, simple_combo.send_topic)
 
         simple_combo.set_active(1)
 
     @pytest.mark.unit
     def test_on_changed_compound(self, compound_combo):
         """Call on_changed() when a compound GTK3ComboBox value changes."""
-        pub.subscribe(mock_handler, compound_combo.send_topic)
+        pub.subscribe(self.mock_handler, compound_combo.send_topic)
 
         compound_combo.set_active(1)

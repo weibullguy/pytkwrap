@@ -44,17 +44,6 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
     expected_default_value = None
     expected_default_width = -1
 
-    def mock_callback(self, matrixview) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(matrixview, GTK3MatrixView)
-
-    def no_signal_error_handler(self, message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-            message == "GTK3MatrixView.do_set_callbacks(): Unknown signal name "
-            "'value-changed'."
-        )
-
     @pytest.mark.unit
     def test_init(self):
         """Should create a GTK3MatrixView with default values for attributes."""
@@ -76,8 +65,7 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set the default attributes of a GTK3MatrixView when passed an empty
-        GTK3DataWidgetAttributes.
-        """
+        GTK3DataWidgetAttributes."""
         super().test_do_set_attributes_default()
 
         dut = self.make_dut()
@@ -89,8 +77,7 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_attributes(self):
         """do_set_attributes() should set the MatrixView attributes to the values passed
-        in a WidgetAttributes dict.
-        """
+        in a WidgetAttributes dict."""
         super().test_do_set_attributes()
 
         dut = self.make_dut()

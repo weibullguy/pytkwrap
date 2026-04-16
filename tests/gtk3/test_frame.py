@@ -28,18 +28,6 @@ class TestFrame(BaseGTK3WidgetTests):
     expected_default_value = None
     expected_default_width = -1
 
-    @staticmethod
-    def no_signal_error_handler(message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-            message == "GTK3Frame.do_set_callbacks(): Unknown signal name "
-            "'value-changed'."
-        )
-
-    def mock_callback(self, frame) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(frame, GTK3Frame)
-
     @pytest.mark.unit
     def test_init(self):
         """Should create a GTK3Frame with default values for attributes."""
@@ -62,8 +50,7 @@ class TestFrame(BaseGTK3WidgetTests):
     @pytest.mark.unit
     def test_set_properties_default(self):
         """Set the default properties of a GTK3Frame when passed an empty
-        GTK3WidgetProperties.
-        """
+        GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 

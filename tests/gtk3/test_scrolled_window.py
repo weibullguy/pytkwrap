@@ -31,17 +31,6 @@ class TestScrolledWindow(BaseGTK3WidgetTests):
         """Create a device under test for the GTK3ScrolledWindow."""
         return self.widget_class(child)
 
-    def mock_callback(self, scrolledwindow) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(scrolledwindow, GTK3ScrolledWindow)
-
-    def no_signal_error_handler(self, message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-            message == "GTK3ScrolledWindow.do_set_callbacks(): Unknown signal name "
-            "'value-changed'."
-        )
-
     @pytest.mark.unit
     def test_init(self):
         """Should create a GTK3ScrolledWindow with default values for attributes."""
@@ -68,8 +57,7 @@ class TestScrolledWindow(BaseGTK3WidgetTests):
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """do_set_properties() should set the default properties of a ScrolledWindow
-        when an empty WidgetProperties is passed to the method.
-        """
+        when an empty WidgetProperties is passed to the method."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
@@ -97,8 +85,7 @@ class TestScrolledWindow(BaseGTK3WidgetTests):
     @pytest.mark.unit
     def test_do_set_properties(self):
         """do_set_properties() should set the properties of a ScrolledWindow to the
-        values found in the passed WidgetProperties.
-        """
+        values found in the passed WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(

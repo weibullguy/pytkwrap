@@ -25,21 +25,6 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 from .conftest import BaseGTK3DataWidgetTests
 
 
-def do_update_error_handler(message):
-    """Error handler for do_update() errors."""
-    assert message == "GTK3TextView.do_update(): Unknown signal name 'edit_signal'."
-
-
-def mock_handler(node_id, package) -> None:
-    """Mock message handler."""
-    if node_id == 0:
-        assert package == {"test_field": "Test Text"}
-
-
-def on_changed_error_handler(message):
-    """Error handler for on_changed() errors."""
-    assert message == "GTK3TextView.on_changed(): Unknown signal name 'edit_signal'."
-
 
 class TestTextView(BaseGTK3DataWidgetTests):
     """Test class for the TextView."""
@@ -48,21 +33,11 @@ class TestTextView(BaseGTK3DataWidgetTests):
     expected_default_height = 100
     expected_default_value = ""
     expected_default_width = 200
+    expected_package = {0: {"test_field": "Test Text"}}
 
     def make_dut(self):
         """Create a device under test for the GTK3TextView."""
         return self.widget_class(Gtk.TextBuffer())
-
-    def mock_callback(self, textview) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(textview, GTK3TextView)
-
-    def no_signal_error_handler(self, message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-            message == "GTK3TextView.do_set_callbacks(): Unknown signal name "
-            "'value-changed'."
-        )
 
     @pytest.mark.unit
     def test_init(self):
@@ -83,8 +58,7 @@ class TestTextView(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set the default properties of a GTK3TextView when passed an empty
-        GTK3WidgetProperties.
-        """
+        GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
@@ -249,7 +223,7 @@ class TestTextView(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.field = "test_field"
         dut.do_set_callbacks(dut.edit_signal, dut.do_update)
-        pub.subscribe(do_update_error_handler, "do_log_error")
+        pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(dut.do_update, "rootTopic")
         dut.edit_signal = "edit_signal"
 
@@ -280,7 +254,7 @@ class TestTextView(BaseGTK3DataWidgetTests):
         dut.send_topic = "entry_changed"
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
 
-        pub.subscribe(mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.send_topic)
 
         dut.dic_properties["buffer"].set_text("Test Text")
 
@@ -292,9 +266,9 @@ class TestTextView(BaseGTK3DataWidgetTests):
         dut.record_id = 0
         dut.send_topic = "entry_changed"
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
-        pub.subscribe(on_changed_error_handler, "do_log_error")
+        pub.subscribe(self.on_changed_error_handler, "do_log_error")
         dut.edit_signal = "edit_signal"
-        pub.subscribe(mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.send_topic)
 
         _stderr = sys.stderr
         sys.stderr = StringIO()

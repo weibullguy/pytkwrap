@@ -34,17 +34,6 @@ class TestBaseButton(BaseGTK3WidgetTests):
         """Create a device under test for the GTK3BaseButton."""
         return self.widget_class(label)
 
-    def mock_callback(self, basebutton) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(basebutton, GTK3BaseButton)
-
-    def no_signal_error_handler(self, message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-            message
-            == "GTK3BaseButton.do_set_callbacks(): Unknown signal name 'value-changed'."
-        )
-
     @pytest.mark.unit
     def test_init_with_label(self):
         """Should create a GTK3BaseButton with default values for attributes."""

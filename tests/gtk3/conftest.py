@@ -49,6 +49,13 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
         """Callback method for testing."""
         assert isinstance(widget, self.widget_class)
 
+    def no_signal_error_handler(self, message):
+        """Error handler for do_set_callbacks() errors."""
+        assert (
+                message == f"{self.widget_class.__name__}.do_set_callbacks(): Unknown signal name "
+                           "'value-changed'."
+        )
+
     @pytest.mark.unit
     def test_init(self):
         """Should initialize an instance of a GTK3BaseWidget."""
@@ -131,16 +138,9 @@ class BaseGTK3DataWidgetTests(BaseGTK3WidgetTests, TestDataWidgetMixin):
             f"'edit_signal'."
         )
 
-    def mock_callback(self, widget) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(widget, self.widget_class)
-
-    def no_signal_error_handler(self, message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-                message == f"{self.widget_class.__name__}.do_set_callbacks(): Unknown signal name "
-                           "'value-changed'."
-        )
+    def mock_handler(self, node_id, package) -> None:
+        """Mock message handler."""
+        assert package == self.expected_package[node_id]
 
     def on_changed_error_handler(self, message):
         """Error handler for on_changed() errors."""
