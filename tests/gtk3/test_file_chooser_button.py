@@ -1,11 +1,10 @@
 # pylint: skip-file
 # type: ignore
-# -*- coding: utf-8 -*-
 #
 #       tests.gtk3.test_file_chooser_button.py is part of the pytkwrap project
 #
 # All rights reserved.
-"""Test class for the GTK3 file chooser button module algorithms and models."""
+"""Test class for the GTK3FileChooserButton module algorithms and models."""
 
 import os
 
@@ -18,11 +17,11 @@ from pubsub import pub
 from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.buttons import (
-    BaseButton,
-    FileChooserButton,
+    GTK3BaseButton,
+    GTK3FileChooserButton,
 )
-from pytkwrap.gtk3.widget import WidgetProperties
-from .conftest import CommonWidgetTests
+from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from .conftest import BaseGTK3WidgetTests
 
 
 @pytest.mark.skip(
@@ -33,41 +32,23 @@ from .conftest import CommonWidgetTests
     )
 )
 @pytest.mark.usefixtures("suppress_stderr")
-class TestFileChooserButton(CommonWidgetTests):
-    """Test class for the FileChooserButton."""
+class TestFileChooserButton(BaseGTK3WidgetTests):
+    """Test class for the GTK3FileChooserButton."""
 
-    widget_class = FileChooserButton
+    widget_class = GTK3FileChooserButton
     expected_default_height = 30
     expected_default_width = 200
 
     def make_dut(self, label="..."):
+        """Create a device under test for the GTK3FileChooserButton."""
         return self.widget_class(label=label)
-
-    def do_update_error_handler(self, message):
-        assert message == (
-            "FileChooserButton.do_update(): Unknown signal name 'edit_signal'."
-        )
-
-    def mock_handler(self, node_id, package) -> None:
-        if node_id == 0:
-            assert package == {"test_field": True}
-
-    def no_signal_error_handler(self, message):
-        assert message == (
-            "FileChooserButton.do_set_callbacks(): Unknown signal name 'value-changed'."
-        )
-
-    def on_changed_error_handler(self, message):
-        assert message == (
-            "FileChooserButton.on_changed(): Unknown signal name 'edit_signal'."
-        )
 
     @pytest.mark.unit
     def test_set_properties_default(self):
-        """do_set_properties() should set the default properties of a FileChooserButton
-        when no keywords are passed to the method."""
+        """Should set the default properties of a GTK3FileChooserButton when passed an
+        empty GTK3WidgetProperties."""
         dut = self.make_dut()
-        dut.do_set_properties(WidgetProperties())
+        dut.do_set_properties(GTK3WidgetProperties())
 
         assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
         assert dut.get_property("rgba").alpha == 1.0
@@ -80,10 +61,11 @@ class TestFileChooserButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_set_properties(self):
-        """do_set_properties() should set the properties of a CheckButton."""
+        """Should set the properties of a GTK3FileChooserButton to the values in the
+        passed GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
-            WidgetProperties(
+            GTK3WidgetProperties(
                 rgba=Gdk.RGBA(1.0, 1.0, 1.0, 1.0),
                 show_editor=True,
                 title="Choose a Color",
@@ -102,7 +84,7 @@ class TestFileChooserButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_update(self):
-        """do_update() should update the ColorButton with the data in the passed
+        """Should update the GTK3FileChooserButton with the data in the passed
         package."""
         dut = self.make_dut()
         dut.field = "test_field"
@@ -122,8 +104,8 @@ class TestFileChooserButton(CommonWidgetTests):
 
     @pytest.mark.unit
     def test_do_update_none_value(self):
-        """do_update() should update the ColorButton with the default RGBA values
-        when passed None."""
+        """do_update() should update the ColorButton with the default RGBA values when
+        passed None."""
         dut = self.make_dut()
         dut.field = "test_field"
         dut.do_set_callbacks(dut.edit_signal, dut.do_update)
