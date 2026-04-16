@@ -1,21 +1,20 @@
-# Standard Library Imports
-from datetime import date
+# Third Party Imports
+from _typeshed import Incomplete
 
-# RAMSTK Package Imports
-from ramstk.views.gtk3 import Gdk as Gdk
-from ramstk.views.gtk3 import Gtk as Gtk
-from ramstk.views.gtk3 import _ as _
-from ramstk.views.gtk3.widgets.widget import WidgetProperties as WidgetProperties
+# pytkwrap Package Imports
+from pytkwrap.gtk3._libs import Gdk as Gdk
+from pytkwrap.gtk3._libs import Gtk as Gtk
+from pytkwrap.gtk3.buttons import GTK3BaseButton as GTK3BaseButton
+from pytkwrap.gtk3.widget import GTK3BaseDataWidget as GTK3BaseDataWidget
+from pytkwrap.gtk3.widget import GTK3WidgetProperties as GTK3WidgetProperties
 
-# RAMSTK Local Imports
-from . import RAMSTKButton as RAMSTKButton
-
-class RAMSTKCheckButton(Gtk.ColorButton, RAMSTKButton):
-    _default_height: int
-    _default_width: int
-    _edit_signal: str
+class GTK3ColorButton(Gtk.ColorButton, GTK3BaseButton, GTK3BaseDataWidget):
+    _GTK3_COLOR_BUTTON_PROPERTIES: Incomplete
+    _GTK3_COLOR_BUTTON_SIGNALS: Incomplete
+    _DEFAULT_EDIT_SIGNAL: str
+    _DEFAULT_HEIGHT: int
+    _DEFAULT_WIDTH: int
     def __init__(self) -> None: ...
-    def do_set_properties(self, properties: WidgetProperties) -> None: ...
-    def do_update(
-        self, package: dict[str, bool | date | float | int | str]
-    ) -> None: ...
+    def do_set_properties(self, properties: GTK3WidgetProperties) -> None: ...
+    def do_get_value(self) -> Gdk.RGBA | None: ...
+    def do_set_value(self, value: Gdk.RGBA | None) -> None: ...
