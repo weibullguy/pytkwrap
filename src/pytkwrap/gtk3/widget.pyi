@@ -1,14 +1,25 @@
+# Standard Library Imports
 import abc
-from _typeshed import Incomplete
 from abc import abstractmethod
 from datetime import date
-from pytkwrap.common import WidgetMixin as WidgetMixin
-from pytkwrap.exceptions import UnkSignalError as UnkSignalError
-from pytkwrap.gtk3._libs import GLib as GLib, Gdk as Gdk, GdkPixbuf as GdkPixbuf, Gio as Gio, Gtk as Gtk, Pango as Pango, _ as _
-from pytkwrap.gtk3.mixins import GTK3DataWidgetMixin as GTK3DataWidgetMixin
-from pytkwrap.utilities import none_to_default as none_to_default
 from types import FunctionType
 from typing import TypedDict
+
+# Third Party Imports
+from _typeshed import Incomplete
+
+# pytkwrap Package Imports
+from pytkwrap.common import WidgetMixin as WidgetMixin
+from pytkwrap.exceptions import UnkSignalError as UnkSignalError
+from pytkwrap.gtk3._libs import Gdk as Gdk
+from pytkwrap.gtk3._libs import GdkPixbuf as GdkPixbuf
+from pytkwrap.gtk3._libs import Gio as Gio
+from pytkwrap.gtk3._libs import GLib as GLib
+from pytkwrap.gtk3._libs import Gtk as Gtk
+from pytkwrap.gtk3._libs import Pango as Pango
+from pytkwrap.gtk3._libs import _ as _
+from pytkwrap.gtk3.mixins import GTK3DataWidgetMixin as GTK3DataWidgetMixin
+from pytkwrap.utilities import none_to_default as none_to_default
 
 class GTK3WidgetProperties(TypedDict, total=False):
     accepts_tab: bool
@@ -197,6 +208,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     top_margin: int
     track_visited_links: bool
     truncate_multiline: bool
+    update_policy: Gtk.SpinButtonUpdatePolicy | None
     upper: float
     use_alpha: bool
     use_markup: bool
@@ -204,6 +216,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     use_underline: bool
     vadjustment: Gtk.Adjustment | None
     valign: Gtk.Align | None
+    value: float | int
     vertical_alignment: str
     vexpand: bool
     vexpand_set: bool
@@ -238,6 +251,8 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin, metaclass=abc.ABCM
     def do_get_value(self) -> None: ...
     @abstractmethod
     def do_set_value(self, value) -> None: ...
-    def do_update(self, package: dict[str, bool | date | float | int | str | None]) -> None: ...
+    def do_update(
+        self, package: dict[str, bool | date | float | int | str | None]
+    ) -> None: ...
     def on_changed(self, /, __widget: GTK3BaseWidget) -> None: ...
     def _get_signal_owner(self) -> GTK3BaseDataWidget: ...
