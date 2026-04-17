@@ -25,7 +25,7 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 from .conftest import BaseGTK3DataWidgetTests
 
 
-
+@pytest.mark.usefixtures("suppress_stderr")
 class TestTextView(BaseGTK3DataWidgetTests):
     """Test class for the TextView."""
 
@@ -251,7 +251,7 @@ class TestTextView(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.field = "test_field"
         dut.record_id = 0
-        dut.send_topic = "entry_changed"
+        dut.send_topic = "textview_changed"
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
 
         pub.subscribe(self.mock_handler, dut.send_topic)
@@ -264,13 +264,10 @@ class TestTextView(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.field = "test_field"
         dut.record_id = 0
-        dut.send_topic = "entry_changed"
+        dut.send_topic = "textview_changed"
         dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
         dut.edit_signal = "edit_signal"
         pub.subscribe(self.mock_handler, dut.send_topic)
 
-        _stderr = sys.stderr
-        sys.stderr = StringIO()
         dut.dic_properties["buffer"].set_text("Test Text")
-        sys.stderr = _stderr

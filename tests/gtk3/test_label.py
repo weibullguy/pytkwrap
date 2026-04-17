@@ -21,7 +21,7 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 from .conftest import BaseGTK3DataWidgetTests
 
 
-@pytest.mark.unit
+@pytest.mark.integration
 def test_do_make_label_group():
     """Should return the maximum x-position and the list of GTK3Labels created."""
     _test_labels = ["This", "is", "a", "list", "of", "labels"]
