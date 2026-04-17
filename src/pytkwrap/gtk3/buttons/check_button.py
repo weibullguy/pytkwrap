@@ -6,29 +6,20 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.buttons import GTK3BaseButton
-from pytkwrap.gtk3.widget import (
-    GTK3BaseDataWidget,
-    GTK3WidgetProperties,
-)
+from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
+from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
-# pylint: disable=too-many-ancestors
-# GTK3's own inheritance chain accounts for 7 of the 9 ancestors.
-# The pytkwrap additions (GTK3BaseButton, GTK3BaseDataWidget) are necessary
-# to provide button label handling and pubsub data widget support.
-# TODO: Refactor the GTKBaseButton to inherit from GTK3BaseDataWidget instead of
-#  GTK3BaseWidget and then remove the GTK3BaseDataWidget ancestor from here.
-class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton, GTK3BaseDataWidget):
+class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton):
     """The GTK3CheckButton class."""
 
     # Define private class attributes.
-    _CHECK_BUTTON_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_CHECK_BUTTON_PROPERTIES = GTK3WidgetProperties(
         active=False,
         draw_indicator=False,
         inconsistent=False,
     )
-    _CHECK_BUTTON_SIGNALS = ["toggled"]
+    _GTK3_CHECK_BUTTON_SIGNALS = ["toggled"]
     _DEFAULT_EDIT_SIGNAL = "toggled"
     _DEFAULT_HEIGHT = 40
     _DEFAULT_WIDTH = 200
@@ -42,13 +33,12 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton, GTK3BaseDataWidget):
             The text to display with the GTK3CheckButton. Default is an empty string.
         """
         Gtk.CheckButton.__init__(self)
-        GTK3BaseDataWidget.__init__(self)
         GTK3BaseButton.__init__(self, label=label)
 
         # Initialize public instance attributes.
-        self.dic_properties.update(self._CHECK_BUTTON_PROPERTIES)
+        self.dic_properties.update(self._GTK3_CHECK_BUTTON_PROPERTIES)
         self.dic_handler_id.update({
-            _signal: -1 for _signal in self._CHECK_BUTTON_SIGNALS
+            _signal: -1 for _signal in self._GTK3_CHECK_BUTTON_SIGNALS
         })
 
         self.default = False

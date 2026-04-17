@@ -8,20 +8,11 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.buttons import GTK3BaseButton
-from pytkwrap.gtk3.widget import (
-    GTK3BaseDataWidget,
-    GTK3WidgetProperties,
-)
+from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
+from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
-# pylint: disable=too-many-ancestors
-# GTK3's own inheritance chain accounts for 7 of the 9 ancestors.
-# The pytkwrap additions (GTK3BaseButton, GTK3BaseDataWidget) are necessary
-# to provide button label handling and pubsub data widget support.
-# TODO: Refactor the GTKBaseButton to inherit from GTK3BaseDataWidget instead of
-#  GTK3BaseWidget and then remove the GTK3BaseDataWidget ancestor from here.
-class GTK3ColorButton(Gtk.ColorButton, GTK3BaseButton, GTK3BaseDataWidget):
+class GTK3ColorButton(Gtk.ColorButton, GTK3BaseButton):
     """The GTK3ColorButton class."""
 
     # Define private class attributes.
@@ -43,7 +34,6 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3BaseButton, GTK3BaseDataWidget):
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ColorButton widget."""
         Gtk.ColorButton.__init__(self)
-        GTK3BaseDataWidget.__init__(self)
         GTK3BaseButton.__init__(self)
 
         # Initialize public instance attributes.

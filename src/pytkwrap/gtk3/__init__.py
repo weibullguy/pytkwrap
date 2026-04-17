@@ -1,8 +1,14 @@
+# pylint: disable=useless-import-alias
 #       pytkwrap.gtk3.__init__.py is part of the pytkwrap project
 #
 # All rights reserved.
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""The pytkwrap GTK3 package."""
+"""The pytkwrap GTK3 package.
+
+NOTE: Sub-modules in this package must import siblings directly
+(e.g. from pytkwrap.gtk3.combo import GTK3ComboBox)
+and never through this __init__.py to avoid circular imports.
+"""
 
 # pytkwrap Local Imports
 from .buttons import (

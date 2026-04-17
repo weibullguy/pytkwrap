@@ -16,12 +16,6 @@ hooks = [
 ]
 
 [[repos]]
-repo = "local"
-hooks =[
-    {id = "pylint", name = "pylint", entry = "pylint", language = "python", files = "\\.py$", args = ["--rcfile=./pyproject.toml"]},
-]
-
-[[repos]]
 repo = "git@github.com:pre-commit/mirrors-mypy.git"
 rev = "v1.20.0"
 hooks = [
@@ -41,4 +35,10 @@ rev = "v0.15.10"
 hooks = [
     {id = "ruff-check", args = ["--preview", "--fix"]},
     {id = "ruff-format", args = ["--preview"]},
+]
+
+[[repos]]
+repo = "local"
+hooks =[
+    {id = "pylint", name = "pylint", entry = "pylint", language = "python", files = "\\.py$", args = ["--rcfile=./pyproject.toml"]},
 ]

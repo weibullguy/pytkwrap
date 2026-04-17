@@ -177,6 +177,9 @@ good-names = [
 ]
 variable-rgx = '^_{0,2}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}$'
 
+[tool.pylint.design]
+max-parents = 10
+
 [tool.pylint.format]
 max-line-length = 88
 indent-string = '    '

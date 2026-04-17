@@ -6,7 +6,7 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.buttons import GTK3BaseButton
+from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 

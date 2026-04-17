@@ -1,91 +1,99 @@
-# -*- coding: utf-8 -*-
-#
 #       pytkwrap.gtk3.buttons.option_button.py is part of the pytkwrap project
 #
 # All rights reserved.
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""The pytkwrap GTK3 OptionButton module."""
+"""The pytkwrap GTK3OptionButton module."""
 
-# Standard Library Imports
-from datetime import date
-from typing import Dict, Union
-
-# Third Party Imports
-from pubsub import pub
-
-# RAMSTK Package Imports
-from ramstk.views.gtk3 import Gtk
-
-# RAMSTK Local Imports
-from ..widget import WidgetProperties
-from . import RAMSTKButton
+# pytkwrap Package Imports
+from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
+from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
-class RAMSTKOptionButton(Gtk.RadioButton, RAMSTKButton):
-    """The RAMSTKOptionButton class."""
+class GTK3OptionButton(Gtk.RadioButton, GTK3BaseButton):
+    """The GTK3OptionButton class."""
 
     # Define private class attributes.
-    _edit_signal = "clicked"
+    _GTK3_OPTION_BUTTON_PROPERTIES = GTK3WidgetProperties(
+        active=False,
+        draw_indicator=False,
+        group=None,
+        inconsistent=False,
+    )
+    _GTK3_OPTION_BUTTON_SIGNALS = ["group-changed", "toggled"]
+    _DEFAULT_EDIT_SIGNAL = "toggled"
+    _DEFAULT_HEIGHT = 40
+    _DEFAULT_WIDTH = 200
 
     def __init__(self, group: Gtk.RadioButton = None, label: str = "") -> None:
-        """Initialize an instance of the RAMSTKOptionButton widget.
+        """Initialize an instance of the GTK3OptionButton widget.
 
-        :param group: the group the RAMSTKOptionButton belongs to, if any. Default is
-            None.
-        :param label: the text to place in the label on the RAMSTKOptionButton. Default
-            is an empty string.
+        Parameters
+        ----------
+        group : Gtk.RadioButton | GTK3OptionButton
+            The group the GTK3OptionButton belongs to, if any. Default is None.
+        label : str
+            The text to place in the label on the GTK3OptionButton. Default is an empty
+             string.
         """
-        RAMSTKButton.__init__(self)
+        Gtk.RadioButton.__init__(self)
+        GTK3BaseButton.__init__(self)
 
-        self.dic_properties["label"] = label
-        self.dic_properties["group"] = group
+        # Initialize public instance attributes.
+        self.dic_properties.update(self._GTK3_OPTION_BUTTON_PROPERTIES)
+        self.dic_handler_id.update({
+            _signal: -1 for _signal in self._GTK3_OPTION_BUTTON_SIGNALS
+        })
 
-        self.set_group(self.dic_properties["group"])
-        self.set_label(self.dic_properties["label"])
+        self.do_set_properties(
+            GTK3WidgetProperties(
+                group=group,
+                label=label,
+            )
+        )
 
     # ----- ----- Standard widget methods. ----- ----- #
-    def do_set_properties(self, properties: WidgetProperties) -> None:
-        """Set the properties of the RAMSTKOptionButton.
+    def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
+        """Set the properties of the GTK3OptionButton.
 
-        :param properties: the WidgetProperties dict with the property values to set for
-            the RAMSTKOptionButton.
+        Parameters
+        ----------
+        properties : GTK3WidgetProperties
+            The typed dict with the property values to set for the GTK3OptionButton.
         """
         super().do_set_properties(properties)
 
-        self.dic_properties["group"] = properties.get("group")
+        self.set_active(self.dic_properties["active"])
+        self.join_group(self.dic_properties["group"])
+        self.set_inconsistent(self.dic_properties["inconsistent"])
 
-        self.set_group(self.dic_properties["group"])
+        for _property in [
+            "draw_indicator",
+        ]:
+            self.set_property(
+                _property.replace("_", "-"), self.dic_properties[_property]
+            )
 
-    def do_update(
-        self, package: Dict[str, Union[bool, date, float, int, None, str]]
-    ) -> None:
-        """Update the RAMSTKOptionButton with a new value.
+    # ----- ----- Option Button specific methods. ----- ----- #
+    def do_get_value(self) -> bool:  # type: ignore[override]
+        """Return the value of the GTK3OptionButton.
 
-        :param package: the date package to use to update the RAMSTKOptionButton.
+        Returns
+        -------
+        active : bool
+            Whether the GTK3OptionButton is active or not.
         """
-        _field, _value = next(iter(package.items()))
+        return self.get_active()
 
-        if _field != self.field:
+    def do_set_value(self, value: bool) -> None:
+        """Set the status of the GTK3OptionButton.
+
+        Parameters
+        ----------
+        value : bool
+            The index of the item in the GTK3ComboBox to set active.
+        """
+        if not isinstance(value, bool):
             return
 
-        try:
-            self.handler_block(self.handler_id)
-            self.set_active(_value)
-            self.handler_unblock(self.handler_id)
-        except KeyError:
-            self.set_active(_value)
-
-    def on_changed(self) -> None:
-        """Retrieve the data package for the RAMSTKOptionButton on value changes.
-
-        This method also sends a PyPubSub message along with the data package for
-        listeners to update with the new value.
-        """
-        try:
-            self.handler_block(self.handler_id)
-            _package = {self.field: self.get_active()}
-            self.handler_unblock(self.handler_id)
-        except KeyError:
-            _package = {self.field: self.get_active()}
-
-        pub.sendMessage(self.topic, node_id=self.record_id, package=_package)
+        self.set_active(value)

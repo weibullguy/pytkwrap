@@ -11,7 +11,7 @@ from typing import Any
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
-from pytkwrap.gtk3.widget import GTK3BaseWidget, GTK3WidgetProperties
+from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
 
 
 def do_make_buttonbox(
@@ -74,7 +74,7 @@ def do_make_buttonbox(
     return _buttonbox
 
 
-class GTK3BaseButton(Gtk.Button, GTK3BaseWidget):
+class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
     """The GTK3BaseButton class."""
 
     # Define private class attributes.
@@ -107,7 +107,7 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseWidget):
             ellipsis (...).
         """
         Gtk.Button.__init__(self)
-        GTK3BaseWidget.__init__(self)
+        GTK3BaseDataWidget.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._BUTTON_PROPERTIES)
@@ -158,3 +158,9 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseWidget):
             _image.set_from_pixbuf(_icon)
             self.set_image(_image)
             self.set_image_position(self.dic_properties["image_position"])
+
+    def do_get_value(self) -> None:
+        """Return the current value of the GTK3BaseButton."""
+
+    def do_set_value(self, value) -> None:
+        """Set the current value of the GTK3BaseButton."""
