@@ -1,7 +1,7 @@
 # pylint: skip-file
 # type: ignore
 #
-#       tests.gtk3.test_button.py is part of the pytkwrap project
+#       tests.gtk3.test_option_button.py is part of the pytkwrap project
 #
 # All rights reserved.
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com

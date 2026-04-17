@@ -53,7 +53,7 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
         """Error handler for do_set_callbacks() errors."""
         assert (
                 message == f"{self.widget_class.__name__}.do_set_callbacks(): Unknown signal name "
-                           "'value-changed'."
+                           "'unk_signal'."
         )
 
     @pytest.mark.unit
@@ -97,7 +97,7 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
         pub.subscribe(self.no_signal_error_handler, "do_log_error")
 
         with pytest.raises(UnkSignalError):
-            dut.do_set_callbacks("value-changed", self.mock_callback)
+            dut.do_set_callbacks("unk_signal", self.mock_callback)
 
     @pytest.mark.unit
     def test_do_set_callbacks_no_callback(self):

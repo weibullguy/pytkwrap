@@ -102,14 +102,6 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         yield dut
         pub.unsubscribe(dut.do_update, "rootTopic")
 
-    @staticmethod
-    def no_signal_error_handler(message):
-        """Error handler for do_set_callbacks() errors."""
-        assert (
-            message == "GTK3ComboBox.do_set_callbacks(): Unknown signal name "
-            "'value-changed'."
-        )
-
     @pytest.mark.unit
     def test_init(self):
         """Create a simple GTK3ComboBox when not passed any arguments."""
