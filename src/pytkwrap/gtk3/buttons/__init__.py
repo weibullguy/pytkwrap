@@ -17,4 +17,4 @@ from .check_button import GTK3CheckButton as GTK3CheckButton
 from .color_button import GTK3ColorButton as GTK3ColorButton
 from .file_chooser_button import GTK3FileChooserButton as GTK3FileChooserButton
 from .option_button import GTK3OptionButton as GTK3OptionButton
-# from .spin_button import GTK3SpinButton as GTK3SpinButton
+from .spin_button import GTK3SpinButton as GTK3SpinButton

@@ -1,97 +1,128 @@
-# pylint: disable=protected-access, non-parent-init-called
-# -*- coding: utf-8 -*-
-#
-#       ramstk.views.gtk3.widgets.buttons.spin_button.py is part of the RAMSTK
-#       Project
+#       pytkwrap.gtk3.buttons.spin_button.py is part of the pytkwrap project
 #
 # All rights reserved.
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""The RAMSTKSpinButton module."""
+"""The GTK3SpinButton module."""
 
-# Standard Library Imports
-from datetime import date
-from typing import Dict, List, Union
-
-# Third Party Imports
-from pubsub import pub
-
-# RAMSTK Package Imports
-from ramstk.views.gtk3 import Gtk
-
-# RAMSTK Local Imports
-from ..widget import RAMSTKBaseWidget, WidgetProperties
+# pytkwrap Package Imports
+from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
+from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
-class RAMSTKSpinButton(Gtk.SpinButton, RAMSTKBaseWidget):
-    """The RAMSTKSpinButton class."""
+class GTK3SpinButton(Gtk.SpinButton, GTK3BaseButton):
+    """The GTK3SpinButton class."""
 
     # Define private class scalar attributes.
-    _default_height = 30
-    _default_width = 200
-    _edit_signal = "value_changed"
+    _DEFAULT_EDIT_SIGNAL = "value-changed"
+    _DEFAULT_HEIGHT = 30
+    _DEFAULT_WIDTH = 200
+    _GTK3_SPIN_BUTTON_PROPERTIES = GTK3WidgetProperties(
+        adjustment=None,
+        climb_rate=0.0,
+        digits=0,
+        lower=0.0,
+        numeric=False,
+        page_increment=0.0,
+        snap_to_ticks=False,
+        step_increment=0.0,
+        update_policy=Gtk.SpinButtonUpdatePolicy.ALWAYS,
+        upper=0.0,
+        value=0.0,
+        wrap=False,
+    )
+    _GTK3_SPIN_BUTTON_SIGNALS: list[str] = [
+        "activate",
+        "backspace",
+        "change-value",
+        "changed",
+        "copy-clipboard",
+        "cut-clipboard",
+        "delete-from-cursor",
+        "delete-text",
+        "editing-done",
+        "icon-press",
+        "icon-release",
+        "input",
+        "insert-at-cursor",
+        "insert-emoji",
+        "insert-text",
+        "move-cursor",
+        "output",
+        "paste-clipboard",
+        "populate-popup",
+        "preedit-changed",
+        "remove-widget",
+        "toggle-direction",
+        "toggle-overwrite",
+        "value-changed",
+        "wrapped",
+    ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the RAMSTKSpinButton widget."""
-        RAMSTKBaseWidget.__init__(self)
+        """Initialize an instance of the GTK3SpinButton."""
+        Gtk.SpinButton.__init__(self)
+        GTK3BaseButton.__init__(self)
 
-        self.show_all()
+        # Initialize public instance attributes.
+        self.dic_properties.update(self._GTK3_SPIN_BUTTON_PROPERTIES)
+        self.dic_handler_id.update({
+            _signal: -1 for _signal in self._GTK3_SPIN_BUTTON_SIGNALS
+        })
 
     # ----- ----- Standard widget methods. ----- ----- #
-    def do_set_properties(self, properties: WidgetProperties) -> None:
-        """Set the properties of the RAMSTKSpinButton.
+    def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
+        """Set the properties of the GTK3SpinButton.
 
-        :param properties: the WidgetProperties dict with the property values to set for
-            the RAMSTKSpinButton.
+        Parameters
+        ----------
+        properties : GTK3WidgetProperties
+            The typed dict with the property values to set for the GTK3SpinButton.
         """
         super().do_set_properties(properties)
 
-        self.dic_properties["lower"] = properties.get("lower", 0.0)
-        self.dic_properties["numeric"] = properties.get("numeric", True)
-        self.dic_properties["page_increment"] = properties.get("page_increment", 0.1)
-        self.dic_properties["page_size"] = properties.get("page_size", 1.0)
-        self.dic_properties["step_increment"] = properties.get("step_increment", 1.0)
-        self.dic_properties["snap_to_ticks"] = properties.get("snap_to_ticks", True)
-        self.dic_properties["upper"] = properties.get("upper", 100.0)
+        if isinstance(self.dic_properties["adjustment"], Gtk.Adjustment):
+            self.set_adjustment(self.dic_properties["adjustment"])
 
-        _limits: List[float] = properties.get("limits", [0.0, 0.0, 100.0, 1.0, 0.1])  # type: ignore[assignment] # noqa
-
-        self.set_adjustment(
-            Gtk.Adjustment(_limits[0], _limits[1], _limits[2], _limits[3], _limits[4])
+        self.set_digits(self.dic_properties["digits"])
+        self.set_increments(
+            self.dic_properties["step_increment"], self.dic_properties["page_increment"]
         )
         self.set_numeric(self.dic_properties["numeric"])
+        self.set_range(self.dic_properties["lower"], self.dic_properties["upper"])
         self.set_snap_to_ticks(self.dic_properties["snap_to_ticks"])
-        self.set_update_policy(Gtk.SpinButtonUpdatePolicy.IF_VALID)
+        self.set_update_policy(self.dic_properties["update_policy"])
+        self.set_value(self.dic_properties["value"])
+        self.set_wrap(self.dic_properties["wrap"])
 
-    def do_update(
-        self, package: Dict[str, Union[bool, date, float, int, None, str]]
-    ) -> None:
-        """Update the RAMSTKSpinButton with a new value.
+        for _property in [
+            "climb_rate",
+        ]:
+            self.set_property(
+                _property.replace("_", "-"), self.dic_properties[_property]
+            )
 
-        :param package: the date package to use to update the RAMSTKSpinButton.
+    # ----- ----- Option Button specific methods. ----- ----- #
+    def do_get_value(self) -> float:  # type: ignore[override]
+        """Return the value of the GTK3SpinButton.
+
+        Returns
+        -------
+        value : float
+            Whether the GTK3SpinButton is active or not.
         """
-        _field, _value = next(iter(package.items()))
+        return self.get_value()
 
-        if _field != self.field:
+    def do_set_value(self, value: float | int | None) -> None:
+        """Set the value of the GTK3SpinButton.
+
+        Parameters
+        ----------
+        value : float | int | None
+            The number to set the value of the GTK3SpinButton.
+        """
+        print(f"Value is: {value}")
+        if value is None:
             return
 
-        try:
-            self.handler_block(self.handler_id)
-            self.set_value(_value)
-            self.handler_unblock(self.handler_id)
-        except KeyError:
-            self.set_value(_value)
-
-    def on_changed(self) -> None:
-        """Retrieve the data package for the RAMSTKSpinButton on value changes.
-
-        This method also sends a PyPubSub message along with the data package for
-        listeners to update with the new value.
-        """
-        try:
-            self.handler_block(self.handler_id)
-            _package = {self.field: self.get_value()}
-            self.handler_unblock(self.handler_id)
-        except KeyError:
-            _package = {self.field: self.get_value()}
-
-        pub.sendMessage(self.topic, node_id=self.record_id, package=_package)
+        self.set_value(float(value))

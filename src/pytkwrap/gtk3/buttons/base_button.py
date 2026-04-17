@@ -91,8 +91,8 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
     _BUTTON_SIGNALS = [
         "activate",
         # "add", # TODO: The callback for this signal needs to accept two arguments.
-        "check-resize",
-        "clicked",
+        # "check-resize", # TODO: This signal is not a spin button signal.
+        # "clicked", # TODO: This signal is not a spin button signal.
         # "remove", # TODO: The callback for this signal needs to accept two arguments.
         # "set-focus-child", # TODO: The callback for this signal needs to accept two
         #  arguments.

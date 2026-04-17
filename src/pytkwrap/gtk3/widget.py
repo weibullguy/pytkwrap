@@ -217,6 +217,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     top_margin: int
     track_visited_links: bool
     truncate_multiline: bool
+    update_policy: Gtk.SpinButtonUpdatePolicy | None
     upper: float
     use_alpha: bool
     use_markup: bool
@@ -224,6 +225,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     use_underline: bool
     vadjustment: Gtk.Adjustment | None
     valign: Gtk.Align | None
+    value: float | int
     vertical_alignment: str
     vexpand: bool
     vexpand_set: bool
