@@ -1,17 +1,18 @@
-# Standard Library Imports
-from datetime import date
+# Third Party Imports
+from _typeshed import Incomplete
 
-# RAMSTK Package Imports
-from ramstk.views.gtk3 import Gtk as Gtk
+# pytkwrap Package Imports
+from pytkwrap.gtk3._libs import Gtk as Gtk
+from pytkwrap.gtk3.buttons import GTK3BaseButton as GTK3BaseButton
+from pytkwrap.gtk3.widget import GTK3WidgetProperties as GTK3WidgetProperties
 
-# RAMSTK Local Imports
-from ..widget import WidgetProperties as WidgetProperties
-from . import RAMSTKButton as RAMSTKButton
-
-class RAMSTKOptionButton(Gtk.RadioButton, RAMSTKButton):
+class GTK3OptionButton(Gtk.RadioButton, GTK3BaseButton):
+    _GTK3_OPTION_BUTTON_PROPERTIES: Incomplete
+    _GTK3_OPTION_BUTTON_SIGNALS: Incomplete
+    _DEFAULT_EDIT_SIGNAL: str
+    _DEFAULT_HEIGHT: int
+    _DEFAULT_WIDTH: int
     def __init__(self, group: Gtk.RadioButton = None, label: str = "") -> None: ...
-    def do_set_properties(self, properties: WidgetProperties) -> None: ...
-    def do_update(
-        self, package: dict[str, bool | date | float | int | str]
-    ) -> None: ...
-    def on_changed(self) -> None: ...
+    def do_set_properties(self, properties: GTK3WidgetProperties) -> None: ...
+    def do_get_value(self) -> bool: ...
+    def do_set_value(self, value: bool) -> None: ...
