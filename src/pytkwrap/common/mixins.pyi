@@ -1,9 +1,12 @@
-from _typeshed import Incomplete
+# Standard Library Imports
 from datetime import date
+from typing import TypedDict
+
+# Third Party Imports
+from _typeshed import Incomplete
 from matplotlib.axes import Axes
 from matplotlib.backend_bases import FigureCanvasBase
 from matplotlib.figure import Figure
-from typing import TypedDict
 
 class WidgetAttributes(TypedDict, total=False):
     label_text: str | None
@@ -67,11 +70,13 @@ class WidgetMixin:
     x_pos: int
     y_pos: int
     def __init__(self) -> None: ...
-    def do_get_attribute(self, attribute: str) -> bool | date | float | int | str | None: ...
+    def do_get_attribute(
+        self, attribute: str
+    ) -> bool | date | float | int | object | str | None: ...
     def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
 
 class DataWidgetMixin(WidgetMixin):
-    _DATA_WIDGET_ATTRIBUTES: DataWidgetAttributes
+    _DATA_WIDGET_ATTRIBUTES: WidgetAttributes
     _DEFAULT_EDIT_SIGNAL: str
     datatype: bool | date | float | int | str | None
     default: bool | date | float | int | str | None
@@ -110,8 +115,10 @@ class DataWidgetMixin(WidgetMixin):
     record_id: int
     send_topic: str
     def __init__(self) -> None: ...
-    def do_get_attribute(self, attribute: str) -> bool | date | float | int | str | None: ...
-    def do_set_attributes(self, attributes: DataWidgetAttributes) -> None: ...
+    def do_get_attribute(
+        self, attribute: str
+    ) -> bool | date | float | int | object | str | None: ...
+    def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
 
 class WidgetConfig(TypedDict):
     widget: WidgetMixin
@@ -125,7 +132,9 @@ class PlotWidgetMixin(DataWidgetMixin):
     figure: Figure | None
     def __init__(self) -> None: ...
     def do_get_attribute(self, attribute: str) -> object | None: ...
-    def do_set_attributes(self, attributes: PlotWidgetAttributes) -> None: ...
+    def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
 
-def make_widget_config(widget: WidgetMixin, attributes: WidgetAttributes, properties: dict) -> WidgetConfig: ...
+def make_widget_config(
+    widget: WidgetMixin, attributes: WidgetAttributes, properties: dict
+) -> WidgetConfig: ...
 def set_widget_sensitivity(widgets: list, sensitive: bool = True) -> None: ...

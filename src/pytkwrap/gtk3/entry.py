@@ -8,6 +8,7 @@
 from datetime import date, datetime
 
 # pytkwrap Package Imports
+from pytkwrap.common import WidgetAttributes
 from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
 from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
@@ -156,7 +157,7 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
             return getattr(self, attribute)
         return super().do_get_attribute(attribute)
 
-    def do_set_attributes(self, attributes: GTK3DataWidgetAttributes) -> None:
+    def do_set_attributes(self, attributes: WidgetAttributes) -> None:
         """Set the attributes of the Entry.
 
         Parameters

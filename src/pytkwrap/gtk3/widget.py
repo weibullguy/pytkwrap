@@ -468,7 +468,7 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
         GTK3DataWidgetMixin.__init__(self)
 
     @abstractmethod
-    def do_get_value(self) -> None:
+    def do_get_value(self) -> bool | date | float | int | str | None:
         """Return the current value of the widget."""
         raise NotImplementedError
 

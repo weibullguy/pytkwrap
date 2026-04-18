@@ -143,7 +143,9 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
 
-    def do_update(self, package: dict[str, str]) -> None:
+    def do_update(
+        self, package: dict[str, bool | date | float | int | str | None]
+    ) -> None:
         """Update the GTK3TextView with a new value.
 
         Parameters

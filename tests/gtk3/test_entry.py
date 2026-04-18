@@ -25,7 +25,6 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 from .conftest import BaseGTK3DataWidgetTests
 
 
-
 @pytest.mark.order(4)
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3Entry(BaseGTK3DataWidgetTests):
@@ -35,7 +34,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     expected_default_height = 25
     expected_default_value = ""
     expected_default_width = 200
-    expected_package = {0:{"test_field": "Test Text"}}
+    expected_package = {0: {"test_field": "Test Text"}}
 
     def make_dut(self, font_description=None):
         """Create a device under test for the GTK3Entry."""
@@ -105,7 +104,9 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         """Should not override column_types set in __init__ when no column_types key is
         passed in WidgetAttributes."""
         dut = self.make_dut(
-            Pango.FontDescription("Sans,Serif,Monospace Normal Not-Rotated Bold 10")
+            Pango.FontDescription(
+                "Sans,Serif,Monospace Normal Not-Rotated Bold 10",
+            )
         )
         dut.do_set_attributes(WidgetAttributes())
 
@@ -122,12 +123,14 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_set_attributes_overrides_font_description(self):
         """Should override column_types when explicitly passed."""
         dut = self.make_dut(
-            Pango.FontDescription("Sans,Serif,Monospace Normal Not-Rotated Bold 10")
+            Pango.FontDescription(
+                "Sans,Serif,Monospace Normal Not-Rotated Bold 10",
+            )
         )
         dut.do_set_attributes(
             WidgetAttributes(
                 font_description=Pango.FontDescription(
-                    "Helvetica Italic Not-Rotated Demi-Bold 16"
+                    "Helvetica Italic Not-Rotated Demi-Bold 16",
                 )
             )
         )
@@ -220,7 +223,10 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
             GTK3WidgetProperties(
                 activates_default=True,
                 attributes=Pango.AttrList(),
-                buffer=Gtk.EntryBuffer.new("New Buffer", 10),
+                buffer=Gtk.EntryBuffer.new(
+                    "New Buffer",
+                    10,
+                ),
                 caps_lock_warning=False,
                 completion=Gtk.EntryCompletion(),
                 editable=False,
@@ -319,6 +325,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         assert dut.get_property("secondary_icon_activatable")
         assert dut.get_property("secondary_icon_gicon") is None
         assert dut.get_property("secondary_icon_name") == "face-smile-symbolic"
+        # This causes GTK3 to seg fault.
         # assert isinstance(dut.get_property("secondary_icon_pixbuf"), GdkPixbuf.Pixbuf)
         assert dut.get_property("secondary_icon_sensitive")
         assert (
@@ -362,7 +369,10 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
 
         pub.sendMessage("rootTopic", package={"test_field": datetime.today()})
 
-        assert dut.get_text() == datetime.strftime(datetime.today(), "%Y-%m-%d")
+        assert dut.get_text() == datetime.strftime(
+            datetime.today(),
+            "%Y-%m-%d",
+        )
 
     @pytest.mark.unit
     def test_do_update_none_value(self):

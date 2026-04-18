@@ -261,7 +261,7 @@ class DataWidgetMixin(WidgetMixin):  # pylint: disable=too-many-instance-attribu
             return getattr(self, attribute)
         return super().do_get_attribute(attribute)
 
-    def do_set_attributes(self, attributes: DataWidgetAttributes) -> None:
+    def do_set_attributes(self, attributes: WidgetAttributes) -> None:
         """Set the data display widget attributes.
 
         Parameters

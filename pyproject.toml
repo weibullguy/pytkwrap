@@ -135,6 +135,17 @@ skips = [
   "B105",
 ]
 
+[tool.black]
+line-length = 88
+target-version = [
+  "py310",
+  "py311",
+  "py312",
+  "py313",
+  "py314",
+]
+workers = 5
+
 [tool.coverage.run]
 source_pkgs = ["pytkwrap"]
 branch = true
@@ -160,6 +171,11 @@ non-cap = [
 ]
 wrap-summaries = 88
 wrap-descriptions = 88
+
+[tool.mypy]
+[[tool.mypy.overrides]]
+module = ["gi", "gi.repository", "gi.overrides.*",]
+ignore_missing_imports = true
 
 [tool.pylint.master]
 ignore-paths = [

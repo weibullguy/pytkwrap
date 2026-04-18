@@ -23,7 +23,6 @@ from pytkwrap.gtk3.widget import (
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
 
-
 SIMPLE_TEST_LIST = [
     "Index 1",
     "Index 2",
@@ -36,7 +35,6 @@ COMPOUND_TEST_LIST = [
 ]
 
 
-
 @pytest.mark.order(4)
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
@@ -46,7 +44,10 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     expected_default_height = 30
     expected_default_value = -1
     expected_default_width = 200
-    expected_package = {0:{"test_field": "Index 1"},1:{"test_field": "is"}}
+    expected_package = {
+        0: {"test_field": "Index 1"},
+        1: {"test_field": "is"},
+    }
 
     def make_dut(
         self,
@@ -64,10 +65,6 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
             column_types=column_types,
             has_entry=has_entry,
         )
-
-    def mock_callback(self, combobox) -> None:
-        """Mock callback to attach dut signals to."""
-        assert isinstance(combobox, GTK3ComboBox)
 
     @pytest.fixture
     def compound_combo(self):
@@ -115,14 +112,14 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         # All handler IDs should start at -1.
         assert all(_hid == -1 for _hid in dut.dic_handler_id.values())
         # ComboBox-specific attributes should be registered.
-        for _attribute in GTK3ComboBox._GTK3_COMBO_ATTRIBUTES:
+        for _attribute in GTK3ComboBox._GTK3_COMBO_BOX_ATTRIBUTES:
             assert _attribute in dut.dic_attributes
-        # ComboBox-specific signals should be registered.
-        for _signal in GTK3ComboBox._GTK3_COMBO_SIGNALS:
-            assert _signal in dut.dic_handler_id
         # ComboBox-specific properties should be registered.
-        for _property in GTK3ComboBox._GTK3_COMBO_PROPERTIES:
+        for _property in GTK3ComboBox._GTK3_COMBO_BOX_PROPERTIES:
             assert _property in dut.dic_properties
+        # ComboBox-specific signals should be registered.
+        for _signal in GTK3ComboBox._GTK3_COMBO_BOX_SIGNALS:
+            assert _signal in dut.dic_handler_id
 
         assert not dut.has_entry
         assert dut.index == 0
@@ -154,13 +151,13 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         # All handler IDs should start at -1.
         assert all(_hid == -1 for _hid in dut.dic_handler_id.values())
         # ComboBox-specific attributes should be registered.
-        for _attribute in GTK3ComboBox._GTK3_COMBO_ATTRIBUTES:
+        for _attribute in GTK3ComboBox._GTK3_COMBO_BOX_ATTRIBUTES:
             assert _attribute in dut.dic_attributes
         # ComboBox-specific properties should be registered.
-        for _property in GTK3ComboBox._GTK3_COMBO_PROPERTIES:
+        for _property in GTK3ComboBox._GTK3_COMBO_BOX_PROPERTIES:
             assert _property in dut.dic_properties
         # ComboBox-specific signals should be registered.
-        for _signal in GTK3ComboBox._GTK3_COMBO_SIGNALS:
+        for _signal in GTK3ComboBox._GTK3_COMBO_BOX_SIGNALS:
             assert _signal in dut.dic_handler_id
 
         assert not dut.has_entry
@@ -464,21 +461,21 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         dut.do_set_callbacks("changed", dut.on_changed)
         dut.do_load_combo(COMPOUND_TEST_LIST)
 
-        assert not dut.do_get_value(0)
-        assert not dut.do_get_value(1)
-        assert not dut.do_get_value(2)
+        assert not dut.get_value_at_index(0)
+        assert not dut.do_get_value()
+        assert not dut.get_value_at_index(2)
         dut.set_active(1)
-        assert dut.do_get_value(0) == "This"
-        assert dut.do_get_value(1) == "is"
-        assert dut.do_get_value(2) == "a"
+        assert dut.get_value_at_index(0) == "This"
+        assert dut.do_get_value() == "is"
+        assert dut.get_value_at_index(2) == "a"
         dut.set_active(2)
-        assert dut.do_get_value(0) == "test"
-        assert dut.do_get_value(1) == "of"
-        assert dut.do_get_value(2) == "the"
+        assert dut.get_value_at_index(0) == "test"
+        assert dut.do_get_value() == "of"
+        assert dut.get_value_at_index(2) == "the"
         dut.set_active(3)
-        assert dut.do_get_value(0) == "ComboBox"
-        assert dut.do_get_value(1) == "not"
-        assert dut.do_get_value(2) == "simple"
+        assert dut.get_value_at_index(0) == "ComboBox"
+        assert dut.do_get_value() == "not"
+        assert dut.get_value_at_index(2) == "simple"
 
     @pytest.mark.unit
     def test_get_value_no_model(self):
@@ -527,9 +524,9 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         pub.sendMessage("rootTopic", package={"test_field": 2})
 
         assert compound_combo.get_active() == 2
-        assert compound_combo.do_get_value(0) == "test"
-        assert compound_combo.do_get_value(1) == "of"
-        assert compound_combo.do_get_value(2) == "the"
+        assert compound_combo.get_value_at_index(0) == "test"
+        assert compound_combo.do_get_value() == "of"
+        assert compound_combo.get_value_at_index(2) == "the"
 
     @pytest.mark.unit
     def test_do_update_wrong_field(self, subscribed_combo):
