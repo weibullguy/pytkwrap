@@ -2,19 +2,25 @@
 #
 # All rights reserved.
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""The pytkwrap GTK3 MatrixView module."""
+"""The pytkwrap GTK3MatrixView module."""
 
 # Standard Library Imports
+try:
+    # Standard Library Imports
+    from typing import override
+except ImportError:
+    # Standard Library Imports
+    from typing_extensions import override
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject, Gtk
-from pytkwrap.gtk3.buttons import GTK3CheckButton  # , GTK3SpinButton
+from pytkwrap.gtk3.buttons import GTK3CheckButton, GTK3SpinButton
 from pytkwrap.gtk3.combo import GTK3ComboBox
 from pytkwrap.gtk3.entry import GTK3Entry
 from pytkwrap.gtk3.label import GTK3Label
-from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
 from pytkwrap.gtk3.textview import GTK3TextView
 from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
+from pytkwrap.utilities import FontDescription
 
 
 class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
@@ -44,12 +50,10 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
         self.dic_handler_id.update({
             _signal: -1 for _signal in self._GTK3_MATRIXVIEW_SIGNALS
         })
-        self.n_columns: int = 0
-        self.n_rows: int = 0
 
         self.show()
 
-    # ----- ----- Standard widget methods. ----- ----- #
+    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
         """Set the properties of the GTK3MatrixView.
 
@@ -66,7 +70,16 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
         self.set_row_homogeneous(self.dic_properties["row_homogeneous"])
         self.set_row_spacing(self.dic_properties["row_spacing"])
 
-    # ----- ----- MatrixView specific methods ----- ----- #
+    @override
+    def do_get_value(self) -> None:  # satisfies base class
+        """Not meaningful for GTK3MatrixView — use get_cell_value() instead."""
+        return None
+
+    @override
+    def do_set_value(self, value) -> None:  # satisfies base class
+        """Not meaningful for GTK3MatrixView — use set_cell_value() instead."""
+
+    # ----- ----- ----- ----- - MatrixView specific methods - ----- ----- ----- ----- #
     def do_add_column(self, position: int) -> None:
         """Add a column to the GTK3MatrixView at position.
 
@@ -76,7 +89,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             The position in the GTK3MatrixView to add the column.
         """
         self.insert_column(position)
-        self.n_columns += 1
+        self.dic_attributes["n_columns"] += 1
 
     def do_add_label(
         self,
@@ -106,11 +119,6 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             The number of columns for the label to span.
         """
         _label = GTK3Label(heading)
-        _label.do_set_attributes(
-            GTK3DataWidgetAttributes(
-                font_weight="bold",
-            )
-        )
         _label.do_set_properties(
             GTK3WidgetProperties(
                 angle=angle,
@@ -121,7 +129,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
                 wrap=False,
             ),
         )
-        _label.do_set_font_description()
+        _label.do_set_font_description(FontDescription(weight="bold"))
 
         self.attach(
             _label,
@@ -140,27 +148,24 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             The position in the GTK3MatrixView to add the row.
         """
         self.insert_row(position)
-        self.n_rows += 1
+        self.dic_attributes["n_rows"] += 1
 
-    # TODO: Add the spinbutton to this method once their classes are written.
     def do_add_widget(
         self,
-        widget: GTK3CheckButton | GTK3ComboBox | GTK3Entry | GTK3Label | GTK3TextView,
+        widget: (
+            GTK3CheckButton
+            | GTK3ComboBox
+            | GTK3Entry
+            | GTK3Label
+            | GTK3SpinButton
+            | GTK3TextView
+        ),
         left: int,
         top: int,
         height: int,
         width: int,
     ):
         """Add an interactive widget to the GTK3MatrixView.
-
-        Interactive widgets can be one of:
-
-        * GTK3Checkbutton
-        * GTK3ComboBox
-        * GTK3Entry
-        * GTK3Label
-        * GTK3SpinButton
-        * GTK3TextView
 
         Parameters
         ----------
@@ -172,8 +177,8 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             The row the top of the widget should attach to.
         width : int
             The number of columns the widget spans.
-        widget : GTK3CheckButton or GTK3ComboBox or GTK3Entry or GTK3Label or
-        GTK3SpinButton or GTK3TextView
+        widget : GTK3CheckButton | GTK3ComboBox | GTK3Entry | GTK3Label |
+        GTK3SpinButton | GTK3TextView
             The data widget to attach.
         """
         self.attach(widget, left, top, width, height)
@@ -197,12 +202,19 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
         self.do_set_column_headings(column_names)
         self.do_set_row_headings(row_names)
 
-    # TODO: Add the spinbutton to this method once their classes are written.
     def do_get_widget(
         self,
         column: int,
         row: int,
-    ) -> GTK3CheckButton | GTK3ComboBox | GTK3Entry | GTK3Label | GTK3TextView | None:
+    ) -> (
+        GTK3CheckButton
+        | GTK3ComboBox
+        | GTK3Entry
+        | GTK3Label
+        | GTK3SpinButton
+        | GTK3TextView
+        | None
+    ):
         """Get the interactive widget at column/row.
 
         Parameters
@@ -214,8 +226,8 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
 
         Returns
         -------
-        GTK3CheckButton or GTK3Combobox or GTK3Entry or GTK3Label or
-        GTK3SpinButton or GTK3TextView or None
+        GTK3CheckButton | GTK3Combobox | GTK3Entry | GTK3Label | GTK3SpinButton |
+        GTK3TextView or None
             The widget at the column/row intersection in the GTK3MatrixView or None.
         """
         return self.get_child_at(column, row)
@@ -229,7 +241,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             The column position to remove.
         """
         self.remove_column(position)
-        self.n_columns -= 1
+        self.dic_attributes["n_columns"] -= 1
 
     def do_remove_row(self, position: int) -> None:
         """Remove the GTK3MatrixView row at position.
@@ -240,7 +252,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             The row position to remove.
         """
         self.remove_row(position)
-        self.n_rows -= 1
+        self.dic_attributes["n_rows"] -= 1
 
     def do_set_column_headings(
         self,
@@ -258,12 +270,12 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             tooltip.
         """
         for _column_name in column_names:
-            self.do_add_column(self.n_columns + 1)
+            self.do_add_column(self.dic_attributes["n_columns"] + 1)
             self.do_add_label(
                 90.0,
                 _column_name[0],
                 1,
-                (self.n_columns, 0),
+                (self.dic_attributes["n_columns"], 0),
                 _column_name[1],
                 1,
             )
@@ -283,15 +295,90 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             A list of tuples with the items to use as the row heading and the tooltip.
         """
         for _row_name in row_names:
-            self.do_add_row(self.n_rows + 1)
+            self.do_add_row(self.dic_attributes["n_rows"] + 1)
             self.do_add_label(
                 0.0,
                 _row_name[0],
                 1,
-                (0, self.n_rows),
+                (0, self.dic_attributes["n_rows"]),
                 _row_name[1],
                 1,
             )
+
+    def get_cell_value(
+        self,
+        column: int = 0,
+        row: int = 0,
+    ) -> bool | float | int | str | None:
+        """Retrieve the value from the widget at the specified cell.
+
+        Parameters
+        ----------
+        column : int
+            The column index of the cell to retrieve the value from.
+        row : int
+            The row index of the cell to retrieve the value from.
+
+        Returns
+        -------
+        bool or float or int or str or None
+            The value of the widget at the specified cell, or None if the cell
+            is empty or contains an unsupported widget type.
+        """
+        _widget = self.get_child_at(column, row)
+
+        if _widget is None:
+            return None
+
+        if isinstance(
+            _widget,
+            (
+                GTK3CheckButton,
+                GTK3ComboBox,
+                GTK3Entry,
+                GTK3Label,
+                GTK3SpinButton,
+                GTK3TextView,
+            ),
+        ):
+            return _widget.do_get_value()
+
+        return None
+
+    def set_cell_value(
+        self,
+        value: bool | float | int | str | None,
+        column: int = 0,
+        row: int = 0,
+    ) -> None:
+        """Set the value of the widget at the specified cell.
+
+        Parameters
+        ----------
+        value : bool or float or int or str or None
+            The value to set in the widget at the specified cell.
+        column : int
+            The column index of the cell to set the value in.
+        row : int
+            The row index of the cell to set the value in.
+        """
+        _widget = self.get_child_at(column, row)
+
+        if _widget is None:
+            return
+
+        if isinstance(
+            _widget,
+            (
+                GTK3CheckButton,
+                GTK3ComboBox,
+                GTK3Entry,
+                GTK3Label,
+                GTK3SpinButton,
+                GTK3TextView,
+            ),
+        ):
+            _widget.do_set_value(value)
 
 
 # Register the new widget types.

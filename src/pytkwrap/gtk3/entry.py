@@ -10,8 +10,8 @@ from datetime import date, datetime
 # pytkwrap Package Imports
 from pytkwrap.common import WidgetAttributes
 from pytkwrap.gtk3._libs import Gtk, Pango
-from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
 from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
+from pytkwrap.utilities import FontDescription
 
 
 class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
@@ -33,9 +33,6 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
     _DEFAULT_EDIT_SIGNAL: str = "changed"
     _DEFAULT_HEIGHT: int = 25
     _DEFAULT_WIDTH: int = 200
-    _GTK3_ENTRY_ATTRIBUTES = GTK3DataWidgetAttributes(
-        font_description=None,
-    )
     _GTK3_ENTRY_PROPERTIES = GTK3WidgetProperties(
         activates_default=False,
         attributes=None,
@@ -112,51 +109,29 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
 
     def __init__(
         self,
-        font_description: Pango.FontDescription | str | None = None,
+        font: FontDescription | None = None,
     ) -> None:
         """Initialize an instance of the GTK3Entry widget.
 
         Parameters
         ----------
-        font_description : Pango.FontDescription or str or None
+        font : FontDescription | None
             The font description for the font used by the GTK3Entry.
         """
         Gtk.Entry.__init__(self)
         GTK3BaseDataWidget.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_attributes.update(self._GTK3_ENTRY_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_ENTRY_PROPERTIES)
         self.dic_handler_id.update({
             _signal: -1 for _signal in self._GTK3_ENTRY_SIGNALS
         })
 
-        self.default = ""
-        self.font_description = font_description
+        self.do_set_font_description(font)
 
         self.show()
 
     # ----- ----- Standard widget methods. ----- ----- #
-    def do_get_attribute(
-        self,
-        attribute: str,
-    ) -> bool | date | float | int | str | None:
-        """Get the value of the requested BaseWidget attribute.
-
-        Parameters
-        ----------
-        attribute : str
-            The name of the attribute to retrieve.
-
-        Returns
-        -------
-        bool or date or float or int or str or None
-            The value of the requested attribute.
-        """
-        if attribute in self._GTK3_ENTRY_ATTRIBUTES:
-            return getattr(self, attribute)
-        return super().do_get_attribute(attribute)
-
     def do_set_attributes(self, attributes: WidgetAttributes) -> None:
         """Set the attributes of the Entry.
 
@@ -167,13 +142,7 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
         """
         super().do_set_attributes(attributes)
 
-        self.font_description = attributes.get(
-            "font_description",
-            self.font_description,
-        )
-
-        if self.font_description is not None:
-            self.override_font(self.font_description)
+        self.do_set_font_description(self.dic_attributes["font_description"])
 
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
         """Set the properties of the GTK3Entry.
@@ -238,8 +207,7 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
 
-    # ----- ----- Entry specific methods. ----- ----- #
-    def do_get_value(self) -> float | int | str | None:  # type: ignore[override]
+    def do_get_value(self) -> float | int | str | None:
         """Retrieve the text displayed in the GTK3Entry.
 
         This method will return the correct datatype (float, int, str) associated with
@@ -250,47 +218,17 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
         float | int | str | None
             The value displayed in the GTK3Entry.
         """
-        _value: float | int | str | None = self.get_text()
+        _value: str | None = self.get_text()
 
-        if self.datatype == "gfloat":
-            _value = float(_value)
-        elif self.datatype == "gint":
-            _value = int(_value)
-        elif self.datatype == "gchararray":
-            _value = str(_value)
+        if self.dic_attributes["datatype"] == "gfloat":
+            # pylint: disable-next=line-too-long
+            return float(_value)  # type: ignore[arg-type, assignment] # ty:ignore[invalid-assignment]
 
-        return _value
+        if self.dic_attributes["datatype"] == "gint":
+            # pylint: disable-next=line-too-long
+            return int(_value)  # type: ignore[arg-type, assignment] # ty:ignore[invalid-assignment]
 
-    # TODO: Consider passing a dict or use **kwargs rather than eight keywords.
-    def do_set_font_description(  # pylint: disable=too-many-positional-arguments
-        self,
-        family: str = "Sans, Serif, Monospace",
-        gravity: str = "Not Rotated",
-        size: int = 10,
-        stretch: str = "",
-        style: str = "Normal",
-        variant: str = "",
-        weight: str = "Regular",
-    ) -> None:
-        """Set the Pango.FontDescription for the GTK3Entry.
-
-        :param family: comma separated list of fonts.
-        :param gravity:
-        :param size:
-        :param stretch:
-        :param style:
-        :param variant:
-        :param weight:
-        """
-        _font_description: str = (
-            f"{family} {gravity} {stretch} {style} {variant} {weight} {size}"
-        )
-
-        self.do_set_attributes(
-            GTK3DataWidgetAttributes(
-                font_description=Pango.FontDescription(_font_description),
-            )
-        )
+        return str(_value)
 
     def do_set_value(self, value: bool | date | float | int | str) -> None:
         """Set the GTK3Entry active value.
@@ -307,3 +245,20 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
             value = datetime.strftime(value, "%Y-%m-%d")
 
         self.set_text(str(value))
+
+    # ----- ----- ----- ----- --- Entry specific methods. --- ----- ----- ----- ----- #
+    def do_set_font_description(
+        self,
+        font: FontDescription | None = None,
+    ) -> None:
+        """Set the Pango.FontDescription for the GTK3Entry.
+
+        Parameters
+        ----------
+        font : FontDescription | None
+            The font description to apply. If None, the default FontDescription is used.
+        """
+        _font = font or FontDescription()
+
+        self.dic_attributes["font_description"] = _font
+        self.override_font(Pango.FontDescription(_font.to_string()))

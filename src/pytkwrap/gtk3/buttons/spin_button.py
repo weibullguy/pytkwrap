@@ -10,7 +10,10 @@ from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
-class GTK3SpinButton(Gtk.SpinButton, GTK3BaseButton):
+class GTK3SpinButton(
+    Gtk.SpinButton,
+    GTK3BaseButton,
+):  # ty:ignore[inconsistent-mro]
     """The GTK3SpinButton class."""
 
     # Define private class scalar attributes.
@@ -121,7 +124,6 @@ class GTK3SpinButton(Gtk.SpinButton, GTK3BaseButton):
         value : float | int | None
             The number to set the value of the GTK3SpinButton.
         """
-        print(f"Value is: {value}")
         if value is None:
             return
 

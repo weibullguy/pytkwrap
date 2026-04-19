@@ -13,6 +13,9 @@ from matplotlib.axes import Axes
 from matplotlib.backend_bases import FigureCanvasBase
 from matplotlib.figure import Figure
 
+# pytkwrap Package Imports
+from pytkwrap.utilities import FontDescription
+
 
 class WidgetAttributes(TypedDict, total=False):
     """Type for widget structural attributes."""
@@ -31,32 +34,7 @@ class DataWidgetAttributes(WidgetAttributes, total=False):
     default: bool | date | float | int | str | None
     edit_signal: str
     field: str
-    font_allow_breaks: str
-    font_bgalpha: str
-    font_bgcolor: str
-    font_family: str
-    font_features: str
-    font_fgalpha: str
-    font_fgcolor: str
-    font_gravity: str
-    font_gravity_hint: str
-    font_insert_hyphens: str
-    font_lang: str
-    font_letter_spacing: str
-    font_overline: str
-    font_overline_color: str
-    font_rise: str
-    font_scale: str
-    font_size: str
-    font_stretch: str
-    font_strikethrough: str
-    font_strikethrough_color: str
-    font_style: str
-    font_underline: str
-    font_underline_color: str
-    font_variant: str
-    font_variations: str
-    font_weight: str
+    font_description: FontDescription | None
     format: str
     index: int
     listen_topic: str | None
@@ -93,17 +71,12 @@ class WidgetMixin:
             "unk_function": "{}: No such function {} exists.",
             "unk_signal": "{}: Unknown signal name '{}'.",
         }
-        self.label_text: str = ""
-        self.n_columns: int = 0
-        self.n_rows: int = 0
-        self.x_pos: int = 0
-        self.y_pos: int = 0
 
     def do_get_attribute(
         self,
         attribute: str,
-    ) -> bool | date | float | int | str | None:
-        """Get the value of the requested attribute.
+    ) -> bool | date | float | int | object | str | None:
+        """Get the value of the requested WidgetMixin attribute.
 
         Parameters
         ----------
@@ -125,10 +98,10 @@ class WidgetMixin:
                 f"{type(self).__name__}.do_get_attribute(): Unknown attribute"
                 f" {attribute}."
             )
-        return getattr(self, attribute)
+        return self.dic_attributes.get(attribute)
 
     def do_set_attributes(self, attributes: WidgetAttributes) -> None:
-        """Set the widget attributes.
+        """Set the WidgetMixin attributes.
 
         Parameters
         ----------
@@ -144,17 +117,23 @@ class WidgetMixin:
         _str_attrs = set(self._WIDGET_ATTRIBUTES.keys()) - _int_attrs
 
         for _attr in _int_attrs:
-            setattr(self, _attr, int(attributes.get(_attr, self.dic_attributes[_attr])))
+            self.dic_attributes[_attr] = int(
+                attributes.get(
+                    _attr,
+                    self.dic_attributes[_attr],
+                )
+            )
 
         for _attr in _str_attrs:
-            setattr(self, _attr, str(attributes.get(_attr, self.dic_attributes[_attr])))
+            self.dic_attributes[_attr] = str(
+                attributes.get(
+                    _attr,
+                    self.dic_attributes[_attr],
+                )
+            )
 
-        self.dic_attributes.update({
-            _attr: getattr(self, _attr) for _attr in _int_attrs | _str_attrs
-        })
 
-
-class DataWidgetMixin(WidgetMixin):  # pylint: disable=too-many-instance-attributes
+class DataWidgetMixin(WidgetMixin):
     """Mixin to use with widgets that display and/or manipulate data."""
 
     _DATA_WIDGET_ATTRIBUTES: DataWidgetAttributes = DataWidgetAttributes(
@@ -162,32 +141,7 @@ class DataWidgetMixin(WidgetMixin):  # pylint: disable=too-many-instance-attribu
         default=None,
         edit_signal="",
         field="",
-        font_allow_breaks="",
-        font_bgalpha="",
-        font_bgcolor="",
-        font_family="",
-        font_features="",
-        font_fgalpha="",
-        font_fgcolor="",
-        font_gravity="",
-        font_gravity_hint="",
-        font_insert_hyphens="",
-        font_lang="",
-        font_letter_spacing="",
-        font_overline="",
-        font_overline_color="",
-        font_rise="",
-        font_scale="",
-        font_size="",
-        font_stretch="",
-        font_strikethrough="",
-        font_strikethrough_color="",
-        font_style="",
-        font_underline="",
-        font_underline_color="",
-        font_variant="",
-        font_variations="",
-        font_weight="",
+        font_description=None,
         format="{}",
         index=-1,
         listen_topic="listen_topic",
@@ -203,49 +157,13 @@ class DataWidgetMixin(WidgetMixin):  # pylint: disable=too-many-instance-attribu
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._DATA_WIDGET_ATTRIBUTES)
-
-        self.datatype: bool | date | float | int | str | None = None
-        self.default: bool | date | float | int | str | None = None
-        self.edit_signal: str = ""
-        self.field: str = ""
-        self.font_allow_breaks: str = ""
-        self.font_bgalpha: str = ""
-        self.font_bgcolor: str = ""
-        self.font_family: str = ""
-        self.font_features: str = ""
-        self.font_fgalpha: str = ""
-        self.font_fgcolor: str = ""
-        self.font_gravity: str = ""
-        self.font_gravity_hint: str = ""
-        self.font_insert_hyphens: str = ""
-        self.font_lang: str = ""
-        self.font_letter_spacing: str = ""
-        self.font_overline: str = ""
-        self.font_overline_color: str = ""
-        self.font_rise: str = ""
-        self.font_scale: str = ""
-        self.font_size: str = ""
-        self.font_stretch: str = ""
-        self.font_strikethrough: str = ""
-        self.font_strikethrough_color: str = ""
-        self.font_style: str = ""
-        self.font_underline: str = ""
-        self.font_underline_color: str = ""
-        self.font_variant: str = ""
-        self.font_variations: str = ""
-        self.font_weight: str = ""
-        self.format: str = "{}"
-        self.index: int = -1
-        self.listen_topic: str = "listen_topic"
-        self.parent_id: int = -1
-        self.record_id: int = -1
-        self.send_topic: str = "send_topic"
+        self.dic_attributes["edit_signal"] = self._DEFAULT_EDIT_SIGNAL
 
     def do_get_attribute(
         self,
         attribute: str,
-    ) -> bool | date | float | int | str | None:
-        """Get the value of the requested BaseWidget attribute.
+    ) -> bool | date | float | int | object | str | None:
+        """Get the value of the requested DataWidgetMixin attribute.
 
         Parameters
         ----------
@@ -258,11 +176,11 @@ class DataWidgetMixin(WidgetMixin):  # pylint: disable=too-many-instance-attribu
             The value of the requested attribute.
         """
         if attribute in self._DATA_WIDGET_ATTRIBUTES:
-            return getattr(self, attribute)
+            return self.dic_attributes.get(attribute)
         return super().do_get_attribute(attribute)
 
     def do_set_attributes(self, attributes: WidgetAttributes) -> None:
-        """Set the data display widget attributes.
+        """Set the DatawidgetMixin attributes.
 
         Parameters
         ----------
@@ -279,22 +197,31 @@ class DataWidgetMixin(WidgetMixin):  # pylint: disable=too-many-instance-attribu
         _obj_attrs = {
             "datatype",
             "default",
+            "font_description",
         }
         _str_attrs = set(self._DATA_WIDGET_ATTRIBUTES.keys()) - _int_attrs - _obj_attrs
 
         for _attr in _int_attrs:
-            setattr(self, _attr, int(attributes.get(_attr, self.dic_attributes[_attr])))
+            self.dic_attributes[_attr] = int(
+                attributes.get(
+                    _attr,
+                    self.dic_attributes[_attr],
+                )
+            )
 
         for _attr in _obj_attrs:
-            setattr(self, _attr, attributes.get(_attr, self.dic_attributes[_attr]))
+            self.dic_attributes[_attr] = attributes.get(
+                _attr,
+                self.dic_attributes[_attr],
+            )
 
         for _attr in _str_attrs:
-            setattr(self, _attr, str(attributes.get(_attr, self.dic_attributes[_attr])))
-
-        self.dic_attributes.update({
-            _attr: getattr(self, _attr)
-            for _attr in _int_attrs | _obj_attrs | _str_attrs
-        })
+            self.dic_attributes[_attr] = str(
+                attributes.get(
+                    _attr,
+                    self.dic_attributes[_attr],
+                )
+            )
 
 
 class WidgetConfig(TypedDict):
@@ -318,6 +245,7 @@ class PlotWidgetMixin(DataWidgetMixin):
         """Initialize an instance of PlotWidgetMixin."""
         super().__init__()
 
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._PLOT_WIDGET_ATTRIBUTES)
 
         self.axis: Axes | None = None
@@ -341,10 +269,10 @@ class PlotWidgetMixin(DataWidgetMixin):
             The value of the requested attribute.
         """
         if attribute in self._PLOT_WIDGET_ATTRIBUTES:
-            return getattr(self, attribute)
+            return self.dic_attributes.get(attribute)
         return super().do_get_attribute(attribute)
 
-    def do_set_attributes(self, attributes: PlotWidgetAttributes) -> None:
+    def do_set_attributes(self, attributes: WidgetAttributes) -> None:
         """Set the widget attributes.
 
         Parameters

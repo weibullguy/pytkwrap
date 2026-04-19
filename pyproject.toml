@@ -60,6 +60,7 @@ extra-dependencies = [
   "pytest-icdiff",
   "pytest-order",
   "pytest-sugar",
+  "typing_extensions",
 ]
 
 [tool.hatch.envs.test.scripts]

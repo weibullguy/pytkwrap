@@ -13,10 +13,11 @@ from pytkwrap.common import WidgetAttributes
 from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
 from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
+from pytkwrap.utilities import FontDescription
 
 
 # pylint: disable-next=too-many-instance-attributes
-class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
+class GTK3Label(Gtk.Label, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
     """The GTK3Label class."""
 
     # Define private class attributes.
@@ -24,33 +25,6 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
     _DEFAULT_WIDTH = 200
     _GTK3_LABEL_ATTRIBUTES = GTK3DataWidgetAttributes(
         column_types=None,
-        font_allow_breaks="false",
-        font_bgalpha="100%",
-        font_bgcolor="white",
-        font_description=None,
-        font_family="Sans, Serif, Monospace",
-        font_features="",
-        font_fgalpha="100%",
-        font_fgcolor="black",
-        font_gravity="auto",
-        font_gravity_hint="natural",
-        font_insert_hyphens="true",
-        font_lang="en_US",
-        font_letter_spacing="",
-        font_overline="false",
-        font_overline_color="black",
-        font_rise="0pt",
-        font_scale="",
-        font_size="12pt",
-        font_stretch="normal",
-        font_strikethrough="false",
-        font_strikethrough_color="black",
-        font_style="normal",
-        font_underline="false",
-        font_underline_color="black",
-        font_variant="normal",
-        font_variations="",
-        font_weight="normal",
     )
     _GTK3_LABEL_PROPERTIES = GTK3WidgetProperties(
         angle=0.0,
@@ -100,42 +74,17 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
             _signal: -1 for _signal in self._GTK3_LABEL_SIGNALS
         })
 
-        self.default = "..."
-        self.font_allow_breaks: str = "false"
-        self.font_bgalpha: str = "100%"
-        self.font_bgcolor: str = "white"
-        self.font_description = ""
-        self.font_family: str = "Sans, Serif, Monospace"
-        self.font_features: str = ""
-        self.font_fgalpha: str = "100%"
-        self.font_fgcolor: str = "black"
-        self.font_gravity: str = "auto"
-        self.font_gravity_hint: str = "natural"
-        self.font_insert_hyphens: str = "true"
-        self.font_lang: str = "en_US"
-        self.font_letter_spacing: str = ""
-        self.font_overline: str = "false"
-        self.font_overline_color: str = "black"
-        self.font_rise: str = "0pt"
-        self.font_scale: str = ""
-        self.font_size: str = "12pt"
-        self.font_stretch: str = "normal"
-        self.font_strikethrough: str = "false"
-        self.font_strikethrough_color: str = "black"
-        self.font_style: str = "normal"
-        self.font_underline: str = "false"
-        self.font_underline_color: str = "black"
-        self.font_variant: str = "normal"
-        self.font_weight: str = "normal"
+        self.dic_attributes["default"] = "..."
+        self.do_set_font_description()
+        self.do_set_value(text)
 
-        self.set_markup(text)
         self.show()
 
-    # ----- ----- Standard widget methods. ----- ----- #
+    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
     def do_get_attribute(
         self,
         attribute: str,
-    ) -> bool | date | float | int | str | None:
+    ) -> bool | date | float | int | object | str | None:
         """Get the value of the requested GTK3Label attribute.
 
         Parameters
@@ -149,7 +98,7 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
             The value of the requested attribute.
         """
         if attribute in self._GTK3_LABEL_ATTRIBUTES:
-            return getattr(self, attribute)
+            return self.dic_attributes.get(attribute)
         return super().do_get_attribute(attribute)
 
     def do_set_attributes(self, attributes: WidgetAttributes) -> None:
@@ -164,13 +113,14 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
 
         _str_attrs = set(self._GTK3_LABEL_ATTRIBUTES.keys()) - {
             "column_types",
-            "font_description",
         }
         for _attr in _str_attrs:
-            setattr(self, _attr, str(attributes.get(_attr, self.dic_attributes[_attr])))
-        self.dic_attributes.update({
-            _attr: getattr(self, _attr) for _attr in _str_attrs
-        })
+            self.dic_attributes[_attr] = str(
+                attributes.get(
+                    _attr,
+                    self.dic_attributes[_attr],
+                )
+            )
 
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
         """Set the properties of the GTK3Label.
@@ -224,13 +174,12 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
         _field, _raw_value = next(iter(package.items()))
         _value = str(_raw_value)
 
-        if _field != self.field or _value == "None":
+        if _field != self.dic_attributes["field"] or _value == "None":
             return
 
         self.do_set_value(_value)
 
-    # ----- ----- Label specific methods. ----- ----- #
-    def do_get_value(self) -> str | None:  # type: ignore[override]
+    def do_get_value(self) -> str | None:
         """Retrieve the text displayed in the GTK3Label.
 
         Returns
@@ -239,29 +188,6 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
             The value displayed in the GTK3Label.
         """
         return self.get_text()
-
-    def do_set_font_description(self) -> None:
-        """Set the font description for the GTK3Label."""
-        # TODO: Fix this so existing font description is updated/overwritten even if
-        #  it's not blank.
-        if not self.font_description:
-            self.font_description = (
-                f"<span allow_breaks={self.font_allow_breaks} "
-                f"bgalpha={self.font_bgalpha} bgcolor={self.font_bgcolor} "
-                f"face={self.font_family} font_features={self.font_features} "
-                f"fgalpha={self.font_fgalpha} fgcolor={self.font_fgcolor} "
-                f"gravity={self.font_gravity} gravity_hint={self.font_gravity_hint} "
-                f"insert_hyphen={self.font_insert_hyphens} lang={self.font_lang} "
-                f"letter_spacing={self.font_letter_spacing} "
-                f"overline={self.font_overline} "
-                f"overline_color={self.font_overline_color} rise={self.font_rise} "
-                f"font_scale={self.font_scale} size={self.font_size} "
-                f"stretch={self.font_stretch} strikethrough={self.font_strikethrough} "
-                f"strikethrough_color={self.font_strikethrough_color} "
-                f"style={self.font_style} underline={self.font_underline} "
-                f"underline_color={self.font_underline_color} "
-                f"variant={self.font_variant} weight={self.font_weight}"
-            )
 
     def do_set_value(self, value: str | None) -> None:
         """Set the GTK3Label active value.
@@ -275,21 +201,51 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
             value = ""
 
         if self.dic_properties["use_markup"]:
-            self.dic_properties["label"] = f"{self.font_description}{value}</span>"
+            _font_desc = self.dic_attributes.get("font_description")
+            _markup_prefix = (
+                _font_desc.to_markup()
+                if isinstance(_font_desc, FontDescription)
+                else ""
+            )
+            self.dic_properties["label"] = f"{_markup_prefix}{value}</span>"
             if self.dic_properties["use_underline"]:
-                self.set_markup_with_mnemonic(value)
+                self.set_markup_with_mnemonic(self.dic_properties["label"])
                 return
 
-            self.set_markup(value)
+            self.set_markup(self.dic_properties["label"])
             return
 
         if self.dic_properties["use_underline"]:
+            self.dic_properties["label"] = value
             self.set_text_with_mnemonic(value)
             return
 
         # Setting the text will overwrite any text in the label, clear any mnemonic
         # accelerators, set use_markup=False, and set use_underline=False.
+        self.dic_properties["label"] = value
         self.set_text(value)
+
+    # ----- ----- ----- ----- --- Label specific methods. --- ----- ----- ----- ----- #
+    def do_set_font_description(self, font: FontDescription | None = None) -> None:
+        """Set the font description for the GTK3Label.
+
+        Parameters
+        ----------
+        font : FontDescription | None
+            The font description to apply.  If None, the default FontDescription is
+            used.
+        """
+        _font = font or FontDescription()
+
+        self.dic_attributes["font_description"] = _font
+
+        if self.dic_properties["use_markup"]:
+            # Apply markup via the current label text.
+            _current = self.get_text()
+            self.set_markup(f"{_font.to_markup()}{_current}</span>")
+            return
+
+        self.override_font(Pango.FontDescription(_font.to_string()))
 
 
 def do_make_label_group(

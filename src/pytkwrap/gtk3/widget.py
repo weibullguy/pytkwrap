@@ -360,12 +360,12 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
         WidgetMixin.__init__(self)
 
         # Initialize public instance attributes.
+        self.dic_properties = dict(self._GTK3_BASE_PROPERTIES)
         self.dic_handler_id: dict[str, int] = {
             _signal: -1 for _signal in self._GTK3_BASE_SIGNALS
         }
-        self.dic_properties = dict(self._GTK3_BASE_PROPERTIES)
 
-    # ----- ----- Standard widget methods. ----- ----- #
+    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
     def do_set_callbacks(self, signal: str, callback: FunctionType) -> None:
         """Set the callback method for the GTK3BaseWidget.
 
@@ -387,7 +387,8 @@ class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
                 "buffer" in self.dic_properties
                 and self.dic_properties["buffer"] is not None
             ):
-                self.dic_handler_id[signal] = self.dic_properties["buffer"].connect(
+                # pylint: disable-next=line-too-long
+                self.dic_handler_id[signal] = self.dic_properties["buffer"].connect(  # type: ignore[attr-defined]
                     signal,
                     callback,
                 )
@@ -494,19 +495,19 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
             If the signal name is not valid for the widget.
         """
         _field, _value = next(iter(package.items()))
-        _value = none_to_default(_value, self.default)
+        _value = none_to_default(_value, self.dic_attributes["default"])
 
-        if _field != self.field:
+        if _field != self.dic_attributes["field"]:
             return
 
         try:
-            _hid = self.dic_handler_id[self.edit_signal]
+            _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
             with self._get_signal_owner().handler_block(_hid):
                 self.do_set_value(_value)
         except KeyError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
                 f"{type(self).__name__}.do_update()",
-                self.edit_signal,
+                self.dic_attributes["edit_signal"],
             )
             pub.sendMessage(
                 "do_log_error",
@@ -531,19 +532,19 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
         UnkSignalError
             If the signal name is not valid for this widget.
         """
-        _package = {self.field: self.do_get_value()}
+        _package = {self.dic_attributes["field"]: self.do_get_value()}
         try:
-            _hid = self.dic_handler_id[self.edit_signal]
+            _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
             with self._get_signal_owner().handler_block(_hid):
                 pub.sendMessage(
-                    self.send_topic,
-                    node_id=self.record_id,
+                    self.dic_attributes["send_topic"],
+                    node_id=self.dic_attributes["record_id"],
                     package=_package,
                 )
         except KeyError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
                 f"{type(self).__name__}.on_changed()",
-                self.edit_signal,
+                self.dic_attributes["edit_signal"],
             )
             pub.sendMessage(
                 "do_log_error",

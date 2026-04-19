@@ -8,15 +8,14 @@
 from types import EllipsisType
 
 # pytkwrap Package Imports
-from pytkwrap.common import DataWidgetAttributes, DataWidgetMixin
-from pytkwrap.gtk3._libs import GObject, Pango
+from pytkwrap.common import DataWidgetAttributes, DataWidgetMixin, WidgetAttributes
+from pytkwrap.gtk3._libs import GObject
 
 
 class GTK3DataWidgetAttributes(DataWidgetAttributes, total=False):
     """GTK3-specific data widget attributes."""
 
     column_types: list[EllipsisType] | list[GObject.GType] | None
-    font_description: Pango.FontDescription | str | None
 
 
 class GTK3DataWidgetMixin(DataWidgetMixin):
@@ -24,7 +23,6 @@ class GTK3DataWidgetMixin(DataWidgetMixin):
 
     _GTK3_DATA_WIDGET_ATTRIBUTES = GTK3DataWidgetAttributes(
         column_types=None,
-        font_description=None,
     )
 
     def __init__(self) -> None:
@@ -34,6 +32,17 @@ class GTK3DataWidgetMixin(DataWidgetMixin):
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_DATA_WIDGET_ATTRIBUTES)
 
-        self.column_types: list[EllipsisType] | list[GObject.GType] | None = None
-        self.edit_signal: str = self._DEFAULT_EDIT_SIGNAL
-        self.font_description: Pango.FontDescription | str | None = None
+    def do_set_attributes(self, attributes: WidgetAttributes) -> None:
+        """Set GTK3-specific data widget attributes.
+
+        Parameters
+        ----------
+        attributes : GTK3DataWidgetAttributes
+            The attributes to set.
+        """
+        super().do_set_attributes(attributes)
+
+        self.dic_attributes["column_types"] = attributes.get(
+            "column_types",
+            self.dic_attributes["column_types"],
+        )
