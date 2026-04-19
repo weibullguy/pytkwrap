@@ -5,39 +5,22 @@ from datetime import date
 from _typeshed import Incomplete
 
 # pytkwrap Package Imports
-from pytkwrap.common import WidgetAttributes
+from pytkwrap.common import WidgetAttributes as WidgetAttributes
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3._libs import Pango as Pango
-from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes as GTK3DataWidgetAttributes
 from pytkwrap.gtk3.widget import GTK3BaseDataWidget as GTK3BaseDataWidget
 from pytkwrap.gtk3.widget import GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.utilities import FontDescription as FontDescription
 
 class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):
     _DEFAULT_EDIT_SIGNAL: str
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
-    _GTK3_ENTRY_ATTRIBUTES: Incomplete
     _GTK3_ENTRY_PROPERTIES: Incomplete
     _GTK3_ENTRY_SIGNALS: list[str]
-    default: str
-    font_description: Incomplete
-    def __init__(
-        self, font_description: Pango.FontDescription | str | None = None
-    ) -> None: ...
-    def do_get_attribute(
-        self, attribute: str
-    ) -> bool | date | float | int | str | None: ...
+    def __init__(self, font: FontDescription | None = None) -> None: ...
     def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None: ...
     def do_get_value(self) -> float | int | str | None: ...
-    def do_set_font_description(
-        self,
-        family: str = "Sans, Serif, Monospace",
-        gravity: str = "Not Rotated",
-        size: int = 10,
-        stretch: str = "",
-        style: str = "Normal",
-        variant: str = "",
-        weight: str = "Regular",
-    ) -> None: ...
     def do_set_value(self, value: bool | date | float | int | str) -> None: ...
+    def do_set_font_description(self, font: FontDescription | None = None) -> None: ...

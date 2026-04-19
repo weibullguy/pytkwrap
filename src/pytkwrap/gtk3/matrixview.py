@@ -10,7 +10,7 @@ try:
     from typing import override
 except ImportError:
     # Standard Library Imports
-    from typing_extensions import override
+    from typing import override
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject, Gtk

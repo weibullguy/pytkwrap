@@ -239,8 +239,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
 class GTK3BaseWidget(Gtk.Widget, WidgetMixin):
     _GTK3_BASE_PROPERTIES: Incomplete
     _GTK3_BASE_SIGNALS: list[str]
-    dic_handler_id: dict[str, int]
     dic_properties: Incomplete
+    dic_handler_id: dict[str, int]
     def __init__(self) -> None: ...
     def do_set_callbacks(self, signal: str, callback: FunctionType) -> None: ...
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None: ...
