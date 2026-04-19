@@ -39,32 +39,7 @@ class TestPlotWidgetMixin:
             "edit_signal": "",
             "field": "",
             "figure": None,
-            "font_allow_breaks": "",
-            "font_bgalpha": "",
-            "font_bgcolor": "",
-            "font_family": "",
-            "font_features": "",
-            "font_fgalpha": "",
-            "font_fgcolor": "",
-            "font_gravity": "",
-            "font_gravity_hint": "",
-            "font_insert_hyphens": "",
-            "font_lang": "",
-            "font_letter_spacing": "",
-            "font_overline": "",
-            "font_overline_color": "",
-            "font_rise": "",
-            "font_scale": "",
-            "font_size": "",
-            "font_stretch": "",
-            "font_strikethrough": "",
-            "font_strikethrough_color": "",
-            "font_style": "",
-            "font_underline": "",
-            "font_underline_color": "",
-            "font_variant": "",
-            "font_variations": "",
-            "font_weight": "",
+            "font_description": None,
             "format": "{}",
             "index": -1,
             "label_text": "",
@@ -77,9 +52,9 @@ class TestPlotWidgetMixin:
             "x_pos": 0,
             "y_pos": 0,
         }
-        assert dut.axis is None
-        assert dut.canvas is None
-        assert dut.figure is None
+        assert dut.dic_attributes["axis"] is None
+        assert dut.dic_attributes["canvas"] is None
+        assert dut.dic_attributes["figure"] is None
 
     @pytest.mark.unit
     def test_do_get_attribute(self):
@@ -106,11 +81,11 @@ class TestPlotWidgetMixin:
         dut = PlotWidgetMixin()
         dut.do_set_attributes(PlotWidgetAttributes())
 
-        assert dut.axis is None
-        assert dut.canvas is None
-        assert dut.figure is None
-        assert dut.x_pos == 0
-        assert dut.y_pos == 0
+        assert dut.dic_attributes["axis"] is None
+        assert dut.dic_attributes["canvas"] is None
+        assert dut.dic_attributes["figure"] is None
+        assert dut.dic_attributes["x_pos"] == 0
+        assert dut.dic_attributes["y_pos"] == 0
 
     @pytest.mark.unit
     def test_do_set_attributes(self):
@@ -128,6 +103,6 @@ class TestPlotWidgetMixin:
             )
         )
 
-        assert isinstance(dut.axis, Axes)
-        assert isinstance(dut.canvas, FigureCanvasGTK3Cairo)
-        assert isinstance(dut.figure, Figure)
+        assert isinstance(dut.dic_attributes["axis"], Axes)
+        assert isinstance(dut.dic_attributes["canvas"], FigureCanvasGTK3Cairo)
+        assert isinstance(dut.dic_attributes["figure"], Figure)

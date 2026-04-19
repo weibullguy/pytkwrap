@@ -52,7 +52,6 @@ class TestTextView(BaseGTK3DataWidgetTests):
         # TextView-specific signals should be registered.
         for _signal in GTK3TextView._GTK3_TEXTVIEW_SIGNALS:
             assert _signal in dut.dic_handler_id
-        assert dut.edit_signal == "changed"
         assert isinstance(dut.tag_bold, Gtk.TextTag)
 
     @pytest.mark.unit
@@ -189,16 +188,16 @@ class TestTextView(BaseGTK3DataWidgetTests):
 
         for signal, handler_id in dut.dic_handler_id.items():
             if signal not in (_signal_1, _signal_2):
-                assert handler_id == -1, (
-                    f"Expected {signal} to be -1, got {handler_id}."
-                )
+                assert (
+                    handler_id == -1
+                ), f"Expected {signal} to be -1, got {handler_id}."
 
     @pytest.mark.unit
     def test_do_update(self):
         """Should update the GTK3TextView with the data package value."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": "Test Package"})
@@ -209,8 +208,8 @@ class TestTextView(BaseGTK3DataWidgetTests):
     def test_do_update_none_value(self):
         """Should update the GTK3TextView with the default value when passed None."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": None})
@@ -221,11 +220,11 @@ class TestTextView(BaseGTK3DataWidgetTests):
     def test_do_update_unknown_signal(self):
         """Should raise a KeyError with an unknown edit signal name."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(dut.do_update, "rootTopic")
-        dut.edit_signal = "edit_signal"
+        dut.dic_attributes["edit_signal"] = "edit_signal"
 
         with pytest.raises(UnkSignalError):
             pub.sendMessage("rootTopic", package={"test_field": "Test Package"})
@@ -236,8 +235,8 @@ class TestTextView(BaseGTK3DataWidgetTests):
     def test_do_update_wrong_field(self):
         """Should do nothing when the package field doesn't match."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(dut.do_update, "rootTopic")
         dut.dic_properties["buffer"].set_text("Test Text")
 
@@ -249,12 +248,12 @@ class TestTextView(BaseGTK3DataWidgetTests):
     def test_on_changed(self):
         """Should be called when the GTK3TextView text changes."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "textview_changed"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "textview_changed"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.dic_properties["buffer"].set_text("Test Text")
 
@@ -262,12 +261,12 @@ class TestTextView(BaseGTK3DataWidgetTests):
     def test_on_changed_unknown_signal(self):
         """Should raise a KeyError with an unknown edit signal name."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "textview_changed"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "textview_changed"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        dut.edit_signal = "edit_signal"
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        dut.dic_attributes["edit_signal"] = "edit_signal"
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.dic_properties["buffer"].set_text("Test Text")

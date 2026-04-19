@@ -45,11 +45,6 @@ class TestWidgetMixin:
             "unk_function": "{}: No such function {} exists.",
             "unk_signal": "{}: Unknown signal name '{}'.",
         }
-        assert dut.label_text == ""
-        assert dut.n_columns == 0
-        assert dut.n_rows == 0
-        assert dut.x_pos == 0
-        assert dut.y_pos == 0
 
     @pytest.mark.unit
     def test_do_get_attribute(self):
@@ -76,11 +71,11 @@ class TestWidgetMixin:
         dut = WidgetMixin()
         dut.do_set_attributes(WidgetAttributes())
 
-        assert dut.label_text == ""
-        assert dut.n_columns == 0
-        assert dut.n_rows == 0
-        assert dut.x_pos == 0
-        assert dut.y_pos == 0
+        assert dut.dic_attributes["label_text"] == ""
+        assert dut.dic_attributes["n_columns"] == 0
+        assert dut.dic_attributes["n_rows"] == 0
+        assert dut.dic_attributes["x_pos"] == 0
+        assert dut.dic_attributes["y_pos"] == 0
 
     @pytest.mark.unit
     def test_do_set_attributes(self):
@@ -92,11 +87,11 @@ class TestWidgetMixin:
             )
         )
 
-        assert dut.label_text == "Test Label Text"
-        assert dut.n_columns == 3
-        assert dut.n_rows == 5
-        assert dut.x_pos == 5
-        assert dut.y_pos == 10
+        assert dut.dic_attributes["label_text"] == "Test Label Text"
+        assert dut.dic_attributes["n_columns"] == 3
+        assert dut.dic_attributes["n_rows"] == 5
+        assert dut.dic_attributes["x_pos"] == 5
+        assert dut.dic_attributes["y_pos"] == 10
 
 
 @pytest.mark.unit

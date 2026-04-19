@@ -27,8 +27,8 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
     widget_class = GTK3SpinButton
     expected_default_height = 30
     expected_default_edit_signal = "value-changed"
-    expected_package = {0:{"test_field": 0.5}}
     expected_default_width = 200
+    expected_package = {0: {"test_field": 0.5}}
 
     @pytest.mark.unit
     def test_init(self):
@@ -94,8 +94,8 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
                 upper=10.0,
                 value=5.0,
                 wrap=True,
-                ),
-            )
+            ),
+        )
 
         assert isinstance(dut.get_adjustment(), Gtk.Adjustment)
         assert dut.get_digits() == 2
@@ -119,8 +119,8 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
                 upper=5.0,
             ),
         )
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": 0.9})
@@ -139,8 +139,8 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
                 value=2.5,
             ),
         )
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": None})
@@ -159,8 +159,8 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
                 value=2.5,
             ),
         )
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": 2})
@@ -179,11 +179,11 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
                 value=2.5,
             ),
         )
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(dut.do_update, "rootTopic")
-        dut.edit_signal = "edit_signal"
+        dut.dic_attributes["edit_signal"] = "edit_signal"
 
         with pytest.raises(UnkSignalError):
             pub.sendMessage("rootTopic", package={"test_field": 4.8})
@@ -202,8 +202,8 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
                 value=2.5,
             ),
         )
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"wrong_field": 2.89})
@@ -222,12 +222,12 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
                 value=2.5,
             ),
         )
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "button_toggled"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "button_toggled"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.set_value(3.8)
 
@@ -243,12 +243,12 @@ class TestSpinButton(BaseGTK3DataWidgetTests):
                 value=2.5,
             ),
         )
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "button_toggled"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "button_toggled"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        dut.edit_signal = "toggle_signal"
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        dut.dic_attributes["edit_signal"] = "toggle_signal"
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.set_value(3.8)

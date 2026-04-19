@@ -27,8 +27,8 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
     widget_class = GTK3OptionButton
     expected_default_height = 40
     expected_default_edit_signal = "toggled"
-    expected_package = {0:{"test_field": True}}
     expected_default_width = 200
+    expected_package = {0: {"test_field": True}}
 
     def make_dut(self, group=None, label=""):
         return self.widget_class(group, label)
@@ -53,7 +53,7 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
         assert dut.get_group() == [dut]
         assert not dut.get_inconsistent()
         assert dut.get_label() == ""
-        assert not dut.get_mode() # draw-indicator property.
+        assert not dut.get_mode()  # draw-indicator property.
 
     @pytest.mark.unit
     def test_init_with_group(self):
@@ -69,7 +69,7 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_init_with_label(self):
         """Should create a GTK3OptionButton with a label."""
-        dut = self.make_dut(None,"Test Option Button Label")
+        dut = self.make_dut(None, "Test Option Button Label")
 
         assert isinstance(dut, GTK3OptionButton)
         assert dut.get_label() == "Test Option Button Label"
@@ -85,7 +85,7 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
         assert dut.get_group() == [dut]
         assert not dut.get_inconsistent()
         assert dut.get_label() == ""
-        assert not dut.get_mode() # draw-indicator property.
+        assert not dut.get_mode()  # draw-indicator property.
 
     @pytest.mark.unit
     def test_do_set_properties(self):
@@ -101,14 +101,14 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
                 group=btnOptionButton,
                 inconsistent=True,
                 label="Test Option Button Label",
-                ),
-            )
+            ),
+        )
 
         assert not dut.get_active()
         assert dut.get_group() == [dut, btnOptionButton]
         assert dut.get_inconsistent()
         assert dut.get_label() == "Test Option Button Label"
-        assert dut.get_mode() # draw-indicator property.
+        assert dut.get_mode()  # draw-indicator property.
 
     @pytest.mark.unit
     def test_do_update(self):
@@ -118,8 +118,8 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.join_group(btnOptionButton)
 
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": True})
@@ -134,8 +134,8 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.join_group(btnOptionButton)
 
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": None})
@@ -150,11 +150,11 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.join_group(btnOptionButton)
 
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(dut.do_update, "rootTopic")
-        dut.edit_signal = "edit_signal"
+        dut.dic_attributes["edit_signal"] = "edit_signal"
 
         with pytest.raises(UnkSignalError):
             pub.sendMessage("rootTopic", package={"test_field": True})
@@ -169,8 +169,8 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.join_group(btnOptionButton)
 
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"wrong_field": True})
@@ -181,12 +181,12 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
     def test_on_changed(self):
         """Called when the GTK3OptionButton active state changes."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "button_toggled"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "button_toggled"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.emit("toggled")
 
@@ -194,12 +194,12 @@ class TestOptionButton(BaseGTK3DataWidgetTests):
     def test_on_changed_unknown_signal(self):
         """Raise a KeyError with an unknown edit signal name."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "button_toggled"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "button_toggled"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        dut.edit_signal = "toggle_signal"
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        dut.dic_attributes["edit_signal"] = "toggle_signal"
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.emit("toggled")

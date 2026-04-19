@@ -70,10 +70,10 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def compound_combo(self):
         """Create compound GTK3ComboBox device under test."""
         dut = self.make_dut(index=1, simple=False, n_items=3)
-        dut.field = "test_field"
-        dut.record_id = 1
-        dut.send_topic = "combo_changed"
-        dut.do_set_callbacks("changed", dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 1
+        dut.dic_attributes["send_topic"] = "combo_changed"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         dut.do_load_combo(COMPOUND_TEST_LIST)
         return dut
 
@@ -81,10 +81,10 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def simple_combo(self):
         """Create simple (default) GTK3ComboBox device under test."""
         dut = self.make_dut(column_types=[GObject.TYPE_STRING])
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "combo_changed"
-        dut.do_set_callbacks("changed", dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "combo_changed"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         dut.do_load_combo(SIMPLE_TEST_LIST)
         return dut
 
@@ -92,8 +92,10 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def subscribed_combo(self):
         """Create GTK3ComboBox dut that is subscribed to a pubsub message."""
         dut = self.make_dut(column_types=[GObject.TYPE_STRING])
-        dut.field = "test_field"
-        dut.do_set_callbacks("changed", dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "combo_changed"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
         dut.do_load_combo(SIMPLE_TEST_LIST)
         yield dut
@@ -121,14 +123,13 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         for _signal in GTK3ComboBox._GTK3_COMBO_BOX_SIGNALS:
             assert _signal in dut.dic_handler_id
 
+        assert dut.dic_attributes["column_types"] == [GObject.TYPE_STRING]
+        assert dut.dic_attributes["index"] == 0
         assert not dut.has_entry
-        assert dut.index == 0
         assert dut.n_items == 1
         assert dut.simple
-        assert dut.column_types == [GObject.TYPE_STRING]
         assert dut.get_model().get_n_columns() == 1
         assert dut.get_model().get_column_type(0) == GObject.TYPE_STRING
-        assert dut.edit_signal == "changed"
 
     @pytest.mark.unit
     def test_init_combobox_compound(self):
@@ -147,7 +148,6 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         assert isinstance(dut, GTK3ComboBox)
         assert dut._DEFAULT_HEIGHT == 30
         assert dut._DEFAULT_WIDTH == 200
-        assert dut.edit_signal == "changed"
         # All handler IDs should start at -1.
         assert all(_hid == -1 for _hid in dut.dic_handler_id.values())
         # ComboBox-specific attributes should be registered.
@@ -160,15 +160,15 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         for _signal in GTK3ComboBox._GTK3_COMBO_BOX_SIGNALS:
             assert _signal in dut.dic_handler_id
 
-        assert not dut.has_entry
-        assert dut.index == 2
-        assert dut.n_items == 3
-        assert not dut.simple
-        assert dut.column_types == [
+        assert dut.dic_attributes["column_types"] == [
             GObject.TYPE_STRING,
             GObject.TYPE_STRING,
             GObject.TYPE_STRING,
         ]
+        assert dut.dic_attributes["index"] == 2
+        assert not dut.has_entry
+        assert dut.n_items == 3
+        assert not dut.simple
         assert dut.get_model().get_n_columns() == 3
         assert dut.get_model().get_column_type(0) == GObject.TYPE_STRING
         assert dut.get_model().get_column_type(1) == GObject.TYPE_STRING
@@ -178,10 +178,14 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_init_combobox_custom_column_types(self):
         """Respect custom column_types passed by the caller."""
         dut = self.make_dut(
-            n_items=2, column_types=[GObject.TYPE_INT, GObject.TYPE_STRING]
+            n_items=2,
+            column_types=[GObject.TYPE_INT, GObject.TYPE_STRING],
         )
 
-        assert dut.column_types == [GObject.TYPE_INT, GObject.TYPE_STRING]
+        assert dut.dic_attributes["column_types"] == [
+            GObject.TYPE_INT,
+            GObject.TYPE_STRING,
+        ]
         assert dut.get_model().get_n_columns() == 2
         assert dut.get_model().get_column_type(0) == GObject.TYPE_INT
         assert dut.get_model().get_column_type(1) == GObject.TYPE_STRING
@@ -195,7 +199,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(GTK3DataWidgetAttributes())
 
-        assert dut.column_types == [GObject.TYPE_STRING]
+        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
 
     @pytest.mark.unit
     def test_do_set_attributes(self):
@@ -210,7 +214,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert dut.column_types == [GObject.TYPE_INT]
+        assert dut.do_get_attribute("column_types") == [GObject.TYPE_INT]
 
     @pytest.mark.unit
     def test_do_set_attributes_preserves_column_types(self):
@@ -222,7 +226,10 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         )
         dut.do_set_attributes(GTK3WidgetProperties())
 
-        assert dut.column_types == [GObject.TYPE_INT, GObject.TYPE_STRING]
+        assert dut.do_get_attribute("column_types") == [
+            GObject.TYPE_INT,
+            GObject.TYPE_STRING,
+        ]
 
     @pytest.mark.unit
     def test_do_set_attributes_overrides_column_types(self):
@@ -232,12 +239,15 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
             column_types=[GObject.TYPE_INT, GObject.TYPE_STRING],
         )
         dut.do_set_attributes(
-            GTK3WidgetProperties(
+            GTK3DataWidgetAttributes(
                 column_types=[GObject.TYPE_STRING, GObject.TYPE_STRING]
             )
         )
 
-        assert dut.column_types == [GObject.TYPE_STRING, GObject.TYPE_STRING]
+        assert dut.do_get_attribute("column_types") == [
+            GObject.TYPE_STRING,
+            GObject.TYPE_STRING,
+        ]
 
     @pytest.mark.unit
     def test_do_get_attribute(self):
@@ -417,7 +427,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_do_get_options_compound(self):
         """Return a dict of all the options available in a non-simple GTK3ComboBox."""
         dut = self.make_dut(index=1, simple=False, n_items=3)
-        dut.do_set_callbacks("changed", self.mock_callback)
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], self.mock_callback)
         dut.do_load_combo(COMPOUND_TEST_LIST)
 
         _options = dut.do_get_options()
@@ -443,8 +453,8 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_get_value_simple(self):
         """Return the value from a simple GTK3ComboBox at index X."""
         dut = self.make_dut(column_types=[GObject.TYPE_STRING])
-        dut.field = "test_field"
-        dut.do_set_callbacks("changed", dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         dut.do_load_combo(SIMPLE_TEST_LIST)
 
         assert not dut.do_get_value()
@@ -456,9 +466,9 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_get_value_compound(self):
         """Return the value from a compound GTK3ComboBox at index X."""
         dut = self.make_dut(index=1, simple=False, n_items=3)
-        dut.edit_signal = "changed"
-        dut.field = "test_field"
-        dut.do_set_callbacks("changed", dut.on_changed)
+        dut.dic_attributes["edit_signal"] = "changed"
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         dut.do_load_combo(COMPOUND_TEST_LIST)
 
         assert not dut.get_value_at_index(0)
@@ -507,7 +517,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         """Raise a key error with an unknown edit signal name."""
         pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(simple_combo.do_update, "rootTopic")
-        simple_combo.edit_signal = "edit_signal"
+        simple_combo.dic_attributes["edit_signal"] = "edit_signal"
 
         with pytest.raises(UnkSignalError):
             pub.sendMessage("rootTopic", package={"test_field": 2})
@@ -518,7 +528,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_update_compound(self, compound_combo):
         """Update a compound GTK3ComboBox with the data package value."""
-        compound_combo.edit_signal = "changed"
+        compound_combo.dic_attributes["edit_signal"] = "changed"
         pub.subscribe(compound_combo.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": 2})
@@ -549,7 +559,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_update_none_value(self, subscribed_combo):
         """Handle a None value via none_to_default."""
-        subscribed_combo.default = 0
+        subscribed_combo.dic_attributes["default"] = 0
 
         pub.sendMessage("rootTopic", package={"test_field": None})
 
@@ -558,7 +568,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_on_changed_simple(self, simple_combo):
         """Call on_changed() when a simple GTK3ComboBox value changes."""
-        pub.subscribe(self.mock_handler, simple_combo.send_topic)
+        pub.subscribe(self.mock_handler, simple_combo.dic_attributes["send_topic"])
 
         simple_combo.set_active(1)
 
@@ -566,14 +576,14 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_on_changed_unknown_signal(self, simple_combo):
         """Raise a KeyError with an unknown edit signal name."""
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        simple_combo.edit_signal = "edit_signal"
-        pub.subscribe(self.mock_handler, simple_combo.send_topic)
+        simple_combo.dic_attributes["edit_signal"] = "edit_signal"
+        pub.subscribe(self.mock_handler, simple_combo.dic_attributes["send_topic"])
 
         simple_combo.set_active(1)
 
     @pytest.mark.unit
     def test_on_changed_compound(self, compound_combo):
         """Call on_changed() when a compound GTK3ComboBox value changes."""
-        pub.subscribe(self.mock_handler, compound_combo.send_topic)
+        pub.subscribe(self.mock_handler, compound_combo.dic_attributes["send_topic"])
 
         compound_combo.set_active(1)

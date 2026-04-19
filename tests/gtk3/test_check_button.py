@@ -21,15 +21,16 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
 
+
 @pytest.mark.usefixtures("suppress_stderr")
-class TestCheckButton(BaseGTK3DataWidgetTests):
+class TestGTK3CheckButton(BaseGTK3DataWidgetTests):
     """Test class for the GTK3CheckButton."""
 
     widget_class = GTK3CheckButton
     expected_default_height = 40
     expected_default_value = False
     expected_default_width = 200
-    expected_package = {0:{"test_field": True}}
+    expected_package = {0: {"test_field": True}}
 
     def make_dut(self, label="..."):
         """Create a device under test for the GTK3CheckButton."""
@@ -79,8 +80,8 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
     def test_do_update(self):
         """Should update the GTK3CheckButton with the data package value."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": True})
@@ -92,8 +93,8 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
     def test_do_update_none_value(self):
         """Should NOT update the GTK3CheckButton when the data package is None."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": None})
@@ -105,11 +106,11 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
     def test_do_update_unknown_signal(self):
         """Should raise an UnkSignalError with an unknown edit signal name."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(dut.do_update, "rootTopic")
-        dut.edit_signal = "edit_signal"
+        dut.dic_attributes["edit_signal"] = "edit_signal"
 
         with pytest.raises(UnkSignalError):
             pub.sendMessage("rootTopic", package={"test_field": "Test Package"})
@@ -121,8 +122,8 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
         """Should NOT update the GTK3CheckButton when the package key doesn't match the
         GTK3CheckButton field name."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(dut.do_update, "rootTopic")
         dut.set_active(True)
 
@@ -134,10 +135,10 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
     def test_on_changed(self):
         """Call on_changed() when the GTK3CheckButton is toggled."""
         dut = self.make_dut()
-        dut.field = "test_field"
+        dut.dic_attributes["field"] = "test_field"
         dut.record_id = 0
         dut.send_topic = "button_toggled"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
         pub.subscribe(self.mock_handler, dut.send_topic)
 
@@ -147,12 +148,12 @@ class TestCheckButton(BaseGTK3DataWidgetTests):
     def test_on_changed_unknown_signal(self):
         """Should raise a KeyError with an unknown edit signal name."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "button_toggled"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "button_toggled"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        dut.edit_signal = "edit_signal"
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        dut.dic_attributes["edit_signal"] = "edit_signal"
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.set_active(True)

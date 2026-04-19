@@ -23,7 +23,6 @@ from pytkwrap.gtk3.textview import GTK3TextView
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
 
-
 COLUMN_HEADINGS = [
     ("Column 1", "Column Tooltip 1"),
     ("Column 2", "Column Tooltip 2"),
@@ -59,8 +58,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         # MatrixView-specific signals should be registered.
         for _signal in GTK3MatrixView._GTK3_MATRIXVIEW_SIGNALS:
             assert _signal in dut.dic_handler_id
-        assert dut.n_columns == 0
-        assert dut.n_rows == 0
+        assert dut.dic_attributes["n_columns"] == 0
+        assert dut.dic_attributes["n_rows"] == 0
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
@@ -71,8 +70,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(GTK3DataWidgetAttributes())
 
-        assert dut.n_columns == 0
-        assert dut.n_rows == 0
+        assert dut.dic_attributes["n_columns"] == 0
+        assert dut.dic_attributes["n_rows"] == 0
 
     @pytest.mark.unit
     def test_do_set_attributes(self):
@@ -88,8 +87,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert dut.n_columns == 3
-        assert dut.n_rows == 2
+        assert dut.dic_attributes["n_columns"] == 3
+        assert dut.dic_attributes["n_rows"] == 2
 
     @pytest.mark.unit
     def test_do_get_attribute(self):
@@ -106,23 +105,25 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         """Should add a column to the GTK3MatrixView."""
         dut = self.make_dut()
 
-        assert dut.n_columns == 0
+        assert dut.dic_attributes["n_columns"] == 0
         dut.do_add_column(1)
-        assert dut.n_columns == 1
+        assert dut.dic_attributes["n_columns"] == 1
 
     @pytest.mark.integration
     def test_do_add_column_label(self):
         """Should add a GTK3Label widget with text and a tooltip to each column."""
         dut = self.make_dut()
-        dut.do_set_column_headings([
-            (
-                "Column of the 1",
-                "This is the first, and only, column in the MatrixView.",
-            ),
-        ])
+        dut.do_set_column_headings(
+            [
+                (
+                    "Column of the 1",
+                    "This is the first, and only, column in the MatrixView.",
+                ),
+            ]
+        )
 
-        assert dut.n_columns == 1
-        assert dut.n_rows == 0
+        assert dut.dic_attributes["n_columns"] == 1
+        assert dut.dic_attributes["n_rows"] == 0
         assert isinstance(dut.get_child_at(1, 0), GTK3Label)
         assert dut.get_child_at(1, 0).get_label() == "Column of the 1"
         assert (
@@ -134,15 +135,17 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
     def test_do_add_row_label(self):
         """Should add a GTK3Label widget with text and a tooltip to each row."""
         dut = self.make_dut()
-        dut.do_set_row_headings([
-            (
-                "Row of the 1",
-                "This is the first, and only, row in the MatrixView.",
-            ),
-        ])
+        dut.do_set_row_headings(
+            [
+                (
+                    "Row of the 1",
+                    "This is the first, and only, row in the MatrixView.",
+                ),
+            ]
+        )
 
-        assert dut.n_columns == 0
-        assert dut.n_rows == 1
+        assert dut.dic_attributes["n_columns"] == 0
+        assert dut.dic_attributes["n_rows"] == 1
         assert isinstance(dut.get_child_at(0, 1), GTK3Label)
         assert dut.get_child_at(0, 1).get_label() == "Row of the 1"
         assert (
@@ -155,9 +158,9 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         """Should add a row to the GTK3MatrixView."""
         dut = self.make_dut()
 
-        assert dut.n_columns == 0
+        assert dut.dic_attributes["n_columns"] == 0
         dut.do_add_row(1)
-        assert dut.n_rows == 1
+        assert dut.dic_attributes["n_rows"] == 1
 
     @pytest.mark.integration
     def test_do_add_combobox_widget(self):
@@ -168,8 +171,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         dut.do_add_row(1)
         dut.do_add_widget(_combo, 1, 1, 1, 1)
 
-        assert dut.n_columns == 1
-        assert dut.n_rows == 1
+        assert dut.dic_attributes["n_columns"] == 1
+        assert dut.dic_attributes["n_rows"] == 1
         assert isinstance(dut.do_get_widget(1, 1), GTK3ComboBox)
 
     @pytest.mark.integration
@@ -181,8 +184,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         dut.do_add_row(1)
         dut.do_add_widget(_entry, 1, 1, 1, 1)
 
-        assert dut.n_columns == 1
-        assert dut.n_rows == 1
+        assert dut.dic_attributes["n_columns"] == 1
+        assert dut.dic_attributes["n_rows"] == 1
         assert isinstance(dut.do_get_widget(1, 1), GTK3Entry)
 
     @pytest.mark.integration
@@ -194,8 +197,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         dut.do_add_row(1)
         dut.do_add_widget(_label, 1, 1, 1, 1)
 
-        assert dut.n_columns == 1
-        assert dut.n_rows == 1
+        assert dut.dic_attributes["n_columns"] == 1
+        assert dut.dic_attributes["n_rows"] == 1
         assert isinstance(dut.do_get_widget(1, 1), GTK3Label)
 
     @pytest.mark.integration
@@ -207,8 +210,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         dut.do_add_row(1)
         dut.do_add_widget(_textview.scrollwindow, 1, 1, 1, 1)
 
-        assert dut.n_columns == 1
-        assert dut.n_rows == 1
+        assert dut.dic_attributes["n_columns"] == 1
+        assert dut.dic_attributes["n_rows"] == 1
         assert isinstance(dut.do_get_widget(1, 1), Gtk.ScrolledWindow)
 
     @pytest.mark.integration
@@ -216,16 +219,16 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         """Should build a 3 row by 3 column matrix."""
         dut = self.make_dut()
 
-        assert dut.n_columns == 0
-        assert dut.n_rows == 0
+        assert dut.dic_attributes["n_columns"] == 0
+        assert dut.dic_attributes["n_rows"] == 0
 
         dut.do_build_matrix(
             COLUMN_HEADINGS,
             ROW_HEADINGS,
         )
 
-        assert dut.n_columns == 3
-        assert dut.n_rows == 3
+        assert dut.dic_attributes["n_columns"] == 3
+        assert dut.dic_attributes["n_rows"] == 3
         assert isinstance(dut.get_child_at(0, 1), GTK3Label)
         assert dut.get_child_at(0, 1).get_label() == "Row 1"
         assert dut.get_child_at(0, 1).get_property("tooltip-markup") == "Row Tooltip 1"
@@ -272,32 +275,32 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         """Should remove a column from the GTK3MatrixView."""
         dut = self.make_dut()
 
-        assert dut.n_columns == 0
+        assert dut.dic_attributes["n_columns"] == 0
         dut.do_add_column(1)
         dut.do_add_column(1)
-        assert dut.n_columns == 2
+        assert dut.dic_attributes["n_columns"] == 2
         dut.do_remove_column(1)
-        assert dut.n_columns == 1
+        assert dut.dic_attributes["n_columns"] == 1
 
     @pytest.mark.unit
     def test_do_remove_row(self):
         """Should remove a row from the GTK3MatrixView."""
         dut = self.make_dut()
 
-        assert dut.n_rows == 0
+        assert dut.dic_attributes["n_rows"] == 0
         dut.do_add_row(1)
         dut.do_add_row(2)
-        assert dut.n_rows == 2
+        assert dut.dic_attributes["n_rows"] == 2
         dut.do_remove_row(1)
-        assert dut.n_rows == 1
+        assert dut.dic_attributes["n_rows"] == 1
 
     @pytest.mark.unit
     def test_do_set_column_headings(self):
         """Should add a row and populate with column heading Labels."""
         dut = self.make_dut()
 
-        assert dut.n_columns == 0
-        assert dut.n_rows == 0
+        assert dut.dic_attributes["n_columns"] == 0
+        assert dut.dic_attributes["n_rows"] == 0
 
         dut.do_set_column_headings(
             COLUMN_HEADINGS,
@@ -309,8 +312,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
             dut.get_child_at(3, 0),
         ]
 
-        assert dut.n_columns == 3
-        assert dut.n_rows == 0
+        assert dut.dic_attributes["n_columns"] == 3
+        assert dut.dic_attributes["n_rows"] == 0
         assert isinstance(_label_lst[0], GTK3Label)
         assert _label_lst[0].get_label() == "Column 1"
         assert _label_lst[0].get_property("tooltip-markup") == COLUMN_HEADINGS[0][1]
@@ -326,8 +329,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
         """Should add a column and populate with row heading Labels."""
         dut = self.make_dut()
 
-        assert dut.n_columns == 0
-        assert dut.n_rows == 0
+        assert dut.dic_attributes["n_columns"] == 0
+        assert dut.dic_attributes["n_rows"] == 0
 
         dut.do_set_row_headings(
             ROW_HEADINGS,
@@ -339,8 +342,8 @@ class TestMatrixView(BaseGTK3DataWidgetTests):
             dut.get_child_at(0, 3),
         ]
 
-        assert dut.n_columns == 0
-        assert dut.n_rows == 3
+        assert dut.dic_attributes["n_columns"] == 0
+        assert dut.dic_attributes["n_rows"] == 3
         assert isinstance(_label_lst[0], GTK3Label)
         assert _label_lst[0].get_label() == "Row 1"
         assert _label_lst[0].get_property("tooltip-markup") == ROW_HEADINGS[0][1]

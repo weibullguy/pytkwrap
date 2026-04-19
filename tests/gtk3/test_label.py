@@ -16,6 +16,7 @@ from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.label import GTK3Label, do_make_label_group
 from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.utilities import FontDescription
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
@@ -70,32 +71,6 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         # GTK3Label-specific signals should be registered.
         for _signal in GTK3Label._GTK3_LABEL_SIGNALS:
             assert _signal in dut.dic_handler_id
-        assert dut.font_allow_breaks == "false"
-        assert dut.font_bgalpha == "100%"
-        assert dut.font_bgcolor == "white"
-        assert dut.font_description == ""
-        assert dut.font_family == "Sans, Serif, Monospace"
-        assert dut.font_features == ""
-        assert dut.font_fgalpha == "100%"
-        assert dut.font_fgcolor == "black"
-        assert dut.font_gravity == "auto"
-        assert dut.font_gravity_hint == "natural"
-        assert dut.font_insert_hyphens == "true"
-        assert dut.font_lang == "en_US"
-        assert dut.font_letter_spacing == ""
-        assert dut.font_overline == "false"
-        assert dut.font_overline_color == "black"
-        assert dut.font_rise == "0pt"
-        assert dut.font_scale == ""
-        assert dut.font_size == "12pt"
-        assert dut.font_stretch == "normal"
-        assert dut.font_strikethrough == "false"
-        assert dut.font_strikethrough_color == "black"
-        assert dut.font_style == "normal"
-        assert dut.font_underline == "false"
-        assert dut.font_underline_color == "black"
-        assert dut.font_variant == "normal"
-        assert dut.font_weight == "normal"
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
@@ -104,32 +79,17 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(GTK3DataWidgetAttributes())
 
-        assert dut.font_allow_breaks == "false"
-        assert dut.font_bgalpha == "100%"
-        assert dut.font_bgcolor == "white"
-        assert dut.font_description == ""
-        assert dut.font_family == "Sans, Serif, Monospace"
-        assert dut.font_features == ""
-        assert dut.font_fgalpha == "100%"
-        assert dut.font_fgcolor == "black"
-        assert dut.font_gravity == "auto"
-        assert dut.font_gravity_hint == "natural"
-        assert dut.font_insert_hyphens == "true"
-        assert dut.font_lang == "en_US"
-        assert dut.font_letter_spacing == ""
-        assert dut.font_overline == "false"
-        assert dut.font_overline_color == "black"
-        assert dut.font_rise == "0pt"
-        assert dut.font_scale == ""
-        assert dut.font_size == "12pt"
-        assert dut.font_stretch == "normal"
-        assert dut.font_strikethrough == "false"
-        assert dut.font_strikethrough_color == "black"
-        assert dut.font_style == "normal"
-        assert dut.font_underline == "false"
-        assert dut.font_underline_color == "black"
-        assert dut.font_variant == "normal"
-        assert dut.font_weight == "normal"
+        assert isinstance(dut.dic_attributes["font_description"], FontDescription)
+        assert dut.do_get_attribute("font_description").family == (
+            "Sans,Serif,Monospace"
+        )
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").gravity == "south"
+        assert dut.do_get_attribute("font_description").size == 10
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "Normal"
+        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").weight == "Regular"
 
     @pytest.mark.unit
     def test_do_set_attributes(self):
@@ -137,58 +97,43 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(
             GTK3DataWidgetAttributes(
-                font_allow_breaks="true",
-                font_bgalpha="50%",
-                font_bgcolor="blue",
-                font_fgalpha="50%",
-                font_fgcolor="red",
-                font_family="Arial",
-                font_lang="en_GB",
-                font_letter_spacing="0",
-                font_gravity="west",
-                font_gravity_hint="strong",
-                font_insert_hyphens="false",
-                font_overline="true",
-                font_overline_color="purple",
-                font_rise="2pt",
-                font_scale="small-caps",
-                font_size="16pt",
-                font_stretch="condensed",
-                font_style="italic",
-                font_strikethrough="true",
-                font_strikethrough_color="green",
-                font_underline="true",
-                font_underline_color="yellow",
-                font_variant="title-caps",
-                font_weight="bold",
+                font_description=FontDescription(
+                    allow_breaks="true",
+                    bgalpha="50%",
+                    bgcolor="blue",
+                    fgalpha="50%",
+                    fgcolor="red",
+                    family="Arial",
+                    lang="en_GB",
+                    letter_spacing="0",
+                    gravity="west",
+                    gravity_hint="strong",
+                    insert_hyphens="false",
+                    overline="true",
+                    overline_color="purple",
+                    rise="2pt",
+                    scale="small-caps",
+                    size="16pt",
+                    stretch="condensed",
+                    style="italic",
+                    strikethrough="true",
+                    strikethrough_color="green",
+                    underline="true",
+                    underline_color="yellow",
+                    variant="Title-Caps",
+                    weight="Bold",
+                )
             )
         )
-        assert dut.font_allow_breaks == "true"
-        assert dut.font_bgalpha == "50%"
-        assert dut.font_bgcolor == "blue"
-        assert dut.font_description == ""
-        assert dut.font_family == "Arial"
-        assert dut.font_features == ""
-        assert dut.font_fgalpha == "50%"
-        assert dut.font_fgcolor == "red"
-        assert dut.font_gravity == "west"
-        assert dut.font_gravity_hint == "strong"
-        assert dut.font_insert_hyphens == "false"
-        assert dut.font_lang == "en_GB"
-        assert dut.font_letter_spacing == "0"
-        assert dut.font_overline == "true"
-        assert dut.font_overline_color == "purple"
-        assert dut.font_rise == "2pt"
-        assert dut.font_scale == "small-caps"
-        assert dut.font_size == "16pt"
-        assert dut.font_stretch == "condensed"
-        assert dut.font_strikethrough == "true"
-        assert dut.font_strikethrough_color == "green"
-        assert dut.font_style == "italic"
-        assert dut.font_underline == "true"
-        assert dut.font_underline_color == "yellow"
-        assert dut.font_variant == "title-caps"
-        assert dut.font_weight == "bold"
+
+        assert isinstance(dut.dic_attributes["font_description"], FontDescription)
+        assert dut.dic_attributes["font_description"].family == "Arial"
+        assert dut.dic_attributes["font_description"].features == ""
+        assert dut.dic_attributes["font_description"].gravity == "west"
+        assert dut.dic_attributes["font_description"].stretch == "condensed"
+        assert dut.dic_attributes["font_description"].style == "italic"
+        assert dut.dic_attributes["font_description"].variant == "Title-Caps"
+        assert dut.dic_attributes["font_description"].weight == "Bold"
 
     @pytest.mark.unit
     def test_do_get_attribute(self):
@@ -197,29 +142,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
 
         dut = self.make_dut()
 
-        assert dut.do_get_attribute("font_allow_breaks") == "false"
-        assert dut.do_get_attribute("font_bgalpha") == "100%"
-        assert dut.do_get_attribute("font_bgcolor") == "white"
-        assert dut.do_get_attribute("font_description") == ""
-        assert dut.do_get_attribute("font_family") == "Sans, Serif, Monospace"
-        assert dut.do_get_attribute("font_features") == ""
-        assert dut.do_get_attribute("font_fgalpha") == "100%"
-        assert dut.do_get_attribute("font_fgcolor") == "black"
-        assert dut.do_get_attribute("font_gravity") == "auto"
-        assert dut.do_get_attribute("font_gravity_hint") == "natural"
-        assert dut.do_get_attribute("font_insert_hyphens") == "true"
-        assert dut.do_get_attribute("font_overline") == "false"
-        assert dut.do_get_attribute("font_overline_color") == "black"
-        assert dut.do_get_attribute("font_rise") == "0pt"
-        assert dut.do_get_attribute("font_scale") == ""
-        assert dut.do_get_attribute("font_size") == "12pt"
-        assert dut.do_get_attribute("font_stretch") == "normal"
-        assert dut.do_get_attribute("font_strikethrough") == "false"
-        assert dut.do_get_attribute("font_strikethrough_color") == "black"
-        assert dut.do_get_attribute("font_underline") == "false"
-        assert dut.do_get_attribute("font_underline_color") == "black"
-        assert dut.do_get_attribute("font_variant") == "normal"
-        assert dut.do_get_attribute("font_weight") == "normal"
+        assert isinstance(dut.do_get_attribute("font_description"), FontDescription)
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
@@ -232,7 +155,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         assert dut.get_property("attributes") is None
         assert dut.get_property("ellipsize") == Pango.EllipsizeMode.NONE
         assert dut.get_property("justify") == Gtk.Justification.LEFT
-        assert dut.get_property("label") == ""
+        assert dut.get_property("label") == "Test Label Text"
         assert not dut.get_property("wrap")
         assert dut.get_property("wrap_mode") == Pango.WrapMode.WORD
         assert dut.get_property("lines") == -1
@@ -255,8 +178,9 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
             GTK3WidgetProperties(
                 angle=90,
                 ellipsize=Pango.EllipsizeMode.END,
+                font_description=FontDescription(weight="bold"),
                 justify=Gtk.Justification.CENTER,
-                label="<b><span>Test _Label Text</span></b>",
+                label="Test _Label Text",
                 lines=3,
                 max_width_chars=25,
                 selectable=True,
@@ -276,7 +200,16 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         assert dut.get_property("attributes") is None
         assert dut.get_property("ellipsize") == Pango.EllipsizeMode.END
         assert dut.get_property("justify") == Gtk.Justification.CENTER
-        assert dut.get_property("label") == "<b><span>Test _Label Text</span></b>"
+        assert (
+            dut.get_property("label")
+            == "<span allow_breaks='false' bgalpha='100%' bgcolor='white' face='Sans,"
+            "Serif,Monospace' font_features='' fgalpha='100%' fgcolor='black' "
+            "gravity='south' gravity_hint='natural' insert_hyphens='true' "
+            "lang='en_US' overline='none' overline_color='black' rise='0pt' "
+            "size='10pt' strikethrough='false' strikethrough_color='black' "
+            "style='Normal' underline='none' underline_color='black' "
+            "weight='Regular'>Test _Label Text</span>"
+        )
         assert dut.get_property("wrap")
         assert dut.get_property("wrap_mode") == Pango.WrapMode.CHAR
         assert dut.get_property("lines") == 3
@@ -308,7 +241,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     def test_do_update(self):
         """Should update the GTK3Label with the data package value."""
         dut = self.make_dut()
-        dut.field = "test_field"
+        dut.dic_attributes["field"] = "test_field"
         dut.do_set_callbacks("focus-in-event", dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
@@ -321,7 +254,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     def test_do_update_use_underline(self):
         """Should update the GTK3Label with the data package value."""
         dut = self.make_dut()
-        dut.field = "test_field"
+        dut.dic_attributes["field"] = "test_field"
         dut.do_set_properties(GTK3WidgetProperties(use_underline=True))
         dut.do_set_callbacks("focus-in-event", dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
@@ -335,24 +268,34 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     def test_do_update_use_markup(self):
         """Should update the GTK3Label with the data package value."""
         dut = self.make_dut()
-        dut.field = "test_field"
+        dut.dic_attributes["field"] = "test_field"
         dut.do_set_properties(GTK3WidgetProperties(use_markup=True))
         dut.do_set_callbacks("focus-in-event", dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage(
             "rootTopic",
-            package={"test_field": "<span foreground='red'>Test Package</span>"},
+            package={"test_field": "Test Package"},
         )
 
-        assert dut.get_label() == "<span foreground='red'>Test Package</span>"
+        assert dut.get_label() == (
+            "<span allow_breaks='false' bgalpha='100%' "
+            "bgcolor='white' face='Sans,Serif,Monospace' "
+            "font_features='' fgalpha='100%' fgcolor='black' "
+            "gravity='south' gravity_hint='natural' "
+            "insert_hyphens='true' lang='en_US' "
+            "overline='none' overline_color='black' "
+            "rise='0pt' size='10pt' strikethrough='false' "
+            "strikethrough_color='black' style='Normal' underline='none' "
+            "underline_color='black' weight='Regular'>Test Package</span>"
+        )
         assert dut.get_text() == "Test Package"
 
     @pytest.mark.unit
     def test_do_update_use_underline_and_markup(self):
         """Should update the GTK3Label with the data package value."""
         dut = self.make_dut()
-        dut.field = "test_field"
+        dut.dic_attributes["field"] = "test_field"
         dut.do_set_properties(
             GTK3WidgetProperties(
                 use_underline=True,
@@ -364,17 +307,25 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
 
         pub.sendMessage(
             "rootTopic",
-            package={"test_field": "<span foreground='red'>Test _Package</span>"},
+            package={"test_field": "Test _Package"},
         )
 
-        assert dut.get_label() == "<span foreground='red'>Test _Package</span>"
+        assert dut.get_label() == (
+            "<span allow_breaks='false' bgalpha='100%' bgcolor='white' "
+            "face='Sans,Serif,Monospace' font_features='' fgalpha='100%' "
+            "fgcolor='black' gravity='south' gravity_hint='natural' "
+            "insert_hyphens='true' lang='en_US' overline='none' overline_color='black' "
+            "rise='0pt' size='10pt' strikethrough='false' strikethrough_color='black' "
+            "style='Normal' underline='none' underline_color='black' "
+            "weight='Regular'>Test _Package</span>"
+        )
         assert dut.get_text() == "Test Package"
 
     @pytest.mark.unit
     def test_do_update_none_value(self):
         """Should not update the GTK3Label with the data package value is None."""
         dut = self.make_dut()
-        dut.field = "test_field"
+        dut.dic_attributes["field"] = "test_field"
         dut.do_set_callbacks("focus-in-event", dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
@@ -391,7 +342,7 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         """Should not update the GTK3Label when the data package key doesn't mathc the
         field."""
         dut = self.make_dut()
-        dut.field = "test_field"
+        dut.dic_attributes["field"] = "test_field"
         dut.do_set_callbacks("focus-in-event", dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
@@ -409,78 +360,45 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_font_description()
 
-        assert (
-            dut.font_description == "<span allow_breaks=false "
-            "bgalpha=100% "
-            "bgcolor=white "
-            "face=Sans, Serif, Monospace "
-            "font_features= "
-            "fgalpha=100% "
-            "fgcolor=black "
-            "gravity=auto "
-            "gravity_hint=natural "
-            "insert_hyphen=true "
-            "lang=en_US "
-            "letter_spacing= "
-            "overline=false "
-            "overline_color=black "
-            "rise=0pt "
-            "font_scale= "
-            "size=12pt "
-            "stretch=normal "
-            "strikethrough=false "
-            "strikethrough_color=black "
-            "style=normal "
-            "underline=false "
-            "underline_color=black "
-            "variant=normal "
-            "weight=normal"
-        )
+        assert isinstance(dut.dic_attributes["font_description"], FontDescription)
+        assert dut.do_get_attribute("font_description").family == "Sans,Serif,Monospace"
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").gravity == "south"
+        assert dut.do_get_attribute("font_description").size == 10
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "Normal"
+        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").weight == "Regular"
 
     @pytest.mark.unit
     def test_do_set_font_description(self):
         """Should set the default font description values to those in the arguments."""
         dut = self.make_dut()
-        dut.font_bgalpha = "50%"
-        dut.font_bgcolor = "yellow"
-        dut.font_family = "Helvetica"
-        dut.font_overline = "true"
-        dut.do_set_font_description()
-
-        assert (
-            dut.font_description == "<span allow_breaks=false "
-            "bgalpha=50% "
-            "bgcolor=yellow "
-            "face=Helvetica "
-            "font_features= "
-            "fgalpha=100% "
-            "fgcolor=black "
-            "gravity=auto "
-            "gravity_hint=natural "
-            "insert_hyphen=true "
-            "lang=en_US "
-            "letter_spacing= "
-            "overline=true "
-            "overline_color=black "
-            "rise=0pt "
-            "font_scale= "
-            "size=12pt "
-            "stretch=normal "
-            "strikethrough=false "
-            "strikethrough_color=black "
-            "style=normal "
-            "underline=false "
-            "underline_color=black "
-            "variant=normal "
-            "weight=normal"
+        dut.do_set_font_description(
+            FontDescription(
+                bgalpha="50%", bgcolor="yellow", family="Helvetica", overline="single"
+            )
         )
+
+        assert isinstance(dut.do_get_attribute("font_description"), FontDescription)
+        assert dut.do_get_attribute("font_description").bgalpha == "50%"
+        assert dut.do_get_attribute("font_description").bgcolor == "yellow"
+        assert dut.do_get_attribute("font_description").family == "Helvetica"
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").gravity == "south"
+        assert dut.do_get_attribute("font_description").overline == "single"
+        assert dut.do_get_attribute("font_description").size == 10
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "Normal"
+        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").weight == "Regular"
 
     @pytest.mark.unit
     def test_do_set_font_description_preserves_existing(self):
         """Should make no changes to the font description when already set and passed no
         arguments."""
         dut = self.make_dut()
-        dut.font_description = "<span face=Arial size=12pt"
-        dut.do_set_font_description()
+        dut.dic_attributes["font_description"] = FontDescription(family="Arial")
+        dut.do_set_font_description(FontDescription(family="Arial"))
 
-        assert dut.font_description == "<span face=Arial size=12pt"
+        assert dut.do_get_attribute("font_description").family == "Arial"

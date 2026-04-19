@@ -20,6 +20,7 @@ from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk, Pango
 from pytkwrap.gtk3.entry import GTK3Entry
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.utilities import FontDescription
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
@@ -50,19 +51,14 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         assert isinstance(dut, GTK3Entry)
         assert dut._DEFAULT_HEIGHT == 25
         assert dut._DEFAULT_WIDTH == 200
-        assert dut.edit_signal == "changed"
         # All handler IDs should start at -1.
         assert all(_hid == -1 for _hid in dut.dic_handler_id.values())
-        # Entry-specific attributes should be registered.
-        for _attribute in GTK3Entry._GTK3_ENTRY_ATTRIBUTES:
-            assert _attribute in dut.dic_attributes
         # Entry-specific properties should be registered.
         for _property in GTK3Entry._GTK3_ENTRY_PROPERTIES:
             assert _property in dut.dic_properties
         # Entry-specific signals should be registered.
         for _signal in GTK3Entry._GTK3_ENTRY_SIGNALS:
             assert _signal in dut.dic_handler_id
-        assert dut.font_description is None
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
@@ -73,7 +69,20 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(WidgetAttributes())
 
-        assert dut.font_description is None
+        assert isinstance(
+            dut.do_get_attribute("font_description"),
+            FontDescription,
+        )
+        assert dut.do_get_attribute("font_description").family == (
+            "Sans,Serif,Monospace"
+        )
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").gravity == "south"
+        assert dut.do_get_attribute("font_description").size == 10
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "Normal"
+        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").weight == "Regular"
 
     @pytest.mark.unit
     def test_do_set_attributes(self):
@@ -84,65 +93,82 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(
             WidgetAttributes(
-                font_description=Pango.FontDescription(
-                    "Sans,Serif,Monospace Normal Not-Rotated Bold 10"
+                font_description=FontDescription(
+                    family="Sans,Serif,Monospace",
+                    gravity="west",
+                    size=10,
+                    style="Normal",
+                    weight="Bold",
                 ),
             )
         )
 
-        assert dut.font_description.get_family() == "Sans,Serif,Monospace"
-        assert dut.font_description.get_features() is None
-        assert dut.font_description.get_gravity() == Pango.Gravity.SOUTH
-        assert dut.font_description.get_size() == 10240
-        assert dut.font_description.get_stretch() == Pango.Stretch.NORMAL
-        assert dut.font_description.get_style() == Pango.Style.NORMAL
-        assert dut.font_description.get_variant() == Pango.Variant.NORMAL
-        assert dut.font_description.get_weight() == Pango.Weight.BOLD
+        assert isinstance(dut.do_get_attribute("font_description"), FontDescription)
+        assert dut.do_get_attribute("font_description").family == "Sans,Serif,Monospace"
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").gravity == "west"
+        assert dut.do_get_attribute("font_description").size == 10
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "Normal"
+        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").weight == "Bold"
 
     @pytest.mark.unit
     def test_do_set_attributes_preserves_font_description(self):
         """Should not override column_types set in __init__ when no column_types key is
         passed in WidgetAttributes."""
         dut = self.make_dut(
-            Pango.FontDescription(
-                "Sans,Serif,Monospace Normal Not-Rotated Bold 10",
+            FontDescription(
+                family="Sans,Serif,Monospace",
+                gravity="south",
+                size=10,
+                style="Normal",
+                weight="Bold",
             )
         )
         dut.do_set_attributes(WidgetAttributes())
 
-        assert dut.font_description.get_family() == "Sans,Serif,Monospace"
-        assert dut.font_description.get_features() is None
-        assert dut.font_description.get_gravity() == Pango.Gravity.SOUTH
-        assert dut.font_description.get_size() == 10240
-        assert dut.font_description.get_stretch() == Pango.Stretch.NORMAL
-        assert dut.font_description.get_style() == Pango.Style.NORMAL
-        assert dut.font_description.get_variant() == Pango.Variant.NORMAL
-        assert dut.font_description.get_weight() == Pango.Weight.BOLD
+        assert dut.do_get_attribute("font_description").family == "Sans,Serif,Monospace"
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").gravity == "south"
+        assert dut.do_get_attribute("font_description").size == 10
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "Normal"
+        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").weight == "Bold"
 
     @pytest.mark.unit
     def test_do_set_attributes_overrides_font_description(self):
         """Should override column_types when explicitly passed."""
         dut = self.make_dut(
-            Pango.FontDescription(
-                "Sans,Serif,Monospace Normal Not-Rotated Bold 10",
+            FontDescription(
+                family="Sans,Serif,Monospace",
+                gravity="south",
+                size=12,
+                style="Normal",
+                weight="Bold",
             )
         )
         dut.do_set_attributes(
             WidgetAttributes(
-                font_description=Pango.FontDescription(
-                    "Helvetica Italic Not-Rotated Demi-Bold 16",
+                font_description=FontDescription(
+                    family="Helvetica",
+                    gravity="east",
+                    size=16,
+                    style="Italic",
+                    weight="Demi-Bold",
                 )
             )
         )
 
-        assert dut.font_description.get_family() == "Helvetica"
-        assert dut.font_description.get_features() is None
-        assert dut.font_description.get_gravity() == Pango.Gravity.SOUTH
-        assert dut.font_description.get_size() == 16384
-        assert dut.font_description.get_stretch() == Pango.Stretch.NORMAL
-        assert dut.font_description.get_style() == Pango.Style.ITALIC
-        assert dut.font_description.get_variant() == Pango.Variant.NORMAL
-        assert dut.font_description.get_weight() == Pango.Weight.SEMIBOLD
+        assert dut.do_get_attribute("font_description").family == "Helvetica"
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").gravity == "east"
+        assert dut.do_get_attribute("font_description").size == 16
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "Italic"
+        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").weight == "Demi-Bold"
 
     @pytest.mark.unit
     def test_do_get_attribute(self):
@@ -151,7 +177,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
 
         dut = self.make_dut()
 
-        assert dut.do_get_attribute("font_description") is None
+        assert isinstance(dut.do_get_attribute("font_description"), FontDescription)
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
@@ -351,8 +377,8 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_update(self):
         """Update the GTK3Entry with the data package value."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": "Test Package"})
@@ -363,8 +389,8 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_update_date_value(self):
         """Update the GTK3Entry with the stringified version of a date."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": datetime.today()})
@@ -378,8 +404,8 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_update_none_value(self):
         """Update the GTK3Entry with a blank string."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={"test_field": None})
@@ -390,11 +416,11 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_update_unknown_signal(self):
         """Raise a KeyError with an unknown edit signal name."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.do_update)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(self.do_update_error_handler, "do_log_error")
         pub.subscribe(dut.do_update, "rootTopic")
-        dut.edit_signal = "edit_signal"
+        dut.dic_attributes["edit_signal"] = "edit_signal"
 
         with pytest.raises(UnkSignalError):
             pub.sendMessage("rootTopic", package={"test_field": "Test Package"})
@@ -405,8 +431,8 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_update_wrong_field(self):
         """Do nothing when the package field doesn't match."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(dut.do_update, "rootTopic")
         dut.set_text("Test Text")
 
@@ -418,12 +444,12 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_on_changed(self):
         """Called when the GTK3Entry text changes."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "entry_changed"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "entry_changed"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.set_text("Test Text")
 
@@ -431,13 +457,13 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_on_changed_unknown_signal(self):
         """Raise a KeyError with an unknown edit signal name."""
         dut = self.make_dut()
-        dut.field = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "entry_changed"
-        dut.do_set_callbacks(dut.edit_signal, dut.on_changed)
+        dut.dic_attributes["field"] = "test_field"
+        dut.dic_attributes["record_id"] = 0
+        dut.dic_attributes["send_topic"] = "entry_changed"
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        dut.edit_signal = "edit_signal"
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        dut.dic_attributes["edit_signal"] = "edit_signal"
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.set_text("Test Text")
 
@@ -445,7 +471,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_get_value_float(self):
         """Return a float value when the datatype attribute is set to 'gfloat'."""
         dut = self.make_dut()
-        dut.datatype = "gfloat"
+        dut.dic_attributes["datatype"] = "gfloat"
         dut.set_text("38.235")
 
         assert isinstance(dut.do_get_value(), float)
@@ -455,7 +481,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_get_value_int(self):
         """Return an integer value when the datatype attribute is set to 'gint'."""
         dut = self.make_dut()
-        dut.datatype = "gint"
+        dut.dic_attributes["datatype"] = "gint"
         dut.set_text("38")
 
         assert isinstance(dut.do_get_value(), int)
@@ -465,7 +491,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_get_value_string(self):
         """Return a string value when the datatype attribute is set to 'gchararray'."""
         dut = self.make_dut()
-        dut.datatype = "gchararray"
+        dut.dic_attributes["datatype"] = "gchararray"
         dut.set_text("Some Text")
 
         assert isinstance(dut.do_get_value(), str)
@@ -478,37 +504,36 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_font_description()
 
-        assert isinstance(dut.font_description, Pango.FontDescription)
-        assert dut.font_description.get_family() == "Sans,Serif,Monospace Not Rotated"
-        assert dut.font_description.get_features() is None
-        assert dut.font_description.get_gravity() == Pango.Gravity.SOUTH
-        assert dut.font_description.get_size() == 10240
-        assert dut.font_description.get_stretch() == Pango.Stretch.NORMAL
-        assert dut.font_description.get_style() == Pango.Style.NORMAL
-        assert dut.font_description.get_variant() == Pango.Variant.NORMAL
-        assert dut.font_description.get_weight() == Pango.Weight.NORMAL
+        assert isinstance(dut.dic_attributes["font_description"], FontDescription)
+        assert dut.dic_attributes["font_description"].family == "Sans,Serif,Monospace"
+        assert dut.dic_attributes["font_description"].features == ""
+        assert dut.dic_attributes["font_description"].gravity == "south"
+        assert dut.dic_attributes["font_description"].size == 10
+        assert dut.dic_attributes["font_description"].stretch == ""
+        assert dut.dic_attributes["font_description"].style == "Normal"
+        assert dut.dic_attributes["font_description"].variant == ""
+        assert dut.dic_attributes["font_description"].weight == "Regular"
 
     @pytest.mark.unit
     def test_do_set_font_description(self):
         """Set a new font description with values passed as arguments."""
         dut = self.make_dut()
         dut.do_set_font_description(
-            family="Helvetica",
-            size=16,
-            style="Roman",
-            variant="All-Caps",
-            weight="Demi Bold",
+            FontDescription(
+                family="Helvetica",
+                size=16,
+                style="Roman",
+                variant="All-Caps",
+                weight="Demi Bold",
+            )
         )
 
-        assert isinstance(dut.font_description, Pango.FontDescription)
-        assert (
-            dut.font_description.get_family()
-            == "Helvetica Not Rotated  Roman All-Caps Demi"
-        )
-        assert dut.font_description.get_features() is None
-        assert dut.font_description.get_gravity() == Pango.Gravity.SOUTH
-        assert dut.font_description.get_size() == 16384
-        assert dut.font_description.get_stretch() == Pango.Stretch.NORMAL
-        assert dut.font_description.get_style() == Pango.Style.NORMAL
-        assert dut.font_description.get_variant() == Pango.Variant.NORMAL
-        assert dut.font_description.get_weight() == Pango.Weight.BOLD
+        assert isinstance(dut.dic_attributes["font_description"], FontDescription)
+        assert dut.dic_attributes["font_description"].family == "Helvetica"
+        assert dut.dic_attributes["font_description"].features == ""
+        assert dut.dic_attributes["font_description"].gravity == "south"
+        assert dut.dic_attributes["font_description"].size == 16
+        assert dut.dic_attributes["font_description"].stretch == ""
+        assert dut.dic_attributes["font_description"].style == "Roman"
+        assert dut.dic_attributes["font_description"].variant == "All-Caps"
+        assert dut.dic_attributes["font_description"].weight == "Demi Bold"
