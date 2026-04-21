@@ -16,10 +16,17 @@ hooks = [
 ]
 
 [[repos]]
-repo = "git@github.com:pre-commit/mirrors-mypy.git"
-rev = "v1.20.0"
+repo = "https://github.com/psf/black"
+rev = "24.10.0"
 hooks = [
-    {id = "mypy", args = ["--install-types", "--non-interactive"]},
+    {id = "black", args = ["--config", "./pyproject.toml"]}
+]
+
+[[repos]]
+repo = "https://github.com/PyCQA/isort"
+rev = "5.13.2"
+hooks = [
+    {id = "isort", args = ["--settings-file", "./pyproject.toml"]}
 ]
 
 [[repos]]
@@ -34,11 +41,24 @@ repo = "git@github.com:astral-sh/ruff-pre-commit.git"
 rev = "v0.15.10"
 hooks = [
     {id = "ruff-check", args = ["--preview", "--fix"]},
-    {id = "ruff-format", args = ["--preview"]},
 ]
 
 [[repos]]
 repo = "local"
 hooks =[
     {id = "pylint", name = "pylint", entry = "pylint", language = "python", files = "\\.py$", args = ["--rcfile=./pyproject.toml"]},
+]
+
+[[repos]]
+repo = "git@github.com:pre-commit/mirrors-mypy.git"
+rev = "v1.20.0"
+hooks = [
+    {id = "mypy", args = ["--config-file", "./pyproject.toml"]},
+]
+
+[[repos]]
+repo = "https://github.com/myint/eradicate"
+rev = "2.3.0"
+hooks = [
+    {id = "eradicate", args = []}
 ]

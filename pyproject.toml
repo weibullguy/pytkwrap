@@ -11,18 +11,18 @@ requires-python = ">=3.8"
 license = "MIT"
 keywords = []
 authors = [
-  { name = "Doyle Rowland", email = "weibullguy@protonmail.com" },
+    { name = "Doyle Rowland", email = "weibullguy@protonmail.com" },
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: Implementation :: CPython",
-  "Programming Language :: Python :: Implementation :: PyPy",
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = []
 
@@ -37,13 +37,13 @@ path = "src/pytkwrap/__about__.py"
 [tool.hatch.envs.default]
 python = "3.12"
 dependencies = [
-  "matplotlib>=3.10.8",
-  "prek>=0.3.9",
-  "pycairo>=1.29",
-  "pygobject>=3.54",
-  "pylint",
-  "pypubsub>=4.0",
-  "python-dateutil",
+    "matplotlib>=3.10.8",
+    "prek>=0.3.9",
+    "pycairo>=1.29",
+    "pygobject>=3.54",
+    "pylint",
+    "pypubsub>=4.0",
+    "python-dateutil",
 ]
 [tool.hatch.envs.default.scripts]
 install = "pip install -e ."
@@ -53,14 +53,14 @@ python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
 [tool.hatch.envs.test]
 extra-dependencies = [
-  "coveralls",
-  "coverage[toml]",
-  "pytest",
-  "pytest-cov",
-  "pytest-icdiff",
-  "pytest-order",
-  "pytest-sugar",
-  "typing_extensions",
+    "coveralls",
+    "coverage[toml]",
+    "pytest",
+    "pytest-cov",
+    "pytest-icdiff",
+    "pytest-order",
+    "pytest-sugar",
+    "typing_extensions",
 ]
 
 [tool.hatch.envs.test.scripts]
@@ -74,76 +74,77 @@ integration-coverage = "COVERAGE_FILE='.coverage.integration' pytest -m integrat
 coverage-combine = "coverage combine .coverage.unit .coverage.integration"
 coverage-report = "coverage html --rcfile=pyproject.toml"
 test = [
-  "install",
-  "unit",
-  "integration",
+    "install",
+    "unit",
+    "integration",
 ]
 test-coverage = [
-  "install",
-  "unit-coverage",
-  "integration-coverage",
-  "coverage-combine",
-  "coverage-report",
+    "install",
+    "unit-coverage",
+    "integration-coverage",
+    "coverage-combine",
+    "coverage-report",
 ]
 
 [tool.hatch.envs.lint]
 extra-dependencies = [
-  "bandit[toml]",
-  "docformatter[tomli]>=1.7",
-  "mccabe",
-  "pylint",
-  "radon",
-  "ruff",
+    "bandit[toml]",
+    "docformatter[tomli]>=1.7",
+    "isort",
+    "mccabe",
+    "pylint",
+    "radon",
+    "ruff",
 ]
 [tool.hatch.envs.lint.scripts]
 update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
 fix = "prek run ruff-check --files {args}"
 format = [
-  "prek run ruff-format --files {args}",
-  "docformatter --in-place --config ./pyproject.toml {args}",
+    "prek run black --files {args}",
+    "prek run docformatter --files {args}",
+    "prek run isort --files {args}",
 ]
-lint = "pylint --rcfile ./pyproject.toml {args}"
+lint = "prek run pylint --files {args}"
 maintain = [
-  "radon hal {args}",
-  "radon cc --show-complexity {args}",
-  "radon mi --show {args}",
+    "radon hal {args}",
+    "radon cc --show-complexity {args}",
+    "radon mi --show {args}",
 ]
 security = "bandit -c pyproject.toml -b .bandit.baseline -r {args}"
 all = [
-  "fix",
-  "format",
-  "lint",
-  "maintain",
+    "fix",
+    "format",
+    "lint",
+    "maintain",
 ]
 
 [tool.hatch.envs.types]
 extra-dependencies = [
-  "mypy>=1.0.0",
-  "ty",
+    "mypy>=1.0.0",
+    "ty",
 ]
 [tool.hatch.envs.types.scripts]
 check = [
-  "mypy --install-types --non-interactive {args}",
-  "ty check {args}",
+    "prek run mypy --files {args}",
+    "ty check {args}",
 ]
 make-stub = "stubgen --include-private -o src {args}"
 
 [tool.bandit]
 exclude_dirs = [
-  "tests/",
+    "tests/",
 ]
 skips = [
-  "B105",
+    "B105",
 ]
 
 [tool.black]
 line-length = 88
 target-version = [
-  "py310",
-  "py311",
-  "py312",
-  "py313",
-  "py314",
+    "py310",
+    "py311",
+    "py312",
+    "py313",
 ]
 workers = 5
 
@@ -152,7 +153,7 @@ source_pkgs = ["pytkwrap"]
 branch = true
 parallel = true
 omit = [
-  "src/pytkwrap/__about__.py",
+    "src/pytkwrap/__about__.py",
 ]
 
 [tool.coverage.paths]
@@ -161,36 +162,54 @@ tests = ["tests", "*/pytkwrap/tests"]
 
 [tool.coverage.report]
 exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
+    "no cov",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
 ]
 
 [tool.docformatter]
 non-cap = [
-  "pytkwrap",
+    "pytkwrap",
 ]
 wrap-summaries = 88
 wrap-descriptions = 88
 
+[tool.isort]
+known_first_party = 'pytkwrap'
+known_third_party = [
+    'gi',
+    'pubsub',
+    'pytest',
+]
+import_heading_firstparty = 'pytkwrap Package Imports'
+import_heading_localfolder = 'pytkwrap Local Imports'
+import_heading_stdlib = 'Standard Library Imports'
+import_heading_thirdparty = 'Third Party Imports'
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
 [tool.mypy]
 [[tool.mypy.overrides]]
-module = ["gi", "gi.repository", "gi.overrides.*",]
+module = ["gi", "gi.repository", "gi.overrides.*", ]
 ignore_missing_imports = true
 
 [tool.pylint.master]
 ignore-paths = [
-  'tests*'
+    'tests*'
 ]
 ignore-patterns = [
-  '\S*.pyi'
+    '\S*.pyi'
 ]
 persistent = true
 
 [tool.pylint.basic]
 attr-rgx = '^_{0,2}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}$'
 good-names = [
-  '_'
+    '_'
 ]
 variable-rgx = '^_{0,2}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}$'
 
@@ -204,17 +223,17 @@ max-module-lines = 5000
 
 [tool.pylint.messages_control]
 disable = [
-  "fixme",
-  "too-many-arguments",
-  "too-many-positional-arguments",
-  "wrong-import-position",
+    "fixme",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "wrong-import-position",
 ]
 
 [tool.pylint.miscellaneous]
 notes = [
-  'FIXME',
-  'ISSUE',
-  'TODO'
+    'FIXME',
+    'ISSUE',
+    'TODO'
 ]
 
 [tool.pylint.reports]
@@ -247,17 +266,17 @@ markers = [
 
 [tool.ruff]
 builtins = [
-  "_",
+    "_",
 ]
 extend-exclude = [
-  ".idea",
-  ".pytest_cache",
-  "htmlcov",
-  "tests",
+    ".idea",
+    ".pytest_cache",
+    "htmlcov",
+    "tests",
 ]
 indent-width = 4
 line-length = 88
-target-version = "py313"
+target-version = "py310"
 
 [tool.ruff.analyze]
 type-checking-imports = false
@@ -274,93 +293,44 @@ skip-magic-trailing-comma = false
 dummy-variable-rgx = '^_{0,2}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}$'
 fixable = ["ALL"]
 ignore = [
-  "D203",
-  "D204",
-  "D213",
+    "D203",
+    "D204",
+    "D213",
 ]
 select = [
-  "B",
-  "D",
-  "DOC",
-  "E",
-  "F",
-  "I",
-  "N",
-  "PLC",
-  "PLR",
-  "S",
-  "SIM",
-  "UP",
+    "B",
+    "D",
+    "DOC",
+    "E",
+    "F",
+    "N",
+    "PLC",
+    "PLR",
+    "S",
+    "SIM",
+    "UP",
 ]
 task-tags = [
-  "BUG",
-  "FIXME",
-  "TODO",
+    "BUG",
+    "FIXME",
+    "TODO",
 ]
 unfixable = []
 
-[tool.ruff.lint.isort]
-case-sensitive = false
-classes = []
-combine-as-imports = false
-constants = []
-default-section = "third-party"
-detect-same-package = true
-extra-standard-library = []
-force-single-line = false
-force-sort-within-sections = false
-force-to-top = []
-force-wrap-aliases = false
-forced-separate = []
-from-first = false
-known-first-party = ["pytkwrap"]
-known-local-folder = []
-known-third-party = [
-  'gi',
-  'pubsub',
-  'pytest',
-]
-length-sort = false
-length-sort-straight = false
-lines-after-imports = 2
-lines-between-types = 0
-no-lines-before = []
-no-sections = false
-order-by-type = true
-relative-imports-order = "furthest-to-closest"
-required-imports = []
-section-order = [
-  "future",
-  "standard-library",
-  "third-party",
-  "first-party",
-  "local-folder",
-]
-single-line-exclusions = []
-split-on-trailing-comma = true
-variables = []
-
-[tool.ruff.lint.isort.import-heading]
-first-party = 'pytkwrap Package Imports'
-future = "Future Imports"
-standard-library = "Standard Library Imports"
-third-party = 'Third Party Imports'
-local-folder = 'pytkwrap Local Imports'
-
-[tool.ruf.lint.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 8
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = [
-  "D205",
-  "DOC201",
-  "DOC402",
-  "PLC1901",
-  "PLC2701",
-  "PLR0904",
-  "PLR2004",
-  "PLR6301",
-  "S101",
+    "D205",
+    "DOC201",
+    "DOC402",
+    "PLC1901",
+    "PLC2701",
+    "PLR0904",
+    "PLR2004",
+    "PLR6301",
+    "S101",
 ]
 [tool.ruff.lint.pycodestyle]
 max-doc-length = 88
@@ -377,21 +347,24 @@ max-positional-args = 6
 
 [tool.ty.analysis]
 allowed-unresolved-imports = [
-  "gi.overrides.*"
+    "gi.overrides.*"
 ]
 respect-type-ignore-comments = true
 
 [tool.ty.environment]
 python-version = "3.12"
 root = [
-  "./src"
+    "./src"
 ]
+
+[tool.ty.rules]
+inconsistent-mro = "ignore"
 
 [tool.ty.src]
 exclude = [
-  "tests"
+    "tests"
 ]
 include = [
-  "examples",
-  "src"
+    "examples",
+    "src"
 ]
