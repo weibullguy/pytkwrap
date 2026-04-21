@@ -1,8 +1,9 @@
 # Standard Library Imports
-from typing import override
+from datetime import date
 
 # Third Party Imports
 from _typeshed import Incomplete
+from typing_extensions import override
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject as GObject
@@ -39,12 +40,14 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
     def do_add_row(self, position: int) -> None: ...
     def do_add_widget(
         self,
-        widget: GTK3CheckButton
-        | GTK3ComboBox
-        | GTK3Entry
-        | GTK3Label
-        | GTK3SpinButton
-        | GTK3TextView,
+        widget: (
+            GTK3CheckButton
+            | GTK3ComboBox
+            | GTK3Entry
+            | GTK3Label
+            | GTK3SpinButton
+            | GTK3TextView
+        ),
         left: int,
         top: int,
         height: int,
@@ -70,7 +73,10 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
     def do_set_row_headings(self, row_names: list[tuple[str, str]]) -> None: ...
     def get_cell_value(
         self, column: int = 0, row: int = 0
-    ) -> bool | float | int | str | None: ...
+    ) -> bool | date | float | int | str | None: ...
     def set_cell_value(
-        self, value: bool | float | int | str | None, column: int = 0, row: int = 0
+        self,
+        value: bool | date | float | int | str | None,
+        column: int = 0,
+        row: int = 0,
     ) -> None: ...
