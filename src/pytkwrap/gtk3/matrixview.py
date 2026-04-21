@@ -5,12 +5,14 @@
 """The pytkwrap GTK3MatrixView module."""
 
 # Standard Library Imports
+from datetime import date
+
 try:
     # Standard Library Imports
     from typing import override
 except ImportError:
-    # Standard Library Imports
-    from typing import override
+    # Third Party Imports
+    from typing_extensions import override  # ruff: disable[unsorted-imports]
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject, Gtk
@@ -47,9 +49,9 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_MATRIXVIEW_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_MATRIXVIEW_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_MATRIXVIEW_SIGNALS}
+        )
 
         self.show()
 
@@ -241,7 +243,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             The column position to remove.
         """
         self.remove_column(position)
-        self.dic_attributes["n_columns"] -= 1
+        self.dic_attributes["n_columns"] = max(0, self.dic_attributes["n_columns"] - 1)
 
     def do_remove_row(self, position: int) -> None:
         """Remove the GTK3MatrixView row at position.
@@ -252,7 +254,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
             The row position to remove.
         """
         self.remove_row(position)
-        self.dic_attributes["n_rows"] -= 1
+        self.dic_attributes["n_rows"] = max(0, self.dic_attributes["n_rows"] - 1)
 
     def do_set_column_headings(
         self,
@@ -309,7 +311,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
         self,
         column: int = 0,
         row: int = 0,
-    ) -> bool | float | int | str | None:
+    ) -> bool | date | float | int | str | None:
         """Retrieve the value from the widget at the specified cell.
 
         Parameters
@@ -321,7 +323,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
 
         Returns
         -------
-        bool or float or int or str or None
+        bool | date | float | int | str | None
             The value of the widget at the specified cell, or None if the cell
             is empty or contains an unsupported widget type.
         """
@@ -347,7 +349,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
 
     def set_cell_value(
         self,
-        value: bool | float | int | str | None,
+        value: bool | date | float | int | str | None,
         column: int = 0,
         row: int = 0,
     ) -> None:
@@ -355,7 +357,7 @@ class GTK3MatrixView(Gtk.Grid, GTK3BaseDataWidget):
 
         Parameters
         ----------
-        value : bool or float or int or str or None
+        value : bool | date | float | int | str | None
             The value to set in the widget at the specified cell.
         column : int
             The column index of the cell to set the value in.

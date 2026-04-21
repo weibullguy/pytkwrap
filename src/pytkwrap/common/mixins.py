@@ -9,9 +9,9 @@ from datetime import date
 from typing import TypedDict
 
 # Third Party Imports
-from matplotlib.axes import Axes
-from matplotlib.backend_bases import FigureCanvasBase
-from matplotlib.figure import Figure
+from matplotlib.axes import Axes  # type: ignore[import-not-found]
+from matplotlib.backend_bases import FigureCanvasBase  # type: ignore[import-not-found]
+from matplotlib.figure import Figure  # type: ignore[import-not-found]
 
 # pytkwrap Package Imports
 from pytkwrap.utilities import FontDescription
@@ -283,9 +283,9 @@ class PlotWidgetMixin(DataWidgetMixin):
         for _attr in self._PLOT_WIDGET_ATTRIBUTES:
             setattr(self, _attr, attributes.get(_attr, self.dic_attributes[_attr]))
 
-        self.dic_attributes.update({
-            _attr: getattr(self, _attr) for _attr in self._PLOT_WIDGET_ATTRIBUTES
-        })
+        self.dic_attributes.update(
+            {_attr: getattr(self, _attr) for _attr in self._PLOT_WIDGET_ATTRIBUTES}
+        )
 
 
 def make_widget_config(

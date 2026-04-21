@@ -14,7 +14,7 @@ from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
 from pytkwrap.utilities import FontDescription
 
 
-class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
+class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):
     """The GTK3Entry class.
 
     Attributes
@@ -123,9 +123,9 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_ENTRY_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_ENTRY_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_ENTRY_SIGNALS}
+        )
 
         self.do_set_font_description(font)
 
@@ -230,12 +230,12 @@ class GTK3Entry(Gtk.Entry, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
 
         return str(_value)
 
-    def do_set_value(self, value: bool | date | float | int | str) -> None:
+    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
         """Set the GTK3Entry active value.
 
         Parameters
         ----------
-        value : bool | date | float | int | str
+        value : bool | date | float | int | str | None
             The data to display in the GTK3Entry.
         """
         if value is None:

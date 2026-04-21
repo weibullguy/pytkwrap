@@ -20,10 +20,7 @@ from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
 from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
 
 
-class GTK3ComboBox(
-    Gtk.ComboBox,
-    GTK3BaseDataWidget,
-):  # ty:ignore[inconsistent-mro]
+class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
     """The GTK3ComboBox class."""
 
     # Define private class attributes.
@@ -90,9 +87,9 @@ class GTK3ComboBox(
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_COMBO_BOX_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_COMBO_BOX_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_COMBO_BOX_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_COMBO_BOX_SIGNALS}
+        )
         self.dic_attributes["column_types"] = column_types
         self.dic_attributes["index"] = index
 
@@ -156,7 +153,7 @@ class GTK3ComboBox(
         self.set_wrap_width(self.dic_properties["wrap_width"])
 
         if self.dic_properties["model"]:
-            self.dic_properties["model"].set_column_types(
+            self.dic_properties["model"].set_column_types(  # type: ignore[attr-defined]
                 self.dic_attributes["column_types"]
             )
         self.set_model(self.dic_properties["model"])
@@ -231,18 +228,18 @@ class GTK3ComboBox(
         """
         return self.get_value_at_index(self.dic_attributes["index"])
 
-    def do_set_value(self, value: int) -> None:
+    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
         """Set the GTK3ComboBox active selection.
 
         Parameters
         ----------
-        value : int
+        value : bool | date | float | int | str | None
             The index of the item in the GTK3ComboBox to set active.
         """
-        if not isinstance(value, int):
+        if not isinstance(value, (float, int)):
             return
 
-        self.set_active(value)
+        self.set_active(int(value))
 
     def get_value_at_index(self, index: int = -1) -> str:
         """Return the value in the ComboBox model found at <index> position.

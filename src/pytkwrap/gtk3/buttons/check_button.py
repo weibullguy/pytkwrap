@@ -4,6 +4,9 @@
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
 """The pytkwrap GTK3CheckButton module."""
 
+# Standard Library Imports
+from datetime import date
+
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
@@ -37,13 +40,13 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton):
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_CHECK_BUTTON_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_CHECK_BUTTON_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_CHECK_BUTTON_SIGNALS}
+        )
 
         self.default = False
 
-    # ----- ----- Standard widget methods. ----- ----- #
+    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
         """Set the properties of the GTK3CheckButton.
 
@@ -53,10 +56,6 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton):
             The typed dict with the property values to set for the GTK3CheckButton.
         """
         super().do_set_properties(properties)
-
-        self.dic_properties["active"] = properties.get("active", False)
-        self.dic_properties["draw_indicator"] = properties.get("draw_indicator", False)
-        self.dic_properties["inconsistent"] = properties.get("inconsistent", False)
 
         self.set_active(self.dic_properties["active"])
         self.set_inconsistent(self.dic_properties["inconsistent"])
@@ -68,7 +67,7 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton):
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
 
-    # ----- ----- Check Button specific methods. ----- ----- #
+    # ----- ----- ----- ----- Check Button specific methods. ----- ----- ----- ----- #
     def do_get_value(self) -> bool:  # type: ignore[override]
         """Retrieve the status of the GTK3CheckButton.
 
@@ -79,7 +78,7 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton):
         """
         return self.get_active()
 
-    def do_set_value(self, value: bool | int) -> None:
+    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
         """Set the GTK3CheckButton active value.
 
         Parameters
@@ -90,4 +89,4 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton):
         if value is None:
             value = False
 
-        self.set_active(value)
+        self.set_active(bool(value))

@@ -17,7 +17,7 @@ from pytkwrap.utilities import FontDescription
 
 
 # pylint: disable-next=too-many-instance-attributes
-class GTK3Label(Gtk.Label, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
+class GTK3Label(Gtk.Label, GTK3BaseDataWidget):
     """The GTK3Label class."""
 
     # Define private class attributes.
@@ -70,9 +70,9 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_LABEL_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_LABEL_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_LABEL_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_LABEL_SIGNALS}
+        )
 
         self.dic_attributes["default"] = "..."
         self.do_set_font_description()
@@ -189,12 +189,12 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
         """
         return self.get_text()
 
-    def do_set_value(self, value: str | None) -> None:
+    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
         """Set the GTK3Label active value.
 
         Parameters
         ----------
-        value : str or None
+        value : bool | date | float | int | str | None
             The data to display in the GTK3Label.
         """
         if value is None:
@@ -209,21 +209,21 @@ class GTK3Label(Gtk.Label, GTK3BaseDataWidget):  # ty:ignore[inconsistent-mro]
             )
             self.dic_properties["label"] = f"{_markup_prefix}{value}</span>"
             if self.dic_properties["use_underline"]:
-                self.set_markup_with_mnemonic(self.dic_properties["label"])
+                self.set_markup_with_mnemonic(str(self.dic_properties["label"]))
                 return
 
-            self.set_markup(self.dic_properties["label"])
+            self.set_markup(str(self.dic_properties["label"]))
             return
 
         if self.dic_properties["use_underline"]:
             self.dic_properties["label"] = value
-            self.set_text_with_mnemonic(value)
+            self.set_text_with_mnemonic(str(value))
             return
 
         # Setting the text will overwrite any text in the label, clear any mnemonic
         # accelerators, set use_markup=False, and set use_underline=False.
         self.dic_properties["label"] = value
-        self.set_text(value)
+        self.set_text(str(value))
 
     # ----- ----- ----- ----- --- Label specific methods. --- ----- ----- ----- ----- #
     def do_set_font_description(self, font: FontDescription | None = None) -> None:

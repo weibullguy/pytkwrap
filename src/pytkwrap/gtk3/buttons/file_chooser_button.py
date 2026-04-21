@@ -72,9 +72,9 @@ class GTK3FileChooserButton(
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_FILE_CHOOSER_BUTTON_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_FILE_CHOOSER_BUTTON_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_FILE_CHOOSER_BUTTON_SIGNALS}
+        )
 
         self.default = "path"
 
@@ -108,7 +108,9 @@ class GTK3FileChooserButton(
 
     # ----- ----- ----- -- File Chooser Button specific methods. -- ----- ----- ----- #
     # pylint: disable-next=line-too-long,too-many-return-statements
-    def do_get_value(self) -> str | list[str] | Gio.File | list[Gio.File] | None:  # type: ignore[override] # noqa: PLR0911
+    def do_get_value(  # type: ignore[override]
+        self,
+    ) -> str | list[str] | Gio.File | list[Gio.File] | None:  # noqa: PLR0911
         """Retrieve the selected file name(s) from the GTK3FileChooserButton.
 
         The value(s) will always be returned as absolute paths.

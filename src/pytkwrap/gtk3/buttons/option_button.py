@@ -4,6 +4,9 @@
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
 """The pytkwrap GTK3OptionButton module."""
 
+# Standard Library Imports
+from datetime import date
+
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
@@ -41,9 +44,9 @@ class GTK3OptionButton(Gtk.RadioButton, GTK3BaseButton):
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_OPTION_BUTTON_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_OPTION_BUTTON_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_OPTION_BUTTON_SIGNALS}
+        )
 
         self.do_set_properties(
             GTK3WidgetProperties(
@@ -52,7 +55,7 @@ class GTK3OptionButton(Gtk.RadioButton, GTK3BaseButton):
             )
         )
 
-    # ----- ----- Standard widget methods. ----- ----- #
+    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
         """Set the properties of the GTK3OptionButton.
 
@@ -74,7 +77,7 @@ class GTK3OptionButton(Gtk.RadioButton, GTK3BaseButton):
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
 
-    # ----- ----- Option Button specific methods. ----- ----- #
+    # ----- ----- ----- ----- Option Button specific methods. ----- ----- ----- ----- #
     def do_get_value(self) -> bool:  # type: ignore[override]
         """Return the value of the GTK3OptionButton.
 
@@ -85,15 +88,15 @@ class GTK3OptionButton(Gtk.RadioButton, GTK3BaseButton):
         """
         return self.get_active()
 
-    def do_set_value(self, value: bool) -> None:
+    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
         """Set the status of the GTK3OptionButton.
 
         Parameters
         ----------
-        value : bool
+        value : bool | date | float | int | str | None
             The index of the item in the GTK3ComboBox to set active.
         """
         if not isinstance(value, bool):
             return
 
-        self.set_active(value)
+        self.set_active(bool(value))

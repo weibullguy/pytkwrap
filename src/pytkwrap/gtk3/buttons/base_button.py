@@ -7,7 +7,7 @@
 
 # Standard Library Imports
 from collections.abc import Callable
-from typing import Any
+from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
@@ -18,7 +18,10 @@ def do_make_buttonbox(
     icons: list[str],
     tooltips: list[str],
     callbacks: list[Callable],
-    **kwargs: Any,
+    height: int = -1,
+    layout: Gtk.ButtonBoxStyle = Gtk.ButtonBoxStyle.START,
+    orientation: str = "vertical",
+    width: int = -1,
 ) -> Gtk.HButtonBox | Gtk.VButtonBox:
     """Create a buttonbox for  views.
 
@@ -27,26 +30,34 @@ def do_make_buttonbox(
 
     Parameters
     ----------
-    icons: list[str]
-    tooltips: list[str]
-    callbacks: list[Callable]
+    icons : list[str]
+        List of absolute paths to icon image files for each button.
+    tooltips : list[str]
+        List of tooltip markup strings for each button.  If fewer tooltips than icons
+        are present, remaining buttons get default tooltips.
+    callbacks : list[Callable]
+        List of callback functions for each button's 'clicked' signal.  If fewer
+        callbacks than icons are provided, remaining buttons are set insensitive.
+    height : int
+        The button height in pixels.  Default is -1 (natural size).
+    layout : Gtk.ButtonBoxStyle
+        The button layout style.  Default is Gtk.ButtonBoxStyle.START.
+    orientation : str
+        'horizontal' or 'vertical'. Default is 'vertical'.
+    width : int
+        The button width in pixels.  Default is -1 (natural size).
 
     Returns
     -------
-    _buttonbox : Gtk.ButtonBox
+    _buttonbox : Gtk.HButtonBox | Gtk.VButtonBox
         The buttonbox populated with GTK3Buttons.
     """
-    _height = kwargs.get("height", -1)
-    _layout = kwargs.get("layout", Gtk.ButtonBoxStyle.START)
-    _orientation = kwargs.get("orientation", "vertical")
-    _width = kwargs.get("width", -1)
-
-    _buttonbox = Gtk.HButtonBox() if _orientation == "horizontal" else Gtk.VButtonBox()
-    _buttonbox.set_layout(_layout)
+    _buttonbox = Gtk.HButtonBox() if orientation == "horizontal" else Gtk.VButtonBox()
+    _buttonbox.set_layout(layout)
 
     for _idx, __ in enumerate(icons):
         _image = Gtk.Image()
-        _icon = GdkPixbuf.Pixbuf.new_from_file_at_size(__, _height, _width)
+        _icon = GdkPixbuf.Pixbuf.new_from_file_at_size(__, height, width)
         _image.set_from_pixbuf(_icon)
 
         _button = GTK3BaseButton()
@@ -54,8 +65,8 @@ def do_make_buttonbox(
 
         _button.do_set_properties(
             GTK3WidgetProperties(
-                height_request=_height,
-                width_request=_width,
+                height_request=height,
+                width_request=width,
             )
         )
 
@@ -78,7 +89,7 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
     """The GTK3BaseButton class."""
 
     # Define private class attributes.
-    _BUTTON_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_BASE_BUTTON_PROPERTIES = GTK3WidgetProperties(
         action_name=None,
         action_target=None,
         always_show_image=False,
@@ -88,14 +99,14 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
         relief=Gtk.ReliefStyle.NORMAL,
         use_underline=False,
     )
-    _BUTTON_SIGNALS = [
+    _GTK3_BASE_BUTTON_SIGNALS = [
         "activate",
-        # "add", # TODO: The callback for this signal needs to accept two arguments.
-        # "check-resize", # TODO: This signal is not a spin button signal.
-        # "clicked", # TODO: This signal is not a spin button signal.
-        # "remove", # TODO: The callback for this signal needs to accept two arguments.
-        # "set-focus-child", # TODO: The callback for this signal needs to accept two
-        #  arguments.
+        "check-resize",
+        "clicked",
+        # Container signals inherited from Gtk.Bin - callbacks require two arguments
+        # (container, widget) rather than the standard single-argument form.  Register
+        # these manually via self.connect() if needed:
+        # "add", "remove", "set-focus-child"
     ]
     _DEFAULT_HEIGHT = 30
     _DEFAULT_WIDTH = 200
@@ -110,13 +121,15 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
         GTK3BaseDataWidget.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_properties.update(self._BUTTON_PROPERTIES)
-        self.dic_handler_id.update({_signal: -1 for _signal in self._BUTTON_SIGNALS})
+        self.dic_properties.update(self._GTK3_BASE_BUTTON_PROPERTIES)
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_BASE_BUTTON_SIGNALS}
+        )
 
         self.set_label(label)
         self.show_all()
 
-    # ----- ----- Standard widget methods. ----- ----- #
+    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
         """Set the properties of the Button.
 
@@ -124,21 +137,6 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
             the Button.
         """
         super().do_set_properties(properties)
-
-        self.dic_properties["action_name"] = properties.get("action_name", None)
-        self.dic_properties["action_target"] = properties.get("action_target", None)
-        self.dic_properties["always_show_image"] = properties.get(
-            "always_show_image",
-            False,
-        )
-        self.dic_properties["image"] = properties.get("image", None)
-        self.dic_properties["image_position"] = properties.get(
-            "image_position",
-            Gtk.PositionType.LEFT,
-        )
-        self.dic_properties["label"] = properties.get("label", None)
-        self.dic_properties["relief"] = properties.get("relief", Gtk.ReliefStyle.NORMAL)
-        self.dic_properties["use_underline"] = properties.get("use_underline", False)
 
         self.set_always_show_image(self.dic_properties["always_show_image"])
         self.set_relief(self.dic_properties["relief"])
@@ -159,8 +157,8 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
             self.set_image(_image)
             self.set_image_position(self.dic_properties["image_position"])
 
-    def do_get_value(self) -> None:
+    def do_get_value(self) -> bool | date | float | int | str | None:
         """Return the current value of the GTK3BaseButton."""
 
-    def do_set_value(self, value) -> None:
+    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
         """Set the current value of the GTK3BaseButton."""

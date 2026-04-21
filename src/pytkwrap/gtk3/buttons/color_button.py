@@ -4,8 +4,6 @@
 # Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
 """The GTK3ColorButton module."""
 
-# Third Party Imports
-
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
@@ -38,11 +36,11 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3BaseButton):
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_COLOR_BUTTON_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_COLOR_BUTTON_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_COLOR_BUTTON_SIGNALS}
+        )
 
-    # ----- ----- Standard widget methods. ----- ----- #
+    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
     def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
         """Set the properties of the GTK3ColorButton.
 
@@ -65,7 +63,7 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3BaseButton):
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
 
-    # ----- ----- Color Button specific methods. ----- ----- #
+    # ----- ----- ----- ----- Color Button specific methods. ----- ----- ----- ----- #
     def do_get_value(self) -> Gdk.RGBA | None:  # type: ignore[override]
         """Retrieve the Gtk.RGBA displayed in the GTK3ColorButton.
 

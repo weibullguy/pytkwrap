@@ -8,7 +8,7 @@
 from datetime import date
 
 # Third Party Imports
-from pubsub import pub
+from pubsub import pub  # type: ignore[import-not-found]
 
 # pytkwrap Package Imports
 from pytkwrap.exceptions import UnkSignalError
@@ -84,13 +84,13 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_TEXTVIEW_PROPERTIES)
-        self.dic_handler_id.update({
-            _signal: -1 for _signal in self._GTK3_TEXTVIEW_SIGNALS
-        })
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_TEXTVIEW_SIGNALS}
+        )
 
         self.default = ""
         self.dic_properties["buffer"] = txtbuffer
-        self.tag_bold = self.dic_properties["buffer"].create_tag(
+        self.tag_bold = self.dic_properties["buffer"].create_tag(  # type: ignore[attr-defined] # pylint: disable=line-too-long
             "bold", weight=Pango.Weight.BOLD
         )
         self.set_buffer(self.dic_properties["buffer"])
@@ -163,7 +163,7 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         except OverflowError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
                 f"{type(self).__name__}.do_update()",
-                self.edit_signal,
+                self.dic_attributes["edit_signal"],
             )
             pub.sendMessage(
                 "do_log_error",
@@ -188,19 +188,19 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         UnkSignalError
             If the signal name is not in the handler_id dict.
         """
-        _package = {self.field: self.do_get_value()}
+        _package = {self.dic_attributes["field"]: self.do_get_value()}
         try:
-            _hid = self.dic_handler_id[self.edit_signal]
-            with self.dic_properties["buffer"].handler_block(_hid):
+            _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
+            with self.dic_properties["buffer"].handler_block(_hid):  # type: ignore[attr-defined] # pylint: disable=line-too-long
                 pub.sendMessage(
-                    self.send_topic,
-                    node_id=self.record_id,
+                    self.dic_attributes["send_topic"],
+                    node_id=self.dic_attributes["record_id"],
                     package=_package,
                 )
         except KeyError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
                 f"{type(self).__name__}.on_changed()",
-                self.edit_signal,
+                self.dic_attributes["edit_signal"],
             )
             pub.sendMessage(
                 "do_log_error",
@@ -216,22 +216,22 @@ class GTK3TextView(Gtk.TextView, GTK3BaseDataWidget):
         text : str
             The text in the Gtk.TextBuffer.
         """
-        return self.dic_properties["buffer"].get_text(
-            *self.dic_properties["buffer"].get_bounds(), True
+        return self.dic_properties["buffer"].get_text(  # type: ignore[attr-defined]
+            *self.dic_properties["buffer"].get_bounds(), True  # type: ignore[attr-defined] # pylint: disable=line-too-long
         )
 
-    def do_set_value(self, value: bool | date | float | int | str) -> None:
+    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
         """Set the GTK3TextView active value.
 
         Parameters
         ----------
-        value : bool | date | float | int | str
+        value : bool | date | float | int | str | None
             The data to display in the GTK3TextView.
         """
         if value is None:
             value = ""
 
-        self.dic_properties["buffer"].set_text(str(value))
+        self.dic_properties["buffer"].set_text(str(value))  # type: ignore[attr-defined]
 
     def _get_signal_owner(self) -> Gtk.TextBuffer:
         """Return the object whose signal handler should be blocked.

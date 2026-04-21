@@ -12,13 +12,12 @@ from abc import abstractmethod
 from datetime import date
 from typing import TYPE_CHECKING, TypedDict
 
-
 if TYPE_CHECKING:
     # Standard Library Imports
     from types import FunctionType
 
 # Third Party Imports
-from pubsub import pub
+from pubsub import pub  # type: ignore[import-not-found]
 
 # pytkwrap Package Imports
 from pytkwrap.common import WidgetMixin
@@ -474,7 +473,10 @@ class GTK3BaseDataWidget(GTK3BaseWidget, GTK3DataWidgetMixin):
         raise NotImplementedError
 
     @abstractmethod
-    def do_set_value(self, value) -> None:
+    def do_set_value(
+        self,
+        value: bool | date | float | int | str | None,
+    ) -> None:
         """Set the current value of the widget."""
         raise NotImplementedError
 

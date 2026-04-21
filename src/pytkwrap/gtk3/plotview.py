@@ -1,4 +1,4 @@
-#
+# mypy: disable-error-code=import-not-found
 #       pytkwrap.gtk3.plotview.py is part of the pytkwrap project
 #
 # All rights reserved.
@@ -11,7 +11,6 @@
 from pytkwrap.common import PlotWidgetAttributes, PlotWidgetMixin
 from pytkwrap.gtk3._libs import Gdk, Gtk, _
 from pytkwrap.gtk3.widget import GTK3BaseWidget
-
 
 try:
     # Third Party Imports
@@ -97,7 +96,7 @@ class GTK3PlotView(Gtk.HBox, GTK3BaseWidget, PlotWidgetMixin):
 
         _min, _max = self._get_minimax_ordinates()
 
-        self.axis.set_ybound(_min, 1.05 * _max)
+        self.axis.set_ybound(_min, 1.05 * _max)  # type: ignore[union-attr]
 
         self.canvas.show()
 
@@ -132,7 +131,7 @@ class GTK3PlotView(Gtk.HBox, GTK3BaseWidget, PlotWidgetMixin):
             marker=marker,
             markersize=10,
         )
-        self.axis.add_line(_line)
+        self.axis.add_line(_line)  # type: ignore[union-attr]
 
     def do_close_plot(
         self, __window: Gtk.Window, __event: Gdk.Event, parent: Gtk.Widget
@@ -194,8 +193,9 @@ class GTK3PlotView(Gtk.HBox, GTK3BaseWidget, PlotWidgetMixin):
             The type and color of marker to use for the plot. Default is 'g-' or a
             solid green line.
         """
-        self.axis.xaxis_date()
-        self.axis.plot(x_values, y_values, marker, linewidth=2)
+        self.axis.xaxis_date()  # type: ignore[union-attr]
+        # pylint: disable-next=line-too-long
+        self.axis.plot(x_values, y_values, marker, linewidth=2)  # type: ignore[union-attr]
         self._min_values.append(min(y_values))
         self._max_values.append(max(y_values))
 
@@ -216,8 +216,12 @@ class GTK3PlotView(Gtk.HBox, GTK3BaseWidget, PlotWidgetMixin):
         marker : str
             Type and color of marker to use for the plot. Default is 'g' or solid green.
         """
-        self.axis.grid(False, which="both")
-        _values, _edges, __ = self.axis.hist(x_values, bins=y_values, color=marker)
+        self.axis.grid(False, which="both")  # type: ignore[union-attr]
+        _values, _edges, __ = self.axis.hist(  # type: ignore[union-attr]
+            x_values,
+            bins=y_values,
+            color=marker,
+        )
         self._min_values.append(min(_values))
         self._max_values.append(max(_values) + 1)
 
@@ -239,7 +243,12 @@ class GTK3PlotView(Gtk.HBox, GTK3BaseWidget, PlotWidgetMixin):
             Type and color of marker to use for the plot. Default is 'go' or open green
              circles.
         """
-        _paths = self.axis.scatter(x_values, y_values, marker=marker, linewidth=2)
+        _paths = self.axis.scatter(  # type: ignore[union-attr]
+            x_values,
+            y_values,
+            marker=marker,
+            linewidth=2,
+        )
         self._min_values.append(min(y_values))
         self._max_values.append(max(y_values))
 
@@ -261,7 +270,12 @@ class GTK3PlotView(Gtk.HBox, GTK3BaseWidget, PlotWidgetMixin):
             Type and color of marker to use for the plot. Default is 'g-' or a solid
             green line.
         """
-        (_line,) = self.axis.step(x_values, y_values, marker, where="mid")
+        (_line,) = self.axis.step(  # type: ignore[union-attr]
+            x_values,
+            y_values,
+            marker,
+            where="mid",
+        )
         _line.set_ydata(y_values)
         self._min_values.append(min(y_values))
         self._max_values.append(max(y_values))
