@@ -141,7 +141,7 @@ extra-dependencies = [
     "recommonmark",
     "rstcheck",
     "Sphinx",
-    "sphinx_py3doc_enhanced_theme",
+    "sphinx-py3doc-enhanced-theme",
     "sphinxcontrib-issuetracker",
     "sphinxcontrib-spelling",
 ]
