@@ -7,7 +7,7 @@ name = "pytkwrap"
 dynamic = ["version"]
 description = ''
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = "MIT"
 keywords = []
 authors = [
@@ -27,9 +27,9 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Documentation = "https://github.com/Doyle Rowland/pytkwrap#readme"
-Issues = "https://github.com/Doyle Rowland/pytkwrap/issues"
-Source = "https://github.com/Doyle Rowland/pytkwrap"
+Documentation = "https://github.com/weibullguy/pytkwrap#readme"
+Issues = "https://github.com/weibullguy/pytkwrap/issues"
+Source = "https://github.com/weibullguy/pytkwrap"
 
 [tool.hatch.version]
 path = "src/pytkwrap/__about__.py"
@@ -95,6 +95,7 @@ extra-dependencies = [
     "pylint",
     "radon",
     "ruff",
+    "wily",
 ]
 [tool.hatch.envs.lint.scripts]
 update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
@@ -111,6 +112,7 @@ maintain = [
     "radon mi --show {args}",
 ]
 security = "bandit -c pyproject.toml -b .bandit.baseline -r {args}"
+wily = "prek run wily --files {args}"
 all = [
     "fix",
     "format",
@@ -129,6 +131,30 @@ check = [
     "ty check {args}",
 ]
 make-stub = "stubgen --include-private -o src {args}"
+
+[tool.hatch.envs.docs]
+extra-dependencies = [
+    "Babel",
+    "docutils",
+    "myst_parser",
+    "pyroma",
+    "recommonmark",
+    "rstcheck",
+    "Sphinx",
+    "sphinx_py3doc_enhanced_theme",
+    "sphinxcontrib-issuetracker",
+    "sphinxcontrib-spelling",
+]
+
+[tool.hatch.envs.docs.scripts]
+clean-docs = "cd docs && rm -fr _build/html/*"
+lint-docs = "rstcheck --config ./pyproject.toml -r docs/requirements docs/api"
+api-docs = "sphinx-apidoc -f -o docs/api src/pytkwrap"
+make-docs = "cd docs && make html -e"
+docs = [
+    "clean-docs",
+    "make-docs",
+]
 
 [tool.bandit]
 exclude_dirs = [
@@ -262,6 +288,17 @@ testpaths = ["tests", "tests/common"]
 markers = [
     "unit: marks the test as a unit test.",
     "integration: marks the test as an integration test.",
+]
+
+[tool.rstcheck]
+report = "warning"
+ignore_directives = [
+    "automodule",
+    "tabularcolumns",
+    "toctree",
+]
+ignore_roles = [
+    "numref",
 ]
 
 [tool.ruff]

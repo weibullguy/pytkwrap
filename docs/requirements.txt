@@ -1,0 +1,2 @@
+myst-parser
+sphinx-py3doc-enhanced-theme
