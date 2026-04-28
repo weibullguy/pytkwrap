@@ -65,12 +65,12 @@ extra-dependencies = [
 
 [tool.hatch.envs.test.scripts]
 update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
-install = "pip install ."
+install = "pip install -e ."
 clean-test = "rm -f .coverage* cobertura.xml && rm -fr .pytest_cache"
-unit = "pytest -x -s -vvv -m unit --no-cov --cache-clear tests/common/ tests/gtk3/"
-unit-coverage = "COVERAGE_FILE='.coverage.unit' pytest -m unit --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/ tests/gtk3/"
-integration = "pytest -x -s -v -m integration --no-cov --cache-clear tests/common/ tests/gtk3/"
-integration-coverage = "COVERAGE_FILE='.coverage.integration' pytest -m integration --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/ tests/gtk3/"
+unit = "pytest -x -s -vvv -m unit --no-cov --cache-clear {args}"
+unit-coverage = "COVERAGE_FILE='.coverage.unit' pytest -m unit --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/"
+integration = "pytest -x -s -v -m integration --no-cov --cache-clear tests/common/"
+integration-coverage = "COVERAGE_FILE='.coverage.integration' pytest -m integration --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/"
 coverage-combine = "coverage combine .coverage.unit .coverage.integration"
 coverage-report = "coverage html --rcfile=pyproject.toml"
 test = [
@@ -139,21 +139,21 @@ extra-dependencies = [
     "myst_parser",
     "pyroma",
     "recommonmark",
-    "rstcheck",
+    "rstcheck[toml,sphinx]",
     "Sphinx",
-    "sphinx-py3doc-enhanced-theme",
     "sphinxcontrib-issuetracker",
     "sphinxcontrib-spelling",
+    "sphinx-conestack-theme",
 ]
 
 [tool.hatch.envs.docs.scripts]
-clean-docs = "cd docs && rm -fr _build/html/*"
-lint-docs = "rstcheck --config ./pyproject.toml -r docs/requirements docs/api"
+clean = "cd docs && rm -fr _build/html/*"
+lint = "rstcheck --config ./pyproject.toml -r docs/requirements docs/api"
 api-docs = "sphinx-apidoc -f -o docs/api src/pytkwrap"
-make-docs = "cd docs && make html -e"
-docs = [
-    "clean-docs",
-    "make-docs",
+make = "cd docs && make html -e"
+make-docs = [
+    "clean",
+    "make",
 ]
 
 [tool.bandit]
@@ -288,6 +288,8 @@ testpaths = ["tests", "tests/common"]
 markers = [
     "unit: marks the test as a unit test.",
     "integration: marks the test as an integration test.",
+    "requirement: marks the test the verification for requirement X.",
+    "issue: marks the test as the regression test for issue X.",
 ]
 
 [tool.rstcheck]
@@ -296,6 +298,10 @@ ignore_directives = [
     "automodule",
     "tabularcolumns",
     "toctree",
+]
+ignore_messages = [
+    "Duplicate implicit target name",
+    "Hyperlink target",
 ]
 ignore_roles = [
     "numref",

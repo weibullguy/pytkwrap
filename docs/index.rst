@@ -7,10 +7,6 @@ Welcome to pytkwrap!
 .. toctree::
    :maxdepth: 2
 
-#   overview
-#   contributing
-#   history
-
 ####################
 pytkwrap Development
 ####################
@@ -18,7 +14,6 @@ pytkwrap Development
 .. toctree::
    :maxdepth: 2
 
-   api/pytkwrap
    requirements/index
 
 ##################

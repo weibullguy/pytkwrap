@@ -7,9 +7,6 @@
 # http://www.sphinx-doc.org/en/master/config
 """Configuration for Sphinx."""
 
-# Third Party Imports
-import sphinx_py3doc_enhanced_theme
-
 # -- Project information -----------------------------------------------------
 project = "pytkwrap"
 copyright = (  # pylint: disable=redefined-builtin
@@ -18,9 +15,9 @@ copyright = (  # pylint: disable=redefined-builtin
 author = "Doyle Rowland"
 
 # The short X.Y version
-version = "0.0"
+version = "0.1"
 # The full version, including alpha/beta/rc tags
-release = "0.0.1"
+release = "0.1.0"
 
 # -- General configuration ---------------------------------------------------
 # Add any Sphinx extension module names here, as strings. They can be
@@ -65,8 +62,9 @@ numfig = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 # html_theme = "bizstyle"
-html_theme = "sphinx_py3doc_enhanced_theme"
-html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path(), "."]
+html_theme = "conestack"
+# html_logo = "_static/logo.png"
+html_static_path = ["_static"]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
