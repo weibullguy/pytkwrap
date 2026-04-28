@@ -5,14 +5,12 @@
 """The pytkwrap common package."""
 
 # pytkwrap Local Imports
-from .mixins import (
-    DataWidgetAttributes,  # noqa: F401
-    DataWidgetMixin,  # noqa: F401
-    PlotWidgetAttributes,  # noqa: F401
-    PlotWidgetMixin,  # noqa: F401
-    WidgetAttributes,  # noqa: F401
-    WidgetConfig,  # noqa: F401
-    WidgetMixin,  # noqa: F401
-    make_widget_config,  # noqa: F401
-    set_widget_sensitivity,  # noqa: F401
-)
+from .mixins import BaseMixin  # noqa: F401
+from .mixins import DataWidgetAttributes  # noqa: F401
+from .mixins import DataWidgetMixin  # noqa: F401
+from .mixins import PlotWidgetAttributes  # noqa: F401
+from .mixins import PlotWidgetMixin  # noqa: F401
+from .mixins import WidgetAttributes  # noqa: F401
+from .mixins import WidgetConfig  # noqa: F401
+from .mixins import WidgetMixin  # noqa: F401
+from .mixins import make_widget_config  # noqa: F401

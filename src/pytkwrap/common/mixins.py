@@ -1,10 +1,11 @@
-#       pytkwrap.common.mixins.py is part of the pytkwrap project
-#
-# All rights reserved.
-# Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""The pytkwrap mixins module."""
+"""The pytkwrap common mixins module.
+
+.. author:: Doyle Rowland
+.. copyright:: Since 2007, all rights reserved.
+"""
 
 # Standard Library Imports
+import gettext
 from datetime import date
 from typing import TypedDict
 
@@ -16,11 +17,12 @@ from matplotlib.figure import Figure  # type: ignore[import-not-found]
 # pytkwrap Package Imports
 from pytkwrap.utilities import FontDescription
 
+_ = gettext.gettext
+
 
 class WidgetAttributes(TypedDict, total=False):
     """Type for widget structural attributes."""
 
-    label_text: str | None
     n_columns: int
     n_rows: int
     x_pos: float | int
@@ -30,16 +32,13 @@ class WidgetAttributes(TypedDict, total=False):
 class DataWidgetAttributes(WidgetAttributes, total=False):
     """Type for widget data display attributes."""
 
-    datatype: bool | date | float | int | str | None
-    default: bool | date | float | int | str | None
+    data_type: type | None  # e.g. bool, date, float, int, str
+    default_value: bool | date | float | int | str | None
     edit_signal: str
-    field: str
     font_description: FontDescription | None
     format: str
     index: int
     listen_topic: str | None
-    parent_id: int
-    record_id: int
     send_topic: str | None
 
 
@@ -51,30 +50,48 @@ class PlotWidgetAttributes(DataWidgetAttributes, total=False):
     figure: Figure | None
 
 
-class WidgetMixin:
-    """Mixin to be used with all widgets."""
+class BaseMixin:  # pylint: disable=[too-few-public-methods]
+    """Mixin that provides the base for all other mixins."""
 
-    _WIDGET_ATTRIBUTES = WidgetAttributes(
-        label_text="",
-        n_columns=0,
-        n_rows=0,
-        x_pos=0,
-        y_pos=0,
-    )
-    _DEFAULT_HEIGHT = -1
-    _DEFAULT_WIDTH = -1
-
-    def __init__(self) -> None:
-        """Initialize an instance of the WidgetMixin."""
-        self.dic_attributes = dict(self._WIDGET_ATTRIBUTES)
+    def __init__(self):
+        """Initialize an instance of the BaseMixin."""
+        self.dic_attributes: dict[str, str] = {}
         self.dic_error_message: dict[str, str] = {
             "unk_function": "{}: No such function {} exists.",
             "unk_signal": "{}: Unknown signal name '{}'.",
         }
 
+
+class WidgetMixin(BaseMixin):
+    """Mixin to be used with all widgets."""
+
+    _DEFAULT_HEIGHT = -1
+    _DEFAULT_TOOLTIP = _("Missing tooltip, please file an issue to have one added.")
+    _DEFAULT_WIDTH = -1
+    _WIDGET_ATTRIBUTES = WidgetAttributes(
+        n_columns=0,
+        n_rows=0,
+        x_pos=0,
+        y_pos=0,
+    )
+
+    def __init__(self) -> None:
+        """Initialize an instance of the WidgetMixin.
+
+        Notes
+        -----
+        Implements requirements:
+            - PTW-SR-W-003.
+
+        Fixes issues:
+            - None
+        """
+        BaseMixin.__init__(self)
+
+        self.dic_attributes.update(self._WIDGET_ATTRIBUTES)
+
     def do_get_attribute(
-        self,
-        attribute: str,
+        self, attribute: str
     ) -> bool | date | float | int | object | str | None:
         """Get the value of the requested WidgetMixin attribute.
 
@@ -85,7 +102,7 @@ class WidgetMixin:
 
         Returns
         -------
-        bool or date or float or int or str or None
+        bool | date | float | int | str | None
             The value of the requested attribute.
 
         Raises
@@ -95,8 +112,8 @@ class WidgetMixin:
         """
         if attribute not in self._WIDGET_ATTRIBUTES:
             raise KeyError(
-                f"{type(self).__name__}.do_get_attribute(): Unknown attribute"
-                f" {attribute}."
+                f"{type(self).__name__}.do_get_attribute(): Unknown attribute "
+                f"'{attribute}'."
             )
         return self.dic_attributes.get(attribute)
 
@@ -137,19 +154,17 @@ class DataWidgetMixin(WidgetMixin):
     """Mixin to use with widgets that display and/or manipulate data."""
 
     _DATA_WIDGET_ATTRIBUTES: DataWidgetAttributes = DataWidgetAttributes(
-        datatype=None,
-        default=None,
+        data_type=None,
+        default_value=None,
         edit_signal="",
-        field="",
         font_description=None,
         format="{}",
         index=-1,
         listen_topic="listen_topic",
-        parent_id=-1,
-        record_id=-1,
         send_topic="send_topic",
     )
     _DEFAULT_EDIT_SIGNAL: str = ""
+    _DEFAULT_VALUE: bool | date | float | int | str | None = None
 
     def __init__(self) -> None:
         """Initialize an instance of the DataWidgetMixin."""
@@ -158,6 +173,7 @@ class DataWidgetMixin(WidgetMixin):
         # Initialize public instance attributes.
         self.dic_attributes.update(self._DATA_WIDGET_ATTRIBUTES)
         self.dic_attributes["edit_signal"] = self._DEFAULT_EDIT_SIGNAL
+        self.dic_attributes["default_value"] = self._DEFAULT_VALUE
 
     def do_get_attribute(
         self,
@@ -191,12 +207,10 @@ class DataWidgetMixin(WidgetMixin):
 
         _int_attrs = {
             "index",
-            "parent_id",
-            "record_id",
         }
         _obj_attrs = {
-            "datatype",
-            "default",
+            "data_type",
+            "default_value",
             "font_description",
         }
         _str_attrs = set(self._DATA_WIDGET_ATTRIBUTES.keys()) - _int_attrs - _obj_attrs
@@ -223,13 +237,10 @@ class DataWidgetMixin(WidgetMixin):
                 )
             )
 
-
-class WidgetConfig(TypedDict):
-    """Type for widget configuration."""
-
-    widget: WidgetMixin
-    attributes: WidgetAttributes
-    properties: dict
+        if self.dic_attributes["font_description"] is not None and not isinstance(
+            self.dic_attributes["font_description"], FontDescription
+        ):
+            self.dic_attributes["font_description"] = FontDescription()
 
 
 class PlotWidgetMixin(DataWidgetMixin):
@@ -247,10 +258,6 @@ class PlotWidgetMixin(DataWidgetMixin):
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._PLOT_WIDGET_ATTRIBUTES)
-
-        self.axis: Axes | None = None
-        self.canvas: FigureCanvasBase | None = None
-        self.figure: Figure | None = None
 
     def do_get_attribute(
         self,
@@ -273,19 +280,29 @@ class PlotWidgetMixin(DataWidgetMixin):
         return super().do_get_attribute(attribute)
 
     def do_set_attributes(self, attributes: WidgetAttributes) -> None:
-        """Set the widget attributes.
+        """Set the PlotWidgetMixin attributes.
 
         Parameters
         ----------
         attributes : PlotWidgetAttributes
             Typed dict with the attribute values to set for the widget.
         """
+        super().do_set_attributes(attributes)
+
         for _attr in self._PLOT_WIDGET_ATTRIBUTES:
             setattr(self, _attr, attributes.get(_attr, self.dic_attributes[_attr]))
 
         self.dic_attributes.update(
             {_attr: getattr(self, _attr) for _attr in self._PLOT_WIDGET_ATTRIBUTES}
         )
+
+
+class WidgetConfig(TypedDict):
+    """Type for widget configuration."""
+
+    widget: WidgetMixin
+    attributes: WidgetAttributes
+    properties: dict
 
 
 def make_widget_config(
@@ -307,17 +324,3 @@ def make_widget_config(
         "attributes": attributes,
         "properties": properties,
     }
-
-
-def set_widget_sensitivity(widgets: list, sensitive: bool = True) -> None:
-    """Set the sensitivity for a list of widgets.
-
-    Parameters
-    ----------
-    widgets : list
-        The list of widget objects.
-    sensitive : bool
-        Whether to make the widgets in the list sensitive or not.
-    """
-    for _widget in widgets:
-        _widget.set_sensitive(sensitive)

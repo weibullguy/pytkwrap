@@ -1,8 +1,8 @@
-#       pytkwrap.utilities.py is part of the pytkwrap Project
-#
-# All rights reserved.
-# Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""Utility functions for interacting with the pytkwrap application."""
+"""Utility functions for interacting with the pytkwrap application.
+
+.. author:: Doyle Rowland
+.. copyright:: Since 2007, all rights reserved.
+"""
 
 # Standard Library Imports
 import contextlib
@@ -19,7 +19,6 @@ from typing import Any
 # Third Party Imports
 from dateutil.parser import parse
 from pubsub import pub
-
 
 _ = gettext.gettext
 
@@ -53,7 +52,7 @@ class FontDescription:  # pylint: disable=too-many-instance-attributes
     lang : str
         Language for the font. Default is 'en_US'.
     letter_spacing : str
-        Letter spacing. Default is empty string.
+        The inter-letter spacing in 1024ths of a point. Default is 0.0.
     overline : str
         Whether to overline text. Default is 'none'.  Options are 'none', 'single'.
     overline_color : str
@@ -61,7 +60,8 @@ class FontDescription:  # pylint: disable=too-many-instance-attributes
     rise : str
         Vertical rise of the text. Default is '0pt'.
     scale : str
-        Font scale. Default is empty string.
+        Font scale. Default is empty string.  Options are 'superscript', 'subscript',
+        'small-caps'.
     size : int
         Font size in points. Default is 10.
     stretch : str
@@ -101,7 +101,7 @@ class FontDescription:  # pylint: disable=too-many-instance-attributes
     gravity_hint: str = "natural"
     insert_hyphens: str = "true"
     lang: str = "en_US"
-    letter_spacing: str = ""
+    letter_spacing: float = 0.0
     overline: str = "none"
     overline_color: str = "black"
     rise: str = "0pt"
