@@ -1,4 +1,5 @@
 # Standard Library Imports
+import gettext
 from datetime import date
 from typing import TypedDict
 
@@ -11,24 +12,22 @@ from matplotlib.figure import Figure
 # pytkwrap Package Imports
 from pytkwrap.utilities import FontDescription as FontDescription
 
+_ = gettext.gettext
+
 class WidgetAttributes(TypedDict, total=False):
-    label_text: str | None
     n_columns: int
     n_rows: int
     x_pos: float | int
     y_pos: float | int
 
 class DataWidgetAttributes(WidgetAttributes, total=False):
-    datatype: bool | date | float | int | str | None
-    default: bool | date | float | int | str | None
+    data_type: type | None
+    default_value: bool | date | float | int | str | None
     edit_signal: str
-    field: str
     font_description: FontDescription | None
     format: str
     index: int
     listen_topic: str | None
-    parent_id: int
-    record_id: int
     send_topic: str | None
 
 class PlotWidgetAttributes(DataWidgetAttributes, total=False):
@@ -36,12 +35,16 @@ class PlotWidgetAttributes(DataWidgetAttributes, total=False):
     canvas: FigureCanvasBase | None
     figure: Figure | None
 
-class WidgetMixin:
-    _WIDGET_ATTRIBUTES: Incomplete
-    _DEFAULT_HEIGHT: int
-    _DEFAULT_WIDTH: int
-    dic_attributes: Incomplete
+class BaseMixin:
+    dic_attributes: dict[str, str]
     dic_error_message: dict[str, str]
+    def __init__(self) -> None: ...
+
+class WidgetMixin(BaseMixin):
+    _DEFAULT_HEIGHT: int
+    _DEFAULT_TOOLTIP: Incomplete
+    _DEFAULT_WIDTH: int
+    _WIDGET_ATTRIBUTES: Incomplete
     def __init__(self) -> None: ...
     def do_get_attribute(
         self, attribute: str
@@ -51,10 +54,17 @@ class WidgetMixin:
 class DataWidgetMixin(WidgetMixin):
     _DATA_WIDGET_ATTRIBUTES: DataWidgetAttributes
     _DEFAULT_EDIT_SIGNAL: str
+    _DEFAULT_VALUE: bool | date | float | int | str | None
     def __init__(self) -> None: ...
     def do_get_attribute(
         self, attribute: str
     ) -> bool | date | float | int | object | str | None: ...
+    def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
+
+class PlotWidgetMixin(DataWidgetMixin):
+    _PLOT_WIDGET_ATTRIBUTES: Incomplete
+    def __init__(self) -> None: ...
+    def do_get_attribute(self, attribute: str) -> object | None: ...
     def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
 
 class WidgetConfig(TypedDict):
@@ -62,16 +72,6 @@ class WidgetConfig(TypedDict):
     attributes: WidgetAttributes
     properties: dict
 
-class PlotWidgetMixin(DataWidgetMixin):
-    _PLOT_WIDGET_ATTRIBUTES: Incomplete
-    axis: Axes | None
-    canvas: FigureCanvasBase | None
-    figure: Figure | None
-    def __init__(self) -> None: ...
-    def do_get_attribute(self, attribute: str) -> object | None: ...
-    def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
-
 def make_widget_config(
     widget: WidgetMixin, attributes: WidgetAttributes, properties: dict
 ) -> WidgetConfig: ...
-def set_widget_sensitivity(widgets: list, sensitive: bool = True) -> None: ...
