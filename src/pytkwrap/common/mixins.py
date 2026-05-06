@@ -13,70 +13,129 @@ from typing import TypedDict
 from matplotlib.axes import Axes  # type: ignore[import-not-found]
 from matplotlib.backend_bases import FigureCanvasBase  # type: ignore[import-not-found]
 from matplotlib.figure import Figure  # type: ignore[import-not-found]
+from pubsub import pub  # type: ignore[import-not-found]
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import PytkwrapError, UnkAttributeError, UnkPropertyError
 from pytkwrap.utilities import FontDescription
 
 _ = gettext.gettext
 
 
-class WidgetAttributes(TypedDict, total=False):
-    """Type for widget structural attributes."""
+class PyTkWrapAttributes(TypedDict, total=False):
+    """Type for pytkwrap convenience layer attributes."""
 
-    n_columns: int
-    n_rows: int
-    x_pos: float | int
-    y_pos: float | int
-
-
-class DataWidgetAttributes(WidgetAttributes, total=False):
-    """Type for widget data display attributes."""
-
+    axis: Axes | None
+    canvas: FigureCanvasBase | None
     data_type: type | None  # e.g. bool, date, float, int, str
     default_value: bool | date | float | int | str | None
     edit_signal: str
+    figure: Figure | None
     font_description: FontDescription | None
     format: str
     index: int
     listen_topic: str | None
+    n_columns: int
+    n_rows: int
     send_topic: str | None
+    x_pos: float | int
+    y_pos: float | int
 
 
-class PlotWidgetAttributes(DataWidgetAttributes, total=False):
-    """Type for widget plotting attributes."""
-
-    axis: Axes | None
-    canvas: FigureCanvasBase | None
-    figure: Figure | None
-
-
-class BaseMixin:  # pylint: disable=[too-few-public-methods]
-    """Mixin that provides the base for all other mixins."""
-
-    def __init__(self):
-        """Initialize an instance of the BaseMixin."""
-        self.dic_attributes: dict[str, str] = {}
-        self.dic_error_message: dict[str, str] = {
-            "unk_function": "{}: No such function {} exists.",
-            "unk_signal": "{}: Unknown signal name '{}'.",
-        }
-
-
-class WidgetMixin(BaseMixin):
-    """Mixin to be used with all widgets."""
+class ToolkitMixin:
+    """Mixin that provides the base layer for exposing the underlying toolkit."""
 
     _DEFAULT_HEIGHT = -1
     _DEFAULT_TOOLTIP = _("Missing tooltip, please file an issue to have one added.")
     _DEFAULT_WIDTH = -1
-    _WIDGET_ATTRIBUTES = WidgetAttributes(
-        n_columns=0,
-        n_rows=0,
+
+    def __init__(self):
+        """Initialize an instance of the ToolkitMixin."""
+        self.dic_error_message: dict[str, str] = {
+            "unk_function": "{}: Unknown function '{}'.",
+            "unk_property": "{}: Unknown property '{}'.",
+            "unk_signal": "{}: Unknown signal '{}'.",
+        }
+        self.dic_handler_id = {}
+        self.dic_properties = {}
+
+    def do_get_property(
+        self, property_name: str
+    ) -> bool | float | int | object | str | None:
+        """Get the value of the requested property.
+
+        Parameters
+        ----------
+        property_name : str
+            The name of the property whose value is to be retrieved..
+
+        Raises
+        ------
+        UnkPropertyError
+            If the property is not in the properties dictionary.
+        """
+        _error_msg = self.dic_error_message["unk_property"].format(
+            f"{type(self).__name__}.do_get_property()",
+            property_name,
+        )
+        pub.sendMessage(
+            "do_log_error",
+            message=_error_msg,
+        )
+
+        raise UnkPropertyError(_error_msg)
+
+    def do_set_properties(self, properties: dict | list[list | tuple]) -> None:
+        """Set the properties to the values in the passed dictionary.
+
+        Parameters
+        ----------
+        properties : dict | list
+            The TypedDict (preferred) containing the properties to set. and their
+            values.  It is also possible to pass a list of lists or tuples with each
+            inner list or tuple containing the [key, value] or (key, value) pairs.
+
+        Raises
+        ------
+        PytkwrapError
+            If properties is None, a non-iterable object, or not a valid key-value
+            pairs.
+        """
+        try:
+            self.dic_properties.update(properties)
+        except TypeError as exc:
+            _error_msg = (
+                f"{type(self).__name__}.do_set_properties(): Properties are None or a "
+                f"non-iterable object: '{properties}'."
+            )
+            pub.sendMessage(
+                "do_log_error",
+                message=_error_msg,
+            )
+            raise PytkwrapError(_error_msg) from exc
+        except ValueError as exc:
+            _error_msg = (
+                f"{type(self).__name__}.do_set_properties(): Properties are not valid "
+                f"key-value pairs: '{properties}'."
+            )
+            pub.sendMessage(
+                "do_log_error",
+                message=_error_msg,
+            )
+            raise PytkwrapError(_error_msg) from exc
+
+
+class PyTkWrapMixin:
+    """Mixin that provides the base for providing the pytkwrap convenience layer."""
+
+    _PYTKWRAP_ATTRIBUTES: PyTkWrapAttributes = PyTkWrapAttributes(
+        index=-1,
         x_pos=0,
         y_pos=0,
     )
 
     def __init__(self) -> None:
-        """Initialize an instance of the WidgetMixin.
+        """Initialize an instance of the PyTkWrapMixin.
 
         Notes
         -----
@@ -86,14 +145,13 @@ class WidgetMixin(BaseMixin):
         Fixes issues:
             - None
         """
-        BaseMixin.__init__(self)
-
-        self.dic_attributes.update(self._WIDGET_ATTRIBUTES)
+        self.dic_attributes = dict(self._PYTKWRAP_ATTRIBUTES)
+        self.dic_error_message = {"unk_attribute": "{}: Unknown attribute '{}'."}
 
     def do_get_attribute(
         self, attribute: str
     ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested WidgetMixin attribute.
+        """Get the value of the requested PyTkWrapMixin attribute.
 
         Parameters
         ----------
@@ -107,209 +165,53 @@ class WidgetMixin(BaseMixin):
 
         Raises
         ------
-        KeyError
+        UnkAttributeError
             If the requested attribute does not exist.
         """
-        if attribute not in self._WIDGET_ATTRIBUTES:
-            raise KeyError(
-                f"{type(self).__name__}.do_get_attribute(): Unknown attribute "
-                f"'{attribute}'."
-            )
-        return self.dic_attributes.get(attribute)
-
-    def do_set_attributes(self, attributes: WidgetAttributes) -> None:
-        """Set the WidgetMixin attributes.
-
-        Parameters
-        ----------
-        attributes : WidgetAttributes
-            Typed dict with the attribute values to set for the widget.
-        """
-        _int_attrs = {
-            "n_columns",
-            "n_rows",
-            "x_pos",
-            "y_pos",
-        }
-        _str_attrs = set(self._WIDGET_ATTRIBUTES.keys()) - _int_attrs
-
-        for _attr in _int_attrs:
-            self.dic_attributes[_attr] = int(
-                attributes.get(
-                    _attr,
-                    self.dic_attributes[_attr],
-                )
-            )
-
-        for _attr in _str_attrs:
-            self.dic_attributes[_attr] = str(
-                attributes.get(
-                    _attr,
-                    self.dic_attributes[_attr],
-                )
-            )
-
-
-class DataWidgetMixin(WidgetMixin):
-    """Mixin to use with widgets that display and/or manipulate data."""
-
-    _DATA_WIDGET_ATTRIBUTES: DataWidgetAttributes = DataWidgetAttributes(
-        data_type=None,
-        default_value=None,
-        edit_signal="",
-        font_description=None,
-        format="{}",
-        index=-1,
-        listen_topic="listen_topic",
-        send_topic="send_topic",
-    )
-    _DEFAULT_EDIT_SIGNAL: str = ""
-    _DEFAULT_VALUE: bool | date | float | int | str | None = None
-
-    def __init__(self) -> None:
-        """Initialize an instance of the DataWidgetMixin."""
-        super().__init__()
-
-        # Initialize public instance attributes.
-        self.dic_attributes.update(self._DATA_WIDGET_ATTRIBUTES)
-        self.dic_attributes["edit_signal"] = self._DEFAULT_EDIT_SIGNAL
-        self.dic_attributes["default_value"] = self._DEFAULT_VALUE
-
-    def do_get_attribute(
-        self,
-        attribute: str,
-    ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested DataWidgetMixin attribute.
-
-        Parameters
-        ----------
-        attribute : str
-            The name of the attribute to retrieve.
-
-        Returns
-        -------
-        bool or date or float or int or str or None
-            The value of the requested attribute.
-        """
-        if attribute in self._DATA_WIDGET_ATTRIBUTES:
+        if attribute in self._PYTKWRAP_ATTRIBUTES:
             return self.dic_attributes.get(attribute)
-        return super().do_get_attribute(attribute)
 
-    def do_set_attributes(self, attributes: WidgetAttributes) -> None:
-        """Set the DatawidgetMixin attributes.
-
-        Parameters
-        ----------
-        attributes : DataWidgetAttributes
-            Typed dict with the attribute values to set for the widget.
-        """
-        super().do_set_attributes(attributes)
-
-        _int_attrs = {
-            "index",
-        }
-        _obj_attrs = {
-            "data_type",
-            "default_value",
-            "font_description",
-        }
-        _str_attrs = set(self._DATA_WIDGET_ATTRIBUTES.keys()) - _int_attrs - _obj_attrs
-
-        for _attr in _int_attrs:
-            self.dic_attributes[_attr] = int(
-                attributes.get(
-                    _attr,
-                    self.dic_attributes[_attr],
-                )
-            )
-
-        for _attr in _obj_attrs:
-            self.dic_attributes[_attr] = attributes.get(
-                _attr,
-                self.dic_attributes[_attr],
-            )
-
-        for _attr in _str_attrs:
-            self.dic_attributes[_attr] = str(
-                attributes.get(
-                    _attr,
-                    self.dic_attributes[_attr],
-                )
-            )
-
-        if self.dic_attributes["font_description"] is not None and not isinstance(
-            self.dic_attributes["font_description"], FontDescription
-        ):
-            self.dic_attributes["font_description"] = FontDescription()
-
-
-class PlotWidgetMixin(DataWidgetMixin):
-    """Mixin for widgets that display matplotlib plots."""
-
-    _PLOT_WIDGET_ATTRIBUTES = PlotWidgetAttributes(
-        axis=None,
-        canvas=None,
-        figure=None,
-    )
-
-    def __init__(self) -> None:
-        """Initialize an instance of PlotWidgetMixin."""
-        super().__init__()
-
-        # Initialize public instance attributes.
-        self.dic_attributes.update(self._PLOT_WIDGET_ATTRIBUTES)
-
-    def do_get_attribute(
-        self,
-        attribute: str,
-    ) -> object | None:
-        """Get the value of the requested plotting widget attribute.
-
-        Parameters
-        ----------
-        attribute : str
-            The name of the attribute to retrieve.
-
-        Returns
-        -------
-        object or None
-            The value of the requested attribute.
-        """
-        if attribute in self._PLOT_WIDGET_ATTRIBUTES:
-            return self.dic_attributes.get(attribute)
-        return super().do_get_attribute(attribute)
-
-    def do_set_attributes(self, attributes: WidgetAttributes) -> None:
-        """Set the PlotWidgetMixin attributes.
-
-        Parameters
-        ----------
-        attributes : PlotWidgetAttributes
-            Typed dict with the attribute values to set for the widget.
-        """
-        super().do_set_attributes(attributes)
-
-        for _attr in self._PLOT_WIDGET_ATTRIBUTES:
-            setattr(self, _attr, attributes.get(_attr, self.dic_attributes[_attr]))
-
-        self.dic_attributes.update(
-            {_attr: getattr(self, _attr) for _attr in self._PLOT_WIDGET_ATTRIBUTES}
+        _error_msg = self.dic_error_message["unk_attribute"].format(
+            f"{type(self).__name__}.do_get_attribute()",
+            attribute,
+        )
+        pub.sendMessage(
+            "do_log_error",
+            message=_error_msg,
         )
 
+        raise UnkAttributeError(_error_msg)
 
-class WidgetConfig(TypedDict):
+    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
+        """Set the PyTkWrapMixin attributes.
+
+        Parameters
+        ----------
+        attributes : PyTkWrapAttributes
+            Typed dict with the attribute values to set for the widget.
+        """
+        for _attr in ("index", "x_pos", "y_pos"):
+            self.dic_attributes[_attr] = int(
+                attributes.get(
+                    _attr,
+                    self.dic_attributes[_attr],
+                )
+            )
+
+
+class PyTkWrapConfig(TypedDict):
     """Type for widget configuration."""
 
-    widget: WidgetMixin
-    attributes: WidgetAttributes
+    widget: PyTkWrapMixin
+    attributes: PyTkWrapAttributes
     properties: dict
 
 
-def make_widget_config(
-    widget: WidgetMixin,
-    attributes: WidgetAttributes,
+def make_pytkwrap_config(
+    widget: PyTkWrapMixin,
+    attributes: PyTkWrapAttributes,
     properties: dict,
-) -> WidgetConfig:
+) -> PyTkWrapConfig:
     """Create a widget configuration dictionary.
 
     This is a helper function used to ensure type-safety.

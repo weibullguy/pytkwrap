@@ -126,7 +126,7 @@ extra-dependencies = [
     "ty",
 ]
 [tool.hatch.envs.types.scripts]
-check = [
+all = [
     "prek run mypy --files {args}",
     "ty check {args}",
 ]
