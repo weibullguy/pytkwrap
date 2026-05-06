@@ -127,7 +127,7 @@ extra-dependencies = [
 ]
 [tool.hatch.envs.types.scripts]
 all = [
-    "prek run mypy --files {args}",
+    "mypy --config ./pyproject.toml {args}",
     "ty check {args}",
 ]
 make-stub = "stubgen --include-private -o src {args}"

@@ -51,13 +51,6 @@ hooks =[
 ]
 
 [[repos]]
-repo = "git@github.com:pre-commit/mirrors-mypy.git"
-rev = "v1.20.0"
-hooks = [
-    {id = "mypy", args = ["--config-file", "./pyproject.toml"]},
-]
-
-[[repos]]
 repo = "https://github.com/myint/eradicate"
 rev = "2.3.0"
 hooks = [

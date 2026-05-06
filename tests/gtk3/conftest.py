@@ -8,10 +8,10 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkSignalError
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
-from tests.common.test_widget_mixin import TestWidgetMixin
-from tests.common.test_data_widget_mixin import TestDataWidgetMixin
+from pytkwrap.exceptions import UnkAttributeError, UnkSignalError
+from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from tests.common.test_pytkwrap_mixin import TestPyTkWrapMixin
 
 
 @pytest.fixture(scope="function")
@@ -21,22 +21,9 @@ def image_file():
     return _image_
 
 
-@pytest.fixture(autouse=True)
-def pubsub_cleanup():
-    yield
-    pub.unsubAll()
-
-
-@pytest.fixture(scope="class")
-def suppress_stderr():
-    _stderr = sys.stderr
-    sys.stderr = StringIO()
-    yield
-    sys.stderr = _stderr
-
-
-class BaseGTK3WidgetTests(TestWidgetMixin):
+class BaseGTK3WidgetTests(TestPyTkWrapMixin):
     """Add GTK3-specific assertions to the common mixin tests."""
+
     widget_class = None
     expected_default_height = -1
     expected_default_width = -1
@@ -52,8 +39,8 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
     def no_signal_error_handler(self, message):
         """Error handler for do_set_callbacks() errors."""
         assert (
-                message == f"{self.widget_class.__name__}.do_set_callbacks(): Unknown signal name "
-                           "'unk_signal'."
+            message
+            == f"{self.widget_class.__name__}.do_set_callbacks(): Unknown signal 'unk_signal'."
         )
 
     @pytest.mark.unit
@@ -62,19 +49,138 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
         dut = self.make_dut()
 
         assert isinstance(dut, self.widget_class)
-        assert all(v == -1 for v in dut.dic_handler_id.values())
-        assert dut.dic_error_message == {
-            "unk_function": "{}: No such function {} exists.",
-            "unk_signal": "{}: Unknown signal name '{}'.",
+        assert dut._DEFAULT_HEIGHT == -1
+        assert (
+            dut._DEFAULT_TOOLTIP
+            == "Missing tooltip, please file an issue to have one added."
+        )
+        assert dut._DEFAULT_WIDTH == -1
+
+        # These are inherited from GTK3GObjectMixin.
+        assert dut.dic_attributes == {
+            "index": -1,
+            "x_pos": 0,
+            "y_pos": 0,
         }
-        assert isinstance(dut.dic_properties, dict)
+        assert dut.dic_error_message == {
+            "unk_attribute": "{}: Unknown attribute '{}'.",
+            "unk_function": "{}: Unknown function '{}'.",
+            "unk_property": "{}: Unknown property '{}'.",
+            "unk_signal": "{}: Unknown signal '{}'.",
+        }
+
+        # These are added by GTK3Widget.
+        assert dut._GTK3_WIDGET_PROPERTIES == {
+            "can_default": False,
+            "can_focus": False,
+            "focus_on_click": True,
+            "halign": Gtk.Align.FILL,
+            "has_default": False,
+            "has_focus": False,
+            "has_tooltip": False,
+            "height_request": -1,
+            "hexpand": False,
+            "hexpand_set": False,
+            "is_focus": False,
+            "margin": 0,
+            "margin_bottom": 0,
+            "margin_end": 0,
+            "margin_start": 0,
+            "margin_top": 0,
+            "name": "pytkwrap GTK3 widget",
+            "opacity": 1.0,
+            "parent": None,
+            "receives_default": False,
+            "scale_factor": 1,
+            "sensitive": True,
+            "tooltip_markup": None,
+            "tooltip_text": None,
+            "valign": Gtk.Align.FILL,
+            "vexpand": False,
+            "vexpand_set": False,
+            "visible": False,
+            "width_request": -1,
+            "window": None,
+        }
+        assert dut._GTK3_WIDGET_SIGNALS == [
+            "destroy",
+            "direction-changed",
+            "hide",
+            "keynav-failed",
+            "map",
+            "mnemonic-activate",
+            "move-focus",
+            "query-tooltip",
+            "realize",
+            "show",
+            "state-flags-changed",
+            "unmap",
+            "unrealize",
+        ]
+        assert dut.dic_handler_id == {
+            "destroy": -1,
+            "direction-changed": -1,
+            "hide": -1,
+            "keynav-failed": -1,
+            "map": -1,
+            "mnemonic-activate": -1,
+            "move-focus": -1,
+            "notify": -1,
+            "query-tooltip": -1,
+            "realize": -1,
+            "show": -1,
+            "state-flags-changed": -1,
+            "unmap": -1,
+            "unrealize": -1,
+        }
+        assert dut.dic_properties == {
+            "can_default": False,
+            "can_focus": False,
+            "focus_on_click": True,
+            "halign": Gtk.Align.FILL,
+            "has_default": False,
+            "has_focus": False,
+            "has_tooltip": False,
+            "height_request": -1,
+            "hexpand": False,
+            "hexpand_set": False,
+            "is_focus": False,
+            "margin": 0,
+            "margin_bottom": 0,
+            "margin_end": 0,
+            "margin_start": 0,
+            "margin_top": 0,
+            "name": "pytkwrap GTK3 widget",
+            "opacity": 1.0,
+            "parent": None,
+            "receives_default": False,
+            "scale_factor": 1,
+            "sensitive": True,
+            "tooltip_markup": "Missing tooltip, please file an issue to have one added.",
+            "tooltip_text": "Missing tooltip, please file an issue to have one added.",
+            "valign": Gtk.Align.FILL,
+            "vexpand": False,
+            "vexpand_set": False,
+            "visible": False,
+            "width_request": -1,
+            "window": None,
+        }
+
+    @pytest.mark.requirement("PTW-COM-W-002")
+    @pytest.mark.unit
+    def test_PTW_SR_W_002(self):
+        """Verifies all Gtk methods are available via pytkwrap."""
+        dut = self.make_dut()
+
+        for _attribute in self.expected_attributes:
+            assert hasattr(dut, _attribute)
 
     @pytest.mark.unit
     def test_do_get_attribute_unknown(self):
-        """Should raise a KeyError when passed a non-existent attribute."""
+        """Should raise an UnkAttributeError when passed a non-existent attribute."""
         dut = self.make_dut()
 
-        with pytest.raises(KeyError):
+        with pytest.raises(UnkAttributeError):
             dut.do_get_attribute("database_name")
 
     @pytest.mark.unit
@@ -114,7 +220,7 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
         dut.do_set_properties(GTK3WidgetProperties(height_request=0))
 
         assert (
-                dut.dic_properties["height_request"] == self.expected_default_height
+            dut.dic_properties["height_request"] == self.expected_default_height
         )  # falls back to _DEFAULT_HEIGHT
 
     @pytest.mark.unit
@@ -124,37 +230,19 @@ class BaseGTK3WidgetTests(TestWidgetMixin):
         dut.do_set_properties(GTK3WidgetProperties(width_request=0))
 
         assert (
-                dut.dic_properties["width_request"] == self.expected_default_width
+            dut.dic_properties["width_request"] == self.expected_default_width
         )  # falls back to _DEFAULT_WIDTH
 
+    @pytest.mark.unit
+    @pytest.mark.requirement("PTW-GTK3-X-009")
+    def test_dic_properties_not_shared(self):
+        """Instance of the GTK3Widget should not share a dic_properties."""
+        dut1 = self.make_dut()
+        dut2 = self.make_dut()
 
-class BaseGTK3DataWidgetTests(BaseGTK3WidgetTests, TestDataWidgetMixin):
-    """Adds data widget assertions for GTK3 data widgets."""
+        assert not dut1.dic_properties is dut2.dic_properties
 
-    def do_update_error_handler(self, message):
-        """Error handler for do_update() errors."""
-        assert message == (
-            f"{self.widget_class.__name__}.do_update(): Unknown signal name "
-            f"'edit_signal'."
-        )
+        dut1.dic_properties["sensitive"] = False
 
-    def mock_handler(self, node_id, package) -> None:
-        """Mock message handler."""
-        assert package == self.expected_package[node_id]
-
-    def on_changed_error_handler(self, message):
-        """Error handler for on_changed() errors."""
-        assert message == (f"{self.widget_class.__name__}.on_changed(): Unknown signal name "
-                           f"'edit_signal'.")
-
-    @pytest.mark.skip
-    def test_do_update(self):
-        pass
-
-    @pytest.mark.skip
-    def test_do_update_wrong_field(self):
-        pass
-
-    @pytest.mark.skip
-    def test_on_changed(self):
-        pass
+        assert not dut1.dic_properties["sensitive"]
+        assert dut2.dic_properties["sensitive"]
