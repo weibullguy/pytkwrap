@@ -10,68 +10,58 @@ from matplotlib.backend_bases import FigureCanvasBase
 from matplotlib.figure import Figure
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import PytkwrapError as PytkwrapError
+from pytkwrap.exceptions import UnkAttributeError as UnkAttributeError
+from pytkwrap.exceptions import UnkPropertyError as UnkPropertyError
 from pytkwrap.utilities import FontDescription as FontDescription
 
 _ = gettext.gettext
 
-class WidgetAttributes(TypedDict, total=False):
-    n_columns: int
-    n_rows: int
-    x_pos: float | int
-    y_pos: float | int
-
-class DataWidgetAttributes(WidgetAttributes, total=False):
+class PyTkWrapAttributes(TypedDict, total=False):
+    axis: Axes | None
+    canvas: FigureCanvasBase | None
     data_type: type | None
     default_value: bool | date | float | int | str | None
     edit_signal: str
+    figure: Figure | None
     font_description: FontDescription | None
     format: str
     index: int
     listen_topic: str | None
+    n_columns: int
+    n_rows: int
     send_topic: str | None
+    x_pos: float | int
+    y_pos: float | int
 
-class PlotWidgetAttributes(DataWidgetAttributes, total=False):
-    axis: Axes | None
-    canvas: FigureCanvasBase | None
-    figure: Figure | None
-
-class BaseMixin:
-    dic_attributes: dict[str, str]
-    dic_error_message: dict[str, str]
-    def __init__(self) -> None: ...
-
-class WidgetMixin(BaseMixin):
+class ToolkitMixin:
     _DEFAULT_HEIGHT: int
     _DEFAULT_TOOLTIP: Incomplete
     _DEFAULT_WIDTH: int
-    _WIDGET_ATTRIBUTES: Incomplete
+    dic_error_message: dict[str, str]
+    dic_handler_id: Incomplete
+    dic_properties: Incomplete
+    def __init__(self) -> None: ...
+    def do_get_property(
+        self, property_name: str
+    ) -> bool | float | int | object | str | None: ...
+    def do_set_properties(self, properties: dict | list[list | tuple]) -> None: ...
+
+class PyTkWrapMixin:
+    _PYTKWRAP_ATTRIBUTES: PyTkWrapAttributes
+    dic_attributes: Incomplete
+    dic_error_message: Incomplete
     def __init__(self) -> None: ...
     def do_get_attribute(
         self, attribute: str
     ) -> bool | date | float | int | object | str | None: ...
-    def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
+    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None: ...
 
-class DataWidgetMixin(WidgetMixin):
-    _DATA_WIDGET_ATTRIBUTES: DataWidgetAttributes
-    _DEFAULT_EDIT_SIGNAL: str
-    _DEFAULT_VALUE: bool | date | float | int | str | None
-    def __init__(self) -> None: ...
-    def do_get_attribute(
-        self, attribute: str
-    ) -> bool | date | float | int | object | str | None: ...
-    def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
-
-class PlotWidgetMixin(DataWidgetMixin):
-    _PLOT_WIDGET_ATTRIBUTES: Incomplete
-    def __init__(self) -> None: ...
-    def do_get_attribute(self, attribute: str) -> object | None: ...
-    def do_set_attributes(self, attributes: WidgetAttributes) -> None: ...
-
-class WidgetConfig(TypedDict):
-    widget: WidgetMixin
-    attributes: WidgetAttributes
+class PyTkWrapConfig(TypedDict):
+    widget: PyTkWrapMixin
+    attributes: PyTkWrapAttributes
     properties: dict
 
-def make_widget_config(
-    widget: WidgetMixin, attributes: WidgetAttributes, properties: dict
-) -> WidgetConfig: ...
+def make_pytkwrap_config(
+    widget: PyTkWrapMixin, attributes: PyTkWrapAttributes, properties: dict
+) -> PyTkWrapConfig: ...
