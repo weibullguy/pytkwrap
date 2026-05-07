@@ -30,11 +30,25 @@ class PytkwrapError(Exception):
         return self.msg
 
 
+class NoValueError(PytkwrapError):
+    """Exception class raised when no value or method to retrieve value is available."""
+
+    def __init__(self, msg: str = "No value to return.") -> None:
+        """Initialize a NoValueError instance.
+
+        Parameters
+        ----------
+        msg : str
+            Custom error message.
+        """
+        super().__init__(msg)
+
+
 class UnkAttributeError(PytkwrapError):
     """Exception class raised when an unknown attribute is requested."""
 
     def __init__(self, msg: str = "Unknown attribute name.") -> None:
-        """Initialize UnkAttributeError instance.
+        """Initialize an UnkAttributeError instance.
 
         Parameters
         ----------
@@ -48,7 +62,7 @@ class UnkPropertyError(PytkwrapError):
     """Exception class raised when an unknown property is requested."""
 
     def __init__(self, msg: str = "Unknown property name.") -> None:
-        """Initialize UnkPropertyError instance.
+        """Initialize an UnkPropertyError instance.
 
         Parameters
         ----------
@@ -62,7 +76,21 @@ class UnkSignalError(PytkwrapError):
     """Exception class raised when an unknown signal name is used."""
 
     def __init__(self, msg: str = "Unknown signal name.") -> None:
-        """Initialize UnkSignalError instance.
+        """Initialize an UnkSignalError instance.
+
+        Parameters
+        ----------
+        msg : str
+            Custom error message.
+        """
+        super().__init__(msg)
+
+
+class WrongTypeError(PytkwrapError):
+    """Exception class raised when wrong data type is used."""
+
+    def __init__(self, msg: str = "Wrong data type.") -> None:
+        """Initialize a WrongTypeError instance.
 
         Parameters
         ----------

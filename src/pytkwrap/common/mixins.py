@@ -16,7 +16,13 @@ from matplotlib.figure import Figure  # type: ignore[import-not-found]
 from pubsub import pub  # type: ignore[import-not-found]
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import PytkwrapError, UnkAttributeError, UnkPropertyError
+from pytkwrap.exceptions import (
+    NoValueError,
+    PytkwrapError,
+    UnkAttributeError,
+    UnkPropertyError,
+    WrongTypeError,
+)
 from pytkwrap.utilities import FontDescription
 
 _ = gettext.gettext
@@ -52,9 +58,11 @@ class ToolkitMixin:
     def __init__(self):
         """Initialize an instance of the ToolkitMixin."""
         self.dic_error_message: dict[str, str] = {
+            "no_value": "{}: No value set or no method to retrieve value.",
             "unk_function": "{}: Unknown function '{}'.",
             "unk_property": "{}: Unknown property '{}'.",
             "unk_signal": "{}: Unknown signal '{}'.",
+            "wrong_type": "{}: Wrong type for value '{}': {}.",
         }
         self.dic_handler_id = {}
         self.dic_properties = {}
@@ -82,8 +90,24 @@ class ToolkitMixin:
             "do_log_error",
             message=_error_msg,
         )
-
         raise UnkPropertyError(_error_msg)
+
+    def do_get_value(self) -> bool | date | float | int | str | None:
+        """Return the current value of the widget.
+
+        Raises
+        ------
+        NoValueError
+            If the widget does not have a value or a method to retrieve the value.
+        """
+        _error_msg = self.dic_error_message["no_value"].format(
+            f"{type(self).__name__}.do_get_value()"
+        )
+        pub.sendMessage(
+            "do_log_error",
+            message=_error_msg,
+        )
+        raise NoValueError(_error_msg)
 
     def do_set_properties(self, properties: dict | list[list | tuple]) -> None:
         """Set the properties to the values in the passed dictionary.
@@ -123,6 +147,34 @@ class ToolkitMixin:
                 message=_error_msg,
             )
             raise PytkwrapError(_error_msg) from exc
+
+    def do_set_value(
+        self,
+        value: bool | date | float | int | str | None,
+    ) -> None:
+        """Set the current value of the widget.
+
+        Parameters
+        ----------
+        value : bool | date | float | int | str | None
+            The value to set for the widget.
+
+        Raises
+        ------
+        WrongTypeError
+            If the value passed is not of the correct type.
+        """
+        _error_msg = self.dic_error_message["wrong_type"].format(
+            f"{type(self).__name__}.do_set_value()",
+            value,
+            type(value),
+            "bool or float or int or str",
+        )
+        pub.sendMessage(
+            "do_log_error",
+            message=_error_msg,
+        )
+        raise WrongTypeError(_error_msg)
 
 
 class PyTkWrapMixin:
