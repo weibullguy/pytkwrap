@@ -17,17 +17,17 @@ from pytkwrap.common.mixins import (
 )
 
 
+def unknown_attribute_error_handler(message):
+    """Error handler for do_get_attribute() errors."""
+    assert (
+        message == "PyTkWrapMixin.do_get_attribute(): Unknown attribute "
+        "'unk_attribute'."
+    )
+
+
 @pytest.mark.order(0)
 class TestPyTkWrapMixin:
     """Test class for the PyTkWrapMixin class."""
-
-    @staticmethod
-    def unknown_attribute_error_handler(message):
-        """Error handler for do_get_attribute() errors."""
-        assert (
-            message == "PyTkWrapMixin.do_get_attribute(): Unknown attribute "
-            "'unk_attribute'."
-        )
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-011")
@@ -105,7 +105,7 @@ class TestPyTkWrapMixin:
     def test_do_get_attribute_unknown(self):
         """Should raise a UnkAttributeError when passed an unknown attribute name."""
         dut = PyTkWrapMixin()
-        pub.subscribe(self.unknown_attribute_error_handler, "do_log_error")
+        pub.subscribe(unknown_attribute_error_handler, "do_log_error")
 
         with pytest.raises(UnkAttributeError):
             dut.do_get_attribute("unk_attribute")

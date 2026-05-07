@@ -14,49 +14,46 @@ from pytkwrap.common.mixins import ToolkitMixin
 from pytkwrap.exceptions import WrongTypeError
 
 
+def no_value_error_handler(message):
+    """Error handler for do_get_value() errors."""
+    assert (
+        message == "ToolkitMixin.do_get_value(): No value set or no method to "
+        "retrieve value."
+    )
+
+
+def none_property_error_handler(message):
+    """Error handler for do_set_property() errors."""
+    assert (
+        message == "ToolkitMixin.do_set_properties(): Properties are None or a "
+        "non-iterable object: 'None'."
+    )
+
+
+def non_iterable_property_error_handler(message):
+    """Error handler for do_set_property() errors."""
+    assert (
+        message == "ToolkitMixin.do_set_properties(): Properties are not valid "
+        "key-value pairs: 'Non-iterable property'."
+    )
+
+
+def unknown_property_error_handler(message):
+    """Error handler for do_get_property() errors."""
+    assert message == "ToolkitMixin.do_get_property(): Unknown property 'unk_property'."
+
+
+def wrong_type_error_handler(message):
+    """Error handler for do_set_value() errors."""
+    assert (
+        message == "ToolkitMixin.do_set_value(): Wrong type for value 'None': "
+        "<class 'NoneType'>."
+    )
+
+
 @pytest.mark.order(0)
 class TestToolkitMixin:
     """Test class for the ToolkitMixin class."""
-
-    @staticmethod
-    def unknown_property_error_handler(message):
-        """Error handler for do_get_property() errors."""
-        assert (
-            message
-            == "ToolkitMixin.do_get_property(): Unknown property 'unk_property'."
-        )
-
-    @staticmethod
-    def none_property_error_handler(message):
-        """Error handler for do_set_property() errors."""
-        assert (
-            message == "ToolkitMixin.do_set_properties(): Properties are None or a "
-            "non-iterable object: 'None'."
-        )
-
-    @staticmethod
-    def non_iterable_property_error_handler(message):
-        """Error handler for do_set_property() errors."""
-        assert (
-            message == "ToolkitMixin.do_set_properties(): Properties are not valid "
-            "key-value pairs: 'Non-iterable property'."
-        )
-
-    @staticmethod
-    def no_value_error_handler(message):
-        """Error handler for do_get_value() errors."""
-        assert (
-            message == "ToolkitMixin.do_get_value(): No value set or no method to "
-            "retrieve value."
-        )
-
-    @staticmethod
-    def wrong_type_error_handler(message):
-        """Error handler for do_set_value() errors."""
-        assert (
-            message == "ToolkitMixin.do_set_value(): Wrong type for value 'None': "
-            "<class 'NoneType'>."
-        )
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-001")
@@ -129,14 +126,14 @@ class TestToolkitMixin:
     def test_do_get_property_unknown(self):
         """Should raise an UnkPropertyError."""
         dut = ToolkitMixin()
-        pub.subscribe(self.unknown_property_error_handler, "do_log_error")
+        pub.subscribe(unknown_property_error_handler, "do_log_error")
 
         with pytest.raises(UnkPropertyError):
             dut.do_get_property("unk_property")
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-009")
-    def test_do_set_property(self):
+    def test_do_set_properties(self):
         """Should set dic_properties to new values when passed a dict."""
         dut = ToolkitMixin()
         dut.do_set_properties({"new_prop": 14})
@@ -145,7 +142,7 @@ class TestToolkitMixin:
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-009")
-    def test_do_set_property_list_list(self):
+    def test_do_set_properties_list_list(self):
         """Should set dic_properties to new values when passed a list of lists."""
         dut = ToolkitMixin()
         dut.do_set_properties([["new_prop", 14], ["new_prop_2", "Twenty-two"]])
@@ -155,7 +152,7 @@ class TestToolkitMixin:
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-009")
-    def test_do_set_property_list_tuple(self):
+    def test_do_set_properties_list_tuple(self):
         """Should set dic_properties to new values when passed a list of tuples."""
         dut = ToolkitMixin()
         dut.do_set_properties([("new_prop", 14), ("new_prop_2", "Twenty-two")])
@@ -165,22 +162,22 @@ class TestToolkitMixin:
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-010")
-    def test_do_set_property_type_error(self):
+    def test_do_set_properties_type_error(self):
         """Should raise a PytkwrapError and send a do_log_error message when passed
         None."""
         dut = ToolkitMixin()
-        pub.subscribe(self.none_property_error_handler, "do_log_error")
+        pub.subscribe(none_property_error_handler, "do_log_error")
 
         with pytest.raises(PytkwrapError):
             dut.do_set_properties(None)
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-010")
-    def test_do_set_property_value_error(self):
+    def test_do_set_properties_value_error(self):
         """Should raise a PytkwrapError and send a do_log_error message when passed a
         non-iterable properties."""
         dut = ToolkitMixin()
-        pub.subscribe(self.non_iterable_property_error_handler, "do_log_error")
+        pub.subscribe(non_iterable_property_error_handler, "do_log_error")
 
         with pytest.raises(PytkwrapError):
             dut.do_set_properties("Non-iterable property")
@@ -200,7 +197,7 @@ class TestToolkitMixin:
     def test_do_get_value_missing(self):
         """Should raise a NoValueError and send a do_log_error message when called."""
         dut = ToolkitMixin()
-        pub.subscribe(self.no_value_error_handler, "do_log_error")
+        pub.subscribe(no_value_error_handler, "do_log_error")
 
         with pytest.raises(NoValueError):
             dut.do_get_value()
@@ -209,7 +206,7 @@ class TestToolkitMixin:
     def test_do_set_value_wrong_type(self):
         """Should raise a WrongTypeError and send a do_log_error message when called."""
         dut = ToolkitMixin()
-        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
+        pub.subscribe(wrong_type_error_handler, "do_log_error")
 
         with pytest.raises(WrongTypeError):
             dut.do_set_value(None)
