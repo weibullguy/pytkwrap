@@ -51,6 +51,41 @@ class TestGTK3GObjectMixin:
         assert dut._GTK3_GOBJECT_SIGNALS == ["notify"]
         assert dut.dic_handler_id == {"notify": -1}
 
+    @pytest.mark.requirement("PTW-COM-W-002")
+    @pytest.mark.unit
+    def test_toolkit_attributes_available(self):
+        """Verifies all GObject.Object methods are available via pytkwrap."""
+        dut = GTK3GObjectMixin()
+
+        for _attribute in [
+            "bind_property",
+            "connect",
+            "connect_after",
+            "disconnect",
+            "emit",
+            "force_floating",
+            "get_data",
+            "get_property",
+            "get_qdata",
+            "getv",
+            "handler_block",
+            "handler_unblock",
+            "is_floating",
+            "notify",
+            "notify_by_pspec",
+            "ref",
+            "ref_sink",
+            "run_dispose",
+            "set_data",
+            "set_property",
+            "steal_data",
+            "steal_qdata",
+            "thaw_notify",
+            "unref",
+            "watch_closure",
+        ]:
+            assert hasattr(dut, _attribute)
+
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-GTK3-X-004")
     def test_do_set_callbacks(self):

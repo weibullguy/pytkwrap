@@ -25,7 +25,9 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
     """Add GTK3-specific assertions to the common mixin tests."""
 
     widget_class = None
+    expected_attributes = []
     expected_default_height = -1
+    expected_default_tooltip = ""
     expected_default_width = -1
 
     def make_dut(self):
@@ -93,8 +95,8 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
             "receives_default": False,
             "scale_factor": 1,
             "sensitive": True,
-            "tooltip_markup": None,
-            "tooltip_text": None,
+            "tooltip_markup": "",
+            "tooltip_text": "",
             "valign": Gtk.Align.FILL,
             "vexpand": False,
             "vexpand_set": False,
@@ -168,7 +170,7 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
 
     @pytest.mark.requirement("PTW-COM-W-002")
     @pytest.mark.unit
-    def test_PTW_SR_W_002(self):
+    def test_toolkit_attributes_available(self):
         """Verifies all Gtk methods are available via pytkwrap."""
         dut = self.make_dut()
 
