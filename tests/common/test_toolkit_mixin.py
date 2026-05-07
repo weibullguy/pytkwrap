@@ -9,8 +9,9 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap import PytkwrapError, UnkPropertyError
+from pytkwrap import NoValueError, PytkwrapError, UnkPropertyError
 from pytkwrap.common.mixins import ToolkitMixin
+from pytkwrap.exceptions import WrongTypeError
 
 
 @pytest.mark.order(0)
@@ -41,6 +42,22 @@ class TestToolkitMixin:
             "key-value pairs: 'Non-iterable property'."
         )
 
+    @staticmethod
+    def no_value_error_handler(message):
+        """Error handler for do_get_value() errors."""
+        assert (
+            message == "ToolkitMixin.do_get_value(): No value set or no method to "
+            "retrieve value."
+        )
+
+    @staticmethod
+    def wrong_type_error_handler(message):
+        """Error handler for do_set_value() errors."""
+        assert (
+            message == "ToolkitMixin.do_set_value(): Wrong type for value 'None': "
+            "<class 'NoneType'>."
+        )
+
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-001")
     @pytest.mark.requirement("PTW-COM-X-002")
@@ -59,9 +76,11 @@ class TestToolkitMixin:
         )
         assert dut._DEFAULT_WIDTH == -1
         assert dut.dic_error_message == {
+            "no_value": "{}: No value set or no method to retrieve value.",
             "unk_function": "{}: Unknown function '{}'.",
             "unk_property": "{}: Unknown property '{}'.",
             "unk_signal": "{}: Unknown signal '{}'.",
+            "wrong_type": "{}: Wrong type for value '{}': {}.",
         }
         assert dut.dic_handler_id == {}
         assert dut.dic_properties == {}
@@ -176,3 +195,21 @@ class TestToolkitMixin:
         _expected = {"dic_properties", "dic_error_message", "dic_handler_id"}
 
         assert _instance_attrs == _expected
+
+    @pytest.mark.unit
+    def test_do_get_value_missing(self):
+        """Should raise a NoValueError and send a do_log_error message when called."""
+        dut = ToolkitMixin()
+        pub.subscribe(self.no_value_error_handler, "do_log_error")
+
+        with pytest.raises(NoValueError):
+            dut.do_get_value()
+
+    @pytest.mark.unit
+    def test_do_set_value_wrong_type(self):
+        """Should raise a WrongTypeError and send a do_log_error message when called."""
+        dut = ToolkitMixin()
+        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
+
+        with pytest.raises(WrongTypeError):
+            dut.do_set_value(None)
