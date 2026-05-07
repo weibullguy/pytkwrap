@@ -65,10 +65,12 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
             "y_pos": 0,
         }
         assert dut.dic_error_message == {
+            "no_value": "{}: No value set or no method to retrieve value.",
             "unk_attribute": "{}: Unknown attribute '{}'.",
             "unk_function": "{}: Unknown function '{}'.",
             "unk_property": "{}: Unknown property '{}'.",
             "unk_signal": "{}: Unknown signal '{}'.",
+            "wrong_type": "{}: Wrong type for value '{}': {}.",
         }
 
         # These are added by GTK3Widget.
