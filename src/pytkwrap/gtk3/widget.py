@@ -8,7 +8,6 @@
 from __future__ import annotations
 
 # Standard Library Imports
-from abc import abstractmethod
 from datetime import date
 
 # Third Party Imports
@@ -171,19 +170,6 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
-
-    @abstractmethod
-    def do_get_value(self) -> bool | date | float | int | str | None:
-        """Return the current value of the widget."""
-        raise NotImplementedError
-
-    @abstractmethod
-    def do_set_value(
-        self,
-        value: bool | date | float | int | str | None,
-    ) -> None:
-        """Set the current value of the widget."""
-        raise NotImplementedError
 
     def do_update(
         self,
