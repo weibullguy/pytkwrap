@@ -20,7 +20,8 @@ from .adjustment import GTK3Adjustment
 #    GTK3SpinButton,
 #    do_make_buttonbox,
 # )
-# from .cellrenderer import GTK3BaseCellRenderer
+from .cellrenderer import GTK3CellRenderer
+
 # from .combo import GTK3ComboBox
 # from .entry import GTK3Entry
 # from .frame import GTK3Frame
@@ -67,4 +68,5 @@ __all__ = [
     #    "do_make_label_group",
     "set_widget_sensitivity",
     "GTK3Adjustment",
+    "GTK3CellRenderer",
 ]
