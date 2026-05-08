@@ -68,9 +68,9 @@ update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3
 install = "pip install -e ."
 clean-test = "rm -f .coverage* cobertura.xml && rm -fr .pytest_cache"
 unit = "pytest -x -s -vvv -m unit --no-cov --cache-clear {args}"
-unit-coverage = "COVERAGE_FILE='.coverage.unit' pytest -m unit --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/"
-integration = "pytest -x -s -v -m integration --no-cov --cache-clear tests/common/"
-integration-coverage = "COVERAGE_FILE='.coverage.integration' pytest -m integration --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing tests/common/"
+unit-coverage = "COVERAGE_FILE='.coverage.unit' pytest -m unit --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing {args}"
+integration = "pytest -x -s -v -m integration --no-cov --cache-clear {args}"
+integration-coverage = "COVERAGE_FILE='.coverage.integration' pytest -m integration --cov-config=pyproject.toml --cov=pytkwrap --cov-branch --cov-report=term-missing {args}"
 coverage-combine = "coverage combine .coverage.unit .coverage.integration"
 coverage-report = "coverage html --rcfile=pyproject.toml"
 test = [
