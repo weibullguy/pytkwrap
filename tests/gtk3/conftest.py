@@ -22,6 +22,7 @@ def image_file():
     return _image_
 
 
+@pytest.mark.order(3)
 class BaseGTK3GObjectTests(TestToolkitMixin):
     """Add GTK3-specific assertions to the common mixin tests."""
 
@@ -142,6 +143,7 @@ class BaseGTK3GObjectTests(TestToolkitMixin):
         assert dut.dic_properties == self.expected_properties
 
 
+@pytest.mark.order(3)
 class BaseGTK3WidgetTests(TestPyTkWrapMixin):
     """Add GTK3-specific assertions to the common mixin tests."""
 

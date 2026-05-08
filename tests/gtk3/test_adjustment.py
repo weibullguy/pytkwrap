@@ -112,7 +112,7 @@ class TestGTK3Adjustment(BaseGTK3GObjectTests):
 
     @pytest.mark.unit
     def test_do_set_value_int(self):
-        """Should set the value of the GTK3Adjustment when passed a int."""
+        """Should set the value of the GTK3Adjustment when passed an int."""
         dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
         dut.do_set_value(8)
 
