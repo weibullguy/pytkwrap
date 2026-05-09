@@ -31,58 +31,63 @@ class GTK3WidgetProperties(TypedDict, total=False):
     action_name: str | None
     action_target: GLib.Variant | None
     activates_default: bool
-    active: bool | int  # datawidget property
+    active: bool | int
     active_id: str | None
     activatable: bool
-    adjustment: Gtk.Adjustment | None  # datawidget property
-    alignment: Pango.Alignment | None  # datawidget property
+    adjustment: Gtk.Adjustment | None
+    alignment: float | Pango.Alignment | None
     alpha: int
     always_show_image: bool
     angle: float
     app_paintable: bool
-    attributes: Pango.AttrList | None  # datawidget property
+    attributes: Pango.AttrList | None
     background: str
     background_rgba: Gdk.RGBA | None
     baseline_row: int
-    bold: bool  # datawidget property
+    bold: bool
     border_width: int
     bottom_margin: int
-    buffer: Gtk.EntryBuffer | Gtk.TextBuffer | None  # datawidget property
+    buffer: Gtk.EntryBuffer | Gtk.TextBuffer | None
     button_sensitivity: Gtk.SensitivityType | None
     can_default: bool
     can_focus: bool
     can_target: bool
-    caps_lock_warning: bool  # datawidget property
+    caps_lock_warning: bool
     cell_area: Gtk.CellArea | None
     cell_background: str | None
     cell_background_rgba: Gdk.RGBA | None
     cell_background_set: bool
     cell_foreground_rgba: Gdk.RGBA | None
-    climb_rate: float  # datawidget property
+    clickable: bool
+    climb_rate: float
     column_homogeneous: bool
     column_spacing: int
     column_span_column: int
-    completion: Gtk.EntryCompletion | None  # datawidget property
+    completion: Gtk.EntryCompletion | None
     composite_child: bool
     create_folders: bool
     cursor_position: int
     cursor_visible: bool
+    day: int
     destroy_with_parent: bool
+    detail_height_rows: int
+    detail_width_chars: int
     dialog: Gtk.Dialog | None
-    digits: int  # datawidget property
-    do_overwrite_confirmation: bool  # datawidget property
+    digits: int
+    do_overwrite_confirmation: bool
     draw_indicator: bool
-    editable: bool  # datawidget property
-    editing_canceled: bool  # datawidget property
-    ellipsize: Pango.EllipsizeMode | None  # datawidget property
+    editable: bool
+    editing_canceled: bool
+    ellipsize: Pango.EllipsizeMode | None
     enable_emoji_completion: bool
     enable_grid_lines: Gtk.TreeViewGridLines | None
     enable_tree_lines: bool
-    entry_text_column: int  # datawidget property
+    entry_text_column: int
     events: Gdk.EventMask | None
     expand: bool
     extra_widget: Gtk.Widget | None
     filter: Gtk.FileFilter | None
+    fixed_width: int
     focus_on_click: bool
     foreground: str
     foreground_rgba: Gdk.RGBA | None
@@ -90,7 +95,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     hadjustment: Gtk.Adjustment | None
     halign: Gtk.Align | None
     has_default: bool
-    has_entry: bool  # datawidget property
+    has_entry: bool
     has_focus: bool
     has_frame: bool
     has_tooltip: bool
@@ -107,22 +112,22 @@ class GTK3WidgetProperties(TypedDict, total=False):
     image_position: Gtk.PositionType
     im_module: str | None
     inconsistent: bool
-    indent: int  # datawidget property
+    indent: int
     inner_border: Gtk.Border | None
     input_hints: Gtk.InputHints | None
     input_purpose: Gtk.InputPurpose | None
-    invisible_char: str  # datawidget property
-    invisible_char_set: bool  # datawidget property
+    invisible_char: str
+    invisible_char_set: bool
     is_expanded: bool
     is_expander: bool
     is_focus: bool
-    justification: Gtk.Justification | None  # datawidget property
-    justify: Gtk.Justification | None  # datawidget property
+    justification: Gtk.Justification | None
+    justify: Gtk.Justification | None
     kinetic_scrolling: bool
-    label: str | None  # datawidget property
+    label: str | None
     label_widget: Gtk.Widget | None
-    label_xalign: float  # datawidget property
-    label_yalign: float  # datawidget property
+    label_xalign: float
+    label_yalign: float
     left_margin: int
     level_indentation: int
     lines: int
@@ -136,29 +141,33 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_content_height: int
     max_content_width: int
     max_length: int
-    max_width_chars: int  # datawidget property
+    max_width: int
+    max_width_chars: int
     min_content_height: int
     min_content_width: int
-    mnemonic_widget: Gtk.Widget | None  # datawidget property
+    min_width: int
+    mnemonic_widget: Gtk.Widget | None
     modal: bool
     mode: Gtk.CellRendererMode
     model: Gtk.TreeModel | None
-    monospace: bool  # datawidget property
+    monospace: bool
+    month: int
     name: str
+    no_month_change: bool
     no_show_all: bool
-    numeric: bool  # datawidget property
+    numeric: bool
     opacity: float
     overlay_scrolling: bool
-    overwrite: bool  # datawidget property
-    overwrite_mode: bool  # datawidget property
-    page_increment: float  # datawidget property
-    page_size: float  # datawidget property
+    overwrite: bool
+    overwrite_mode: bool
+    page_increment: float
+    page_size: float
     parent: Gtk.Container | None
     pattern: str | None
     pixels_above_lines: int
     pixels_below_lines: int
     pixels_inside_wrap: int
-    placeholder_text: str | None  # datawidget property
+    placeholder_text: str | None
     populate_all: bool
     popup_fixed_width: bool
     popup_shown: bool
@@ -172,15 +181,17 @@ class GTK3WidgetProperties(TypedDict, total=False):
     primary_icon_storage_type: Gtk.ImageType | None
     primary_icon_tooltip_markup: str | None
     primary_icon_tooltip_text: str | None
-    progress_fraction: float  # datawidget property
-    progress_pulse_step: float  # datawidget property
+    progress_fraction: float
+    progress_pulse_step: float
     propagate_natural_height: bool
     propagate_natural_width: bool
     receives_default: bool
     relief: Gtk.ReliefStyle | None
+    reorderable: bool
+    resizable: bool
     rgba: Gdk.RGBA | None
     right_margin: int
-    rotation: float  # datawidget property?
+    rotation: float
     row_homogeneous: bool
     row_spacing: int
     row_span_column: int
@@ -200,17 +211,26 @@ class GTK3WidgetProperties(TypedDict, total=False):
     selection_bound: int
     sensitive: bool
     shadow_type: Gtk.ShadowType | None
-    show_editor: bool  # datawidget property
+    show_day_names: bool
+    show_details: bool
+    show_editor: bool
     show_emoji_icon: bool
+    show_heading: bool
     show_hidden: bool
+    show_week_numbers: bool
     single_line_mode: bool
+    sizing: Gtk.TreeViewColumnSizing | None
     snap: bool | None
     snap_to_ticks: bool
-    step_increment: float  # datawidget property
-    tabs: Pango.TabArray | None  # datawidget property
-    text: str  # datawidget property
-    text_column: int  # datawidget property
-    text_length: int  # datawidget property
+    sort_column_id: int
+    sort_indicator: bool
+    sort_order: Gtk.SortType | None
+    spacing: int
+    step_increment: float
+    tabs: Pango.TabArray | None
+    text: str
+    text_column: int
+    text_length: int
     title: str
     tooltip: str
     tooltip_column: int
@@ -218,16 +238,16 @@ class GTK3WidgetProperties(TypedDict, total=False):
     tooltip_text: str
     top_margin: int
     track_visited_links: bool
-    truncate_multiline: bool  # datawidget property
+    truncate_multiline: bool
     update_policy: Gtk.SpinButtonUpdatePolicy | None
     upper: float
     use_alpha: bool
     use_markup: bool
     use_preview_label: bool
-    use_underline: bool  # datawidget property
+    use_underline: bool
     vadjustment: Gtk.Adjustment | None
     valign: Gtk.Align | None
-    value: float | int  # datawidget property
+    value: float | int
     vertical_alignment: str
     vexpand: bool
     vexpand_set: bool
@@ -237,17 +257,20 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vscrollbar_policy: Gtk.PolicyType | None
     weight: int
     weight_set: bool
+    widget: object
     width: int
-    width_chars: int  # datawidget property
+    width_chars: int
     width_request: int
     window: Gdk.Window | None
     window_placement: Gtk.CornerType | None
-    wrap: bool  # datawidget property
-    wrap_mode: Gtk.WrapMode | Pango.WrapMode | None  # datawidget property
-    wrap_width: int  # datawidget property
+    wrap: bool
+    wrap_mode: Gtk.WrapMode | Pango.WrapMode | None
+    wrap_width: int
+    x_offset: int
     xalign: float
     xpad: int
     yalign: float
+    year: int
     ypad: int
 
 

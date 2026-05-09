@@ -4,10 +4,9 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
-# Future Imports
-from __future__ import annotations
-
 # Standard Library Imports
+# Future Imports
+from collections.abc import Mapping
 from datetime import date
 
 # Third Party Imports
@@ -24,6 +23,8 @@ from pytkwrap.utilities import none_to_default
 class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
     """Adds GTK3-specific widget attributes."""
 
+    _DEFAULT_HEIGHT = -1
+    _DEFAULT_WIDTH = -1
     _GTK3_WIDGET_PROPERTIES = GTK3WidgetProperties(
         can_default=False,
         can_focus=False,
@@ -107,7 +108,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
 
     def do_set_properties(
         self,
-        properties: dict | list[list | tuple],
+        properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3-specific properties.
 
@@ -208,7 +209,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
             )
             raise UnkSignalError(_error_msg) from exc
 
-    def on_changed(self, __widget: GTK3Widget) -> None:
+    def on_changed(self, __widget: object) -> None:
         """Retrieve the data package for the widget on value changes.
 
         This method also sends a PyPubSub message along with the data package for
@@ -245,7 +246,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
             )
             raise UnkSignalError(_error_msg) from exc
 
-    def _get_signal_owner(self) -> GTK3Widget:
+    def _get_signal_owner(self) -> object:
         """Return the object whose signal handler should be blocked.
 
         Override in subclasses where the signal is owned by a child object rather than

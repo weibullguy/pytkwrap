@@ -5,6 +5,7 @@
 """
 
 # Standard Library Imports
+from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
@@ -25,7 +26,6 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
     )
     _GTK3_ADJUSTMENT_SIGNALS = [
         "changed",
-        "notify",
         "value-changed",
     ]
 
@@ -42,7 +42,9 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         GTK3GObjectMixin.__init__(self)
 
         self.dic_properties.update(self._GTK3_ADJUSTMENT_PROPERTIES)
-        self.dic_handler_id = {_signal: -1 for _signal in self._GTK3_ADJUSTMENT_SIGNALS}
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_ADJUSTMENT_SIGNALS}
+        )
 
         self.do_set_properties(
             GTK3WidgetProperties(
@@ -76,7 +78,7 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
 
     def do_set_properties(
         self,
-        properties: GTK3WidgetProperties | dict | list[list | tuple],
+        properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties of the GTK3Adjustment.
 
@@ -107,7 +109,7 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
 
     def do_set_value(
         self,
-        value: bool | date | float | int | str | None,
+        value: bool | date | float | int | str | tuple | None,
     ) -> None:
         """Set the current value of the GTK3Adjustment.
 

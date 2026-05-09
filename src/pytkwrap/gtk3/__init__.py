@@ -20,6 +20,7 @@ from .adjustment import GTK3Adjustment
 #    GTK3SpinButton,
 #    do_make_buttonbox,
 # )
+from .calendar import GTK3Calendar
 from .cellrenderer import GTK3CellRenderer
 
 # from .combo import GTK3ComboBox
@@ -40,13 +41,13 @@ from .mixins import (
 # from .plotview import GTK3PlotView
 # from .scrolledwindow import GTK3ScrolledWindow
 # from .textview import GTK3TextView
+from .treeviewcolumn import GTK3TreeViewColumn
 from .widget import GTK3Widget
 
 __all__ = [
     #    "GTK3BaseButton",
     #    "GTK3BaseDataWidget",
     #    "GTK3BaseWidget",
-    #    "GTK3BaseCellRenderer",
     #    "GTK3CheckButton",
     #    "GTK3ColorButton",
     #    "GTK3ComboBox",
@@ -68,5 +69,7 @@ __all__ = [
     #    "do_make_label_group",
     "set_widget_sensitivity",
     "GTK3Adjustment",
+    "GTK3Calendar",
     "GTK3CellRenderer",
+    "GTK3TreeViewColumn",
 ]

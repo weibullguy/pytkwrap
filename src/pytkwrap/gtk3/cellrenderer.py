@@ -5,6 +5,7 @@
 """
 
 # Standard Library Imports
+from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
@@ -65,7 +66,7 @@ class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
 
     def do_set_properties(
         self,
-        properties: GTK3WidgetProperties | dict | list[list | tuple],
+        properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties of the GTK3CellRenderer.
 

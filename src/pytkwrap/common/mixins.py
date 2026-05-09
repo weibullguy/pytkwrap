@@ -6,6 +6,7 @@
 
 # Standard Library Imports
 import gettext
+from collections.abc import Mapping
 from datetime import date
 from typing import TypedDict
 
@@ -109,7 +110,9 @@ class ToolkitMixin:
         )
         raise NoValueError(_error_msg)
 
-    def do_set_properties(self, properties: dict | list[list | tuple]) -> None:
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None:
         """Set the properties to the values in the passed dictionary.
 
         Parameters
@@ -150,7 +153,7 @@ class ToolkitMixin:
 
     def do_set_value(
         self,
-        value: bool | date | float | int | str | None,
+        value: bool | date | float | int | str | tuple | None,
     ) -> None:
         """Set the current value of the widget.
 
