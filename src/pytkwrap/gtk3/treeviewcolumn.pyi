@@ -1,4 +1,5 @@
 # Standard Library Imports
+from collections.abc import Mapping
 from datetime import date
 
 # Third Party Imports
@@ -23,5 +24,5 @@ class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
         self, property_name: str
     ) -> bool | date | float | int | object | str | None: ...
     def do_set_properties(
-        self, properties: GTK3WidgetProperties | dict | list[list | tuple]
+        self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...

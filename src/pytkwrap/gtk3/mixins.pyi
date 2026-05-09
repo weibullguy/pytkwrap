@@ -26,7 +26,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     active_id: str | None
     activatable: bool
     adjustment: Gtk.Adjustment | None
-    alignment: Pango.Alignment | None
+    alignment: float | Pango.Alignment | None
     alpha: int
     always_show_image: bool
     angle: float
@@ -49,6 +49,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     cell_background_rgba: Gdk.RGBA | None
     cell_background_set: bool
     cell_foreground_rgba: Gdk.RGBA | None
+    clickable: bool
     climb_rate: float
     column_homogeneous: bool
     column_spacing: int
@@ -58,7 +59,10 @@ class GTK3WidgetProperties(TypedDict, total=False):
     create_folders: bool
     cursor_position: int
     cursor_visible: bool
+    day: int
     destroy_with_parent: bool
+    detail_height_rows: int
+    detail_width_chars: int
     dialog: Gtk.Dialog | None
     digits: int
     do_overwrite_confirmation: bool
@@ -74,6 +78,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     expand: bool
     extra_widget: Gtk.Widget | None
     filter: Gtk.FileFilter | None
+    fixed_width: int
     focus_on_click: bool
     foreground: str
     foreground_rgba: Gdk.RGBA | None
@@ -127,15 +132,19 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_content_height: int
     max_content_width: int
     max_length: int
+    max_width: int
     max_width_chars: int
     min_content_height: int
     min_content_width: int
+    min_width: int
     mnemonic_widget: Gtk.Widget | None
     modal: bool
     mode: Gtk.CellRendererMode
     model: Gtk.TreeModel | None
     monospace: bool
+    month: int
     name: str
+    no_month_change: bool
     no_show_all: bool
     numeric: bool
     opacity: float
@@ -169,6 +178,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     propagate_natural_width: bool
     receives_default: bool
     relief: Gtk.ReliefStyle | None
+    reorderable: bool
+    resizable: bool
     rgba: Gdk.RGBA | None
     right_margin: int
     rotation: float
@@ -191,12 +202,21 @@ class GTK3WidgetProperties(TypedDict, total=False):
     selection_bound: int
     sensitive: bool
     shadow_type: Gtk.ShadowType | None
+    show_day_names: bool
+    show_details: bool
     show_editor: bool
     show_emoji_icon: bool
+    show_heading: bool
     show_hidden: bool
+    show_week_numbers: bool
     single_line_mode: bool
+    sizing: Gtk.TreeViewColumnSizing | None
     snap: bool | None
     snap_to_ticks: bool
+    sort_column_id: int
+    sort_indicator: bool
+    sort_order: Gtk.SortType | None
+    spacing: int
     step_increment: float
     tabs: Pango.TabArray | None
     text: str
@@ -228,6 +248,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vscrollbar_policy: Gtk.PolicyType | None
     weight: int
     weight_set: bool
+    widget: object
     width: int
     width_chars: int
     width_request: int
@@ -236,9 +257,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     wrap: bool
     wrap_mode: Gtk.WrapMode | Pango.WrapMode | None
     wrap_width: int
+    x_offset: int
     xalign: float
     xpad: int
     yalign: float
+    year: int
     ypad: int
 
 class GTK3GObjectMixin(GObject.Object, ToolkitMixin):

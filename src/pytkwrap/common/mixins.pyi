@@ -1,5 +1,6 @@
 # Standard Library Imports
 import gettext
+from collections.abc import Mapping
 from datetime import date
 from typing import TypedDict
 
@@ -48,8 +49,12 @@ class ToolkitMixin:
         self, property_name: str
     ) -> bool | float | int | object | str | None: ...
     def do_get_value(self) -> bool | date | float | int | str | None: ...
-    def do_set_properties(self, properties: dict | list[list | tuple]) -> None: ...
-    def do_set_value(self, value: bool | date | float | int | str | None) -> None: ...
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None: ...
+    def do_set_value(
+        self, value: bool | date | float | int | str | tuple | None
+    ) -> None: ...
 
 class PyTkWrapMixin:
     _PYTKWRAP_ATTRIBUTES: PyTkWrapAttributes

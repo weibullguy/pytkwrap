@@ -1,4 +1,5 @@
 # Standard Library Imports
+from collections.abc import Mapping
 from datetime import date
 
 # Third Party Imports
@@ -26,7 +27,9 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         self, property_name: str
     ) -> bool | date | float | int | object | str | None: ...
     def do_set_properties(
-        self, properties: GTK3WidgetProperties | dict | list[list | tuple]
+        self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
     def do_get_value(self) -> float: ...
-    def do_set_value(self, value: bool | date | float | int | str | None) -> None: ...
+    def do_set_value(
+        self, value: bool | date | float | int | str | tuple | None
+    ) -> None: ...
