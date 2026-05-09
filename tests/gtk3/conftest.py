@@ -149,6 +149,9 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
 
     widget_class = None
     expected_attributes = []
+    expected_default_height = -1
+    expected_default_tooltip = ""
+    expected_default_width = -1
     expected_handler_id = {}
     expected_properties = {}
 
