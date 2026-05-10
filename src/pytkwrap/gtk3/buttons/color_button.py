@@ -31,7 +31,6 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Bin):
         use_alpha=True,
     )
     _GTK3_COLOR_BUTTON_SIGNALS = [
-        "color-activated",
         "color-set",
     ]
     _DEFAULT_EDIT_SIGNAL = "color-set"

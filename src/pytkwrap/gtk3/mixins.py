@@ -90,6 +90,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     filter: Gtk.FileFilter | None
     fixed_width: int
     focus_on_click: bool
+    font_name: str
     foreground: str
     foreground_rgba: Gdk.RGBA | None
     group: Gtk.RadioButton | None
@@ -218,6 +219,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_emoji_icon: bool
     show_heading: bool
     show_hidden: bool
+    show_size: bool
+    show_style: bool
     show_week_numbers: bool
     single_line_mode: bool
     sizing: Gtk.TreeViewColumnSizing | None
@@ -243,8 +246,10 @@ class GTK3WidgetProperties(TypedDict, total=False):
     update_policy: Gtk.SpinButtonUpdatePolicy | None
     upper: float
     use_alpha: bool
+    use_font: bool
     use_markup: bool
     use_preview_label: bool
+    use_style: bool
     use_underline: bool
     vadjustment: Gtk.Adjustment | None
     valign: Gtk.Align | None
