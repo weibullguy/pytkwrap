@@ -21,5 +21,5 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
     def do_set_value(
-        self, value: bool | date | float | int | str | tuple | None
+        self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
