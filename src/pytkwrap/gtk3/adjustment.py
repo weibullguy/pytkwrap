@@ -109,7 +109,7 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
 
     def do_set_value(
         self,
-        value: bool | date | float | int | str | tuple | None,
+        value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
         """Set the current value of the GTK3Adjustment.
 

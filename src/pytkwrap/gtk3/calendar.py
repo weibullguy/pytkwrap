@@ -124,7 +124,7 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
             )
 
     def do_set_value(
-        self, value: bool | date | float | int | str | tuple | None
+        self, value: bool | date | float | int | object | str | tuple | None
     ) -> None:
         """Set the value of the GTK3Calendar.
 

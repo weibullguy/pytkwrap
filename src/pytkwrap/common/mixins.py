@@ -93,7 +93,7 @@ class ToolkitMixin:
         )
         raise UnkPropertyError(_error_msg)
 
-    def do_get_value(self) -> bool | date | float | int | str | None:
+    def do_get_value(self) -> bool | date | float | int | object | str | tuple | None:
         """Return the current value of the widget.
 
         Raises
@@ -153,7 +153,7 @@ class ToolkitMixin:
 
     def do_set_value(
         self,
-        value: bool | date | float | int | str | tuple | None,
+        value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
         """Set the current value of the widget.
 

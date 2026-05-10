@@ -1,4 +1,3 @@
-# pylint: disable=useless-import-alias
 """The pytkwrap GTK3 buttons package.
 
 NOTE: Sub-modules in this package must import siblings directly
@@ -10,15 +9,17 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-from .button import GTK3Button
-from .button import do_make_buttonbox as do_make_buttonbox
+from .button import GTK3Button, do_make_buttonbox
 
 # from .check_button import GTK3CheckButton as GTK3CheckButton
-# from .color_button import GTK3ColorButton as GTK3ColorButton
+from .color_button import GTK3ColorButton
+
 # from .file_chooser_button import GTK3FileChooserButton as GTK3FileChooserButton
 # from .option_button import GTK3OptionButton as GTK3OptionButton
 # from .spin_button import GTK3SpinButton as GTK3SpinButton
 
 __all__ = [
     "GTK3Button",
+    "GTK3ColorButton",
+    "do_make_buttonbox",
 ]

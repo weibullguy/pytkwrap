@@ -188,10 +188,10 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
         UnkSignalError
             If the signal name is not valid for the widget.
         """
-        _field, _value = next(iter(package.items()))
+        _index, _value = next(iter(package.items()))
         _value = none_to_default(_value, self.dic_attributes["default_value"])
 
-        if _field != self.dic_attributes["field"]:
+        if _index != self.dic_attributes["index"]:
             return
 
         try:
@@ -226,13 +226,12 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
         UnkSignalError
             If the signal name is not valid for this widget.
         """
-        _package = {self.dic_attributes["field"]: self.do_get_value()}
+        _package = {self.dic_attributes["index"]: self.do_get_value()}
         try:
             _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
             with self._get_signal_owner().handler_block(_hid):
                 pub.sendMessage(
                     self.dic_attributes["send_topic"],
-                    node_id=self.dic_attributes["record_id"],
                     package=_package,
                 )
         except KeyError as exc:
