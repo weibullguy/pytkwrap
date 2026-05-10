@@ -1,17 +1,17 @@
-#
-#       pytkwrap.gtk3.buttons.base_button.py is part of the pytkwrap project
-#
-# All rights reserved.
-# Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""The pytkwrap GTK3BaseButton module."""
+"""The pytkwrap GTK3 Button module.
+
+.. author:: Doyle Rowland
+.. copyright:: Since 2007, all rights reserved.
+"""
 
 # Standard Library Imports
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
-from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
+from pytkwrap.gtk3.bin import GTK3Bin
+from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
 def do_make_buttonbox(
@@ -22,11 +22,11 @@ def do_make_buttonbox(
     layout: Gtk.ButtonBoxStyle = Gtk.ButtonBoxStyle.START,
     orientation: str = "vertical",
     width: int = -1,
-) -> Gtk.HButtonBox | Gtk.VButtonBox:
-    """Create a buttonbox for  views.
+) -> Gtk.ButtonBox:
+    """Create a buttonbox for views.
 
-    This method creates the base buttonbox used by all  Views.  Use a
-    buttonbox for a  View if there are only buttons to be added.
+    This method creates the base buttonbox used by all Views.  Use a
+    buttonbox for a View if there are only buttons to be added.
 
     Parameters
     ----------
@@ -34,24 +34,25 @@ def do_make_buttonbox(
         List of absolute paths to icon image files for each button.
     tooltips : list[str]
         List of tooltip markup strings for each button.  If fewer tooltips than icons
-        are present, remaining buttons get default tooltips.
+        are present, the remaining buttons get default tooltips.
     callbacks : list[Callable]
         List of callback functions for each button's 'clicked' signal.  If fewer
-        callbacks than icons are provided, remaining buttons are set insensitive.
+        callbacks than icons are provided, the remaining buttons are set insensitive.
     height : int
-        The button height in pixels.  Default is -1 (natural size).
+        The button height in pixels.  The default value is -1 (natural size).
     layout : Gtk.ButtonBoxStyle
-        The button layout style.  Default is Gtk.ButtonBoxStyle.START.
+        The button layout style.  The default value is Gtk.ButtonBoxStyle.START.
     orientation : str
-        'horizontal' or 'vertical'. Default is 'vertical'.
+        'horizontal' or 'vertical'.  The default value is 'vertical'.
     width : int
-        The button width in pixels.  Default is -1 (natural size).
+        The button width in pixels.  The default value is -1 (natural size).
 
     Returns
     -------
-    _buttonbox : Gtk.HButtonBox | Gtk.VButtonBox
+    _buttonbox : Gtk.ButtonBox
         The buttonbox populated with GTK3Buttons.
     """
+    # TODO: Change this to a GTK3ButtonBox once that wrapper is done.
     _buttonbox = Gtk.HButtonBox() if orientation == "horizontal" else Gtk.VButtonBox()
     _buttonbox.set_layout(layout)
 
@@ -60,7 +61,7 @@ def do_make_buttonbox(
         _icon = GdkPixbuf.Pixbuf.new_from_file_at_size(__, height, width)
         _image.set_from_pixbuf(_icon)
 
-        _button = GTK3BaseButton()
+        _button = GTK3Button()
         _button.set_image(_image)
 
         _button.do_set_properties(
@@ -85,11 +86,11 @@ def do_make_buttonbox(
     return _buttonbox
 
 
-class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
-    """The GTK3BaseButton class."""
+class GTK3Button(Gtk.Button, GTK3Bin):
+    """The GTK3Button class."""
 
     # Define private class attributes.
-    _GTK3_BASE_BUTTON_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_BUTTON_PROPERTIES = GTK3WidgetProperties(
         action_name=None,
         action_target=None,
         always_show_image=False,
@@ -99,7 +100,7 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
         relief=Gtk.ReliefStyle.NORMAL,
         use_underline=False,
     )
-    _GTK3_BASE_BUTTON_SIGNALS = [
+    _GTK3_BUTTON_SIGNALS = [
         "activate",
         "check-resize",
         "clicked",
@@ -112,28 +113,54 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
     _DEFAULT_WIDTH = 200
 
     def __init__(self, label: str = "...") -> None:
-        """Initialize an instance of the Button widget.
+        """Initialize an instance of the GTK3Button widget.
 
-        :param label: the text to display on the Button.  Default is an
-            ellipsis (...).
+        Parameters
+        ----------
+        label : str
+            The text to display on the GTK3Button.  The default value is an ellipsis
+            (...).
         """
         Gtk.Button.__init__(self)
-        GTK3BaseDataWidget.__init__(self)
+        GTK3Bin.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_properties.update(self._GTK3_BASE_BUTTON_PROPERTIES)
+        self.dic_properties.update(self._GTK3_BUTTON_PROPERTIES)
         self.dic_handler_id.update(
-            {_signal: -1 for _signal in self._GTK3_BASE_BUTTON_SIGNALS}
+            {_signal: -1 for _signal in self._GTK3_BUTTON_SIGNALS}
         )
 
         self.set_label(label)
         self.show_all()
 
-    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
-    def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
+    def do_get_property(
+        self, property_name: str
+    ) -> bool | date | float | int | object | str | None:
+        """Get the value of the requested property.
+
+        Parameters
+        ----------
+        property_name : str
+            The name of the property to retrieve.
+
+        Returns
+        -------
+        bool | date | float | int | object | str | None
+        """
+        if property_name in self._GTK3_BUTTON_PROPERTIES:
+            return self.dic_properties.get(property_name)
+        return super().do_get_property(property_name)
+
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None:
         """Set the properties of the Button.
 
-        :param properties: the WidgetProperties dict with the property values to set for
+        Parameters
+        ----------
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+         the WidgetProperties dict with the property values to set for
             the Button.
         """
         super().do_set_properties(properties)
@@ -156,9 +183,3 @@ class GTK3BaseButton(Gtk.Button, GTK3BaseDataWidget):
             _image.set_from_pixbuf(_icon)
             self.set_image(_image)
             self.set_image_position(self.dic_properties["image_position"])
-
-    def do_get_value(self) -> bool | date | float | int | str | None:
-        """Return the current value of the GTK3BaseButton."""
-
-    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
-        """Set the current value of the GTK3BaseButton."""
