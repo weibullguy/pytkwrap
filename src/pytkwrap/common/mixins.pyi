@@ -48,12 +48,14 @@ class ToolkitMixin:
     def do_get_property(
         self, property_name: str
     ) -> bool | float | int | object | str | None: ...
-    def do_get_value(self) -> bool | date | float | int | str | None: ...
+    def do_get_value(
+        self,
+    ) -> bool | date | float | int | object | str | tuple | None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
     def do_set_value(
-        self, value: bool | date | float | int | str | tuple | None
+        self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
 
 class PyTkWrapMixin:
