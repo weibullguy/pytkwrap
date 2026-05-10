@@ -22,6 +22,7 @@ from .adjustment import GTK3Adjustment
 # )
 from .calendar import GTK3Calendar
 from .cellrenderer import GTK3CellRenderer
+from .container import GTK3Container
 
 # from .combo import GTK3ComboBox
 # from .entry import GTK3Entry
@@ -71,5 +72,6 @@ __all__ = [
     "GTK3Adjustment",
     "GTK3Calendar",
     "GTK3CellRenderer",
+    "GTK3Container",
     "GTK3TreeViewColumn",
 ]
