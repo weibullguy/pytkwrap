@@ -1,11 +1,8 @@
-# pylint: skip-file
-# type: ignore
-#
-#       tests.gtk3.test_button.py is part of the pytkwrap project
-#
-# All rights reserved.
-# Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""Test class for the GTK3Button module algorithms and models."""
+"""Test module for the GTK3Button class.
+
+.. author:: Doyle Rowland
+.. copyright:: Since 2007, all rights reserved.
+"""
 
 # Third Party Imports
 import pytest

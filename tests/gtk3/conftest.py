@@ -161,6 +161,24 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
         """Override in subclass if constructor needs arguments."""
         return self.widget_class()
 
+    def do_update_error_handler(self, message):
+        """Error handler for do_update() errors."""
+        assert (
+            message
+            == f"{self.widget_class.__name__}.do_update(): Unknown signal 'unk_signal'."
+        )
+
+    def mock_handler(self, package):
+        """Mock handler for on_changed() calls."""
+        assert isinstance(package, dict)
+
+    def on_changed_error_handler(self, message):
+        """Error handler for on_changed() errors."""
+        assert (
+            message
+            == f"{self.widget_class.__name__}.on_changed(): Unknown signal 'unk_signal'."
+        )
+
     @pytest.mark.unit
     def test_init(self):
         """Should initialize an instance of a GTK3BaseWidget."""
