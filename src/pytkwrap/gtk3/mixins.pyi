@@ -49,6 +49,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     cell_background_rgba: Gdk.RGBA | None
     cell_background_set: bool
     cell_foreground_rgba: Gdk.RGBA | None
+    child: Gtk.Widget | None
     clickable: bool
     climb_rate: float
     column_homogeneous: bool
