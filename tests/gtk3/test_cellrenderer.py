@@ -47,7 +47,6 @@ class TestGTK3CellRenderer(BaseGTK3GObjectTests):
         "stop_editing",
     ]
     expected_default_height = -1
-    expected_default_tooltip = ""
     expected_default_width = -1
     expected_handler_id = {
         "editing-canceled": -1,

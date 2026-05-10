@@ -42,7 +42,6 @@ class TestGTK3Calendar(BaseGTK3WidgetTests):
         "unmark_day",
     ]
     expected_default_height = -1
-    expected_default_tooltip = ""
     expected_default_width = -1
     expected_handler_id = {
         "day-selected": -1,

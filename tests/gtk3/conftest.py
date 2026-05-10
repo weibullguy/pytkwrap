@@ -150,7 +150,9 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
     widget_class = None
     expected_attributes = []
     expected_default_height = -1
-    expected_default_tooltip = ""
+    expected_default_tooltip = (
+        "Missing tooltip, please file an issue to have one added."
+    )
     expected_default_width = -1
     expected_handler_id = {}
     expected_properties = {}
@@ -167,12 +169,9 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
         assert isinstance(dut, self.widget_class)
 
         # These are inherited from GTK3GObjectMixin.
-        assert dut._DEFAULT_HEIGHT == -1
-        assert (
-            dut._DEFAULT_TOOLTIP
-            == "Missing tooltip, please file an issue to have one added."
-        )
-        assert dut._DEFAULT_WIDTH == -1
+        assert dut._DEFAULT_HEIGHT == self.expected_default_height
+        assert dut._DEFAULT_TOOLTIP == self.expected_default_tooltip
+        assert dut._DEFAULT_WIDTH == self.expected_default_width
         assert dut.dic_attributes == {
             "index": -1,
             "x_pos": 0,

@@ -53,7 +53,6 @@ class TestGTK3Container(BaseGTK3WidgetTests):
         # "unset_focus_chain", # deprecated
     ]
     expected_default_height = -1
-    expected_default_tooltip = ""
     expected_default_width = -1
     expected_handler_id = {
         "add": -1,

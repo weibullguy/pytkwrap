@@ -24,7 +24,6 @@ class TestGTK3Bin(BaseGTK3WidgetTests):
         "get_child",
     ]
     expected_default_height = -1
-    expected_default_tooltip = ""
     expected_default_width = -1
     expected_handler_id = {
         "add": -1,
