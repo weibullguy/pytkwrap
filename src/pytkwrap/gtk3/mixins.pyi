@@ -100,6 +100,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     hscroll_policy: Gtk.ScrollablePolicy | None
     hscrollbar_policy: Gtk.PolicyType | None
     icon: str
+    icons: list[str]
     id_column: int
     image: Gtk.Widget | None
     image_position: Gtk.PositionType
@@ -214,6 +215,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_style: bool
     show_week_numbers: bool
     single_line_mode: bool
+    size: Gtk.IconSize | None
     sizing: Gtk.TreeViewColumnSizing | None
     snap: bool | None
     snap_to_ticks: bool
