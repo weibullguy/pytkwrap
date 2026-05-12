@@ -252,6 +252,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     use_markup: bool
     use_preview_label: bool
     use_style: bool
+    use_symbolic: bool
     use_underline: bool
     vadjustment: Gtk.Adjustment | None
     valign: Gtk.Align | None

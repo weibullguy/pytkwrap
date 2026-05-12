@@ -11,7 +11,13 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .adjustment import GTK3Adjustment
 from .bin import GTK3Bin
-from .buttons import GTK3Button, GTK3ColorButton, GTK3FontButton, GTK3ScaleButton
+from .buttons import (
+    GTK3Button,
+    GTK3ColorButton,
+    GTK3FontButton,
+    GTK3ScaleButton,
+    GTK3VolumeButton,
+)
 from .calendar import GTK3Calendar
 from .cellrenderer import GTK3CellRenderer
 from .container import GTK3Container
@@ -69,4 +75,5 @@ __all__ = [
     "GTK3Container",
     "GTK3TreeViewColumn",
     "GTK3Bin",
+    "GTK3VolumeButton",
 ]

@@ -105,9 +105,9 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Bin):
 
         Parameters
         ----------
-        value : Gtk.RGBA
-            The Gtk.RGBA to set the GTK3ScaleButton active value.
+        value : float | int | str
+            The value to set the GTK3ScaleButton active value.
         """
-        if not isinstance(value, (float, int)):
+        if not isinstance(value, (float, int, str)):
             value = self.dic_attributes.get("default_value")
-        self.set_value(value)
+        self.set_value(float(value))
