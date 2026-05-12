@@ -1,4 +1,4 @@
-"""Test module for the GTK3ScaleButton class.
+"""Test module for the GTK3VolumeButton class.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -11,7 +11,7 @@ from pubsub import pub
 # pytkwrap Package Imports
 from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.buttons import GTK3ScaleButton
+from pytkwrap.gtk3.buttons import GTK3VolumeButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
@@ -20,26 +20,17 @@ from .conftest import BaseGTK3WidgetTests
 
 @pytest.mark.skip(
     reason=(
-        "Gtk.ScaleButton routinely crashes at the C level in test environments. "
+        "Gtk.VolumeButton routinely crashes at the C level in test environments. "
         "Requires manual testing in a running GTK3 application."
-        "See examples/scale_button.py for manual test program."
+        "See examples/Volume_button.py for manual test program."
     )
 )
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3ScaleButton(BaseGTK3WidgetTests):
-    """Test class for the GTK3ScaleButton."""
+class TestGTK3VolumeButton(BaseGTK3WidgetTests):
+    """Test class for the GTK3VolumeButton."""
 
-    widget_class = GTK3ScaleButton
-    expected_attributes = [
-        "get_adjustment",
-        "get_minus_button",
-        "get_plus_button",
-        "get_popup",
-        "get_value",
-        "set_adjustment",
-        "set_icons",
-        "set_value",
-    ]
+    widget_class = GTK3VolumeButton
+    expected_attributes = []
     expected_default_edit_signal = "value-changed"
     expected_default_height = 30
     expected_default_value = 0.0
@@ -47,7 +38,7 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
     expected_handler_id = {
         "add": -1,
         "check-resize": -1,
-        "Scale-set": -1,
+        "Volume-set": -1,
         "destroy": -1,
         "direction-changed": -1,
         "hide": -1,
@@ -92,13 +83,14 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
         "parent": None,
         "receives_default": False,
         "rgba": None,
-        "scale_factor": 1,
+        "Volume_factor": 1,
         "sensitive": True,
         "show_editor": False,
-        "title": "Pick a Scale",
+        "title": "Pick a Volume",
         "tooltip_markup": "Missing tooltip, please file an issue to have one added.",
         "tooltip_text": "Missing tooltip, please file an issue to have one added.",
         "use_alpha": True,
+        "use_symbolic": True,
         "valign": Gtk.Align.FILL,
         "vexpand": False,
         "vexpand_set": False,
@@ -109,7 +101,7 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
 
     @pytest.mark.unit
     def test_init(self):
-        """Should initialize an instance of a GTK3ScaleButton."""
+        """Should initialize an instance of a GTK3VolumeButton."""
         dut = self.make_dut()
 
         assert isinstance(dut, self.widget_class)
@@ -120,7 +112,7 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
         assert dut._DEFAULT_WIDTH == self.expected_default_width
         assert dut.dic_attributes == {
             "default_value": 0.0,
-            "edit_signal": "Scale-set",
+            "edit_signal": "Volume-set",
             "index": -1,
             "x_pos": 0,
             "y_pos": 0,
@@ -130,7 +122,7 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
 
     @pytest.mark.unit
     def test_set_properties_default(self):
-        """Should set the default properties of a GTK3ScaleButton when passed an empty
+        """Should set the default properties of a GTK3VolumeButton when passed an empty
         GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
@@ -141,7 +133,7 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
         assert dut.get_property("rgba").green == 0.0
         assert dut.get_property("rgba").red == 0.0
         assert not dut.get_property("show-editor")
-        assert dut.get_property("title") == "Pick a Scale"
+        assert dut.get_property("title") == "Pick a Volume"
         assert dut.get_property("use-alpha")
 
     @pytest.mark.unit
@@ -153,7 +145,7 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
             GTK3WidgetProperties(
                 rgba=Gdk.RGBA(1.0, 1.0, 1.0, 1.0),
                 show_editor=True,
-                title="Choose a Scale",
+                title="Choose a Volume",
                 use_alpha=False,
             )
         )
@@ -164,12 +156,12 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
         assert dut.get_property("rgba").green == 1.0
         assert dut.get_property("rgba").red == 1.0
         assert dut.get_property("show-editor")
-        assert dut.get_property("title") == "Choose a Scale"
+        assert dut.get_property("title") == "Choose a Volume"
         assert not dut.get_property("use-alpha")
 
     @pytest.mark.unit
     def test_do_update(self):
-        """Should update the GTK3ScaleButton with the data package value."""
+        """Should update the GTK3VolumeButton with the data package value."""
         dut = self.make_dut()
         dut.dic_attributes["index"] = 1
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
@@ -186,7 +178,7 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
 
     @pytest.mark.unit
     def test_do_update_none_value(self):
-        """Should update the GTK3ScaleButton properties with the default values when
+        """Should update the GTK3VolumeButton properties with the default values when
         passed a data package with a value of None."""
         dut = self.make_dut()
         dut.dic_attributes["index"] = 11
@@ -224,8 +216,8 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
 
     @pytest.mark.unit
     def test_do_update_wrong_field(self):
-        """Should do nothing when the data package key doesn't match the GTK3ScaleButton
-        field name."""
+        """Should do nothing when the data package key doesn't match the
+        GTK3VolumeButton field name."""
         dut = self.make_dut()
         dut.dic_attributes["index"] = 22
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
@@ -241,15 +233,15 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
 
     @pytest.mark.unit
     def test_on_changed(self):
-        """on_changed() is called when the GTK3ScaleButton Scale is set."""
+        """on_changed() is called when the GTK3VolumeButton Volume is set."""
         dut = self.make_dut()
         dut.dic_attributes["index"] = 5
-        dut.dic_attributes["send_topic"] = "Scale_changed"
+        dut.dic_attributes["send_topic"] = "Volume_changed"
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
         pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
-        dut.emit("Scale-set")
+        dut.emit("Volume-set")
 
     @pytest.mark.skip(
         reason="GTK3Widget.on_changed() does not raise an UnkSignalError for some "
@@ -259,11 +251,11 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
         """Should raise an UnkSignalError with an unknown edit signal name."""
         dut = self.make_dut()
         dut.dic_attributes["index"] = 15
-        dut.dic_attributes["send_topic"] = "Scale_changed"
+        dut.dic_attributes["send_topic"] = "Volume_changed"
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
         pub.subscribe(self.on_changed_error_handler, "do_log_error")
         dut.dic_attributes["edit_signal"] = "unk_signal"
 
         with pytest.raises(UnkSignalError):
-            dut.emit("Scale-set")
+            dut.emit("Volume-set")
