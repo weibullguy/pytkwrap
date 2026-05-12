@@ -51,12 +51,12 @@ class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
         return super().do_get_property(property_name)
 
     def do_get_value(self) -> bool | date | float | int | object | str | None:
-        """Retrieve the Gtk.RGBA displayed in the GTK3VolumeButton.
+        """Retrieve the value displayed in the GTK3VolumeButton.
 
         Returns
         -------
-        Gdk.RGBA
-            The Gdk.RGBA displayed in the GTK3VolumeButton.
+        float
+            The value displayed in the GTK3VolumeButton.
         """
         return self.get_value()
 
@@ -66,7 +66,7 @@ class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
     ) -> None:
         """Set the GTK3VolumeButton active value.
 
-        If the value passed is not a float or int, the default value is used.
+        If the value passed is not a float, int, or str, the default value is used.
 
         Parameters
         ----------

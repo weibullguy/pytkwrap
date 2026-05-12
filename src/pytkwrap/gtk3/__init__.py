@@ -16,7 +16,9 @@ from .buttons import (
     GTK3ColorButton,
     GTK3FontButton,
     GTK3ScaleButton,
+    GTK3ToggleButton,
     GTK3VolumeButton,
+    do_make_buttonbox,
 )
 from .calendar import GTK3Calendar
 from .cellrenderer import GTK3CellRenderer
@@ -44,11 +46,14 @@ from .treeviewcolumn import GTK3TreeViewColumn
 from .widget import GTK3Widget
 
 __all__ = [
+    "GTK3Adjustment",
+    "GTK3Bin",
     "GTK3Button",
-    #    "GTK3BaseDataWidget",
-    #    "GTK3BaseWidget",
     #    "GTK3CheckButton",
+    "GTK3Calendar",
+    "GTK3CellRenderer",
     "GTK3ColorButton",
+    "GTK3Container",
     "GTK3FontButton",
     #    "GTK3ComboBox",
     #    "GTK3Entry",
@@ -63,17 +68,13 @@ __all__ = [
     "GTK3ScaleButton",
     #    "GTK3SpinButton",
     #    "GTK3TextView",
+    "GTK3ToggleButton",
+    "GTK3TreeViewColumn",
+    "GTK3VolumeButton",
     "GTK3Widget",
     "GTK3WidgetAttributes",
     "GTK3WidgetProperties",
-    #    "do_make_buttonbox",
+    "do_make_buttonbox",
     #    "do_make_label_group",
     "set_widget_sensitivity",
-    "GTK3Adjustment",
-    "GTK3Calendar",
-    "GTK3CellRenderer",
-    "GTK3Container",
-    "GTK3TreeViewColumn",
-    "GTK3Bin",
-    "GTK3VolumeButton",
 ]
