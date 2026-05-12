@@ -115,4 +115,5 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Bin):
         """
         if not isinstance(value, Gdk.RGBA):
             value = Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
+        self.dic_properties["rgba"] = value
         self.set_rgba(value)

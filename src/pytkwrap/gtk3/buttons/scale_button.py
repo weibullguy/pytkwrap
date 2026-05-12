@@ -110,4 +110,5 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Bin):
         """
         if not isinstance(value, (float, int, str)):
             value = self.dic_attributes.get("default_value")
+        self.dic_properties["value"] = float(value)
         self.set_value(float(value))

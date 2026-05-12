@@ -13,6 +13,7 @@ from .adjustment import GTK3Adjustment
 from .bin import GTK3Bin
 from .buttons import (
     GTK3Button,
+    GTK3CheckButton,
     GTK3ColorButton,
     GTK3FontButton,
     GTK3ScaleButton,
@@ -49,9 +50,9 @@ __all__ = [
     "GTK3Adjustment",
     "GTK3Bin",
     "GTK3Button",
-    #    "GTK3CheckButton",
     "GTK3Calendar",
     "GTK3CellRenderer",
+    "GTK3CheckButton",
     "GTK3ColorButton",
     "GTK3Container",
     "GTK3FontButton",

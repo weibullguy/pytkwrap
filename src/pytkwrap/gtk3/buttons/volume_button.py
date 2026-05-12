@@ -49,30 +49,3 @@ class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
         if property_name in self._GTK3_VOLUME_BUTTON_PROPERTIES:
             return self.dic_properties.get(property_name)
         return super().do_get_property(property_name)
-
-    def do_get_value(self) -> bool | date | float | int | object | str | None:
-        """Retrieve the value displayed in the GTK3VolumeButton.
-
-        Returns
-        -------
-        float
-            The value displayed in the GTK3VolumeButton.
-        """
-        return self.get_value()
-
-    def do_set_value(
-        self,
-        value: bool | date | float | int | object | str | tuple | None,
-    ) -> None:
-        """Set the GTK3VolumeButton active value.
-
-        If the value passed is not a float, int, or str, the default value is used.
-
-        Parameters
-        ----------
-        value : float | int | str
-            The value to set the GTK3VolumeButton active value.
-        """
-        if not isinstance(value, (float, int, str)):
-            value = self.dic_attributes.get("default_value")
-        self.set_value(float(value))

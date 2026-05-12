@@ -1,92 +1,30 @@
-#       pytkwrap.gtk3.buttons.check_button.py is part of the pytkwrap project
-#
-# All rights reserved.
-# Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""The pytkwrap GTK3CheckButton module."""
+"""The pytkwrap GTK3 Check Button module.
 
-# Standard Library Imports
-from datetime import date
+.. author:: Doyle Rowland
+.. copyright:: Since 2007, all rights reserved.
+"""
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.buttons.base_button import GTK3BaseButton
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.gtk3.buttons.toggle_button import GTK3ToggleButton
 
 
-class GTK3CheckButton(Gtk.CheckButton, GTK3BaseButton):
+class GTK3CheckButton(Gtk.CheckButton, GTK3ToggleButton):
     """The GTK3CheckButton class."""
 
     # Define private class attributes.
-    _GTK3_CHECK_BUTTON_PROPERTIES = GTK3WidgetProperties(
-        active=False,
-        draw_indicator=False,
-        inconsistent=False,
-    )
-    _GTK3_CHECK_BUTTON_SIGNALS = ["toggled"]
     _DEFAULT_EDIT_SIGNAL = "toggled"
     _DEFAULT_HEIGHT = 40
     _DEFAULT_WIDTH = 200
 
-    def __init__(self, label: str = "") -> None:
+    def __init__(self, label="...") -> None:
         """Initialize an instance of the GTK3CheckButton widget.
 
         Parameters
         ----------
         label : str
-            The text to display with the GTK3CheckButton. Default is an empty string.
+            The text to display in the GTK3CheckButton label.  The default value is
+            an ellipsis (...).
         """
-        Gtk.CheckButton.__init__(self)
-        GTK3BaseButton.__init__(self, label=label)
-
-        # Initialize public instance attributes.
-        self.dic_properties.update(self._GTK3_CHECK_BUTTON_PROPERTIES)
-        self.dic_handler_id.update(
-            {_signal: -1 for _signal in self._GTK3_CHECK_BUTTON_SIGNALS}
-        )
-
-        self.default = False
-
-    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
-    def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
-        """Set the properties of the GTK3CheckButton.
-
-        Parameters
-        ----------
-        properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the GTK3CheckButton.
-        """
-        super().do_set_properties(properties)
-
-        self.set_active(self.dic_properties["active"])
-        self.set_inconsistent(self.dic_properties["inconsistent"])
-
-        for _property in [
-            "draw_indicator",
-        ]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
-
-    # ----- ----- ----- ----- Check Button specific methods. ----- ----- ----- ----- #
-    def do_get_value(self) -> bool:  # type: ignore[override]
-        """Retrieve the status of the GTK3CheckButton.
-
-        Returns
-        -------
-        bool
-            The status of the GTK3CheckButton.
-        """
-        return self.get_active()
-
-    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
-        """Set the GTK3CheckButton active value.
-
-        Parameters
-        ----------
-        value : bool or int or None
-            The desired status of the GTK3CheckButton.
-        """
-        if value is None:
-            value = False
-
-        self.set_active(bool(value))
+        Gtk.CheckButton.__init__(self, label=label)
+        GTK3ToggleButton.__init__(self)

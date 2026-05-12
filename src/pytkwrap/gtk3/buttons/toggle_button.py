@@ -33,7 +33,7 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Bin):
     ]
     _DEFAULT_EDIT_SIGNAL = "toggled"
     _DEFAULT_HEIGHT = 30
-    _DEFAULT_WIDTH = 60
+    _DEFAULT_WIDTH = 200
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ToggleButton widget."""
@@ -107,4 +107,5 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Bin):
         """
         if not isinstance(value, (bool, float, int)):
             value = self.dic_attributes.get("default_value")
+        self.dic_properties["active"] = bool(value)
         self.set_active(bool(value))
