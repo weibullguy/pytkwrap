@@ -64,6 +64,7 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
         "hexpand_set": False,
         "inconsistent": False,
         "is_focus": False,
+        "label": "...",
         "margin": 0,
         "margin_bottom": 0,
         "margin_end": 0,
@@ -119,9 +120,9 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
-        assert not dut.get_property("active")
-        assert not dut.get_property("draw_indicator")
-        assert not dut.get_property("inconsistent")
+        assert not dut.do_get_property("active")
+        assert not dut.do_get_property("draw_indicator")
+        assert not dut.do_get_property("inconsistent")
 
     @pytest.mark.unit
     def test_set_properties(self):
@@ -136,9 +137,9 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
             )
         )
 
-        assert dut.get_property("active")
-        assert dut.get_property("draw_indicator")
-        assert dut.get_property("inconsistent")
+        assert dut.do_get_property("active")
+        assert dut.do_get_property("draw_indicator")
+        assert dut.do_get_property("inconsistent")
         assert dut.get_active()
         assert dut.get_inconsistent()
 
@@ -165,7 +166,7 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
 
         pub.sendMessage("rootTopic", package={1: None})
 
-        assert not dut.get_property("active")
+        assert not dut.do_get_property("active")
         assert not dut.get_active()
 
     @pytest.mark.unit
