@@ -35,6 +35,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     active_id: str | None
     activatable: bool
     adjustment: Gtk.Adjustment | None
+    align_widget: Gtk.Container | None
     alignment: float | Pango.Alignment | None
     alpha: int
     always_show_image: bool
@@ -75,6 +76,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     detail_width_chars: int
     dialog: Gtk.Dialog | None
     digits: int
+    direction: Gtk.ArrowType
     do_overwrite_confirmation: bool
     draw_indicator: bool
     editable: bool
@@ -146,6 +148,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_length: int
     max_width: int
     max_width_chars: int
+    menu_model: Gio.MenuModel | None
     min_content_height: int
     min_content_width: int
     min_width: int
@@ -171,7 +174,9 @@ class GTK3WidgetProperties(TypedDict, total=False):
     pixels_below_lines: int
     pixels_inside_wrap: int
     placeholder_text: str | None
+    popover: Gtk.Popover | None
     populate_all: bool
+    popup: Gtk.Menu | None
     popup_fixed_width: bool
     popup_shown: bool
     preview_widget: Gtk.Widget | None
@@ -250,6 +255,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     use_alpha: bool
     use_font: bool
     use_markup: bool
+    use_popover: bool
     use_preview_label: bool
     use_style: bool
     use_symbolic: bool
