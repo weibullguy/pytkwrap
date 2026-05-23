@@ -1,12 +1,11 @@
-# pylint: disable=wrong-import-position
-#
-#       pytkwrap.gtk3.combo.py is part of the pytkwrap Project
-#
-# All rights reserved.
-# Copyright since 2007 Doyle "weibullguy" Rowland doyle.rowland <AT> reliaqual <DOT> com
-"""The pytkwrap GTK3 ComboBox module."""
+"""The pytkwrap GTK3 ComboBox module.
+
+.. author:: Doyle Rowland
+.. copyright:: Since 2007, all rights reserved.
+"""
 
 # Standard Library Imports
+from collections.abc import Mapping
 from datetime import date
 from types import EllipsisType
 from typing import Any
@@ -15,23 +14,29 @@ from typing import Any
 from gi.overrides.GdkPixbuf import Pixbuf  # type: ignore[import-untyped]
 
 # pytkwrap Package Imports
+from pytkwrap.common import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import GObject, Gtk
-from pytkwrap.gtk3.mixins import GTK3DataWidgetAttributes
-from pytkwrap.gtk3.widget import GTK3BaseDataWidget, GTK3WidgetProperties
+from pytkwrap.gtk3.bin import GTK3Bin
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
-class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
+class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
     """The GTK3ComboBox class."""
 
     # Define private class attributes.
-    _GTK3_COMBO_BOX_ATTRIBUTES = GTK3DataWidgetAttributes(
-        column_types=[GObject.TYPE_STRING]
+    _DEFAULT_HEIGHT: int = 30
+    _DEFAULT_WIDTH: int = 200
+    _GTK3_COMBOBOX_ATTRIBUTES = GTK3WidgetAttributes(
+        column_types=[GObject.TYPE_STRING],
+        default_value=-1,
+        edit_signal="changed",
     )
-    _GTK3_COMBO_BOX_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_COMBOBOX_PROPERTIES = GTK3WidgetProperties(
         active=-1,
         active_id=None,
         border_width=0,
         button_sensitivity=Gtk.SensitivityType.AUTO,
+        cell_area=None,
         column_span_column=-1,
         editing_canceled=False,
         entry_text_column=-1,
@@ -44,7 +49,7 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
         row_span_column=-1,
         wrap_width=0,
     )
-    _GTK3_COMBO_BOX_SIGNALS: list[str] = [
+    _GTK3_COMBOBOX_SIGNALS: list[str] = [
         "changed",
         "editing-done",
         "format-entry-text",
@@ -53,13 +58,10 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
         "popup",
         "remove-widget",
     ]
-    _DEFAULT_EDIT_SIGNAL: str = "changed"
-    _DEFAULT_HEIGHT: int = 30
-    _DEFAULT_WIDTH: int = 200
 
     def __init__(
         self,
-        index: int = 0,
+        display_index: int = 0,
         simple: bool = True,
         n_items: int = 1,
         column_types: list[EllipsisType] | list[GObject.GType] | None = None,
@@ -69,7 +71,7 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
 
         Parameters
         ----------
-        index : int
+        display_index : int
             The index in the GTK3ComboBox Gtk.ListView to display. Default is 0.
         simple : bool
             Indicates whether to make a simple (one item) or complex (n_item)
@@ -82,19 +84,18 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
             Indicates whether GTK3ComboBox will have an entry.
         """
         Gtk.ComboBox.__init__(self)
-        GTK3BaseDataWidget.__init__(self)
+        GTK3Bin.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_attributes.update(self._GTK3_COMBO_BOX_ATTRIBUTES)
-        self.dic_properties.update(self._GTK3_COMBO_BOX_PROPERTIES)
+        self.dic_attributes.update(self._GTK3_COMBOBOX_ATTRIBUTES)
+        self.dic_properties.update(self._GTK3_COMBOBOX_PROPERTIES)
         self.dic_handler_id.update(
-            {_signal: -1 for _signal in self._GTK3_COMBO_BOX_SIGNALS}
+            {_signal: -1 for _signal in self._GTK3_COMBOBOX_SIGNALS}
         )
         self.dic_attributes["column_types"] = column_types
-        self.dic_attributes["index"] = index
+        self.dic_properties["has_entry"] = has_entry
 
-        self.default = -1
-        self.has_entry: bool = has_entry
+        self.display_index: int = display_index
         self.n_items: int = n_items
         self.simple: bool = simple
 
@@ -105,12 +106,11 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
         for _idx, __ in enumerate(self.dic_attributes["column_types"]):
             _cell = Gtk.CellRendererText()
             self.pack_end(_cell, True)
-            if _idx == self.dic_attributes["index"]:
-                self.add_attribute(_cell, "text", self.dic_attributes["index"])
+            if _idx == self.display_index:
+                self.add_attribute(_cell, "text", self.display_index)
 
         self.show()
 
-    # ----- ----- ----- ----- --- Standard widget methods. --- ----- ----- ----- ----- #
     def do_get_attribute(
         self,
         attribute: str,
@@ -127,11 +127,47 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
         bool | date | float | int | str | None
             The value of the requested attribute.
         """
-        if attribute in self._GTK3_COMBO_BOX_ATTRIBUTES:
+        if attribute in self._GTK3_COMBOBOX_ATTRIBUTES:
             return self.dic_attributes[attribute]
         return super().do_get_attribute(attribute)
 
-    def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
+    def do_get_property(
+        self, property_name: str
+    ) -> bool | date | float | int | object | str | None:
+        """Get the value of the requested property.
+
+        Parameters
+        ----------
+        property_name : str
+            The name of the property to retrieve.
+
+        Returns
+        -------
+        bool | date | float | int | object | str | None
+        """
+        if property_name in self._GTK3_COMBOBOX_PROPERTIES:
+            return self.dic_properties.get(property_name)
+        return super().do_get_property(property_name)
+
+    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
+        """Set the GTK3ComboBox attributes.
+
+        Parameters
+        ----------
+        attributes : GTK3WidgetAttributes
+            Typed dict with the attribute values to set for the widget.
+        """
+        super().do_set_attributes(attributes)
+
+        for _attr in ["column_types"]:
+            self.dic_attributes[_attr] = attributes.get(
+                _attr,
+                self.dic_attributes[_attr],
+            )
+
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None:
         """Set the properties of the GTK3ComboBox.
 
         Parameters
@@ -163,14 +199,13 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
         ]:
             self.set_property(_property, self.dic_properties[_property])
 
-    # ----- ----- ComboBox specific methods. ----- ----- #
     def do_get_options(self) -> dict[int, Any]:
-        """Retrieve all the options in the ComboBox.
+        """Retrieve all the options in the GTK3ComboBox.
 
         Returns
         -------
         _options : dict[int, Any]
-            A dict with the GTK3ComboBox index as key and value at that position as
+            A dict with the GTK3ComboBox index as the key and value at that position as
             the value.
         """
         _options = {}
@@ -183,7 +218,7 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
 
         i = 0
         while _iter is not None:
-            _options[i] = _model.get_value(_iter, self.dic_attributes["index"])
+            _options[i] = _model.get_value(_iter, self.display_index)
             _iter = _model.iter_next(_iter)
             i += 1
 
@@ -191,9 +226,9 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
 
     def do_load_combo(
         self,
-        entries: list[list[str | int | Pixbuf | None]],
+        entries: list[str | list[str | int | Pixbuf | None]],
     ) -> None:
-        """Load the ComboBox widget.
+        """Load the GTK3ComboBox.
 
         Parameters
         ----------
@@ -220,20 +255,23 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
                         _model.append([_entry])
 
     def do_get_value(self) -> str:
-        """Return thw value at the display column (self.index).
+        """Return the value at the display column (self.index).
 
         Returns
         -------
         _value : str
         """
-        return self.get_value_at_index(self.dic_attributes["index"])
+        return self.get_value_at_index(self.display_index)
 
-    def do_set_value(self, value: bool | date | float | int | str | None) -> None:
+    def do_set_value(
+        self,
+        value: bool | date | float | int | object | str | tuple | None,
+    ) -> None:
         """Set the GTK3ComboBox active selection.
 
         Parameters
         ----------
-        value : bool | date | float | int | str | None
+        value : bool | date | float | int | object | str | tuple | None
             The index of the item in the GTK3ComboBox to set active.
         """
         if not isinstance(value, (float, int)):
@@ -241,12 +279,12 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
 
         self.set_active(int(value))
 
-    def get_value_at_index(self, index: int = -1) -> str:
+    def get_value_at_index(self, display_index: int = -1) -> str:
         """Return the value in the ComboBox model found at <index> position.
 
         Parameters
         ----------
-        index : int
+        display_index : int
             The column in the GTK3ComboBox model whose value is to be retrieved.
             Defaults to zero which will always read a 'simple' GTK3ComboBox.
 
@@ -255,13 +293,13 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3BaseDataWidget):
         _value : str
             The value displayed in the GTK3ComboBox at position <index>.
         """
-        index = self.dic_attributes["index"] if index == -1 else index
+        display_index = self.display_index if display_index == -1 else display_index
         _model = self.get_model()
         if _model is None or not isinstance(_model, Gtk.ListStore):
             return ""
 
         _row = self.get_active_iter()
         if isinstance(_row, Gtk.TreeIter):
-            return _model.get_value(_row, index)
+            return _model.get_value(_row, display_index)
 
         return ""

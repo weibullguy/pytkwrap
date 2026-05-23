@@ -38,7 +38,7 @@ class GTK3RadioButton(Gtk.RadioButton, GTK3CheckButton):
             an ellipsis (...).
         """
         Gtk.RadioButton.__init__(self, label=label)
-        GTK3CheckButton.__init__(self)
+        GTK3CheckButton.__init__(self, label=label)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_RADIO_BUTTON_PROPERTIES)

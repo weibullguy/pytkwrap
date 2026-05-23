@@ -15,7 +15,7 @@ from pubsub import pub  # type: ignore[import-not-found]
 # pytkwrap Package Imports
 from pytkwrap.common import PyTkWrapMixin
 from pytkwrap.exceptions import UnkSignalError
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 from pytkwrap.utilities import none_to_default
 
@@ -26,8 +26,12 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
     _DEFAULT_HEIGHT = -1
     _DEFAULT_WIDTH = -1
     _GTK3_WIDGET_PROPERTIES = GTK3WidgetProperties(
+        app_paintable=False,
         can_default=False,
         can_focus=False,
+        composite_child=False,
+        events=Gdk.EventMask.ALL_EVENTS_MASK,  # pylint: disable=no-member
+        expand=False,
         focus_on_click=True,
         halign=Gtk.Align.FILL,
         has_default=False,
@@ -43,13 +47,15 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
         margin_start=0,
         margin_top=0,
         name="pytkwrap GTK3 widget",
+        no_show_all=False,
         opacity=1.0,
         parent=None,
         receives_default=False,
         scale_factor=1,
         sensitive=True,
-        tooltip_markup="",
-        tooltip_text="",
+        style=None,
+        tooltip_markup="Missing tooltip, please file an issue to have one added.",
+        tooltip_text="Missing tooltip, please file an issue to have one added.",
         valign=Gtk.Align.FILL,
         vexpand=False,
         vexpand_set=False,
@@ -196,7 +202,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
 
         try:
             _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
-            with self._get_signal_owner().handler_block(_hid):
+            with self._get_signal_owner().handler_block(_hid):  # type: ignore[attr-defined] # ty: ignore[unresolved-attribute] # pylint: disable=line-too-long
                 self.do_set_value(_value)
         except KeyError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
@@ -229,7 +235,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin, PyTkWrapMixin):
         _package = {self.dic_attributes["index"]: self.do_get_value()}
         try:
             _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
-            with self._get_signal_owner().handler_block(_hid):
+            with self._get_signal_owner().handler_block(_hid):  # type: ignore[attr-defined] # ty: ignore[unresolved-attribute] # pylint: disable=line-too-long
                 pub.sendMessage(
                     self.dic_attributes["send_topic"],
                     package=_package,

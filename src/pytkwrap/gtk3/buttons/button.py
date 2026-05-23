@@ -91,12 +91,10 @@ class GTK3Button(Gtk.Button, GTK3Bin):
 
     # Define private class attributes.
     _GTK3_BUTTON_PROPERTIES = GTK3WidgetProperties(
-        action_name=None,
-        action_target=None,
         always_show_image=False,
         image=None,
         image_position=Gtk.PositionType.LEFT,
-        label=None,
+        label="...",
         relief=Gtk.ReliefStyle.NORMAL,
         use_underline=False,
     )

@@ -11,11 +11,11 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.bin import GTK3Bin
+from pytkwrap.gtk3.buttons.button import GTK3Button
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
-class GTK3ToggleButton(Gtk.ToggleButton, GTK3Bin):
+class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
     """The GTK3ToggleButton class."""
 
     # Define private class attributes.
@@ -35,10 +35,17 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Bin):
     _DEFAULT_HEIGHT = 30
     _DEFAULT_WIDTH = 200
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ToggleButton widget."""
+    def __init__(self, label="...") -> None:
+        """Initialize an instance of the GTK3ToggleButton widget.
+
+        Parameters
+        ----------
+        label : str
+            The text to display in the GTK3ToggleButton label.  The default value is
+            an ellipsis (...).
+        """
         Gtk.ToggleButton.__init__(self)
-        GTK3Bin.__init__(self)
+        GTK3Button.__init__(self, label)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_TOGGLE_BUTTON_ATTRIBUTES)

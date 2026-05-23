@@ -12,12 +12,12 @@ from typing import TypedDict
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.common import ToolkitMixin
+from pytkwrap.common import PyTkWrapAttributes, ToolkitMixin
 from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, GdkPixbuf, Gio, GLib, GObject, Gtk, Pango
 
 
-class GTK3WidgetAttributes(TypedDict, total=False):
+class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
     """Type for GTK3 widget attributes."""
 
     column_types: list[EllipsisType] | list[GObject.GType] | None
@@ -238,6 +238,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     sort_order: Gtk.SortType | None
     spacing: int
     step_increment: float
+    style: Gtk.Style | None
     tabs: Pango.TabArray | None
     text: str
     text_column: int

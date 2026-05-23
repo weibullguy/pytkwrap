@@ -35,7 +35,7 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3ToggleButton):
             an ellipsis (...).
         """
         Gtk.CheckButton.__init__(self, label=label)
-        GTK3ToggleButton.__init__(self)
+        GTK3ToggleButton.__init__(self, label)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_CHECK_BUTTON_PROPERTIES)

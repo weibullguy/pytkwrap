@@ -35,7 +35,7 @@ Source = "https://github.com/weibullguy/pytkwrap"
 path = "src/pytkwrap/__about__.py"
 
 [tool.hatch.envs.default]
-python = "3.12"
+python = "3.14"
 dependencies = [
     "matplotlib>=3.10.8",
     "prek>=0.3.9",
@@ -89,6 +89,7 @@ test-coverage = [
 [tool.hatch.envs.lint]
 extra-dependencies = [
     "bandit[toml]",
+    "black[d]",
     "docformatter[tomli]>=1.7",
     "isort",
     "mccabe",
@@ -240,7 +241,7 @@ good-names = [
 variable-rgx = '^_{0,2}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}_{0,1}[a-zA-Z]{0,15}$'
 
 [tool.pylint.design]
-max-parents = 15
+max-parents = 17
 
 [tool.pylint.format]
 max-line-length = 88

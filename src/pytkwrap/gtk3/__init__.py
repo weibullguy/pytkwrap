@@ -25,9 +25,9 @@ from .buttons import (
 )
 from .calendar import GTK3Calendar
 from .cellrenderer import GTK3CellRenderer
+from .combobox import GTK3ComboBox
 from .container import GTK3Container
 
-# from .combo import GTK3ComboBox
 # from .entry import GTK3Entry
 # from .frame import GTK3Frame
 # from .label import (
@@ -58,7 +58,7 @@ __all__ = [
     "GTK3ColorButton",
     "GTK3Container",
     "GTK3FontButton",
-    #    "GTK3ComboBox",
+    "GTK3ComboBox",
     #    "GTK3Entry",
     #    "GTK3FileChooserButton",
     #    "GTK3Frame",

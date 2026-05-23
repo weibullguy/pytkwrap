@@ -11,11 +11,11 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.bin import GTK3Bin
+from pytkwrap.gtk3.buttons.button import GTK3Button
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
-class GTK3ColorButton(Gtk.ColorButton, GTK3Bin):
+class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
     """The GTK3ColorButton class."""
 
     # Define private class attributes.
@@ -40,7 +40,7 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Bin):
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ColorButton widget."""
         Gtk.ColorButton.__init__(self)
-        GTK3Bin.__init__(self)
+        GTK3Button.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_COLOR_BUTTON_ATTRIBUTES)
