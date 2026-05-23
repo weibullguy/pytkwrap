@@ -3,6 +3,7 @@ from types import EllipsisType, FunctionType
 from typing import TypedDict
 
 # pytkwrap Package Imports
+from pytkwrap.common import PyTkWrapAttributes as PyTkWrapAttributes
 from pytkwrap.common import ToolkitMixin as ToolkitMixin
 from pytkwrap.exceptions import UnkSignalError as UnkSignalError
 from pytkwrap.gtk3._libs import Gdk as Gdk
@@ -13,7 +14,7 @@ from pytkwrap.gtk3._libs import GObject as GObject
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3._libs import Pango as Pango
 
-class GTK3WidgetAttributes(TypedDict, total=False):
+class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
     column_types: list[EllipsisType] | list[GObject.GType] | None
 
 class GTK3WidgetProperties(TypedDict, total=False):
@@ -26,8 +27,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     active_id: str | None
     activatable: bool
     adjustment: Gtk.Adjustment | None
-    alignment: float | Pango.Alignment | None
     align_widget: Gtk.Container | None
+    alignment: float | Pango.Alignment | None
     alpha: int
     always_show_image: bool
     angle: float
@@ -229,6 +230,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     sort_order: Gtk.SortType | None
     spacing: int
     step_increment: float
+    style: Gtk.Style | None
     tabs: Pango.TabArray | None
     text: str
     text_column: int
@@ -248,7 +250,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     use_markup: bool
     use_popover: bool
     use_preview_label: bool
-    use_size: bool
+    use_style: bool
     use_symbolic: bool
     use_underline: bool
     vadjustment: Gtk.Adjustment | None
