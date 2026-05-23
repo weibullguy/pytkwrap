@@ -14,6 +14,14 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
+from .test_constants import (
+    EXPECTED_BUTTON_HANDLER_IDS,
+    EXPECTED_BUTTON_PROPERTIES,
+    EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_PROPERTIES,
+)
 
 
 class TestButton(BaseGTK3WidgetTests):
@@ -48,69 +56,16 @@ class TestButton(BaseGTK3WidgetTests):
     ]
     expected_default_height = 30
     expected_default_width = 200
-    expected_handler_id = {
-        "activate": -1,
-        "add": -1,
-        "check-resize": -1,
-        "clicked": -1,
-        "destroy": -1,
-        "direction-changed": -1,
-        "hide": -1,
-        "keynav-failed": -1,
-        "map": -1,
-        "mnemonic-activate": -1,
-        "move-focus": -1,
-        "notify": -1,
-        "query-tooltip": -1,
-        "realize": -1,
-        "remove": -1,
-        "set-focus-child": -1,
-        "show": -1,
-        "state-flags-changed": -1,
-        "unmap": -1,
-        "unrealize": -1,
-    }
-    expected_properties = {
-        "action_name": None,
-        "action_target": None,
-        "always_show_image": False,
-        "border_width": 0,
-        "can_default": False,
-        "can_focus": False,
-        "focus_on_click": True,
-        "halign": Gtk.Align.FILL,
-        "has_default": False,
-        "has_focus": False,
-        "has_tooltip": False,
-        "height_request": -1,
-        "hexpand": False,
-        "hexpand_set": False,
-        "image": None,
-        "image_position": Gtk.PositionType.LEFT,
-        "is_focus": False,
-        "label": None,
-        "margin": 0,
-        "margin_bottom": 0,
-        "margin_end": 0,
-        "margin_start": 0,
-        "margin_top": 0,
-        "name": "pytkwrap GTK3 widget",
-        "opacity": 1.0,
-        "parent": None,
-        "receives_default": False,
-        "relief": Gtk.ReliefStyle.NORMAL,
-        "scale_factor": 1,
-        "sensitive": True,
-        "tooltip_markup": "Missing tooltip, please file an issue to have one added.",
-        "tooltip_text": "Missing tooltip, please file an issue to have one added.",
-        "use_underline": False,
-        "valign": Gtk.Align.FILL,
-        "vexpand": False,
-        "vexpand_set": False,
-        "visible": False,
-        "width_request": -1,
-        "window": None,
-    }
+    expected_handler_id = (
+        EXPECTED_WIDGET_HANDLER_IDS
+        | EXPECTED_CONTAINER_HANDLER_IDS
+        | EXPECTED_BUTTON_HANDLER_IDS
+    )
+    expected_properties = (
+        EXPECTED_WIDGET_PROPERTIES
+        | EXPECTED_CONTAINER_PROPERTIES
+        | EXPECTED_BUTTON_PROPERTIES
+    )
 
     def make_dut(self, label="..."):
         """Create a device under test for the GTK3Button."""

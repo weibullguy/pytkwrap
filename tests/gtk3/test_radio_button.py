@@ -17,6 +17,17 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
+from .test_constants import (
+    EXPECTED_BUTTON_HANDLER_IDS,
+    EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_RADIO_BUTTON_HANDLER_IDS,
+    EXPECTED_RADIO_BUTTON_PROPERTIES,
+    EXPECTED_TOGGLE_BUTTON_HANDLER_IDS,
+    EXPECTED_TOGGLE_BUTTON_PROPERTIES,
+    EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_PROPERTIES,
+)
 
 
 @pytest.mark.usefixtures("suppress_stderr")
@@ -32,9 +43,21 @@ class TestRadioButton(BaseGTK3WidgetTests):
     expected_default_height = 40
     expected_default_edit_signal = "toggled"
     expected_default_width = 200
-    expected_handler_id = {}
+    expected_handler_id = (
+        EXPECTED_WIDGET_HANDLER_IDS
+        | EXPECTED_CONTAINER_HANDLER_IDS
+        | EXPECTED_BUTTON_HANDLER_IDS
+        | EXPECTED_TOGGLE_BUTTON_HANDLER_IDS
+        | EXPECTED_RADIO_BUTTON_HANDLER_IDS
+    )
     expected_package = {0: {"test_field": True}}
-    expected_properties = {}
+    expected_properties = (
+        EXPECTED_WIDGET_PROPERTIES
+        | EXPECTED_CONTAINER_PROPERTIES
+        | EXPECTED_TOGGLE_BUTTON_PROPERTIES
+        | EXPECTED_TOGGLE_BUTTON_PROPERTIES
+        | EXPECTED_RADIO_BUTTON_PROPERTIES
+    )
 
     def make_dut(self, label="", group=None):
         return self.widget_class(label, group)

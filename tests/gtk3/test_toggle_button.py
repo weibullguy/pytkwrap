@@ -16,6 +16,16 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
+from .test_constants import (
+    EXPECTED_BUTTON_HANDLER_IDS,
+    EXPECTED_BUTTON_PROPERTIES,
+    EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_TOGGLE_BUTTON_HANDLER_IDS,
+    EXPECTED_TOGGLE_BUTTON_PROPERTIES,
+    EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_PROPERTIES,
+)
 
 
 @pytest.mark.usefixtures("suppress_stderr")
@@ -36,63 +46,22 @@ class TestGTK3ToggleButton(BaseGTK3WidgetTests):
     expected_default_height = 30
     expected_default_value = 0.0
     expected_default_width = 200
-    expected_handler_id = {
-        "add": -1,
-        "check-resize": -1,
-        "destroy": -1,
-        "direction-changed": -1,
-        "hide": -1,
-        "keynav-failed": -1,
-        "map": -1,
-        "mnemonic-activate": -1,
-        "move-focus": -1,
-        "notify": -1,
-        "query-tooltip": -1,
-        "realize": -1,
-        "remove": -1,
-        "set-focus-child": -1,
-        "show": -1,
-        "state-flags-changed": -1,
-        "toggled": -1,
-        "unmap": -1,
-        "unrealize": -1,
-    }
-    expected_properties = {
-        "active": False,
-        "border_width": 0,
-        "can_default": False,
-        "can_focus": False,
-        "draw_indicator": False,
-        "focus_on_click": True,
-        "halign": Gtk.Align.FILL,
-        "has_default": False,
-        "has_focus": False,
-        "has_tooltip": False,
-        "height_request": -1,
-        "hexpand": False,
-        "hexpand_set": False,
-        "inconsistent": False,
-        "is_focus": False,
-        "margin": 0,
-        "margin_bottom": 0,
-        "margin_end": 0,
-        "margin_start": 0,
-        "margin_top": 0,
-        "name": "pytkwrap GTK3 widget",
-        "opacity": 1.0,
-        "parent": None,
-        "receives_default": False,
-        "scale_factor": 1,
-        "sensitive": True,
-        "tooltip_markup": "Missing tooltip, please file an issue to have one added.",
-        "tooltip_text": "Missing tooltip, please file an issue to have one added.",
-        "valign": Gtk.Align.FILL,
-        "vexpand": False,
-        "vexpand_set": False,
-        "visible": False,
-        "width_request": -1,
-        "window": None,
-    }
+    expected_handler_id = (
+        EXPECTED_WIDGET_HANDLER_IDS
+        | EXPECTED_CONTAINER_HANDLER_IDS
+        | EXPECTED_BUTTON_HANDLER_IDS
+        | EXPECTED_TOGGLE_BUTTON_HANDLER_IDS
+    )
+    expected_properties = (
+        EXPECTED_WIDGET_PROPERTIES
+        | EXPECTED_CONTAINER_PROPERTIES
+        | EXPECTED_BUTTON_PROPERTIES
+        | EXPECTED_TOGGLE_BUTTON_PROPERTIES
+    )
+
+    def make_dut(self, label="..."):
+        """Create a device under test for the GTK3CheckButton."""
+        return self.widget_class(label)
 
     @pytest.mark.unit
     def test_init(self):

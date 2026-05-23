@@ -14,6 +14,9 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.common.test_pytkwrap_mixin import TestPyTkWrapMixin
 from tests.common.test_toolkit_mixin import TestToolkitMixin
 
+# pytkwrap Local Imports
+from .test_constants import EXPECTED_WIDGET_HANDLER_IDS, EXPECTED_WIDGET_PROPERTIES
+
 
 @pytest.fixture(scope="function")
 def image_file():
@@ -156,6 +159,11 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
     expected_default_width = -1
     expected_handler_id = {}
     expected_properties = {}
+    expected_pytk_attributes = {
+        "index": -1,
+        "x_pos": 0,
+        "y_pos": 0,
+    }
 
     def make_dut(self):
         """Override in subclass if constructor needs arguments."""
@@ -167,6 +175,10 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
             message
             == f"{self.widget_class.__name__}.do_update(): Unknown signal 'unk_signal'."
         )
+
+    def mock_callback(self, widget) -> None:
+        """Callback method for testing."""
+        assert isinstance(widget, self.widget_class)
 
     def mock_handler(self, package):
         """Mock handler for on_changed() calls."""
@@ -190,11 +202,6 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
         assert dut._DEFAULT_HEIGHT == self.expected_default_height
         assert dut._DEFAULT_TOOLTIP == self.expected_default_tooltip
         assert dut._DEFAULT_WIDTH == self.expected_default_width
-        assert dut.dic_attributes == {
-            "index": -1,
-            "x_pos": 0,
-            "y_pos": 0,
-        }
         assert dut.dic_error_message == {
             "no_value": "{}: No value set or no method to retrieve value.",
             "unk_attribute": "{}: Unknown attribute '{}'.",
@@ -205,53 +212,8 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
         }
 
         # These are added by GTK3Widget.
-        assert dut._GTK3_WIDGET_PROPERTIES == {
-            "can_default": False,
-            "can_focus": False,
-            "focus_on_click": True,
-            "halign": Gtk.Align.FILL,
-            "has_default": False,
-            "has_focus": False,
-            "has_tooltip": False,
-            "height_request": -1,
-            "hexpand": False,
-            "hexpand_set": False,
-            "is_focus": False,
-            "margin": 0,
-            "margin_bottom": 0,
-            "margin_end": 0,
-            "margin_start": 0,
-            "margin_top": 0,
-            "name": "pytkwrap GTK3 widget",
-            "opacity": 1.0,
-            "parent": None,
-            "receives_default": False,
-            "scale_factor": 1,
-            "sensitive": True,
-            "tooltip_markup": "",
-            "tooltip_text": "",
-            "valign": Gtk.Align.FILL,
-            "vexpand": False,
-            "vexpand_set": False,
-            "visible": False,
-            "width_request": -1,
-            "window": None,
-        }
-        assert dut._GTK3_WIDGET_SIGNALS == [
-            "destroy",
-            "direction-changed",
-            "hide",
-            "keynav-failed",
-            "map",
-            "mnemonic-activate",
-            "move-focus",
-            "query-tooltip",
-            "realize",
-            "show",
-            "state-flags-changed",
-            "unmap",
-            "unrealize",
-        ]
+        assert dut._GTK3_WIDGET_PROPERTIES == EXPECTED_WIDGET_PROPERTIES
+        assert dut.dic_attributes == self.expected_pytk_attributes
         assert dut.dic_handler_id == self.expected_handler_id
         assert dut.dic_properties == self.expected_properties
 

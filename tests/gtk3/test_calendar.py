@@ -18,6 +18,12 @@ from pytkwrap.gtk3.calendar import GTK3Calendar
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
+from .test_constants import (
+    EXPECTED_CALENDAR_HANDLER_IDS,
+    EXPECTED_CALENDAR_PROPERTIES,
+    EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_PROPERTIES,
+)
 
 
 @pytest.mark.order(3)
@@ -43,71 +49,8 @@ class TestGTK3Calendar(BaseGTK3WidgetTests):
     ]
     expected_default_height = -1
     expected_default_width = -1
-    expected_handler_id = {
-        "day-selected": -1,
-        "day-selected-double-click": -1,
-        "destroy": -1,
-        "direction-changed": -1,
-        "hide": -1,
-        "keynav-failed": -1,
-        "map": -1,
-        "mnemonic-activate": -1,
-        "month-changed": -1,
-        "move-focus": -1,
-        "next-month": -1,
-        "next-year": -1,
-        "notify": -1,
-        "prev-month": -1,
-        "prev-year": -1,
-        "query-tooltip": -1,
-        "realize": -1,
-        "show": -1,
-        "state-flags-changed": -1,
-        "unmap": -1,
-        "unrealize": -1,
-    }
-    expected_properties = {
-        "can_default": False,
-        "can_focus": False,
-        "day": 0,
-        "detail_height_rows": 0,
-        "detail_width_chars": 0,
-        "focus_on_click": True,
-        "halign": Gtk.Align.FILL,
-        "has_default": False,
-        "has_focus": False,
-        "has_tooltip": False,
-        "height_request": -1,
-        "hexpand": False,
-        "hexpand_set": False,
-        "is_focus": False,
-        "margin": 0,
-        "margin_bottom": 0,
-        "margin_end": 0,
-        "margin_start": 0,
-        "margin_top": 0,
-        "month": 0,
-        "name": "pytkwrap GTK3 widget",
-        "no_month_change": False,
-        "opacity": 1.0,
-        "parent": None,
-        "receives_default": False,
-        "scale_factor": 1,
-        "sensitive": True,
-        "show_day_names": True,
-        "show_details": True,
-        "show_heading": True,
-        "show_week_numbers": False,
-        "tooltip_markup": "Missing tooltip, please file an issue to have one added.",
-        "tooltip_text": "Missing tooltip, please file an issue to have one added.",
-        "valign": Gtk.Align.FILL,
-        "vexpand": False,
-        "vexpand_set": False,
-        "visible": False,
-        "width_request": -1,
-        "window": None,
-        "year": 0,
-    }
+    expected_handler_id = EXPECTED_WIDGET_HANDLER_IDS | EXPECTED_CALENDAR_HANDLER_IDS
+    expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_CALENDAR_PROPERTIES
 
     def wrong_type_error_handler(self, message):
         """Return a WrongTypeError with the given message."""
