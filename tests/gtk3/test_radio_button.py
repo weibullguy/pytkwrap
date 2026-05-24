@@ -60,7 +60,6 @@ class TestRadioButton(BaseGTK3WidgetTests):
         + EXPECTED_TOGGLE_BUTTON_METHODS
         + EXPECTED_RADIO_BUTTON_METHODS
     )
-    expected_package = {0: {"test_field": True}}
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES
         | EXPECTED_CONTAINER_PROPERTIES

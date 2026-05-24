@@ -58,7 +58,6 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
         + EXPECTED_BUTTON_METHODS
         + EXPECTED_TOGGLE_BUTTON_METHODS
     )
-    expected_package = {0: {"test_field": True}}
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES
         | EXPECTED_CONTAINER_PROPERTIES

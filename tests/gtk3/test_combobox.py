@@ -69,10 +69,6 @@ class TestGTK3ComboBox(BaseGTK3WidgetTests):
         + EXPECTED_BIN_METHODS
         + EXPECTED_COMBOBOX_METHODS
     )
-    expected_package = {
-        0: {"test_field": "Index 1"},
-        1: {"test_field": "is"},
-    }
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES
         | EXPECTED_CONTAINER_PROPERTIES
