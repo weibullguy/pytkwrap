@@ -17,13 +17,20 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
 from .test_constants import (
+    EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
+    EXPECTED_BUTTON_METHODS,
     EXPECTED_BUTTON_PROPERTIES,
     EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
     EXPECTED_TOGGLE_BUTTON_HANDLER_IDS,
+    EXPECTED_TOGGLE_BUTTON_METHODS,
     EXPECTED_TOGGLE_BUTTON_PROPERTIES,
     EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
 )
 
@@ -33,24 +40,24 @@ class TestGTK3ToggleButton(BaseGTK3WidgetTests):
     """Test class for the GTK3ToggleButton."""
 
     widget_class = GTK3ToggleButton
-    expected_attributes = [
-        "get_active",
-        "get_inconsistent",
-        "get_mode",
-        "set_active",
-        "set_inconsistent",
-        "set_mode",
-        "toggled",
-    ]
     expected_default_edit_signal = "toggled"
     expected_default_height = 30
     expected_default_value = 0.0
     expected_default_width = 200
     expected_handler_id = (
-        EXPECTED_WIDGET_HANDLER_IDS
+        EXPECTED_GOBJECT_HANDLER_IDS
+        | EXPECTED_WIDGET_HANDLER_IDS
         | EXPECTED_CONTAINER_HANDLER_IDS
         | EXPECTED_BUTTON_HANDLER_IDS
         | EXPECTED_TOGGLE_BUTTON_HANDLER_IDS
+    )
+    expected_methods = (
+        EXPECTED_GOBJECT_METHODS
+        + EXPECTED_WIDGET_METHODS
+        + EXPECTED_CONTAINER_METHODS
+        + EXPECTED_BIN_METHODS
+        + EXPECTED_BUTTON_METHODS
+        + EXPECTED_TOGGLE_BUTTON_METHODS
     )
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES

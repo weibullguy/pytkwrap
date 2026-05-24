@@ -20,8 +20,13 @@ from pytkwrap.gtk3.calendar import GTK3Calendar
 from .conftest import BaseGTK3WidgetTests
 from .test_constants import (
     EXPECTED_CALENDAR_HANDLER_IDS,
+    EXPECTED_CALENDAR_METHODS,
     EXPECTED_CALENDAR_PROPERTIES,
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
+    EXPECTED_WIDGET_ATTRIBUTES,
     EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
 )
 
@@ -31,25 +36,17 @@ class TestGTK3Calendar(BaseGTK3WidgetTests):
     """Test class for the GTK3Calendar class."""
 
     widget_class = GTK3Calendar
-    expected_attributes = [
-        "clear_marks",
-        "get_date",
-        "get_day_is_marked",
-        "get_detail_height_rows",
-        "get_detail_width_chars",
-        "get_display_options",
-        "mark_day",
-        "select_day",
-        "select_month",
-        "set_detail_func",
-        "set_detail_height_rows",
-        "set_detail_width_chars",
-        "set_display_options",
-        "unmark_day",
-    ]
+    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES
+    expected_methods = (
+        EXPECTED_GOBJECT_METHODS + EXPECTED_WIDGET_METHODS + EXPECTED_CALENDAR_METHODS
+    )
     expected_default_height = -1
     expected_default_width = -1
-    expected_handler_id = EXPECTED_WIDGET_HANDLER_IDS | EXPECTED_CALENDAR_HANDLER_IDS
+    expected_handler_id = (
+        EXPECTED_GOBJECT_HANDLER_IDS
+        | EXPECTED_WIDGET_HANDLER_IDS
+        | EXPECTED_CALENDAR_HANDLER_IDS
+    )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_CALENDAR_PROPERTIES
 
     def wrong_type_error_handler(self, message):

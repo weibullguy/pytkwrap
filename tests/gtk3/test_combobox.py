@@ -17,11 +17,19 @@ from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
 from .test_constants import (
+    EXPECTED_BIN_METHODS,
+    EXPECTED_COMBOBOX_ATTRIBUTES,
     EXPECTED_COMBOBOX_HANDLER_IDS,
+    EXPECTED_COMBOBOX_METHODS,
     EXPECTED_COMBOBOX_PROPERTIES,
     EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
+    EXPECTED_WIDGET_ATTRIBUTES,
     EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
 )
 
@@ -43,49 +51,23 @@ class TestGTK3ComboBox(BaseGTK3WidgetTests):
     """Test class for the GTK3ComboBox."""
 
     widget_class = GTK3ComboBox
-    expected_attributes = [
-        "get_active",
-        "get_active_id",
-        "get_active_iter",
-        "get_add_tearoffs",
-        "get_button_sensitivity",
-        "get_column_span_column",
-        "get_entry_text_column",
-        "get_focus_on_click",
-        "get_has_entry",
-        "get_id_column",
-        "get_model",
-        "get_popup_accessible",
-        "get_popup_fixed_width",
-        "get_row_span_column",
-        "get_title",
-        "get_wrap_width",
-        "popdown",
-        "popup",
-        "popup_for_device",
-        "set_active",
-        "set_active_id",
-        "set_active_iter",
-        "set_add_tearoffs",
-        "set_button_sensitivity",
-        "set_column_span_column",
-        "set_entry_text_column",
-        "set_focus_on_click",
-        "set_id_column",
-        "set_model",
-        "set_popup_fixed_width",
-        "set_row_separator_func",
-        "set_row_span_column",
-        "set_title",
-        "set_wrap_width",
-    ]
+    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_COMBOBOX_ATTRIBUTES
     expected_default_height = 30
     expected_default_value = -1
     expected_default_width = 200
     expected_handler_id = (
-        EXPECTED_WIDGET_HANDLER_IDS
+        EXPECTED_GOBJECT_HANDLER_IDS
+        | EXPECTED_WIDGET_HANDLER_IDS
+        | EXPECTED_WIDGET_HANDLER_IDS
         | EXPECTED_CONTAINER_HANDLER_IDS
         | EXPECTED_COMBOBOX_HANDLER_IDS
+    )
+    expected_methods = (
+        EXPECTED_GOBJECT_METHODS
+        + EXPECTED_WIDGET_METHODS
+        + EXPECTED_CONTAINER_METHODS
+        + EXPECTED_BIN_METHODS
+        + EXPECTED_COMBOBOX_METHODS
     )
     expected_package = {
         0: {"test_field": "Index 1"},
@@ -96,14 +78,6 @@ class TestGTK3ComboBox(BaseGTK3WidgetTests):
         | EXPECTED_CONTAINER_PROPERTIES
         | EXPECTED_COMBOBOX_PROPERTIES
     )
-    expected_pytk_attributes = {
-        "column_types": [GObject.TYPE_STRING],
-        "default_value": -1,
-        "edit_signal": "changed",
-        "index": -1,
-        "x_pos": 0,
-        "y_pos": 0,
-    }
 
     def make_dut(
         self,

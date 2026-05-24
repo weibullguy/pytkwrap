@@ -14,6 +14,13 @@ from pytkwrap.gtk3.treeviewcolumn import GTK3TreeViewColumn
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
+from .test_constants import (
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
+    EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS,
+    EXPECTED_TREEVIEW_COLUMN_METHODS,
+    EXPECTED_TREEVIEW_COLUMN_PROPERTIES,
+)
 
 
 @pytest.mark.order(3)
@@ -21,86 +28,14 @@ class TestGTK3TreeViewColumn(BaseGTK3GObjectTests):
     """Test class for the GTK3TreeViewColumn class."""
 
     widget_class = GTK3TreeViewColumn
-    expected_attributes = [
-        "add_attribute",
-        "cell_get_position",
-        "cell_get_size",
-        "cell_is_visible",
-        "cell_set_cell_data",
-        "clear",
-        "clear_attributes",
-        "clicked",
-        "focus_cell",
-        "get_alignment",
-        "get_button",
-        "get_clickable",
-        "get_expand",
-        "get_fixed_width",
-        "get_max_width",
-        "get_min_width",
-        "get_reorderable",
-        "get_resizable",
-        "get_sizing",
-        "get_sort_column_id",
-        "get_sort_indicator",
-        "get_sort_order",
-        "get_spacing",
-        "get_title",
-        "get_tree_view",
-        "get_visible",
-        "get_widget",
-        "get_width",
-        "get_x_offset",
-        "pack_end",
-        "pack_start",
-        "queue_resize",
-        "set_alignment",
-        "set_attributes",
-        "set_cell_data_func",
-        "set_clickable",
-        "set_expand",
-        "set_fixed_width",
-        "set_max_width",
-        "set_min_width",
-        "set_reorderable",
-        "set_resizable",
-        "set_sizing",
-        "set_sort_column_id",
-        "set_sort_indicator",
-        "set_sort_order",
-        "set_spacing",
-        "set_title",
-        "set_visible",
-        "set_widget",
-    ]
     expected_default_height = -1
     expected_default_tooltip = ""
     expected_default_width = -1
-    expected_handler_id = {
-        "clicked": -1,
-        "notify": -1,
-    }
-    expected_properties = {
-        "alignment": 0.0,
-        "cell_area": None,
-        "clickable": False,
-        "expand": False,
-        "fixed_width": -1,
-        "max_width": -1,
-        "min_width": -1,
-        "reorderable": False,
-        "resizable": False,
-        "sizing": Gtk.TreeViewColumnSizing.GROW_ONLY,
-        "sort_column_id": -1,
-        "sort_indicator": False,
-        "sort_order": Gtk.SortType.ASCENDING,
-        "spacing": 0,
-        "title": "",
-        "visible": True,
-        "widget": None,
-        "width": 0,
-        "x_offset": 0,
-    }
+    expected_handler_id = (
+        EXPECTED_GOBJECT_HANDLER_IDS | EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS
+    )
+    expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_TREEVIEW_COLUMN_METHODS
+    expected_properties = EXPECTED_TREEVIEW_COLUMN_PROPERTIES
 
     def make_dut(self, title="", cell_renderer=None, cell_area=None):
         """Create a device under test for the GTK3TreeViewColumn."""

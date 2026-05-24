@@ -1,7 +1,200 @@
-# Third Party Imports
-from gi.overrides.Gdk import Gdk
-from gi.overrides.Gtk import Gtk
+# Standard Library Imports
+import sys
 
+try:
+    # Third Party Imports
+    import gi
+
+    gi.require_version("Gdk", "3.0")
+    gi.require_version("GLib", "2.0")
+    gi.require_version("Gtk", "3.0")
+except ImportError:
+    print("Failed to import package gi; exiting.")
+    sys.exit(1)
+# Third Party Imports
+from gi.repository import Gdk, GObject, Gtk
+
+EXPECTED_GOBJECT_HANDLER_IDS = {"notify": -1}
+EXPECTED_GOBJECT_METHODS = [
+    "bind_property",
+    "bind_property_full",
+    "connect",
+    "connect_after",
+    "disconnect",
+    "emit",
+    "force_floating",
+    "freeze_notify",
+    "get_data",
+    "get_property",
+    "get_qdata",
+    "getv",
+    "handler_block",
+    "handler_unblock",
+    "is_floating",
+    "notify",
+    "notify_by_pspec",
+    "ref",
+    "ref_sink",
+    "run_dispose",
+    "set_data",
+    "set_property",
+    "steal_data",
+    "steal_qdata",
+    "thaw_notify",
+    "unref",
+    "watch_closure",
+]
+
+EXPECTED_ADJUSTMENT_HANDLER_IDS = {"changed": -1, "value-changed": -1}
+EXPECTED_ADJUSTMENT_METHODS = [
+    "clamp_page",
+    "configure",
+    "get_lower",
+    "get_minimum_increment",
+    "get_page_increment",
+    "get_page_size",
+    "get_step_increment",
+    "get_upper",
+    "get_value",
+    "set_lower",
+    "set_page_increment",
+    "set_page_size",
+    "set_step_increment",
+    "set_upper",
+    "set_value",
+]
+EXPECTED_ADJUSTMENT_PROPERTIES = {
+    "lower": 0.0,
+    "page_increment": 0.0,
+    "page_size": 0.0,
+    "step_increment": 0.0,
+    "upper": 0.0,
+    "value": 0.0,
+}
+
+EXPECTED_CELL_RENDERER_HANDLER_IDS = {"editing-canceled": -1, "editing-started": -1}
+EXPECTED_CELL_RENDERER_METHODS = [
+    "activate",
+    "get_aligned_area",
+    "get_alignment",
+    "get_fixed_size",
+    "get_padding",
+    "get_preferred_height",
+    "get_preferred_height_for_width",
+    "get_preferred_size",
+    "get_preferred_width",
+    "get_preferred_width_for_height",
+    "get_request_mode",
+    "get_sensitive",
+    "get_state",
+    "get_visible",
+    "is_activatable",
+    "render",
+    "set_alignment",
+    "set_fixed_size",
+    "set_padding",
+    "set_sensitive",
+    "set_visible",
+    "start_editing",
+    "stop_editing",
+]
+EXPECTED_CELL_RENDERER_PROPERTIES = {
+    "cell_background": None,
+    "cell_background_rgba": None,
+    "cell_background_set": False,
+    "height": -1,
+    "is_expanded": False,
+    "is_expander": False,
+    "mode": Gtk.CellRendererMode.INERT,
+    "sensitive": True,
+    "visible": True,
+    "width": -1,
+    "xalign": 0.5,
+    "xpad": 0,
+    "yalign": 0.5,
+    "ypad": 0,
+}
+
+EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
+EXPECTED_TREEVIEW_COLUMN_METHODS = [
+    "add_attribute",
+    "cell_get_position",
+    "cell_get_size",
+    "cell_is_visible",
+    "cell_set_cell_data",
+    "clear",
+    "clear_attributes",
+    "clicked",
+    "focus_cell",
+    "get_alignment",
+    "get_button",
+    "get_clickable",
+    "get_expand",
+    "get_fixed_width",
+    "get_max_width",
+    "get_min_width",
+    "get_reorderable",
+    "get_resizable",
+    "get_sizing",
+    "get_sort_column_id",
+    "get_sort_indicator",
+    "get_sort_order",
+    "get_spacing",
+    "get_title",
+    "get_tree_view",
+    "get_visible",
+    "get_widget",
+    "get_width",
+    "get_x_offset",
+    "pack_end",
+    "pack_start",
+    "queue_resize",
+    "set_alignment",
+    "set_attributes",
+    "set_cell_data_func",
+    "set_clickable",
+    "set_expand",
+    "set_fixed_width",
+    "set_max_width",
+    "set_min_width",
+    "set_reorderable",
+    "set_resizable",
+    "set_sizing",
+    "set_sort_column_id",
+    "set_sort_indicator",
+    "set_sort_order",
+    "set_spacing",
+    "set_title",
+    "set_visible",
+    "set_widget",
+]
+EXPECTED_TREEVIEW_COLUMN_PROPERTIES = {
+    "alignment": 0.0,
+    "cell_area": None,
+    "clickable": False,
+    "expand": False,
+    "fixed_width": -1,
+    "max_width": -1,
+    "min_width": -1,
+    "reorderable": False,
+    "resizable": False,
+    "sizing": Gtk.TreeViewColumnSizing.GROW_ONLY,
+    "sort_column_id": -1,
+    "sort_indicator": False,
+    "sort_order": Gtk.SortType.ASCENDING,
+    "spacing": 0,
+    "title": "",
+    "visible": True,
+    "widget": None,
+    "width": 0,
+    "x_offset": 0,
+}
+
+EXPECTED_WIDGET_ATTRIBUTES = {
+    "index": -1,
+    "x_pos": 0,
+    "y_pos": 0,
+}
 EXPECTED_WIDGET_HANDLER_IDS = {
     "destroy": -1,
     "direction-changed": -1,
@@ -10,7 +203,6 @@ EXPECTED_WIDGET_HANDLER_IDS = {
     "map": -1,
     "mnemonic-activate": -1,
     "move-focus": -1,
-    "notify": -1,
     "query-tooltip": -1,
     "realize": -1,
     "show": -1,
@@ -18,6 +210,223 @@ EXPECTED_WIDGET_HANDLER_IDS = {
     "unmap": -1,
     "unrealize": -1,
 }
+EXPECTED_WIDGET_METHODS = [
+    "activate",
+    "add_accelerator",
+    "add_device_events",
+    "add_events",
+    "add_mnemonic_label",
+    "add_tick_callback",
+    "can_activate_accel",
+    "child_focus",
+    "child_notify",
+    "compute_expand",
+    "create_pango_context",
+    "create_pango_layout",
+    "destroy",
+    "destroyed",
+    "device_is_shadowed",
+    "drag_begin_with_coordinates",
+    "drag_check_threshold",
+    "drag_dest_add_image_targets",
+    "drag_dest_add_text_targets",
+    "drag_dest_add_uri_targets",
+    "drag_dest_find_target",
+    "drag_dest_get_target_list",
+    "drag_dest_get_track_motion",
+    "drag_dest_set",
+    "drag_dest_set_target_list",
+    "drag_dest_set_track_motion",
+    "drag_dest_unset",
+    "drag_get_data",
+    "drag_highlight",
+    "drag_source_add_image_targets",
+    "drag_source_add_text_targets",
+    "drag_source_add_uri_targets",
+    "drag_source_get_target_list",
+    "drag_source_set",
+    "drag_source_set_icon_gicon",
+    "drag_source_set_icon_name",
+    "drag_source_set_icon_pixbuf",
+    "drag_source_set_target_list",
+    "drag_source_unset",
+    "drag_unhighlight",
+    "draw",
+    "error_bell",
+    "event",
+    "freeze_child_notify",
+    "get_accessible",
+    "get_action_group",
+    "get_allocated_baseline",
+    "get_allocated_height",
+    "get_allocated_size",
+    "get_allocated_width",
+    "get_allocation",
+    "get_ancestor",
+    "get_app_paintable",
+    "get_can_default",
+    "get_can_focus",
+    "get_child_visible",
+    "get_clip",
+    "get_clipboard",
+    "get_device_enabled",
+    "get_device_events",
+    "get_direction",
+    "get_display",
+    "get_double_buffered",
+    "get_events",
+    "get_focus_on_click",
+    "get_font_map",
+    "get_font_options",
+    "get_frame_clock",
+    "get_halign",
+    "get_has_tooltip",
+    "get_has_window",
+    "get_hexpand",
+    "get_hexpand_set",
+    "get_mapped",
+    "get_margin_bottom",
+    "get_margin_end",
+    "get_margin_start",
+    "get_margin_top",
+    "get_modifier_mask",
+    "get_name",
+    "get_no_show_all",
+    "get_opacity",
+    "get_pango_context",
+    "get_parent",
+    "get_parent_window",
+    "get_path",
+    "get_preferred_height",
+    "get_preferred_height_and_baseline_for_width",
+    "get_preferred_height_for_width",
+    "get_preferred_size",
+    "get_preferred_width",
+    "get_preferred_width_for_height",
+    "get_realized",
+    "get_receives_default",
+    "get_request_mode",
+    "get_scale_factor",
+    "get_screen",
+    "get_sensitive",
+    "get_settings",
+    "get_size_request",
+    "get_state_flags",
+    "get_style_context",
+    "get_support_multidevice",
+    "get_template_child",
+    "get_tooltip_markup",
+    "get_tooltip_text",
+    "get_tooltip_window",
+    "get_toplevel",
+    "get_valign",
+    "get_valign_with_baseline",
+    "get_vexpand",
+    "get_vexpand_set",
+    "get_visible",
+    "get_visual",
+    "get_window",
+    "grab_add",
+    "grab_default",
+    "grab_focus",
+    "grab_remove",
+    "has_default",
+    "has_focus",
+    "has_grab",
+    "has_visible_focus",
+    "hide",
+    "hide_on_delete",
+    "in_destruction",
+    "init_template",
+    "input_shape_combine_region",
+    "insert_action_group",
+    "intersect",
+    "is_ancestor",
+    "is_drawable",
+    "is_focus",
+    "is_sensitive",
+    "is_toplevel",
+    "is_visible",
+    "keynav_failed",
+    "list_accel_closures",
+    "list_action_prefixes",
+    "list_mnemonic_labels",
+    "map",
+    "mnemonic_activate",
+    "queue_allocate",
+    "queue_draw",
+    "queue_draw_area",
+    "queue_resize",
+    "queue_resize_no_redraw",
+    "realize",
+    "register_window",
+    "remove_accelerator",
+    "remove_mnemonic_label",
+    "remove_tick_callback",
+    "reset_style",
+    "send_focus_change",
+    "set_accel_path",
+    "set_allocation",
+    "set_app_paintable",
+    "set_can_default",
+    "set_can_focus",
+    "set_child_visible",
+    "set_clip",
+    "set_device_enabled",
+    "set_device_events",
+    "set_direction",
+    "set_events",
+    "set_focus_on_click",
+    "set_font_map",
+    "set_font_options",
+    "set_halign",
+    "set_has_tooltip",
+    "set_has_window",
+    "set_hexpand",
+    "set_hexpand_set",
+    "set_mapped",
+    "set_margin_bottom",
+    "set_margin_end",
+    "set_margin_start",
+    "set_margin_top",
+    "set_name",
+    "set_no_show_all",
+    "set_opacity",
+    "set_parent",
+    "set_parent_window",
+    "set_realized",
+    "set_receives_default",
+    "set_redraw_on_allocate",
+    "set_sensitive",
+    "set_size_request",
+    "set_state_flags",
+    "set_support_multidevice",
+    "set_tooltip_markup",
+    "set_tooltip_text",
+    "set_tooltip_window",
+    "set_valign",
+    "set_vexpand",
+    "set_vexpand_set",
+    "set_visible",
+    "set_visual",
+    "set_window",
+    "shape_combine_region",
+    "show",
+    "show_all",
+    "show_now",
+    "size_allocate",
+    "size_allocate_with_baseline",
+    "size_request",
+    "style_get_property",
+    "thaw_child_notify",
+    "translate_coordinates",
+    "trigger_tooltip_query",
+    "unmap",
+    "unparent",
+    "unrealize",
+    "unregister_window",
+    "unset_state_flags",
+]
 EXPECTED_WIDGET_PROPERTIES = {
     "app_paintable": False,
     "can_default": False,
@@ -66,6 +475,22 @@ EXPECTED_CALENDAR_HANDLER_IDS = {
     "prev-month": -1,
     "prev-year": -1,
 }
+EXPECTED_CALENDAR_METHODS = [
+    "clear_marks",
+    "get_date",
+    "get_day_is_marked",
+    "get_detail_height_rows",
+    "get_detail_width_chars",
+    "get_display_options",
+    "mark_day",
+    "select_day",
+    "select_month",
+    "set_detail_func",
+    "set_detail_height_rows",
+    "set_detail_width_chars",
+    "set_display_options",
+    "unmark_day",
+]
 EXPECTED_CALENDAR_PROPERTIES = {
     "day": 0,
     "detail_height_rows": 0,
@@ -85,9 +510,52 @@ EXPECTED_CONTAINER_HANDLER_IDS = {
     "remove": -1,
     "set-focus-child": -1,
 }
+EXPECTED_CONTAINER_METHODS = [
+    "add",
+    "check_resize",
+    "child_get",
+    "child_get_property",
+    "child_notify",
+    "child_notify_by_pspec",
+    "child_set",
+    "child_set_property",
+    "child_type",
+    "forall",
+    "foreach",
+    "get_border_width",
+    "get_children",
+    "get_focus_child",
+    "get_focus_hadjustment",
+    "get_focus_vadjustment",
+    "get_path_for_child",
+    "propagate_draw",
+    "remove",
+    "set_border_width",
+    "set_focus_child",
+    "set_focus_hadjustment",
+    "set_focus_vadjustment",
+]
 EXPECTED_CONTAINER_PROPERTIES = {"border_width": 0}
 
+EXPECTED_BIN_METHODS = ["get_child"]
+
 EXPECTED_BUTTON_HANDLER_IDS = {"activate": -1, "clicked": -1}
+EXPECTED_BUTTON_METHODS = [
+    "clicked",
+    "get_always_show_image",
+    "get_event_window",
+    "get_image",
+    "get_image_position",
+    "get_label",
+    "get_relief",
+    "get_use_underline",
+    "set_always_show_image",
+    "set_image",
+    "set_image_position",
+    "set_label",
+    "set_relief",
+    "set_use_underline",
+]
 EXPECTED_BUTTON_PROPERTIES = {
     "always_show_image": False,
     "image": None,
@@ -98,6 +566,10 @@ EXPECTED_BUTTON_PROPERTIES = {
 }
 
 EXPECTED_COLOR_BUTTON_HANDLER_IDS = {"color-set": -1}
+EXPECTED_COLOR_BUTTON_METHODS = [
+    "get_title",
+    "set_title",
+]
 EXPECTED_COLOR_BUTTON_PROPERTIES = {
     "alpha": 65535,
     "rgba": None,
@@ -107,6 +579,18 @@ EXPECTED_COLOR_BUTTON_PROPERTIES = {
 }
 
 EXPECTED_FONT_BUTTON_HANDLER_IDS = {"font-set": -1}
+EXPECTED_FONT_BUTTON_METHODS = [
+    "get_show_size",
+    "get_show_style",
+    "get_title",
+    "get_use_font",
+    "get_use_size",
+    "set_show_size",
+    "set_show_style",
+    "set_title",
+    "set_use_font",
+    "set_use_size",
+]
 EXPECTED_FONT_BUTTON_PROPERTIES = {
     "font_name": "Sans 12",
     "show_size": True,
@@ -117,6 +601,16 @@ EXPECTED_FONT_BUTTON_PROPERTIES = {
 }
 
 EXPECTED_SCALE_BUTTON_HANDLER_IDS = {"popdown": -1, "popup": -1, "value-changed": -1}
+EXPECTED_SCALE_BUTTON_METHODS = [
+    "get_adjustment",
+    "get_minus_button",
+    "get_plus_button",
+    "get_popup",
+    "get_value",
+    "set_adjustment",
+    "set_icons",
+    "set_values",
+]
 EXPECTED_SCALE_BUTTON_PROPERTIES = {
     "adjustment": None,
     "icons": None,
@@ -127,6 +621,15 @@ EXPECTED_SCALE_BUTTON_PROPERTIES = {
 EXPECTED_VOLUME_BUTTON_PROPERTIES = {"use_stock": False}
 
 EXPECTED_TOGGLE_BUTTON_HANDLER_IDS = {"toggled": -1}
+EXPECTED_TOGGLE_BUTTON_METHODS = [
+    "get_active",
+    "get_inconsistent",
+    "get_mode",
+    "set_active",
+    "set_inconsistent",
+    "set_mode",
+    "toggled",
+]
 EXPECTED_TOGGLE_BUTTON_PROPERTIES = {
     "active": False,
     "draw_indicator": False,
@@ -135,8 +638,27 @@ EXPECTED_TOGGLE_BUTTON_PROPERTIES = {
 }
 
 EXPECTED_RADIO_BUTTON_HANDLER_IDS = {"group-changed": -1}
+EXPECTED_RADIO_BUTTON_METHODS = [
+    "get_group",
+    "join_group",
+    "set_group",
+]
 EXPECTED_RADIO_BUTTON_PROPERTIES = {"group": None}
 
+EXPECTED_MENU_BUTTON_METHODS = [
+    "get_align_widget",
+    "get_direction",
+    "get_menu_model",
+    "get_popover",
+    "get_popup",
+    "get_use_popover",
+    "set_align_widget",
+    "set_direction",
+    "set_menu_model",
+    "set_popover",
+    "set_popup",
+    "set_use_popover",
+]
 EXPECTED_MENU_BUTTON_PROPERTIES = {
     "align_widget": None,
     "direction": Gtk.ArrowType.DOWN,
@@ -146,6 +668,11 @@ EXPECTED_MENU_BUTTON_PROPERTIES = {
     "use_popover": True,
 }
 
+EXPECTED_COMBOBOX_ATTRIBUTES = {
+    "column_types": [GObject.TYPE_STRING],
+    "default_value": -1,
+    "edit_signal": "changed",
+}
 EXPECTED_COMBOBOX_HANDLER_IDS = {
     "changed": -1,
     "editing-done": -1,
@@ -155,6 +682,37 @@ EXPECTED_COMBOBOX_HANDLER_IDS = {
     "popup": -1,
     "remove-widget": -1,
 }
+EXPECTED_COMBOBOX_METHODS = [
+    "get_active",
+    "get_active_id",
+    "get_active_iter",
+    "get_add_tearoffs",
+    "get_button_sensitivity",
+    "get_column_span_column",
+    "get_entry_text_column",
+    "get_has_entry",
+    "get_id_column",
+    "get_model",
+    "get_popup_accessible",
+    "get_popup_fixed_width",
+    "get_row_span_column",
+    "get_wrap_width",
+    "popdown",
+    "popup",
+    "popup_for_device",
+    "set_active",
+    "set_active_id",
+    "set_active_iter",
+    "set_button_sensitivity",
+    "set_column_span_column",
+    "set_entry_text_column",
+    "set_id_column",
+    "set_model",
+    "set_popup_fixed_width",
+    "set_row_separator_func",
+    "get_row_span_column",
+    "set_wrap_width",
+]
 EXPECTED_COMBOBOX_PROPERTIES = {
     "active": -1,
     "active_id": None,
@@ -174,12 +732,33 @@ EXPECTED_COMBOBOX_PROPERTIES = {
 }
 
 EXPECTED_APP_CHOOSER_BUTTON_HANDLER_IDS = {"custum-item-activated": -1}
+EXPECTED_APP_CHOOSER_BUTTON_METHODS = [
+    "append_custom_item",
+    "append_separator",
+    "get_heading",
+    "get_show_default_item",
+    "get_show_dialog_item",
+    "set_active_custom_item",
+    "set_heading",
+    "set_show_default_item",
+    "set_show_dialog_item",
+]
 EXPECTED_APP_CHOOSER_BUTTON_PROPERTIES = {
     "heading": None,
     "show_default_item": False,
     "show_dialog_item": False,
 }
 
+EXPECTED_FRAME_METHODS = [
+    "get_label",
+    "get_label_align",
+    "get_label_widget",
+    "get_shadow_type",
+    "set_label",
+    "set_label_align",
+    "set_label_widget",
+    "set_shadow_type",
+]
 EXPECTED_FRAME_PROPERTIES = {
     "label": "",
     "label_widget": None,
@@ -196,6 +775,23 @@ EXPECTED_MENU_ITEM_HANDLER_IDS = {
     "toggle-size-allocate": -1,
     "toggle-size-request": -1,
 }
+EXPECTED_MENU_ITEM_METHODS = [
+    "activate",
+    "deselect",
+    "get_accel_path",
+    "get_label",
+    "get_reserve_indicator",
+    "get_submenu",
+    "get_use_underline",
+    "select",
+    "set_accel_path",
+    "set_label",
+    "set_reserve_indicator",
+    "set_submenu",
+    "set_use_underline",
+    "toggle_size_allocate",
+    "toggle_size_request",
+]
 EXPECTED_MENU_ITEM_PROPERTIES = {
     "accel_path": None,
     "label": "",
@@ -204,6 +800,15 @@ EXPECTED_MENU_ITEM_PROPERTIES = {
 }
 
 EXPECTED_CHECK_MENU_ITEM_HANDLER_IDS = {"toggled": -1}
+EXPECTED_CHECK_MENU_ITEM_METHODS = [
+    "get_active",
+    "get_draw_as_radio",
+    "get_inconsistent",
+    "set_active",
+    "set_draw_as_radio",
+    "set_inconsistent",
+    "toggled",
+]
 EXPECTED_CHECK_MENU_ITEM_PROPERTIES = {
     "active": False,
     "draw_as_radio": False,
@@ -211,9 +816,27 @@ EXPECTED_CHECK_MENU_ITEM_PROPERTIES = {
 }
 
 EXPECTED_RADIO_MENU_ITEM_HANDLER_IDS = {"group-changed": -1}
+EXPECTED_RADIO_MENU_ITEM_METHODS = ["get_group", "join_group", "set_group"]
 EXPECTED_RADIO_MENU_ITEM_PROPERTIES = {"group": None}
 
 EXPECTED_POPOVER_HANDLER_IDS = {"closed": -1}
+EXPECTED_POPOVER_METHODS = [
+    "bind_model",
+    "get_constrain_to",
+    "get_default_widget",
+    "get_modal",
+    "get_pointing_to",
+    "get_position",
+    "get_relative_to",
+    "popdown",
+    "popup",
+    "set_constrain_to",
+    "set_default_widget",
+    "set_modal",
+    "set_pointing_to",
+    "set_position",
+    "set_relative_to",
+]
 EXPECTED_POPOVER_PROPERTIES = {
     "constrain_to": Gtk.PopoverConstraint.WINDOW,
     "modal": True,

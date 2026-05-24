@@ -18,6 +18,13 @@ from pytkwrap.gtk3.adjustment import GTK3Adjustment
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
+from .test_constants import (
+    EXPECTED_ADJUSTMENT_HANDLER_IDS,
+    EXPECTED_ADJUSTMENT_METHODS,
+    EXPECTED_ADJUSTMENT_PROPERTIES,
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
+)
 
 
 @pytest.mark.order(3)
@@ -25,41 +32,12 @@ class TestGTK3Adjustment(BaseGTK3GObjectTests):
     """Test class for the GTK3Adjustment class."""
 
     widget_class = GTK3Adjustment
-    expected_attributes = [
-        # "changed", # deprecated
-        "clamp_page",
-        "configure",
-        "get_lower",
-        "get_minimum_increment",
-        "get_page_increment",
-        "get_page_size",
-        "get_step_increment",
-        "get_upper",
-        "get_value",
-        "set_lower",
-        "set_page_increment",
-        "set_page_size",
-        "set_step_increment",
-        "set_upper",
-        "set_value",
-        # "value_changed", # deprecated
-    ]
     expected_default_height = -1
     expected_default_tooltip = ""
     expected_default_width = -1
-    expected_handler_id = {
-        "changed": -1,
-        "notify": -1,
-        "value-changed": -1,
-    }
-    expected_properties = {
-        "lower": 0.0,
-        "page_increment": 0.0,
-        "page_size": 0.0,
-        "step_increment": 0.0,
-        "upper": 0.0,
-        "value": 0.0,
-    }
+    expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS | EXPECTED_ADJUSTMENT_HANDLER_IDS
+    expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_ADJUSTMENT_METHODS
+    expected_properties = EXPECTED_ADJUSTMENT_PROPERTIES
 
     def make_dut(
         self,

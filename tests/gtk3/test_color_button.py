@@ -17,13 +17,20 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
 from .test_constants import (
+    EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
+    EXPECTED_BUTTON_METHODS,
     EXPECTED_BUTTON_PROPERTIES,
     EXPECTED_COLOR_BUTTON_HANDLER_IDS,
+    EXPECTED_COLOR_BUTTON_METHODS,
     EXPECTED_COLOR_BUTTON_PROPERTIES,
     EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
     EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
 )
 
@@ -40,25 +47,24 @@ class TestGTK3ColorButton(BaseGTK3WidgetTests):
     """Test class for the GTK3ColorButton."""
 
     widget_class = GTK3ColorButton
-    expected_attributes = [
-        "get_alpha",
-        "get_color",
-        "get_title",
-        "get_use_alpha",
-        "set_alpha",
-        "set_color",
-        "set_title",
-        "set_use_alpha",
-    ]
     expected_default_edit_signal = "color-set"
     expected_default_height = 30
     expected_default_value = None
     expected_default_width = 60
     expected_handler_id = (
-        EXPECTED_WIDGET_HANDLER_IDS
+        EXPECTED_GOBJECT_HANDLER_IDS
+        | EXPECTED_WIDGET_HANDLER_IDS
         | EXPECTED_CONTAINER_HANDLER_IDS
         | EXPECTED_BUTTON_HANDLER_IDS
         | EXPECTED_COLOR_BUTTON_HANDLER_IDS
+    )
+    expected_methods = (
+        EXPECTED_GOBJECT_METHODS
+        + EXPECTED_WIDGET_METHODS
+        + EXPECTED_CONTAINER_METHODS
+        + EXPECTED_BIN_METHODS
+        + EXPECTED_BUTTON_METHODS
+        + EXPECTED_COLOR_BUTTON_METHODS
     )
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES

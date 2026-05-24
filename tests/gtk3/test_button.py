@@ -15,11 +15,18 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
 from .test_constants import (
+    EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
+    EXPECTED_BUTTON_METHODS,
     EXPECTED_BUTTON_PROPERTIES,
     EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
+    EXPECTED_WIDGET_ATTRIBUTES,
     EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
 )
 
@@ -28,38 +35,21 @@ class TestButton(BaseGTK3WidgetTests):
     """Test class for the GTK3Button."""
 
     widget_class = GTK3Button
-    expected_attributes = [
-        "clicked",
-        # "enter", # deprecated
-        # "get_alignment", # deprecated
-        "get_always_show_image",
-        "get_event_window",
-        # "get_focus_on_click", # deprecated
-        "get_image",
-        "get_image_position",
-        "get_label",
-        "get_relief",
-        # "get_use_stock", # deprecated
-        "get_use_underline",
-        # "leave", # deprecated
-        # "pressed", # deprecated
-        # "released", # deprecated
-        # "set_alignment", # deprecated
-        "set_always_show_image",
-        # "set_focus_on_click", # deprecated
-        "set_image",
-        "set_image_position",
-        "set_label",
-        "set_relief",
-        # "set_use_stock", # deprecated
-        "set_use_underline",
-    ]
+    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES
     expected_default_height = 30
     expected_default_width = 200
     expected_handler_id = (
-        EXPECTED_WIDGET_HANDLER_IDS
+        EXPECTED_GOBJECT_HANDLER_IDS
+        | EXPECTED_WIDGET_HANDLER_IDS
         | EXPECTED_CONTAINER_HANDLER_IDS
         | EXPECTED_BUTTON_HANDLER_IDS
+    )
+    expected_methods = (
+        EXPECTED_GOBJECT_METHODS
+        + EXPECTED_WIDGET_METHODS
+        + EXPECTED_CONTAINER_METHODS
+        + EXPECTED_BIN_METHODS
+        + EXPECTED_BUTTON_METHODS
     )
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES

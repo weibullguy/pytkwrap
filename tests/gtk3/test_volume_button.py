@@ -30,7 +30,7 @@ class TestGTK3VolumeButton(BaseGTK3WidgetTests):
     """Test class for the GTK3VolumeButton."""
 
     widget_class = GTK3VolumeButton
-    expected_attributes = []
+    expected_methods = []
     expected_default_edit_signal = "value-changed"
     expected_default_height = 30
     expected_default_value = 0.0

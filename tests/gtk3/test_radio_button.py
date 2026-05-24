@@ -18,14 +18,21 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
 from .test_constants import (
+    EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
+    EXPECTED_BUTTON_METHODS,
+    EXPECTED_BUTTON_PROPERTIES,
     EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
     EXPECTED_RADIO_BUTTON_HANDLER_IDS,
+    EXPECTED_RADIO_BUTTON_METHODS,
     EXPECTED_RADIO_BUTTON_PROPERTIES,
     EXPECTED_TOGGLE_BUTTON_HANDLER_IDS,
+    EXPECTED_TOGGLE_BUTTON_METHODS,
     EXPECTED_TOGGLE_BUTTON_PROPERTIES,
     EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
 )
 
@@ -35,11 +42,6 @@ class TestRadioButton(BaseGTK3WidgetTests):
     """Test class for the GTK3RadioButton."""
 
     widget_class = GTK3RadioButton
-    expected_attributes = [
-        "get_group",
-        "join_group",
-        "set_group",
-    ]
     expected_default_height = 40
     expected_default_edit_signal = "toggled"
     expected_default_width = 200
@@ -50,10 +52,19 @@ class TestRadioButton(BaseGTK3WidgetTests):
         | EXPECTED_TOGGLE_BUTTON_HANDLER_IDS
         | EXPECTED_RADIO_BUTTON_HANDLER_IDS
     )
+    expected_methods = (
+        EXPECTED_WIDGET_METHODS
+        + EXPECTED_CONTAINER_METHODS
+        + EXPECTED_BIN_METHODS
+        + EXPECTED_BUTTON_METHODS
+        + EXPECTED_TOGGLE_BUTTON_METHODS
+        + EXPECTED_RADIO_BUTTON_METHODS
+    )
     expected_package = {0: {"test_field": True}}
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES
         | EXPECTED_CONTAINER_PROPERTIES
+        | EXPECTED_BUTTON_PROPERTIES
         | EXPECTED_TOGGLE_BUTTON_PROPERTIES
         | EXPECTED_TOGGLE_BUTTON_PROPERTIES
         | EXPECTED_RADIO_BUTTON_PROPERTIES
