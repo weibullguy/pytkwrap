@@ -24,29 +24,25 @@ from .test_constants import (
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_FONT_BUTTON_ATTRIBUTES,
     EXPECTED_FONT_BUTTON_HANDLER_IDS,
     EXPECTED_FONT_BUTTON_METHODS,
     EXPECTED_FONT_BUTTON_PROPERTIES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
+    EXPECTED_WIDGET_ATTRIBUTES,
     EXPECTED_WIDGET_HANDLER_IDS,
     EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
 )
 
 
-# @pytest.mark.skip(
-#    reason=(
-#        "Gtk.FontButton routinely crashes at the C level in test environments. "
-#        "Requires manual testing in a running GTK3 application."
-#        "See examples/color_button.py for manual test program."
-#    )
-# )
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3FontButton(BaseGTK3WidgetTests):
     """Test class for the GTK3FontButton."""
 
     widget_class = GTK3FontButton
+    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_FONT_BUTTON_ATTRIBUTES
     expected_default_height = 30
     expected_default_width = 60
     expected_handler_id = (
@@ -70,41 +66,6 @@ class TestGTK3FontButton(BaseGTK3WidgetTests):
         | EXPECTED_BUTTON_PROPERTIES
         | EXPECTED_FONT_BUTTON_PROPERTIES
     )
-
-    @pytest.mark.unit
-    def test_init(self):
-        """Should initialize an instance of a GTK3FontButton."""
-        dut = self.make_dut()
-
-        assert isinstance(dut, self.widget_class)
-
-        # These are inherited from GTK3GObjectMixin.
-        assert dut._DEFAULT_HEIGHT == self.expected_default_height
-        assert dut._DEFAULT_TOOLTIP == self.expected_default_tooltip
-        assert dut._DEFAULT_WIDTH == self.expected_default_width
-        assert dut.dic_attributes == {
-            "default_value": "Sans 12",
-            "edit_signal": "font-set",
-            "index": -1,
-            "x_pos": 0,
-            "y_pos": 0,
-        }
-        assert dut.dic_handler_id == self.expected_handler_id
-        assert dut.dic_properties == self.expected_properties
-
-    @pytest.mark.unit
-    def test_set_properties_default(self):
-        """Should set the default properties of a GTK3FontButton when passed an empty
-        GTK3WidgetProperties."""
-        dut = self.make_dut()
-        dut.do_set_properties(GTK3WidgetProperties())
-
-        assert dut.get_property("font_name") == "Sans 12"
-        assert dut.get_property("show_size")
-        assert dut.get_property("show_style")
-        assert dut.get_property("title") == "Pick a Font"
-        assert not dut.get_property("use_font")
-        assert not dut.get_property("use_size")
 
     @pytest.mark.unit
     def test_set_properties(self):
@@ -142,48 +103,6 @@ class TestGTK3FontButton(BaseGTK3WidgetTests):
         assert dut.do_get_property("font_name") == "Serif 15"
 
     @pytest.mark.unit
-    def test_do_update_none_value(self):
-        """Should update the GTK3FontButton properties with the default values when
-        passed a data package with a value of None."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 11
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(dut.do_update, "rootTopic")
-
-        pub.sendMessage("rootTopic", package={11: None})
-
-        assert dut.do_get_property("font_name") == "Sans 12"
-
-    @pytest.mark.unit
-    def test_do_update_unknown_signal(self):
-        """Should raise an UnkSignalError with an unknown edit signal name."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 21
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(self.do_update_error_handler, "do_log_error")
-        pub.subscribe(dut.do_update, "rootTopic")
-        dut.dic_attributes["edit_signal"] = "unk_signal"
-
-        with pytest.raises(UnkSignalError):
-            pub.sendMessage("rootTopic", package={21: "Test Package"})
-
-        assert dut.do_get_property("font_name") == "Sans 12"
-
-    @pytest.mark.unit
-    def test_do_update_wrong_field(self):
-        """Should do nothing when the data package key doesn't match the GTK3FontButton
-        field name."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 22
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
-        pub.subscribe(dut.do_update, "rootTopic")
-        dut.set_font("Helvetica 12")
-
-        pub.sendMessage("rootTopic", package={12: False})
-
-        assert dut.do_get_property("font_name") == "Sans 12"
-
-    @pytest.mark.unit
     def test_on_changed(self):
         """on_changed() is called when the GTK3FontButton color is set."""
         dut = self.make_dut()
@@ -194,20 +113,3 @@ class TestGTK3FontButton(BaseGTK3WidgetTests):
         pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.emit("font-set")
-
-    @pytest.mark.skip(
-        reason="GTK3Widget.on_changed() does not raise an UnkSignalError for some "
-        "reason."
-    )
-    def test_on_changed_unknown_signal(self):
-        """Should raise an UnkSignalError with an unknown edit signal name."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 15
-        dut.dic_attributes["send_topic"] = "font_changed"
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
-        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
-        pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        dut.dic_attributes["edit_signal"] = "unk_signal"
-
-        with pytest.raises(UnkSignalError):
-            dut.emit("font-set")

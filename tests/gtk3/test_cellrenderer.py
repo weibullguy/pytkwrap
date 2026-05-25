@@ -27,8 +27,6 @@ class TestGTK3CellRenderer(BaseGTK3GObjectTests):
     """Test class for the GTK3CellRenderer class."""
 
     widget_class = GTK3CellRenderer
-    expected_default_height = -1
-    expected_default_width = -1
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS | EXPECTED_CELL_RENDERER_HANDLER_IDS
     )

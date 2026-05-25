@@ -25,7 +25,7 @@ def unknown_attribute_error_handler(message):
     )
 
 
-@pytest.mark.order(0)
+@pytest.mark.order(1)
 class TestPyTkWrapMixin:
     """Test class for the PyTkWrapMixin class."""
 
@@ -61,36 +61,6 @@ class TestPyTkWrapMixin:
         assert not dut1.dic_attributes is dut2.dic_attributes
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-011")
-    def test_no_toolkit_imports(self):
-        """Should not import any toolkit-specific modules."""
-        # Standard Library Imports
-        import ast
-        import inspect
-
-        # pytkwrap Package Imports
-        import pytkwrap.common.mixins as mixins_module
-
-        _source = inspect.getsource(mixins_module)
-        _tree = ast.parse(_source)
-
-        _toolkit_names = {"Gdk", "GdkPixbuf", "Gio", "GLib", "GObject", "Gtk", "Pango"}
-        _imports = set()
-
-        for _node in ast.walk(_tree):
-            if isinstance(_node, ast.Import):
-                for _alias in _node.names:
-                    _imports.add(_alias.name.split(".")[0])
-            elif isinstance(_node, ast.ImportFrom):
-                if _node.module:
-                    _imports.add(_node.module.split(".")[0])
-
-        assert not _toolkit_names & _imports, (
-            f"Toolkit-specific imports found in common layer: "
-            f"{_toolkit_names & _imports}"
-        )
-
-    @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-014")
     def test_do_get_attribute(self):
         """Should return the value of the passed attribute name."""
@@ -109,18 +79,6 @@ class TestPyTkWrapMixin:
 
         with pytest.raises(UnkAttributeError):
             dut.do_get_attribute("unk_attribute")
-
-    @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-015")
-    def test_do_set_attributes_default(self):
-        """Should set attributes to their default value when passed an empty
-        PyTkWrapAttributes."""
-        dut = PyTkWrapMixin()
-        dut.do_set_attributes(PyTkWrapAttributes())
-
-        assert dut.dic_attributes["index"] == -1
-        assert dut.dic_attributes["x_pos"] == 0
-        assert dut.dic_attributes["y_pos"] == 0
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-015")

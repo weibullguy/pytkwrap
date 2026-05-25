@@ -10,7 +10,7 @@ from pubsub import pub
 # pytkwrap Package Imports
 from pytkwrap.exceptions import UnkAttributeError, UnkSignalError
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.common.test_pytkwrap_mixin import TestPyTkWrapMixin
 from tests.common.test_toolkit_mixin import TestToolkitMixin
 
@@ -25,14 +25,15 @@ def image_file():
     return _image_
 
 
-@pytest.mark.order(3)
 class BaseGTK3GObjectTests(TestToolkitMixin):
     """Add GTK3-specific assertions to the common mixin tests."""
 
     widget_class = None
     expected_attributes = {}
     expected_default_height = -1
-    expected_default_tooltip = ""
+    expected_default_tooltip = (
+        "Missing tooltip, please file an issue to have one added."
+    )
     expected_default_width = -1
     expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS
     expected_methods = EXPECTED_GOBJECT_METHODS
@@ -99,7 +100,7 @@ class BaseGTK3GObjectTests(TestToolkitMixin):
     @pytest.mark.requirement("PTW-COM-W-002")
     @pytest.mark.unit
     def test_toolkit_methods_available(self):
-        """Verifies all GObject.Object methods are available via pytkwrap."""
+        """Verifies all GTK3 methods are available via pytkwrap."""
         dut = self.make_dut()
 
         for _method in self.expected_methods:
@@ -153,20 +154,8 @@ class BaseGTK3GObjectTests(TestToolkitMixin):
         assert dut.dic_properties == self.expected_properties
 
 
-@pytest.mark.order(3)
-class BaseGTK3WidgetTests(TestPyTkWrapMixin):
+class BaseGTK3WidgetTests(BaseGTK3GObjectTests, TestPyTkWrapMixin):
     """Add GTK3-specific assertions to the common mixin tests."""
-
-    widget_class = None
-    expected_attributes = {}
-    expected_default_height = -1
-    expected_default_tooltip = (
-        "Missing tooltip, please file an issue to have one added."
-    )
-    expected_default_width = -1
-    expected_handler_id = {}
-    expected_methods = []
-    expected_properties = {}
 
     def make_dut(self):
         """Override in subclass if constructor needs arguments."""
@@ -220,6 +209,7 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
         assert dut._DEFAULT_HEIGHT == self.expected_default_height
         assert dut._DEFAULT_TOOLTIP == self.expected_default_tooltip
         assert dut._DEFAULT_WIDTH == self.expected_default_width
+        assert dut.dic_attributes == self.expected_attributes
         assert dut.dic_error_message == {
             "no_value": "{}: No value set or no method to retrieve value.",
             "unk_attribute": "{}: Unknown attribute '{}'.",
@@ -253,35 +243,14 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
             dut.do_get_attribute("unk_attribute")
 
     @pytest.mark.unit
-    def test_do_set_callbacks(self):
-        """do_set_callbacks should set the callbacks for a pytkwrap widget."""
+    @pytest.mark.requirement("PTW-COM-X-015")
+    def test_do_set_attributes_default(self):
+        """Should set attributes to their default value when passed an empty
+        PyTkWrapAttributes."""
         dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
 
-        # For each signal associated with a pytkwrap GTK3 widget, first we verify that
-        # the handler ID = -1, then we assign a callback and verify the handler
-        # ID != -1.  This also verifies each signal in the signal list exists for a
-        # widget.
-        for signal, handler_id in dut.dic_handler_id.items():
-            assert handler_id == -1, f"Expected {signal} to be -1, got {handler_id}."
-            dut.do_set_callbacks(signal, self.mock_callback)
-            assert dut.dic_handler_id[signal] != -1
-
-    @pytest.mark.unit
-    def test_do_set_callbacks_no_signal(self):
-        """Should raise an UnkSignalError when the signal name does not exist."""
-        dut = self.make_dut()
-        pub.subscribe(self.no_signal_error_handler, "do_log_error")
-
-        with pytest.raises(UnkSignalError):
-            dut.do_set_callbacks("unk_signal", self.mock_callback)
-
-    @pytest.mark.unit
-    def test_do_set_callbacks_no_callback(self):
-        """Should raise an AttributeError when the callback does not exist."""
-        dut = self.make_dut()
-
-        with pytest.raises(AttributeError):
-            dut.do_set_callbacks("event", dut.non_existent_callback)
+        assert dut.dic_properties == self.expected_properties
 
     @pytest.mark.unit
     def test_do_set_properties_zero_height(self):
@@ -302,3 +271,58 @@ class BaseGTK3WidgetTests(TestPyTkWrapMixin):
         assert (
             dut.dic_properties["width_request"] == self.expected_default_width
         )  # falls back to _DEFAULT_WIDTH
+
+    @pytest.mark.unit
+    def test_do_update_none_value(self):
+        """Should update the properties with the default values when passed a data
+        package with a value of None."""
+        dut = self.make_dut()
+        if hasattr(dut.dic_attributes, "edit_signal"):
+            dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
+            pub.subscribe(dut.do_update, "rootTopic")
+
+            pub.sendMessage("rootTopic", package={-1: None})
+
+            assert dut.dic_attributes == self.expected_attributes
+
+    @pytest.mark.unit
+    def test_do_update_unknown_signal(self):
+        """Should raise an UnkSignalError with an unknown edit signal name."""
+        dut = self.make_dut()
+        if hasattr(dut.dic_attributes, "edit_signal"):
+            dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
+            pub.subscribe(self.do_update_error_handler, "do_log_error")
+            pub.subscribe(dut.do_update, "rootTopic")
+            dut.dic_attributes["edit_signal"] = "unk_signal"
+
+            with pytest.raises(UnkSignalError):
+                pub.sendMessage("rootTopic", package={-1: "Test Package"})
+
+            assert dut.dic_attributes == self.expected_attributes
+
+    @pytest.mark.unit
+    def test_do_update_wrong_field(self):
+        """Should do nothing when the data package key doesn't match the GTK3ColorButton
+        field name."""
+        dut = self.make_dut()
+        if hasattr(dut.dic_attributes, "edit_signal"):
+            dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
+            pub.subscribe(dut.do_update, "rootTopic")
+
+            pub.sendMessage("rootTopic", package={-1: False})
+
+            assert dut.dic_attributes == self.expected_attributes
+
+    @pytest.mark.unit
+    def test_on_changed_unknown_signal(self):
+        """Should raise a UnkSignalError with an unknown edit signal name."""
+        dut = self.make_dut()
+        if hasattr(dut.dic_attributes, "edit_signal"):
+            dut.dic_attributes["send_topic"] = "color_changed"
+            dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
+            pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
+            pub.subscribe(self.on_changed_error_handler, "do_log_error")
+            dut.dic_attributes["edit_signal"] = "unk_signal"
+
+            with pytest.raises(UnkSignalError):
+                dut.emit("color-set")

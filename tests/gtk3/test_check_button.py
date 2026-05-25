@@ -21,6 +21,7 @@ from .test_constants import (
     EXPECTED_BUTTON_HANDLER_IDS,
     EXPECTED_BUTTON_METHODS,
     EXPECTED_BUTTON_PROPERTIES,
+    EXPECTED_CHECK_BUTTON_ATTRIBUTES,
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
@@ -29,6 +30,7 @@ from .test_constants import (
     EXPECTED_TOGGLE_BUTTON_HANDLER_IDS,
     EXPECTED_TOGGLE_BUTTON_METHODS,
     EXPECTED_TOGGLE_BUTTON_PROPERTIES,
+    EXPECTED_WIDGET_ATTRIBUTES,
     EXPECTED_WIDGET_HANDLER_IDS,
     EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
@@ -40,6 +42,7 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
     """Test class for the GTK3CheckButton."""
 
     widget_class = GTK3CheckButton
+    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_CHECK_BUTTON_ATTRIBUTES
     expected_default_height = 40
     expected_default_width = 200
     expected_handler_id = (
@@ -72,11 +75,9 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
     def test_init(self):
         """Should create a GTK3CheckButton with a default label and default values for
         attributes."""
-        dut = self.make_dut()
+        super().test_init()
 
-        assert isinstance(dut, GTK3CheckButton)
-        assert dut.dic_handler_id == self.expected_handler_id
-        assert dut.dic_properties == self.expected_properties
+        dut = self.make_dut()
 
         assert dut.get_label() == "..."
         assert dut.get_image() is None
@@ -90,17 +91,6 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
         assert isinstance(dut, GTK3CheckButton)
         assert dut.get_label() == "Test Label"
         assert dut.get_image() is None
-
-    @pytest.mark.unit
-    def test_set_properties_default(self):
-        """Should set the default properties of a GTK3CheckButton when passed an empty
-        GTK3WidgetProperties."""
-        dut = self.make_dut()
-        dut.do_set_properties(GTK3WidgetProperties())
-
-        assert not dut.do_get_property("active")
-        assert not dut.do_get_property("draw_indicator")
-        assert not dut.do_get_property("inconsistent")
 
     @pytest.mark.unit
     def test_set_properties(self):
@@ -135,70 +125,14 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
         assert dut.get_active()
 
     @pytest.mark.unit
-    def test_do_update_none_value(self):
-        """Should NOT update the GTK3CheckButton when the data package is None."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 1
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(dut.do_update, "rootTopic")
-
-        pub.sendMessage("rootTopic", package={1: None})
-
-        assert not dut.do_get_property("active")
-        assert not dut.get_active()
-
-    @pytest.mark.unit
-    def test_do_update_unknown_signal(self):
-        """Should raise an UnkSignalError with an unknown edit signal name."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 1
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(self.do_update_error_handler, "do_log_error")
-        pub.subscribe(dut.do_update, "rootTopic")
-        dut.dic_attributes["edit_signal"] = "unk_signal"
-
-        with pytest.raises(UnkSignalError):
-            pub.sendMessage("rootTopic", package={1: True})
-
-        assert not dut.get_active()
-
-    @pytest.mark.unit
-    def test_do_update_wrong_field(self):
-        """Should NOT update the GTK3CheckButton when the package key doesn't match the
-        GTK3CheckButton field name."""
-        dut = self.make_dut()
-        dut.dic_attributes["field"] = "test_field"
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
-        pub.subscribe(dut.do_update, "rootTopic")
-        dut.set_active(True)
-
-        pub.sendMessage("rootTopic", package={"wrong_field": False})
-
-        assert dut.get_active()
-
-    @pytest.mark.unit
     def test_on_changed(self):
-        """Call on_changed() when the GTK3CheckButton is Checkd."""
+        """Call on_changed() when the GTK3CheckButton is toggled."""
         dut = self.make_dut()
         dut.dic_attributes["field"] = "test_field"
         dut.record_id = 0
-        dut.send_topic = "button_Checkd"
+        dut.send_topic = "button_toggled"
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
         pub.subscribe(self.mock_handler, dut.send_topic)
-
-        dut.set_active(True)
-
-    @pytest.mark.unit
-    def test_on_changed_unknown_signal(self):
-        """Should raise a KeyError with an unknown edit signal name."""
-        dut = self.make_dut()
-        dut.dic_attributes["field"] = "test_field"
-        dut.dic_attributes["record_id"] = 0
-        dut.dic_attributes["send_topic"] = "button_Checkd"
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
-        pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        dut.dic_attributes["edit_signal"] = "edit_signal"
-        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.set_active(True)

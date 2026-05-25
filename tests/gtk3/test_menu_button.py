@@ -24,11 +24,13 @@ from .test_constants import (
     EXPECTED_CONTAINER_PROPERTIES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
+    EXPECTED_MENU_BUTTON_ATTRIBUTES,
     EXPECTED_MENU_BUTTON_METHODS,
     EXPECTED_MENU_BUTTON_PROPERTIES,
     EXPECTED_TOGGLE_BUTTON_HANDLER_IDS,
     EXPECTED_TOGGLE_BUTTON_METHODS,
     EXPECTED_TOGGLE_BUTTON_PROPERTIES,
+    EXPECTED_WIDGET_ATTRIBUTES,
     EXPECTED_WIDGET_HANDLER_IDS,
     EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
@@ -40,6 +42,7 @@ class TestGTK3MenuButton(BaseGTK3WidgetTests):
     """Test class for the GTK3MenuButton."""
 
     widget_class = GTK3MenuButton
+    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_MENU_BUTTON_ATTRIBUTES
     expected_default_height = 30
     expected_default_width = 200
     expected_handler_id = (
@@ -65,41 +68,6 @@ class TestGTK3MenuButton(BaseGTK3WidgetTests):
         | EXPECTED_TOGGLE_BUTTON_PROPERTIES
         | EXPECTED_MENU_BUTTON_PROPERTIES
     )
-
-    @pytest.mark.unit
-    def test_init(self):
-        """Should initialize an instance of a GTK3MenuButton."""
-        dut = self.make_dut()
-
-        assert isinstance(dut, self.widget_class)
-
-        # These are inherited from GTK3GObjectMixin.
-        assert dut._DEFAULT_HEIGHT == self.expected_default_height
-        assert dut._DEFAULT_TOOLTIP == self.expected_default_tooltip
-        assert dut._DEFAULT_WIDTH == self.expected_default_width
-        assert dut.dic_attributes == {
-            "default_value": False,
-            "edit_signal": "toggled",
-            "index": -1,
-            "x_pos": 0,
-            "y_pos": 0,
-        }
-        assert dut.dic_handler_id == self.expected_handler_id
-        assert dut.dic_properties == self.expected_properties
-
-    @pytest.mark.unit
-    def test_set_properties_default(self):
-        """Should set the default properties of a GTK3MenuButton when passed an empty
-        GTK3WidgetProperties."""
-        dut = self.make_dut()
-        dut.do_set_properties(GTK3WidgetProperties())
-
-        assert dut.do_get_property("align_widget") is None
-        assert dut.do_get_property("direction") == Gtk.ArrowType.DOWN
-        assert dut.do_get_property("menu_model") is None
-        assert dut.do_get_property("popover") is None
-        assert dut.do_get_property("popup") is None
-        assert dut.do_get_property("use_popover")
 
     @pytest.mark.unit
     def test_set_properties(self):

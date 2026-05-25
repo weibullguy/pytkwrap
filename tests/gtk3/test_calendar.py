@@ -37,15 +37,13 @@ class TestGTK3Calendar(BaseGTK3WidgetTests):
 
     widget_class = GTK3Calendar
     expected_attributes = EXPECTED_WIDGET_ATTRIBUTES
-    expected_methods = (
-        EXPECTED_GOBJECT_METHODS + EXPECTED_WIDGET_METHODS + EXPECTED_CALENDAR_METHODS
-    )
-    expected_default_height = -1
-    expected_default_width = -1
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
         | EXPECTED_CALENDAR_HANDLER_IDS
+    )
+    expected_methods = (
+        EXPECTED_GOBJECT_METHODS + EXPECTED_WIDGET_METHODS + EXPECTED_CALENDAR_METHODS
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_CALENDAR_PROPERTIES
 
@@ -57,7 +55,7 @@ class TestGTK3Calendar(BaseGTK3WidgetTests):
     def test_do_get_value(self):
         """Should return the current date."""
         dut = self.make_dut()
-        print(dut.do_get_value())
+
         assert dut.do_get_value() == date.today()
 
     @pytest.mark.unit

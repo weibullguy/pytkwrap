@@ -33,8 +33,6 @@ class TestGTK3Bin(BaseGTK3WidgetTests):
 
     widget_class = GTK3Bin
     expected_attributes = EXPECTED_WIDGET_ATTRIBUTES
-    expected_default_height = -1
-    expected_default_width = -1
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS

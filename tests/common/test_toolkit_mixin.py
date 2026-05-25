@@ -13,6 +13,8 @@ from pytkwrap import NoValueError, PytkwrapError, UnkPropertyError
 from pytkwrap.common.mixins import ToolkitMixin
 from pytkwrap.exceptions import WrongTypeError
 
+_TOOLKIT_NAMES = {"Gdk", "GdkPixbuf", "Gio", "GLib", "GObject", "Gtk", "Pango"}
+
 
 def no_value_error_handler(message):
     """Error handler for do_get_value() errors."""
@@ -105,7 +107,6 @@ class TestToolkitMixin:
         _source = inspect.getsource(mixins_module)
         _tree = ast.parse(_source)
 
-        _toolkit_names = {"Gdk", "GdkPixbuf", "Gio", "GLib", "GObject", "Gtk", "Pango"}
         _imports = set()
 
         for _node in ast.walk(_tree):
@@ -116,9 +117,9 @@ class TestToolkitMixin:
                 if _node.module:
                     _imports.add(_node.module.split(".")[0])
 
-        assert not _toolkit_names & _imports, (
+        assert not _TOOLKIT_NAMES & _imports, (
             f"Toolkit-specific imports found in common layer: "
-            f"{_toolkit_names & _imports}"
+            f"{_TOOLKIT_NAMES & _imports}"
         )
 
     @pytest.mark.unit
@@ -169,17 +170,19 @@ class TestToolkitMixin:
         pub.subscribe(none_property_error_handler, "do_log_error")
 
         with pytest.raises(PytkwrapError):
+            # noinspection PyTypeChecker
             dut.do_set_properties(None)
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-010")
     def test_do_set_properties_value_error(self):
-        """Should raise a PytkwrapError and send a do_log_error message when passed a
-        non-iterable properties."""
+        """Should raise a PytkwrapError and send a do_log_error message when passed non-
+        iterable properties."""
         dut = ToolkitMixin()
         pub.subscribe(non_iterable_property_error_handler, "do_log_error")
 
         with pytest.raises(PytkwrapError):
+            # noinspection PyTypeChecker
             dut.do_set_properties("Non-iterable property")
 
     @pytest.mark.unit

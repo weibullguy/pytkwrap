@@ -650,6 +650,8 @@ EXPECTED_TOGGLE_BUTTON_PROPERTIES = {
     "use_underline": False,
 }
 
+EXPECTED_CHECK_BUTTON_ATTRIBUTES = {"default_value": False, "edit_signal": "toggled"}
+
 EXPECTED_RADIO_BUTTON_HANDLER_IDS = {"group-changed": -1}
 EXPECTED_RADIO_BUTTON_METHODS = [
     "get_group",
@@ -658,6 +660,7 @@ EXPECTED_RADIO_BUTTON_METHODS = [
 ]
 EXPECTED_RADIO_BUTTON_PROPERTIES = {"group": None}
 
+EXPECTED_MENU_BUTTON_ATTRIBUTES = {"default_value": False, "edit_signal": "toggled"}
 EXPECTED_MENU_BUTTON_METHODS = [
     "get_align_widget",
     "get_direction",

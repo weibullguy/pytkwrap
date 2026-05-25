@@ -112,19 +112,6 @@ class TestRadioButton(BaseGTK3WidgetTests):
         assert dut.get_label() == "Test Radio Button Label"
 
     @pytest.mark.unit
-    def test_do_set_properties_default(self):
-        """Should set the default properties values of a GTK3RadioButton when passed an
-        empty GTK3WidgetProperties."""
-        dut = self.make_dut()
-        dut.do_set_properties(GTK3WidgetProperties())
-
-        assert dut.get_active()
-        assert dut.get_group() == [dut]
-        assert not dut.get_inconsistent()
-        assert dut.get_label() == "..."
-        assert not dut.get_mode()  # draw-indicator property.
-
-    @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set the GTKRadioButton properties to the values passed in a
         GTK3WidgetProperties dict."""
@@ -164,57 +151,6 @@ class TestRadioButton(BaseGTK3WidgetTests):
         assert dut.get_active()
 
     @pytest.mark.unit
-    def test_do_update_none_value(self):
-        """Do NOT update the GTK3RadioButton with the data package value or None."""
-        btnRadioButton = GTK3RadioButton()
-
-        dut = self.make_dut()
-        dut.join_group(btnRadioButton)
-
-        dut.dic_attributes["index"] = 3
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(dut.do_update, "rootTopic")
-
-        pub.sendMessage("rootTopic", package={3: None})
-
-        assert not dut.get_active()
-
-    @pytest.mark.unit
-    def test_do_update_unknown_signal(self):
-        """Raise an UnkSignalError with an unknown edit signal name."""
-        btnRadioButton = GTK3RadioButton()
-
-        dut = self.make_dut()
-        dut.join_group(btnRadioButton)
-
-        dut.dic_attributes["index"] = 8
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(self.do_update_error_handler, "do_log_error")
-        pub.subscribe(dut.do_update, "rootTopic")
-        dut.dic_attributes["edit_signal"] = "unk_signal"
-
-        with pytest.raises(UnkSignalError):
-            pub.sendMessage("rootTopic", package={8: True})
-
-        assert not dut.get_active()
-
-    @pytest.mark.unit
-    def test_do_update_wrong_field(self):
-        """Do nothing when the package field doesn't match."""
-        btnRadioButton = GTK3RadioButton()
-
-        dut = self.make_dut()
-        dut.join_group(btnRadioButton)
-
-        dut.dic_attributes["index"] = 3
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
-        pub.subscribe(dut.do_update, "rootTopic")
-
-        pub.sendMessage("rootTopic", package={23: True})
-
-        assert not dut.get_active()
-
-    @pytest.mark.unit
     def test_on_changed(self):
         """Called when the GTK3RadioButton active state changes."""
         dut = self.make_dut()
@@ -223,20 +159,6 @@ class TestRadioButton(BaseGTK3WidgetTests):
         dut.dic_attributes["send_topic"] = "button_toggled"
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
-        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
-
-        dut.emit("toggled")
-
-    @pytest.mark.unit
-    def test_on_changed_unknown_signal(self):
-        """Raise a KeyError with an unknown edit signal name."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 3
-        dut.dic_attributes["record_id"] = 0
-        dut.dic_attributes["send_topic"] = "button_toggled"
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
-        pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        dut.dic_attributes["edit_signal"] = "toggle_signal"
         pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.emit("toggled")

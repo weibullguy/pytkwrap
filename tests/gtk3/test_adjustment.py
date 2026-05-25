@@ -32,9 +32,6 @@ class TestGTK3Adjustment(BaseGTK3GObjectTests):
     """Test class for the GTK3Adjustment class."""
 
     widget_class = GTK3Adjustment
-    expected_default_height = -1
-    expected_default_tooltip = ""
-    expected_default_width = -1
     expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS | EXPECTED_ADJUSTMENT_HANDLER_IDS
     expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_ADJUSTMENT_METHODS
     expected_properties = EXPECTED_ADJUSTMENT_PROPERTIES

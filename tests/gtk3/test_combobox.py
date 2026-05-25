@@ -213,17 +213,6 @@ class TestGTK3ComboBox(BaseGTK3WidgetTests):
         assert dut.get_model().get_column_type(1) == GObject.TYPE_STRING
 
     @pytest.mark.unit
-    def test_do_set_attributes_default(self):
-        """Set the default attributes of a GTK3ComboBox when passed an empty
-        WidgetAttributes."""
-        super().test_do_set_attributes_default()
-
-        dut = self.make_dut()
-        dut.do_set_attributes(GTK3WidgetAttributes())
-
-        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
-
-    @pytest.mark.unit
     def test_do_set_attributes(self):
         """Set the GTK3ComboBox attributes to the values passed in a
         WidgetAttributes."""
@@ -279,34 +268,6 @@ class TestGTK3ComboBox(BaseGTK3WidgetTests):
         dut = self.make_dut()
 
         assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
-
-    @pytest.mark.unit
-    def test_do_set_properties_default(self):
-        """Set the default properties of a GTK3ComboBox when passed an empty
-        GTK3WidgetProperties."""
-        dut = self.make_dut()
-        dut.do_set_properties(GTK3WidgetProperties())
-
-        assert dut.do_get_property("active") == -1
-        assert dut.do_get_property("active_id") is None
-        assert dut.do_get_property("border_width") == 0
-        assert dut.do_get_property("button_sensitivity") == Gtk.SensitivityType.AUTO
-        assert not dut.do_get_property("can_focus")
-        assert dut.do_get_property("column_span_column") == -1
-        assert dut.do_get_property("entry_text_column") == -1
-        assert not dut.do_get_property("has_entry")
-        assert dut.do_get_property("height_request") == -1
-        assert dut.do_get_property("id_column") == -1
-        assert dut.do_get_property("model") is None
-        assert dut.do_get_property("popup_fixed_width")
-        assert dut.do_get_property("row_span_column") == -1
-        assert dut.do_get_property("sensitive")
-        assert dut.do_get_property("tooltip_markup") == (
-            "Missing tooltip, please file an issue to have one added."
-        )
-        assert not dut.do_get_property("visible")
-        assert dut.do_get_property("width_request") == -1
-        assert dut.do_get_property("wrap_width") == 0
 
     @pytest.mark.unit
     def test_do_set_properties(self):
