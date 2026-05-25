@@ -18,7 +18,6 @@ class GTK3RadioButton(Gtk.RadioButton, GTK3CheckButton):
     """The GTK3RadioButton class."""
 
     # Define private class attributes.
-    _DEFAULT_EDIT_SIGNAL = "toggled"
     _DEFAULT_HEIGHT = 40
     _DEFAULT_WIDTH = 200
     _GTK3_RADIO_BUTTON_PROPERTIES = GTK3WidgetProperties(

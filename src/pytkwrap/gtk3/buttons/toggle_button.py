@@ -19,6 +19,8 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
     """The GTK3ToggleButton class."""
 
     # Define private class attributes.
+    _DEFAULT_HEIGHT = 30
+    _DEFAULT_WIDTH = 200
     _GTK3_TOGGLE_BUTTON_ATTRIBUTES: PyTkWrapAttributes = PyTkWrapAttributes(
         default_value=False,  # i.e., not active
         edit_signal="toggled",
@@ -31,9 +33,6 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
     _GTK3_TOGGLE_BUTTON_SIGNALS = [
         "toggled",
     ]
-    _DEFAULT_EDIT_SIGNAL = "toggled"
-    _DEFAULT_HEIGHT = 30
-    _DEFAULT_WIDTH = 200
 
     def __init__(self, label="...") -> None:
         """Initialize an instance of the GTK3ToggleButton widget.

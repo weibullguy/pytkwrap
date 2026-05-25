@@ -19,6 +19,8 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
     """The GTK3FontButton class."""
 
     # Define private class attributes.
+    _DEFAULT_HEIGHT = 30
+    _DEFAULT_WIDTH = 60
     _GTK3_FONT_BUTTON_ATTRIBUTES: PyTkWrapAttributes = PyTkWrapAttributes(
         default_value="Sans 12",
         edit_signal="font-set",
@@ -34,9 +36,6 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
     _GTK3_FONT_BUTTON_SIGNALS = [
         "font-set",
     ]
-    _DEFAULT_EDIT_SIGNAL = "font-set"
-    _DEFAULT_HEIGHT = 30
-    _DEFAULT_WIDTH = 60
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3FontButton widget."""

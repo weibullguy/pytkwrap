@@ -17,12 +17,11 @@ class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
     """The GTK3VolumeButton class."""
 
     # Define private class attributes.
+    _DEFAULT_HEIGHT = 30
+    _DEFAULT_WIDTH = 60
     _GTK3_VOLUME_BUTTON_PROPERTIES = GTK3WidgetProperties(
         use_symbolic=True,
     )
-    _DEFAULT_EDIT_SIGNAL = "value-changed"
-    _DEFAULT_HEIGHT = 30
-    _DEFAULT_WIDTH = 60
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3VolumeButton widget."""

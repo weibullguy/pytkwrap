@@ -90,6 +90,8 @@ class GTK3Button(Gtk.Button, GTK3Bin):
     """The GTK3Button class."""
 
     # Define private class attributes.
+    _DEFAULT_HEIGHT = 30
+    _DEFAULT_WIDTH = 200
     _GTK3_BUTTON_PROPERTIES = GTK3WidgetProperties(
         always_show_image=False,
         image=None,
@@ -107,8 +109,6 @@ class GTK3Button(Gtk.Button, GTK3Bin):
         # these manually via self.connect() if needed:
         # "add", "remove", "set-focus-child"
     ]
-    _DEFAULT_HEIGHT = 30
-    _DEFAULT_WIDTH = 200
 
     def __init__(self, label: str = "...") -> None:
         """Initialize an instance of the GTK3Button widget.

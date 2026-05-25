@@ -19,6 +19,8 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Bin):
     """The GTK3ScaleButton class."""
 
     # Define private class attributes.
+    _DEFAULT_HEIGHT = 30
+    _DEFAULT_WIDTH = 60
     _GTK3_SCALE_BUTTON_ATTRIBUTES: PyTkWrapAttributes = PyTkWrapAttributes(
         default_value=0.0,
         edit_signal="value-changed",
@@ -34,9 +36,6 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Bin):
         "popup",
         "value-changed",
     ]
-    _DEFAULT_EDIT_SIGNAL = "value-changed"
-    _DEFAULT_HEIGHT = 30
-    _DEFAULT_WIDTH = 60
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ScaleButton widget."""

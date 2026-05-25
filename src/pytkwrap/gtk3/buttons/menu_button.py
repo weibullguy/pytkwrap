@@ -18,6 +18,8 @@ class GTK3MenuButton(Gtk.MenuButton, GTK3ToggleButton):
     """The GTK3MenuButton class."""
 
     # Define private class attributes.
+    _DEFAULT_HEIGHT = 30
+    _DEFAULT_WIDTH = 200
     _GTK3_MENU_BUTTON_PROPERTIES = GTK3WidgetProperties(
         align_widget=None,
         direction=Gtk.ArrowType.DOWN,
@@ -26,8 +28,6 @@ class GTK3MenuButton(Gtk.MenuButton, GTK3ToggleButton):
         popup=None,
         use_popover=True,
     )
-    _DEFAULT_HEIGHT = 30
-    _DEFAULT_WIDTH = 200
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3MenuButton widget."""

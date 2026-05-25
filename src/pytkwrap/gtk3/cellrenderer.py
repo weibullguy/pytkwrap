@@ -27,9 +27,9 @@ class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
         sensitive=True,
         visible=True,
         width=-1,
-        xalign=0.0,
+        xalign=0.5,
         xpad=0,
-        yalign=0.0,
+        yalign=0.5,
         ypad=0,
     )
     _GTK3_CELLRENDERER_SIGNALS = [

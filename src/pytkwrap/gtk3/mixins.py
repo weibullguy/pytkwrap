@@ -258,6 +258,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     use_markup: bool
     use_popover: bool
     use_preview_label: bool
+    use_size: bool
     use_style: bool
     use_symbolic: bool
     use_underline: bool

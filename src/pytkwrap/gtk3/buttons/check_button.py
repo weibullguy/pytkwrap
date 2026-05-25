@@ -18,7 +18,6 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3ToggleButton):
     """The GTK3CheckButton class."""
 
     # Define private class attributes.
-    _DEFAULT_EDIT_SIGNAL = "toggled"
     _DEFAULT_HEIGHT = 40
     _DEFAULT_WIDTH = 200
     _GTK3_CHECK_BUTTON_PROPERTIES = GTK3WidgetProperties(
