@@ -53,7 +53,6 @@ class TestGTK3ComboBox(BaseGTK3WidgetTests):
     widget_class = GTK3ComboBox
     expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_COMBOBOX_ATTRIBUTES
     expected_default_height = 30
-    expected_default_value = -1
     expected_default_width = 200
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS

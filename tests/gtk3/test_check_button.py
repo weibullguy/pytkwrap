@@ -41,7 +41,6 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
 
     widget_class = GTK3CheckButton
     expected_default_height = 40
-    expected_default_value = False
     expected_default_width = 200
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS

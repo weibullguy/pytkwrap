@@ -47,9 +47,7 @@ class TestGTK3FontButton(BaseGTK3WidgetTests):
     """Test class for the GTK3FontButton."""
 
     widget_class = GTK3FontButton
-    expected_default_edit_signal = "font-set"
     expected_default_height = 30
-    expected_default_value = None
     expected_default_width = 60
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS

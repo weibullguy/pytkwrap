@@ -45,9 +45,7 @@ class TestGTK3ScaleButton(BaseGTK3WidgetTests):
     """Test class for the GTK3ScaleButton."""
 
     widget_class = GTK3ScaleButton
-    expected_default_edit_signal = "value-changed"
     expected_default_height = 30
-    expected_default_value = 0.0
     expected_default_width = 60
     expected_handler_id = (
         EXPECTED_WIDGET_HANDLER_IDS

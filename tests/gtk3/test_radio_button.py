@@ -43,7 +43,6 @@ class TestRadioButton(BaseGTK3WidgetTests):
 
     widget_class = GTK3RadioButton
     expected_default_height = 40
-    expected_default_edit_signal = "toggled"
     expected_default_width = 200
     expected_handler_id = (
         EXPECTED_WIDGET_HANDLER_IDS
@@ -80,7 +79,6 @@ class TestRadioButton(BaseGTK3WidgetTests):
         assert isinstance(dut, GTK3RadioButton)
         assert self.expected_default_height == dut._DEFAULT_HEIGHT
         assert self.expected_default_width == dut._DEFAULT_WIDTH
-        assert self.expected_default_edit_signal == dut._DEFAULT_EDIT_SIGNAL
         # GTK3RadioButton-specific properties should be registered.
         for _property in GTK3RadioButton._GTK3_RADIO_BUTTON_PROPERTIES:
             assert _property in dut.dic_properties

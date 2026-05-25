@@ -565,6 +565,7 @@ EXPECTED_BUTTON_PROPERTIES = {
     "use_underline": False,
 }
 
+EXPECTED_COLOR_BUTTON_ATTRIBUTES = {"default_value": None, "edit_signal": "color-set"}
 EXPECTED_COLOR_BUTTON_HANDLER_IDS = {"color-set": -1}
 EXPECTED_COLOR_BUTTON_METHODS = [
     "get_title",
@@ -578,6 +579,10 @@ EXPECTED_COLOR_BUTTON_PROPERTIES = {
     "use_alpha": True,
 }
 
+EXPECTED_FONT_BUTTON_ATTRIBUTES = {
+    "default_value": "Sans 12",
+    "edit_signal": "font-set",
+}
 EXPECTED_FONT_BUTTON_HANDLER_IDS = {"font-set": -1}
 EXPECTED_FONT_BUTTON_METHODS = [
     "get_show_size",
@@ -600,6 +605,10 @@ EXPECTED_FONT_BUTTON_PROPERTIES = {
     "use_size": False,
 }
 
+EXPECTED_SCALE_BUTTON_ATTRIBUTES = {
+    "default_value": 0.0,
+    "edit_signal": "value-changed",
+}
 EXPECTED_SCALE_BUTTON_HANDLER_IDS = {"popdown": -1, "popup": -1, "value-changed": -1}
 EXPECTED_SCALE_BUTTON_METHODS = [
     "get_adjustment",
@@ -618,8 +627,12 @@ EXPECTED_SCALE_BUTTON_PROPERTIES = {
     "value": 0.0,
 }
 
-EXPECTED_VOLUME_BUTTON_PROPERTIES = {"use_stock": False}
+EXPECTED_VOLUME_BUTTON_PROPERTIES = {"use_symbolic": True}
 
+EXPECTED_TOGGLE_BUTTON_ATTRIBUTES = {
+    "default_value": False,
+    "edit_signal": "toggled",
+}
 EXPECTED_TOGGLE_BUTTON_HANDLER_IDS = {"toggled": -1}
 EXPECTED_TOGGLE_BUTTON_METHODS = [
     "get_active",

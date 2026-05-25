@@ -40,9 +40,7 @@ class TestGTK3ToggleButton(BaseGTK3WidgetTests):
     """Test class for the GTK3ToggleButton."""
 
     widget_class = GTK3ToggleButton
-    expected_default_edit_signal = "toggled"
     expected_default_height = 30
-    expected_default_value = 0.0
     expected_default_width = 200
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS

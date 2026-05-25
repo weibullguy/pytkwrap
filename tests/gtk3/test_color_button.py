@@ -47,9 +47,7 @@ class TestGTK3ColorButton(BaseGTK3WidgetTests):
     """Test class for the GTK3ColorButton."""
 
     widget_class = GTK3ColorButton
-    expected_default_edit_signal = "color-set"
     expected_default_height = 30
-    expected_default_value = None
     expected_default_width = 60
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS

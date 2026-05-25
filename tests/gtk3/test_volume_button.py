@@ -16,6 +16,26 @@ from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3WidgetTests
+from .test_constants import (
+    EXPECTED_BIN_METHODS,
+    EXPECTED_BUTTON_HANDLER_IDS,
+    EXPECTED_BUTTON_METHODS,
+    EXPECTED_BUTTON_PROPERTIES,
+    EXPECTED_CONTAINER_HANDLER_IDS,
+    EXPECTED_CONTAINER_METHODS,
+    EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
+    EXPECTED_SCALE_BUTTON_ATTRIBUTES,
+    EXPECTED_SCALE_BUTTON_HANDLER_IDS,
+    EXPECTED_SCALE_BUTTON_METHODS,
+    EXPECTED_SCALE_BUTTON_PROPERTIES,
+    EXPECTED_VOLUME_BUTTON_PROPERTIES,
+    EXPECTED_WIDGET_ATTRIBUTES,
+    EXPECTED_WIDGET_HANDLER_IDS,
+    EXPECTED_WIDGET_METHODS,
+    EXPECTED_WIDGET_PROPERTIES,
+)
 
 
 @pytest.mark.skip(
@@ -30,74 +50,31 @@ class TestGTK3VolumeButton(BaseGTK3WidgetTests):
     """Test class for the GTK3VolumeButton."""
 
     widget_class = GTK3VolumeButton
-    expected_methods = []
-    expected_default_edit_signal = "value-changed"
+    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_SCALE_BUTTON_ATTRIBUTES
     expected_default_height = 30
-    expected_default_value = 0.0
     expected_default_width = 60
-    expected_handler_id = {
-        "add": -1,
-        "check-resize": -1,
-        "Volume-set": -1,
-        "destroy": -1,
-        "direction-changed": -1,
-        "hide": -1,
-        "keynav-failed": -1,
-        "map": -1,
-        "mnemonic-activate": -1,
-        "move-focus": -1,
-        "notify": -1,
-        "query-tooltip": -1,
-        "popdown": -1,
-        "popup": -1,
-        "realize": -1,
-        "remove": -1,
-        "set-focus-child": -1,
-        "show": -1,
-        "state-flags-changed": -1,
-        "unmap": -1,
-        "unrealize": -1,
-        "value-changed": -1,
-    }
-    expected_properties = {
-        "alpha": 65535,
-        "border_width": 0,
-        "can_default": False,
-        "can_focus": False,
-        "focus_on_click": True,
-        "halign": Gtk.Align.FILL,
-        "has_default": False,
-        "has_focus": False,
-        "has_tooltip": False,
-        "height_request": -1,
-        "hexpand": False,
-        "hexpand_set": False,
-        "is_focus": False,
-        "margin": 0,
-        "margin_bottom": 0,
-        "margin_end": 0,
-        "margin_start": 0,
-        "margin_top": 0,
-        "name": "pytkwrap GTK3 widget",
-        "opacity": 1.0,
-        "parent": None,
-        "receives_default": False,
-        "rgba": None,
-        "Volume_factor": 1,
-        "sensitive": True,
-        "show_editor": False,
-        "title": "Pick a Volume",
-        "tooltip_markup": "Missing tooltip, please file an issue to have one added.",
-        "tooltip_text": "Missing tooltip, please file an issue to have one added.",
-        "use_alpha": True,
-        "use_symbolic": True,
-        "valign": Gtk.Align.FILL,
-        "vexpand": False,
-        "vexpand_set": False,
-        "visible": False,
-        "width_request": -1,
-        "window": None,
-    }
+    expected_handler_id = (
+        EXPECTED_GOBJECT_HANDLER_IDS
+        | EXPECTED_WIDGET_HANDLER_IDS
+        | EXPECTED_CONTAINER_HANDLER_IDS
+        | EXPECTED_BUTTON_HANDLER_IDS
+        | EXPECTED_SCALE_BUTTON_HANDLER_IDS
+    )
+    expected_methods = (
+        EXPECTED_GOBJECT_METHODS
+        + EXPECTED_WIDGET_METHODS
+        + EXPECTED_CONTAINER_METHODS
+        + EXPECTED_BIN_METHODS
+        + EXPECTED_BUTTON_METHODS
+        + EXPECTED_SCALE_BUTTON_METHODS
+    )
+    expected_properties = (
+        EXPECTED_WIDGET_PROPERTIES
+        | EXPECTED_CONTAINER_PROPERTIES
+        | EXPECTED_BUTTON_PROPERTIES
+        | EXPECTED_SCALE_BUTTON_PROPERTIES
+        | EXPECTED_VOLUME_BUTTON_PROPERTIES
+    )
 
     @pytest.mark.unit
     def test_init(self):
@@ -110,13 +87,7 @@ class TestGTK3VolumeButton(BaseGTK3WidgetTests):
         assert dut._DEFAULT_HEIGHT == self.expected_default_height
         assert dut._DEFAULT_TOOLTIP == self.expected_default_tooltip
         assert dut._DEFAULT_WIDTH == self.expected_default_width
-        assert dut.dic_attributes == {
-            "default_value": 0.0,
-            "edit_signal": "Volume-set",
-            "index": -1,
-            "x_pos": 0,
-            "y_pos": 0,
-        }
+        assert dut.dic_attributes == self.expected_attributes
         assert dut.dic_handler_id == self.expected_handler_id
         assert dut.dic_properties == self.expected_properties
 
