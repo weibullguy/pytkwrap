@@ -5,6 +5,7 @@
 """
 
 # Standard Library Imports
+from datetime import date
 from types import EllipsisType, FunctionType
 from typing import TypedDict
 
@@ -12,9 +13,10 @@ from typing import TypedDict
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.common import PyTkWrapAttributes, ToolkitMixin
+from pytkwrap.common import PyTkWrapAttributes, PyTkWrapMixin, ToolkitMixin
 from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, GdkPixbuf, Gio, GLib, GObject, Gtk, Pango
+from pytkwrap.utilities import none_to_default
 
 
 class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
@@ -291,7 +293,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     ypad: int
 
 
-class GTK3GObjectMixin(GObject.Object, ToolkitMixin):
+class GTK3GObjectMixin(GObject.Object, ToolkitMixin, PyTkWrapMixin):
     """Adds GObject-specific attributes."""
 
     _GTK3_GOBJECT_SIGNALS: list[str] = [
@@ -302,7 +304,9 @@ class GTK3GObjectMixin(GObject.Object, ToolkitMixin):
         """Initialize an instance of the GObjectMixin."""
         GObject.Object.__init__(self)
         ToolkitMixin.__init__(self)
+        PyTkWrapMixin.__init__(self)
 
+        self.dic_error_message |= ToolkitMixin().dic_error_message
         self.dic_handler_id: dict[str, int] = {
             _signal: -1 for _signal in self._GTK3_GOBJECT_SIGNALS
         }
@@ -351,6 +355,91 @@ class GTK3GObjectMixin(GObject.Object, ToolkitMixin):
                 message=_error_msg,
             )
             raise UnkSignalError(_error_msg) from exc
+
+    def do_update(
+        self,
+        package: dict[str, bool | date | float | int | str | None],
+    ) -> None:
+        """Update the widget with a new value.
+
+        Parameters
+        ----------
+        package : dict
+            The data package to use to update the widget.
+
+        Raises
+        ------
+        UnkSignalError
+            If the signal name is not valid for the widget.
+        """
+        _index, _value = next(iter(package.items()))
+        _value = none_to_default(_value, self.dic_attributes["default_value"])
+
+        if _index != self.dic_attributes["index"]:
+            return
+
+        try:
+            _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
+            with self._get_signal_owner().handler_block(_hid):  # type: ignore[attr-defined] # ty: ignore[unresolved-attribute] # pylint: disable=line-too-long
+                self.do_set_value(_value)
+        except KeyError as exc:
+            _error_msg = self.dic_error_message["unk_signal"].format(
+                f"{type(self).__name__}.do_update()",
+                self.dic_attributes["edit_signal"],
+            )
+            pub.sendMessage(
+                "do_log_error",
+                message=_error_msg,
+            )
+            raise UnkSignalError(_error_msg) from exc
+
+    def on_changed(self, __widget: object) -> None:
+        """Retrieve the data package for the widget on value changes.
+
+        This method also sends a PyPubSub message along with the data package for
+        listeners to update with the new value.
+
+        Parameters
+        ----------
+        __widget : GTK3Widget
+            The widget that was changed. Unused but required to satisfy the Gtk.Widget()
+            callback method structure.
+
+        Raises
+        ------
+        UnkSignalError
+            If the signal name is not valid for this widget.
+        """
+        _package = {self.dic_attributes["index"]: self.do_get_value()}
+        try:
+            _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
+            with self._get_signal_owner().handler_block(_hid):  # type: ignore[attr-defined] # ty: ignore[unresolved-attribute] # pylint: disable=line-too-long
+                pub.sendMessage(
+                    self.dic_attributes["send_topic"],
+                    package=_package,
+                )
+        except KeyError as exc:
+            _error_msg = self.dic_error_message["unk_signal"].format(
+                f"{type(self).__name__}.on_changed()",
+                self.dic_attributes["edit_signal"],
+            )
+            pub.sendMessage(
+                "do_log_error",
+                message=_error_msg,
+            )
+            raise UnkSignalError(_error_msg) from exc
+
+    def _get_signal_owner(self) -> object:
+        """Return the object whose signal handler should be blocked.
+
+        Override in subclasses where the signal is owned by a child object rather than
+        the widget itself (e.g. GTK3TextView's TextBuffer).
+
+        Returns
+        -------
+        GTK3Widget
+        """
+        return self
 
 
 def set_widget_sensitivity(widgets: list, sensitive: bool = True) -> None:

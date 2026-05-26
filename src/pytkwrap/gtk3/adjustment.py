@@ -10,12 +10,20 @@ from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import (
+    GTK3GObjectMixin,
+    GTK3WidgetAttributes,
+    GTK3WidgetProperties,
+)
 
 
 class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
     """Wrapper for Gtk.Adjustment."""
 
+    _GTK3_ADJUSTMENT_ATTRIBUTES = GTK3WidgetAttributes(
+        default_value=0.0,
+        edit_signal="value-changed",
+    )
     _GTK3_ADJUSTMENT_PROPERTIES = GTK3WidgetProperties(
         lower=0.0,
         upper=0.0,
@@ -41,6 +49,7 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         Gtk.Adjustment.__init__(self)
         GTK3GObjectMixin.__init__(self)
 
+        self.dic_attributes.update(self._GTK3_ADJUSTMENT_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_ADJUSTMENT_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_ADJUSTMENT_SIGNALS}
@@ -96,6 +105,7 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         self.set_page_size(self.dic_properties["page_size"])
         self.set_step_increment(self.dic_properties["step_increment"])
         self.set_upper(self.dic_properties["upper"])
+        self.set_value(self.dic_properties["value"])
 
     def do_get_value(self) -> float:
         """Return the current value of the GTK3Adjustment.
@@ -115,10 +125,10 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
 
         Parameters
         ----------
-        value : bool | date | float | int | str | None
+        value : bool | date | float | int | object | str | tuple | None
             The value to set for the GTK3Adjustment.
         """
-        if value is None or isinstance(value, date):
+        if value is None or isinstance(value, (date, tuple)):
             super().do_set_value(value)
             return
         self.set_value(float(value))
