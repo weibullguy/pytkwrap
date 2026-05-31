@@ -36,30 +36,49 @@ class PyTkWrapAttributes(TypedDict, total=False):
     canvas: FigureCanvasBase | None
     data_type: type | None  # e.g. bool, date, float, int, str
     default_value: bool | date | float | int | str | None
-    edit_signal: str
+    edit_signal: list[str] | str | None
     figure: Figure | None
     font_description: FontDescription | None
-    format: str
-    index: int
+    format: str | None
+    index: int | None
     listen_topic: str | None
-    n_columns: int
-    n_rows: int
+    n_columns: int | None
+    n_rows: int | None
     send_topic: str | None
-    x_pos: float | int
-    y_pos: float | int
+    x_pos: float | int | None
+    y_pos: float | int | None
 
 
-class ToolkitMixin:
+class PyTkWrapMixin:
     """Mixin that provides the base layer for exposing the underlying toolkit."""
 
     _DEFAULT_HEIGHT = -1
     _DEFAULT_TOOLTIP = _("Missing tooltip, please file an issue to have one added.")
     _DEFAULT_WIDTH = -1
+    _PYTKWRAP_ATTRIBUTES = PyTkWrapAttributes(
+        axis=None,
+        canvas=None,
+        data_type=None,
+        default_value=None,
+        edit_signal=None,
+        figure=None,
+        font_description=None,
+        format=None,
+        index=None,
+        listen_topic=None,
+        n_columns=None,
+        n_rows=None,
+        send_topic=None,
+        x_pos=None,
+        y_pos=None,
+    )
 
     def __init__(self):
-        """Initialize an instance of the ToolkitMixin."""
+        """Initialize an instance of the PyTkWrapMixin."""
+        self.dic_attributes = dict(self._PYTKWRAP_ATTRIBUTES)
         self.dic_error_message: dict[str, str] = {
             "no_value": "{}: No value set or no method to retrieve value.",
+            "unk_attribute": "{}: Unknown attribute '{}'.",
             "unk_function": "{}: Unknown function '{}'.",
             "unk_property": "{}: Unknown property '{}'.",
             "unk_signal": "{}: Unknown signal '{}'.",
@@ -67,6 +86,40 @@ class ToolkitMixin:
         }
         self.dic_handler_id = {}
         self.dic_properties = {}
+
+    def do_get_attribute(
+        self, attribute: str
+    ) -> bool | date | float | int | object | str | None:
+        """Get the value of the requested PyTkWrapMixin attribute.
+
+        Parameters
+        ----------
+        attribute : str
+            The name of the attribute to retrieve.
+
+        Returns
+        -------
+        bool | date | float | int | str | None
+            The value of the requested attribute.
+
+        Raises
+        ------
+        UnkAttributeError
+            If the requested attribute does not exist.
+        """
+        if attribute in self._PYTKWRAP_ATTRIBUTES:
+            return self.dic_attributes.get(attribute)
+
+        _error_msg = self.dic_error_message["unk_attribute"].format(
+            f"{type(self).__name__}.do_get_attribute()",
+            attribute,
+        )
+        pub.sendMessage(
+            "do_log_error",
+            message=_error_msg,
+        )
+
+        raise UnkAttributeError(_error_msg)
 
     def do_get_property(
         self, property_name: str
@@ -109,6 +162,20 @@ class ToolkitMixin:
             message=_error_msg,
         )
         raise NoValueError(_error_msg)
+
+    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
+        """Set the PyTkWrapMixin attributes.
+
+        Parameters
+        ----------
+        attributes : PyTkWrapAttributes
+            Typed dict with the attribute values to set for the widget.
+        """
+        for _attr in self._PYTKWRAP_ATTRIBUTES:
+            self.dic_attributes[_attr] = attributes.get(
+                _attr,
+                self.dic_attributes[_attr],
+            )
 
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
@@ -178,80 +245,6 @@ class ToolkitMixin:
             message=_error_msg,
         )
         raise WrongTypeError(_error_msg)
-
-
-class PyTkWrapMixin:
-    """Mixin that provides the base for providing the pytkwrap convenience layer."""
-
-    _PYTKWRAP_ATTRIBUTES: PyTkWrapAttributes = PyTkWrapAttributes(
-        index=-1,
-        x_pos=0,
-        y_pos=0,
-    )
-
-    def __init__(self) -> None:
-        """Initialize an instance of the PyTkWrapMixin.
-
-        Notes
-        -----
-        Implements requirements:
-            - PTW-SR-W-003.
-
-        Fixes issues:
-            - None
-        """
-        self.dic_attributes = dict(self._PYTKWRAP_ATTRIBUTES)
-        self.dic_error_message = {"unk_attribute": "{}: Unknown attribute '{}'."}
-
-    def do_get_attribute(
-        self, attribute: str
-    ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested PyTkWrapMixin attribute.
-
-        Parameters
-        ----------
-        attribute : str
-            The name of the attribute to retrieve.
-
-        Returns
-        -------
-        bool | date | float | int | str | None
-            The value of the requested attribute.
-
-        Raises
-        ------
-        UnkAttributeError
-            If the requested attribute does not exist.
-        """
-        if attribute in self._PYTKWRAP_ATTRIBUTES:
-            return self.dic_attributes.get(attribute)
-
-        _error_msg = self.dic_error_message["unk_attribute"].format(
-            f"{type(self).__name__}.do_get_attribute()",
-            attribute,
-        )
-        pub.sendMessage(
-            "do_log_error",
-            message=_error_msg,
-        )
-
-        raise UnkAttributeError(_error_msg)
-
-    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
-        """Set the PyTkWrapMixin attributes.
-
-        Parameters
-        ----------
-        attributes : PyTkWrapAttributes
-            Typed dict with the attribute values to set for the widget.
-        """
-        for _attr in ("index", "x_pos", "y_pos"):
-            self.dic_attributes[_attr] = int(
-                attributes.get(
-                    _attr,
-                    self.dic_attributes[_attr],
-                )
-            )
 
 
 class PyTkWrapConfig(TypedDict):

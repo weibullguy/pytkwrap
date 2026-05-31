@@ -10,6 +10,7 @@ from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
+from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
@@ -19,6 +20,11 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
 
     _DEFAULT_HEIGHT = -1
     _DEFAULT_WIDTH = -1
+    _GTK3_WIDGET_ATTRIBUTES = PyTkWrapAttributes(
+        index=-1,
+        x_pos=0,
+        y_pos=0,
+    )
     _GTK3_WIDGET_PROPERTIES = GTK3WidgetProperties(
         app_paintable=False,
         can_default=False,
@@ -79,6 +85,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
         GTK3GObjectMixin.__init__(self)
 
         # Initialize public instance attributes.
+        self.dic_attributes.update(self._GTK3_WIDGET_ATTRIBUTES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_WIDGET_SIGNALS}
         )

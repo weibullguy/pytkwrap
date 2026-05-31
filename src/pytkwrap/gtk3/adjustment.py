@@ -9,18 +9,15 @@ from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
+from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.mixins import (
-    GTK3GObjectMixin,
-    GTK3WidgetAttributes,
-    GTK3WidgetProperties,
-)
+from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
     """Wrapper for Gtk.Adjustment."""
 
-    _GTK3_ADJUSTMENT_ATTRIBUTES = GTK3WidgetAttributes(
+    _GTK3_ADJUSTMENT_ATTRIBUTES = PyTkWrapAttributes(
         default_value=0.0,
         edit_signal="value-changed",
     )
@@ -67,6 +64,21 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         )
         self.do_set_value(self.dic_properties["value"])
 
+    def do_get_attribute(
+        self, attribute: str
+    ) -> bool | date | float | int | object | str | None:
+        """Get the value of the requested attribute.
+
+        Returns
+        -------
+        bool | date | float | int | str | None
+            The value of the requested attribute.
+        """
+        if attribute in self._GTK3_ADJUSTMENT_ATTRIBUTES:
+            return self.dic_attributes.get(attribute)
+
+        return super().do_get_attribute(attribute)
+
     def do_get_property(
         self, property_name: str
     ) -> bool | date | float | int | object | str | None:
@@ -84,6 +96,22 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         if property_name in self._GTK3_ADJUSTMENT_PROPERTIES:
             return self.dic_properties.get(property_name)
         return super().do_get_property(property_name)
+
+    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
+        """Set the GTK3Adjustment attributes.
+
+        Parameters
+        ----------
+        attributes : PyTkWrapAttributes
+            Typed dict with the attribute values to set for the widget.
+        """
+        super().do_set_attributes(attributes)
+
+        for _attr in self._GTK3_ADJUSTMENT_ATTRIBUTES:
+            self.dic_attributes[_attr] = attributes.get(
+                _attr,
+                self.dic_attributes[_attr],
+            )
 
     def do_set_properties(
         self,

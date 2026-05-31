@@ -35,12 +35,7 @@ from .container import GTK3Container
 #    do_make_label_group,
 # )
 # from .matrixview import GTK3MatrixView
-from .mixins import (
-    GTK3GObjectMixin,
-    GTK3WidgetAttributes,
-    GTK3WidgetProperties,
-    set_widget_sensitivity,
-)
+from .mixins import GTK3GObjectMixin, GTK3WidgetProperties, set_widget_sensitivity
 
 # from .plotview import GTK3PlotView
 # from .scrolledwindow import GTK3ScrolledWindow
@@ -76,7 +71,6 @@ __all__ = [
     "GTK3TreeViewColumn",
     "GTK3VolumeButton",
     "GTK3Widget",
-    "GTK3WidgetAttributes",
     "GTK3WidgetProperties",
     "do_make_buttonbox",
     #    "do_make_label_group",

@@ -8,5 +8,4 @@
 from .mixins import PyTkWrapAttributes  # noqa: F401
 from .mixins import PyTkWrapConfig  # noqa: F401
 from .mixins import PyTkWrapMixin  # noqa: F401
-from .mixins import ToolkitMixin  # noqa: F401
 from .mixins import make_pytkwrap_config  # noqa: F401

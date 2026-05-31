@@ -9,6 +9,7 @@ from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
+from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3Widget
@@ -17,6 +18,17 @@ from pytkwrap.gtk3.widget import GTK3Widget
 class GTK3Calendar(Gtk.Calendar, GTK3Widget):
     """Wrapper for Gtk.Calendar."""
 
+    _GTK3_CALENDAR_ATTRIBUTES = PyTkWrapAttributes(
+        default_value=date.today(),
+        edit_signal=[
+            "day-selected",
+            "month-changed",
+            "next-month",
+            "next-year",
+            "prev-month",
+            "prev-year",
+        ],
+    )
     _GTK3_CALENDAR_PROPERTIES = GTK3WidgetProperties(
         day=0,
         detail_height_rows=0,
@@ -43,6 +55,7 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
         Gtk.Calendar.__init__(self)
         GTK3Widget.__init__(self)
 
+        self.dic_attributes.update(self._GTK3_CALENDAR_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_CALENDAR_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_CALENDAR_SIGNALS}

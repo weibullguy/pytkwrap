@@ -13,7 +13,7 @@ from typing import TypedDict
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.common import PyTkWrapAttributes, PyTkWrapMixin, ToolkitMixin
+from pytkwrap.common import PyTkWrapAttributes, PyTkWrapMixin
 from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, GdkPixbuf, Gio, GLib, GObject, Gtk, Pango
 from pytkwrap.utilities import none_to_default
@@ -293,9 +293,15 @@ class GTK3WidgetProperties(TypedDict, total=False):
     ypad: int
 
 
-class GTK3GObjectMixin(GObject.Object, ToolkitMixin, PyTkWrapMixin):
+class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
     """Adds GObject-specific attributes."""
 
+    _GTK3_GOBJECT_ATTRIBUTES = GTK3WidgetAttributes(
+        column_types=None,
+        index=-1,
+        listen_topic="listen-topic",
+        send_topic="send-topic",
+    )
     _GTK3_GOBJECT_SIGNALS: list[str] = [
         "notify",
     ]
@@ -303,17 +309,16 @@ class GTK3GObjectMixin(GObject.Object, ToolkitMixin, PyTkWrapMixin):
     def __init__(self) -> None:
         """Initialize an instance of the GObjectMixin."""
         GObject.Object.__init__(self)
-        ToolkitMixin.__init__(self)
         PyTkWrapMixin.__init__(self)
 
-        self.dic_error_message |= ToolkitMixin().dic_error_message
+        self.dic_attributes |= self._GTK3_GOBJECT_ATTRIBUTES
         self.dic_handler_id: dict[str, int] = {
             _signal: -1 for _signal in self._GTK3_GOBJECT_SIGNALS
         }
 
     def do_set_callbacks(
         self,
-        signal: str,
+        signal: list[str] | str,
         callback: FunctionType,
         after: bool = False,
     ) -> None:
@@ -321,7 +326,7 @@ class GTK3GObjectMixin(GObject.Object, ToolkitMixin, PyTkWrapMixin):
 
         Parameters
         ----------
-        signal : str
+        signal : list[str] | str
             The name of the signal to connect the callback to.
         callback : FunctionType
             The callback function or method to connect to the signal.
@@ -334,27 +339,31 @@ class GTK3GObjectMixin(GObject.Object, ToolkitMixin, PyTkWrapMixin):
         UnkSignalError
             If the signal name is not valid for this widget.
         """
-        try:
-            if after:
-                self.dic_handler_id[signal] = self.connect_after(
-                    signal,
-                    callback,
+        if not isinstance(signal, list):
+            signal = [signal]
+
+        for _signal in signal:
+            try:
+                if after:
+                    self.dic_handler_id[_signal] = self.connect_after(
+                        _signal,
+                        callback,
+                    )
+                else:
+                    self.dic_handler_id[_signal] = self.connect(
+                        _signal,
+                        callback,
+                    )
+            except TypeError as exc:
+                _error_msg = self.dic_error_message["unk_signal"].format(
+                    f"{type(self).__name__}.do_set_callbacks()",
+                    _signal,
                 )
-            else:
-                self.dic_handler_id[signal] = self.connect(
-                    signal,
-                    callback,
+                pub.sendMessage(
+                    "do_log_error",
+                    message=_error_msg,
                 )
-        except TypeError as exc:
-            _error_msg = self.dic_error_message["unk_signal"].format(
-                f"{type(self).__name__}.do_set_callbacks()",
-                signal,
-            )
-            pub.sendMessage(
-                "do_log_error",
-                message=_error_msg,
-            )
-            raise UnkSignalError(_error_msg) from exc
+                raise UnkSignalError(_error_msg) from exc
 
     def do_update(
         self,
@@ -379,8 +388,7 @@ class GTK3GObjectMixin(GObject.Object, ToolkitMixin, PyTkWrapMixin):
             return
 
         try:
-            _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
-            with self._get_signal_owner().handler_block(_hid):  # type: ignore[attr-defined] # ty: ignore[unresolved-attribute] # pylint: disable=line-too-long
+            with self._block_edit_handlers():
                 self.do_set_value(_value)
         except KeyError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
@@ -412,12 +420,10 @@ class GTK3GObjectMixin(GObject.Object, ToolkitMixin, PyTkWrapMixin):
         """
         _package = {self.dic_attributes["index"]: self.do_get_value()}
         try:
-            _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
-            with self._get_signal_owner().handler_block(_hid):  # type: ignore[attr-defined] # ty: ignore[unresolved-attribute] # pylint: disable=line-too-long
-                pub.sendMessage(
-                    self.dic_attributes["send_topic"],
-                    package=_package,
-                )
+            pub.sendMessage(
+                self.dic_attributes["send_topic"],
+                package=_package,
+            )
         except KeyError as exc:
             _error_msg = self.dic_error_message["unk_signal"].format(
                 f"{type(self).__name__}.on_changed()",
@@ -429,7 +435,22 @@ class GTK3GObjectMixin(GObject.Object, ToolkitMixin, PyTkWrapMixin):
             )
             raise UnkSignalError(_error_msg) from exc
 
-    def _get_signal_owner(self) -> object:
+    def _block_edit_handlers(self) -> GObject._HandlerBlockManager:
+        """Block the signal handlers for the widget.
+
+        Returns
+        -------
+        GObject._HandlerBlockManager
+        """
+        _signals = self.dic_attributes["edit_signal"]
+        if not isinstance(_signals, list):
+            _signals = [self.dic_attributes["edit_signal"]]
+
+        for _signal in _signals:
+            _hid = self.dic_handler_id[_signal]
+            return self._get_signal_owner().handler_block(_hid)
+
+    def _get_signal_owner(self) -> Gtk.Widget:
         """Return the object whose signal handler should be blocked.
 
         Override in subclasses where the signal is owned by a child object rather than
