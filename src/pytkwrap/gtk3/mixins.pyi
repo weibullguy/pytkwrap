@@ -1,10 +1,14 @@
 # Standard Library Imports
+from datetime import date
 from types import EllipsisType, FunctionType
 from typing import TypedDict
 
+# Third Party Imports
+from _typeshed import Incomplete
+
 # pytkwrap Package Imports
 from pytkwrap.common import PyTkWrapAttributes as PyTkWrapAttributes
-from pytkwrap.common import ToolkitMixin as ToolkitMixin
+from pytkwrap.common import PyTkWrapMixin as PyTkWrapMixin
 from pytkwrap.exceptions import UnkSignalError as UnkSignalError
 from pytkwrap.gtk3._libs import Gdk as Gdk
 from pytkwrap.gtk3._libs import GdkPixbuf as GdkPixbuf
@@ -13,6 +17,7 @@ from pytkwrap.gtk3._libs import GLib as GLib
 from pytkwrap.gtk3._libs import GObject as GObject
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3._libs import Pango as Pango
+from pytkwrap.utilities import none_to_default as none_to_default
 
 class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
     column_types: list[EllipsisType] | list[GObject.GType] | None
@@ -282,12 +287,19 @@ class GTK3WidgetProperties(TypedDict, total=False):
     year: int
     ypad: int
 
-class GTK3GObjectMixin(GObject.Object, ToolkitMixin):
+class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
+    _GTK3_GOBJECT_ATTRIBUTES: Incomplete
     _GTK3_GOBJECT_SIGNALS: list[str]
     dic_handler_id: dict[str, int]
     def __init__(self) -> None: ...
     def do_set_callbacks(
-        self, signal: str, callback: FunctionType, after: bool = False
+        self, signal: list[str] | str, callback: FunctionType, after: bool = False
     ) -> None: ...
+    def do_update(
+        self, package: dict[str, bool | date | float | int | str | None]
+    ) -> None: ...
+    def on_changed(self, /, __widget: object) -> None: ...
+    def _block_edit_handlers(self) -> GObject._HandlerBlockManager: ...
+    def _get_signal_owner(self) -> Gtk.Widget: ...
 
 def set_widget_sensitivity(widgets: list, sensitive: bool = True) -> None: ...

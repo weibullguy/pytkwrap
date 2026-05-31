@@ -25,48 +25,44 @@ class PyTkWrapAttributes(TypedDict, total=False):
     canvas: FigureCanvasBase | None
     data_type: type | None
     default_value: bool | date | float | int | str | None
-    edit_signal: str
+    edit_signal: list[str] | str | None
     figure: Figure | None
     font_description: FontDescription | None
-    format: str
-    index: int
+    format: str | None
+    index: int | None
     listen_topic: str | None
-    n_columns: int
-    n_rows: int
+    n_columns: int | None
+    n_rows: int | None
     send_topic: str | None
-    x_pos: float | int
-    y_pos: float | int
+    x_pos: float | int | None
+    y_pos: float | int | None
 
-class ToolkitMixin:
+class PyTkWrapMixin:
     _DEFAULT_HEIGHT: int
     _DEFAULT_TOOLTIP: Incomplete
     _DEFAULT_WIDTH: int
+    _PYTKWRAP_ATTRIBUTES: Incomplete
+    dic_attributes: Incomplete
     dic_error_message: dict[str, str]
     dic_handler_id: Incomplete
     dic_properties: Incomplete
     def __init__(self) -> None: ...
+    def do_get_attribute(
+        self, attribute: str
+    ) -> bool | date | float | int | object | str | None: ...
     def do_get_property(
         self, property_name: str
     ) -> bool | float | int | object | str | None: ...
     def do_get_value(
         self,
     ) -> bool | date | float | int | object | str | tuple | None: ...
+    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
-
-class PyTkWrapMixin:
-    _PYTKWRAP_ATTRIBUTES: PyTkWrapAttributes
-    dic_attributes: Incomplete
-    dic_error_message: Incomplete
-    def __init__(self) -> None: ...
-    def do_get_attribute(
-        self, attribute: str
-    ) -> bool | date | float | int | object | str | None: ...
-    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None: ...
 
 class PyTkWrapConfig(TypedDict):
     widget: PyTkWrapMixin
