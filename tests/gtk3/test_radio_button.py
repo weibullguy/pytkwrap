@@ -10,13 +10,12 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 # Package Imports
-from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.buttons import GTK3RadioButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
@@ -25,12 +24,15 @@ from .test_constants import (
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_RADIO_BUTTON_HANDLER_IDS,
     EXPECTED_RADIO_BUTTON_METHODS,
     EXPECTED_RADIO_BUTTON_PROPERTIES,
+    EXPECTED_TOGGLE_BUTTON_ATTRIBUTES,
     EXPECTED_TOGGLE_BUTTON_HANDLER_IDS,
     EXPECTED_TOGGLE_BUTTON_METHODS,
     EXPECTED_TOGGLE_BUTTON_PROPERTIES,
+    EXPECTED_WIDGET_ATTRIBUTES,
     EXPECTED_WIDGET_HANDLER_IDS,
     EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
@@ -38,10 +40,15 @@ from .test_constants import (
 
 
 @pytest.mark.usefixtures("suppress_stderr")
-class TestRadioButton(BaseGTK3WidgetTests):
+class TestRadioButton(BaseGTK3GObjectTests):
     """Test class for the GTK3RadioButton."""
 
     widget_class = GTK3RadioButton
+    expected_attributes = (
+        EXPECTED_GOBJECT_ATTRIBUTES
+        | EXPECTED_WIDGET_ATTRIBUTES
+        | EXPECTED_TOGGLE_BUTTON_ATTRIBUTES
+    )
     expected_default_height = 40
     expected_default_width = 200
     expected_handler_id = (

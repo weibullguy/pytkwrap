@@ -17,11 +17,13 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.calendar import GTK3Calendar
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
+    EXPECTED_CALENDAR_ATTRIBUTES,
     EXPECTED_CALENDAR_HANDLER_IDS,
     EXPECTED_CALENDAR_METHODS,
     EXPECTED_CALENDAR_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
     EXPECTED_WIDGET_ATTRIBUTES,
@@ -32,11 +34,15 @@ from .test_constants import (
 
 
 @pytest.mark.order(3)
-class TestGTK3Calendar(BaseGTK3WidgetTests):
+class TestGTK3Calendar(BaseGTK3GObjectTests):
     """Test class for the GTK3Calendar class."""
 
     widget_class = GTK3Calendar
-    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES
+    expected_attributes = (
+        EXPECTED_GOBJECT_ATTRIBUTES
+        | EXPECTED_WIDGET_ATTRIBUTES
+        | EXPECTED_CALENDAR_ATTRIBUTES
+    )
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
@@ -47,9 +53,27 @@ class TestGTK3Calendar(BaseGTK3WidgetTests):
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_CALENDAR_PROPERTIES
 
+    def mock_handler(self, package):
+        """Mock handler for on_changed() calls."""
+        assert isinstance(package, dict)
+        assert package == {-1: date.today()}
+
     def wrong_type_error_handler(self, message):
         """Return a WrongTypeError with the given message."""
         assert "GTK3Calendar.do_set_value(): Wrong type for value" in message
+
+    @pytest.mark.unit
+    def test_do_set_edit_signal_callbacks(self):
+        """Should set the callback function for a GTK3Calendar edit signal."""
+        dut = self.make_dut()
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], self.mock_callback)
+
+        assert dut.dic_handler_id["day-selected"] != -1
+        assert dut.dic_handler_id["month-changed"] != -1
+        assert dut.dic_handler_id["next-month"] != -1
+        assert dut.dic_handler_id["next-year"] != -1
+        assert dut.dic_handler_id["prev-month"] != -1
+        assert dut.dic_handler_id["prev-year"] != -1
 
     @pytest.mark.unit
     def test_do_get_value(self):
@@ -96,7 +120,7 @@ class TestGTK3Calendar(BaseGTK3WidgetTests):
 
     @pytest.mark.unit
     def test_do_set_value_int(self):
-        """Should raise a WrongTypeError and send a do_log_error message when passed a
+        """Should raise a WrongTypeError and send a do_log_error message when passed an
         int."""
         dut = self.make_dut()
         pub.subscribe(self.wrong_type_error_handler, "do_log_error")
@@ -123,3 +147,30 @@ class TestGTK3Calendar(BaseGTK3WidgetTests):
 
         with pytest.raises(WrongTypeError):
             dut.do_set_value(None)
+
+    @pytest.mark.unit
+    def test_do_update(self):
+        """Should update the value of the GTK3Calendar."""
+        dut = self.make_dut()
+
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
+        dut.dic_attributes["send_topic"] = "calendar_changed"
+        pub.subscribe(dut.do_update, "rootTopic")
+        pub.sendMessage("rootTopic", package={-1: date.today()})
+
+        assert dut.do_get_value() == date.today()
+
+        pub.unsubscribe(dut.do_update, "rootTopic")
+
+    @pytest.mark.unit
+    def test_on_changed(self):
+        """Should be called when the GTK3Calendar value changes."""
+        dut = self.make_dut()
+
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
+        dut.dic_attributes["send_topic"] = "calendar_changed"
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
+
+        dut.emit("day-selected")
+
+        pub.unsubscribe(self.mock_handler, dut.dic_attributes["send_topic"])

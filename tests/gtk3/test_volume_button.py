@@ -9,13 +9,12 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.buttons import GTK3VolumeButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
@@ -24,6 +23,7 @@ from .test_constants import (
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
     EXPECTED_SCALE_BUTTON_ATTRIBUTES,
@@ -46,11 +46,15 @@ from .test_constants import (
     )
 )
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3VolumeButton(BaseGTK3WidgetTests):
+class TestGTK3VolumeButton(BaseGTK3GObjectTests):
     """Test class for the GTK3VolumeButton."""
 
     widget_class = GTK3VolumeButton
-    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_SCALE_BUTTON_ATTRIBUTES
+    expected_attributes = (
+        EXPECTED_GOBJECT_ATTRIBUTES
+        | EXPECTED_WIDGET_ATTRIBUTES
+        | EXPECTED_SCALE_BUTTON_ATTRIBUTES
+    )
     expected_default_height = 30
     expected_default_width = 60
     expected_handler_id = (

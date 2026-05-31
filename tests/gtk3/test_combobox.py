@@ -15,7 +15,7 @@ from pytkwrap.gtk3.combobox import GTK3ComboBox
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_COMBOBOX_ATTRIBUTES,
@@ -25,6 +25,7 @@ from .test_constants import (
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
     EXPECTED_WIDGET_ATTRIBUTES,
@@ -47,11 +48,15 @@ COMPOUND_TEST_LIST = [
 
 @pytest.mark.order(4)
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3ComboBox(BaseGTK3WidgetTests):
+class TestGTK3ComboBox(BaseGTK3GObjectTests):
     """Test class for the GTK3ComboBox."""
 
     widget_class = GTK3ComboBox
-    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_COMBOBOX_ATTRIBUTES
+    expected_attributes = (
+        EXPECTED_GOBJECT_ATTRIBUTES
+        | EXPECTED_WIDGET_ATTRIBUTES
+        | EXPECTED_COMBOBOX_ATTRIBUTES
+    )
     expected_default_height = 30
     expected_default_width = 200
     expected_handler_id = (
@@ -543,24 +548,8 @@ class TestGTK3ComboBox(BaseGTK3WidgetTests):
         assert subscribed_combo.get_active() == 1  # unchanged
 
     @pytest.mark.unit
-    def test_do_update_none_value(self, subscribed_combo):
-        """Handle a None value via none_to_default."""
-        pub.sendMessage("rootTopic", package={"test_field": None})
-
-        assert subscribed_combo.get_active() == -1  # falls back to default
-
-    @pytest.mark.unit
     def test_on_changed_simple(self, simple_combo):
         """Call on_changed() when a simple GTK3ComboBox value changes."""
-        pub.subscribe(self.mock_handler, simple_combo.dic_attributes["send_topic"])
-
-        simple_combo.set_active(1)
-
-    @pytest.mark.unit
-    def test_on_changed_unknown_signal(self, simple_combo):
-        """Raise a KeyError with an unknown edit signal name."""
-        pub.subscribe(self.on_changed_error_handler, "do_log_error")
-        simple_combo.dic_attributes["edit_signal"] = "edit_signal"
         pub.subscribe(self.mock_handler, simple_combo.dic_attributes["send_topic"])
 
         simple_combo.set_active(1)

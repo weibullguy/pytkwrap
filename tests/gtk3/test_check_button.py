@@ -15,18 +15,19 @@ from pytkwrap.gtk3.buttons import GTK3CheckButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
     EXPECTED_BUTTON_METHODS,
     EXPECTED_BUTTON_PROPERTIES,
-    EXPECTED_CHECK_BUTTON_ATTRIBUTES,
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
+    EXPECTED_TOGGLE_BUTTON_ATTRIBUTES,
     EXPECTED_TOGGLE_BUTTON_HANDLER_IDS,
     EXPECTED_TOGGLE_BUTTON_METHODS,
     EXPECTED_TOGGLE_BUTTON_PROPERTIES,
@@ -38,11 +39,15 @@ from .test_constants import (
 
 
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3CheckButton(BaseGTK3WidgetTests):
+class TestGTK3CheckButton(BaseGTK3GObjectTests):
     """Test class for the GTK3CheckButton."""
 
     widget_class = GTK3CheckButton
-    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_CHECK_BUTTON_ATTRIBUTES
+    expected_attributes = (
+        EXPECTED_GOBJECT_ATTRIBUTES
+        | EXPECTED_WIDGET_ATTRIBUTES
+        | EXPECTED_TOGGLE_BUTTON_ATTRIBUTES
+    )
     expected_default_height = 40
     expected_default_width = 200
     expected_handler_id = (
@@ -70,6 +75,11 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
     def make_dut(self, label="..."):
         """Create a device under test for the GTK3CheckButton."""
         return self.widget_class(label)
+
+    def mock_handler(self, package):
+        """Mock handler for on_changed() calls."""
+        assert isinstance(package, dict)
+        assert package == {-1: True}
 
     @pytest.mark.unit
     def test_init(self):
@@ -115,24 +125,26 @@ class TestGTK3CheckButton(BaseGTK3WidgetTests):
     def test_do_update(self):
         """Should update the GTK3CheckButton with the data package value."""
         dut = self.make_dut()
-        dut.dic_attributes["index"] = 1
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(dut.do_update, "rootTopic")
 
-        pub.sendMessage("rootTopic", package={1: True})
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
+        dut.dic_attributes["send_topic"] = "check_button_changed"
+        pub.subscribe(dut.do_update, "rootTopic")
+        pub.sendMessage("rootTopic", package={-1: True})
 
         assert dut.do_get_property("active")
         assert dut.get_active()
+
+        pub.unsubscribe(dut.do_update, "rootTopic")
 
     @pytest.mark.unit
     def test_on_changed(self):
         """Call on_changed() when the GTK3CheckButton is toggled."""
         dut = self.make_dut()
-        dut.dic_attributes["field"] = "test_field"
-        dut.record_id = 0
-        dut.send_topic = "button_toggled"
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
-        pub.subscribe(self.mock_handler, dut.send_topic)
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
+        dut.dic_attributes["send_topic"] = "check_button_changed"
+        pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.set_active(True)
+
+        pub.unsubscribe(self.mock_handler, dut.dic_attributes["send_topic"])

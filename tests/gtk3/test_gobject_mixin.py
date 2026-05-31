@@ -13,7 +13,11 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
-from .test_constants import EXPECTED_GOBJECT_HANDLER_IDS, EXPECTED_GOBJECT_METHODS
+from .test_constants import (
+    EXPECTED_GOBJECT_ATTRIBUTES,
+    EXPECTED_GOBJECT_HANDLER_IDS,
+    EXPECTED_GOBJECT_METHODS,
+)
 
 
 @pytest.mark.order(2)
@@ -21,6 +25,7 @@ class TestGTK3GObjectMixin(BaseGTK3GObjectTests):
     """Test class for the GTK3GObjectMixin class."""
 
     widget_class = GTK3GObjectMixin
+    expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES
     expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS
     expected_methods = EXPECTED_GOBJECT_METHODS
     expected_properties = {}

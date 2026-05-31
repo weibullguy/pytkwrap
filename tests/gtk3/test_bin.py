@@ -12,12 +12,13 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.bin import GTK3Bin
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
     EXPECTED_WIDGET_ATTRIBUTES,
@@ -28,11 +29,11 @@ from .test_constants import (
 
 
 @pytest.mark.order(3)
-class TestGTK3Bin(BaseGTK3WidgetTests):
+class TestGTK3Bin(BaseGTK3GObjectTests):
     """Test class for the GTK3Bin class."""
 
     widget_class = GTK3Bin
-    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES
+    expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_WIDGET_ATTRIBUTES
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS

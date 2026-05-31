@@ -28,9 +28,6 @@ class TestGTK3TreeViewColumn(BaseGTK3GObjectTests):
     """Test class for the GTK3TreeViewColumn class."""
 
     widget_class = GTK3TreeViewColumn
-    expected_default_height = -1
-    expected_default_tooltip = ""
-    expected_default_width = -1
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS | EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS
     )

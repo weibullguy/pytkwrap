@@ -13,7 +13,7 @@ from pytkwrap.gtk3.buttons import GTK3Button, do_make_buttonbox
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
@@ -22,6 +22,7 @@ from .test_constants import (
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
     EXPECTED_WIDGET_ATTRIBUTES,
@@ -31,11 +32,11 @@ from .test_constants import (
 )
 
 
-class TestButton(BaseGTK3WidgetTests):
+class TestButton(BaseGTK3GObjectTests):
     """Test class for the GTK3Button."""
 
     widget_class = GTK3Button
-    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES
+    expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_WIDGET_ATTRIBUTES
     expected_default_height = 30
     expected_default_width = 200
     expected_handler_id = (

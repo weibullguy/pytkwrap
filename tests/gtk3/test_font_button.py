@@ -9,13 +9,12 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.buttons import GTK3FontButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
@@ -28,6 +27,7 @@ from .test_constants import (
     EXPECTED_FONT_BUTTON_HANDLER_IDS,
     EXPECTED_FONT_BUTTON_METHODS,
     EXPECTED_FONT_BUTTON_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
     EXPECTED_WIDGET_ATTRIBUTES,
@@ -38,11 +38,15 @@ from .test_constants import (
 
 
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3FontButton(BaseGTK3WidgetTests):
+class TestGTK3FontButton(BaseGTK3GObjectTests):
     """Test class for the GTK3FontButton."""
 
     widget_class = GTK3FontButton
-    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_FONT_BUTTON_ATTRIBUTES
+    expected_attributes = (
+        EXPECTED_GOBJECT_ATTRIBUTES
+        | EXPECTED_WIDGET_ATTRIBUTES
+        | EXPECTED_FONT_BUTTON_ATTRIBUTES
+    )
     expected_default_height = 30
     expected_default_width = 60
     expected_handler_id = (

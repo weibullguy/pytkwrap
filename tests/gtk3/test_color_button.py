@@ -9,13 +9,12 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.buttons import GTK3ColorButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
@@ -28,6 +27,7 @@ from .test_constants import (
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
+    EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
     EXPECTED_WIDGET_ATTRIBUTES,
@@ -37,19 +37,14 @@ from .test_constants import (
 )
 
 
-# @pytest.mark.skip(
-#    reason=(
-#        "Gtk.ColorButton routinely crashes at the C level in test environments. "
-#        "Requires manual testing in a running GTK3 application."
-#        "See examples/color_button.py for manual test program."
-#    )
-# )
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3ColorButton(BaseGTK3WidgetTests):
+class TestGTK3ColorButton(BaseGTK3GObjectTests):
     """Test class for the GTK3ColorButton."""
 
     widget_class = GTK3ColorButton
-    expected_attributes = EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_COLOR_BUTTON_ATTRIBUTES
+    expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | (
+        EXPECTED_WIDGET_ATTRIBUTES | EXPECTED_COLOR_BUTTON_ATTRIBUTES
+    )
     expected_default_height = 30
     expected_default_width = 60
     expected_handler_id = (
@@ -73,6 +68,13 @@ class TestGTK3ColorButton(BaseGTK3WidgetTests):
         | EXPECTED_BUTTON_PROPERTIES
         | EXPECTED_COLOR_BUTTON_PROPERTIES
     )
+
+    @staticmethod
+    def mock_handler(package):
+        """Mock handler for on_changed() calls."""
+        assert isinstance(package, dict)
+        assert isinstance(package[-1], Gdk.RGBA)
+        assert package[-1].alpha == 0.0
 
     @pytest.mark.unit
     def test_set_properties(self):
@@ -101,9 +103,9 @@ class TestGTK3ColorButton(BaseGTK3WidgetTests):
     def test_do_update(self):
         """Should update the GTK3ColorButton with the data package value."""
         dut = self.make_dut()
+
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
-
         pub.sendMessage("rootTopic", package={-1: Gdk.RGBA(0.3, 0.1, 0.9, 0.75)})
 
         assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
@@ -117,9 +119,11 @@ class TestGTK3ColorButton(BaseGTK3WidgetTests):
     def test_on_changed(self):
         """on_changed() is called when the GTK3ColorButton color is set."""
         dut = self.make_dut()
-        dut.dic_attributes["send_topic"] = "color_changed"
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
+        dut.dic_attributes["send_topic"] = "color_changed"
         pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
         dut.emit("color-set")
+
+        pub.unsubscribe(self.mock_handler, dut.dic_attributes["send_topic"])

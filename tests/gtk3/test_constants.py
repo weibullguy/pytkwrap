@@ -1,5 +1,6 @@
 # Standard Library Imports
 import sys
+from datetime import date
 
 try:
     # Third Party Imports
@@ -14,6 +15,24 @@ except ImportError:
 # Third Party Imports
 from gi.repository import Gdk, GObject, Gtk
 
+EXPECTED_GOBJECT_ATTRIBUTES = {
+    "axis": None,
+    "canvas": None,
+    "column_types": None,
+    "data_type": None,
+    "default_value": None,
+    "edit_signal": None,
+    "figure": None,
+    "font_description": None,
+    "format": None,
+    "index": -1,
+    "listen_topic": "listen-topic",
+    "n_columns": None,
+    "n_rows": None,
+    "send_topic": "send-topic",
+    "x_pos": None,
+    "y_pos": None,
+}
 EXPECTED_GOBJECT_HANDLER_IDS = {"notify": -1}
 EXPECTED_GOBJECT_METHODS = [
     "bind_property",
@@ -45,6 +64,7 @@ EXPECTED_GOBJECT_METHODS = [
     "watch_closure",
 ]
 
+EXPECTED_ADJUSTMENT_ATTRIBUTES = {"default_value": 0.0, "edit_signal": "value-changed"}
 EXPECTED_ADJUSTMENT_HANDLER_IDS = {"changed": -1, "value-changed": -1}
 EXPECTED_ADJUSTMENT_METHODS = [
     "clamp_page",
@@ -191,7 +211,17 @@ EXPECTED_TREEVIEW_COLUMN_PROPERTIES = {
 }
 
 EXPECTED_WIDGET_ATTRIBUTES = {
-    "index": -1,
+    "axis": None,
+    "canvas": None,
+    "column_types": None,
+    "data_type": None,
+    "default_value": None,
+    "edit_signal": None,
+    "figure": None,
+    "font_description": None,
+    "format": None,
+    "n_columns": None,
+    "n_rows": None,
     "x_pos": 0,
     "y_pos": 0,
 }
@@ -466,6 +496,17 @@ EXPECTED_WIDGET_PROPERTIES = {
     "window": None,
 }
 
+EXPECTED_CALENDAR_ATTRIBUTES = {
+    "default_value": date.today(),
+    "edit_signal": [
+        "day-selected",
+        "month-changed",
+        "next-month",
+        "next-year",
+        "prev-month",
+        "prev-year",
+    ],
+}
 EXPECTED_CALENDAR_HANDLER_IDS = {
     "day-selected": -1,
     "day-selected-double-click": -1,
@@ -629,10 +670,7 @@ EXPECTED_SCALE_BUTTON_PROPERTIES = {
 
 EXPECTED_VOLUME_BUTTON_PROPERTIES = {"use_symbolic": True}
 
-EXPECTED_TOGGLE_BUTTON_ATTRIBUTES = {
-    "default_value": False,
-    "edit_signal": "toggled",
-}
+EXPECTED_TOGGLE_BUTTON_ATTRIBUTES = {"default_value": False, "edit_signal": "toggled"}
 EXPECTED_TOGGLE_BUTTON_HANDLER_IDS = {"toggled": -1}
 EXPECTED_TOGGLE_BUTTON_METHODS = [
     "get_active",
@@ -650,8 +688,6 @@ EXPECTED_TOGGLE_BUTTON_PROPERTIES = {
     "use_underline": False,
 }
 
-EXPECTED_CHECK_BUTTON_ATTRIBUTES = {"default_value": False, "edit_signal": "toggled"}
-
 EXPECTED_RADIO_BUTTON_HANDLER_IDS = {"group-changed": -1}
 EXPECTED_RADIO_BUTTON_METHODS = [
     "get_group",
@@ -660,7 +696,6 @@ EXPECTED_RADIO_BUTTON_METHODS = [
 ]
 EXPECTED_RADIO_BUTTON_PROPERTIES = {"group": None}
 
-EXPECTED_MENU_BUTTON_ATTRIBUTES = {"default_value": False, "edit_signal": "toggled"}
 EXPECTED_MENU_BUTTON_METHODS = [
     "get_align_widget",
     "get_direction",

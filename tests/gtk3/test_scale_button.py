@@ -9,13 +9,12 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.buttons import GTK3ScaleButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3WidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_BUTTON_HANDLER_IDS,
@@ -41,7 +40,7 @@ from .test_constants import (
     )
 )
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3ScaleButton(BaseGTK3WidgetTests):
+class TestGTK3ScaleButton(BaseGTK3GObjectTests):
     """Test class for the GTK3ScaleButton."""
 
     widget_class = GTK3ScaleButton
