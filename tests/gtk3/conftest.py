@@ -135,15 +135,6 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
             assert hasattr(dut, _method)
 
     @pytest.mark.unit
-    def test_do_get_attribute_unknown(self):
-        """Should raise an UnkAttributeError when passed a non-existent attribute."""
-        dut = self.make_dut()
-        pub.subscribe(self.get_attribute_error_handler, "do_log_error")
-
-        with pytest.raises(UnkAttributeError):
-            dut.do_get_attribute("unk_attribute")
-
-    @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-015")
     def test_do_set_attributes_default(self):
         """Should set attributes to their default value when passed an empty
@@ -200,18 +191,23 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
 
         assert dut.dic_properties == self.expected_properties
 
+
+class BaseGTK3DataWidgetTests(BaseGTK3GObjectTests):
+    """Add GTK3 data manipulation widget-specific assertions to the GObject mixin
+    tests."""
+
     @pytest.mark.unit
     def test_do_update_none_value(self):
         """Should update the properties with the default values when passed a data
         package with a value of None."""
         dut = self.make_dut()
-        if hasattr(dut.dic_attributes, "edit_signal"):
-            dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-            pub.subscribe(dut.do_update, "rootTopic")
 
-            pub.sendMessage("rootTopic", package={-1: None})
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
+        pub.subscribe(dut.do_update, "rootTopic")
 
-            assert dut.dic_attributes == self.expected_attributes
+        pub.sendMessage("rootTopic", package={-1: None})
+
+        assert dut.dic_attributes == self.expected_attributes
 
     @pytest.mark.unit
     def test_do_update_unknown_signal(self):

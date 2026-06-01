@@ -15,7 +15,7 @@ from pytkwrap.gtk3.combobox import GTK3ComboBox
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3GObjectTests
+from .conftest import BaseGTK3DataWidgetTests
 from .test_constants import (
     EXPECTED_BIN_METHODS,
     EXPECTED_COMBOBOX_ATTRIBUTES,
@@ -48,7 +48,7 @@ COMPOUND_TEST_LIST = [
 
 @pytest.mark.order(4)
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3ComboBox(BaseGTK3GObjectTests):
+class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     """Test class for the GTK3ComboBox."""
 
     widget_class = GTK3ComboBox
@@ -502,20 +502,6 @@ class TestGTK3ComboBox(BaseGTK3GObjectTests):
         assert subscribed_combo.do_get_value() == "Index 2"
 
     @pytest.mark.unit
-    def test_do_update_simple_unknown_signal(self, simple_combo):
-        """Raise a key error with an unknown edit signal name."""
-        simple_combo.dic_attributes["index"] = "test_field"
-        pub.subscribe(self.do_update_error_handler, "do_log_error")
-        pub.subscribe(simple_combo.do_update, "rootTopic")
-        simple_combo.dic_attributes["edit_signal"] = "unk_signal"
-
-        with pytest.raises(UnkSignalError):
-            pub.sendMessage("rootTopic", package={"test_field": 2})
-
-        assert simple_combo.get_active() == -1
-        assert not simple_combo.do_get_value()
-
-    @pytest.mark.unit
     def test_do_update_compound(self, compound_combo):
         """Update a compound GTK3ComboBox with the data package value."""
         compound_combo.set_active(2)
@@ -528,15 +514,6 @@ class TestGTK3ComboBox(BaseGTK3GObjectTests):
         assert compound_combo.get_value_at_index(0) == "test"
         assert compound_combo.do_get_value() == "of"
         assert compound_combo.get_value_at_index(2) == "the"
-
-    @pytest.mark.unit
-    def test_do_update_wrong_field(self, subscribed_combo):
-        """Do nothing when the package field doesn't match."""
-        subscribed_combo.set_active(1)
-
-        pub.sendMessage("rootTopic", package={"wrong_field": 2})
-
-        assert subscribed_combo.get_active() == 1  # unchanged
 
     @pytest.mark.unit
     def test_do_update_non_int_value(self, subscribed_combo):

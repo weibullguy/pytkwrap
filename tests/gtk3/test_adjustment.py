@@ -18,7 +18,7 @@ from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3GObjectTests
+from .conftest import BaseGTK3DataWidgetTests
 from .test_constants import (
     EXPECTED_ADJUSTMENT_ATTRIBUTES,
     EXPECTED_ADJUSTMENT_HANDLER_IDS,
@@ -31,7 +31,7 @@ from .test_constants import (
 
 
 @pytest.mark.order(3)
-class TestGTK3Adjustment(BaseGTK3GObjectTests):
+class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
     """Test class for the GTK3Adjustment class."""
 
     widget_class = GTK3Adjustment

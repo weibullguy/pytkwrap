@@ -17,7 +17,7 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.calendar import GTK3Calendar
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3GObjectTests
+from .conftest import BaseGTK3DataWidgetTests
 from .test_constants import (
     EXPECTED_CALENDAR_ATTRIBUTES,
     EXPECTED_CALENDAR_HANDLER_IDS,
@@ -34,7 +34,7 @@ from .test_constants import (
 
 
 @pytest.mark.order(3)
-class TestGTK3Calendar(BaseGTK3GObjectTests):
+class TestGTK3Calendar(BaseGTK3DataWidgetTests):
     """Test class for the GTK3Calendar class."""
 
     widget_class = GTK3Calendar

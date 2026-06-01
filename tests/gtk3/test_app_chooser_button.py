@@ -14,7 +14,7 @@ from pytkwrap.gtk3.buttons import GTK3AppChooserButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3GObjectTests
+from .conftest import BaseGTK3DataWidgetTests
 from .test_constants import (
     EXPECTED_APP_CHOOSER_BUTTON_HANDLER_IDS,
     EXPECTED_APP_CHOOSER_BUTTON_METHODS,
@@ -38,7 +38,7 @@ from .test_constants import (
 
 
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
+class TestGTK3AppChooserButton(BaseGTK3DataWidgetTests):
     """Test class for the GTK3AppChooserButton."""
 
     widget_class = GTK3AppChooserButton
@@ -68,13 +68,6 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         | EXPECTED_COMBOBOX_PROPERTIES
         | EXPECTED_APP_CHOOSER_BUTTON_PROPERTIES
     )
-
-    @staticmethod
-    def mock_handler(package):
-        """Mock handler for on_changed() calls."""
-        assert isinstance(package, dict)
-        assert isinstance(package[-1], Gdk.RGBA)
-        assert package[-1].alpha == 0.0
 
     @pytest.mark.unit
     def test_do_set_properties(self):
