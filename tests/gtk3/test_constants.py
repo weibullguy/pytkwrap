@@ -811,11 +811,11 @@ EXPECTED_FRAME_METHODS = [
     "set_shadow_type",
 ]
 EXPECTED_FRAME_PROPERTIES = {
-    "label": "",
+    "label": None,
     "label_widget": None,
     "label_xalign": 0.0,
-    "label_yalign": 0.0,
-    "shadow_type": Gtk.ShadowType.NONE,
+    "label_yalign": 0.5,
+    "shadow_type": Gtk.ShadowType.ETCHED_IN,
 }
 
 EXPECTED_MENU_ITEM_HANDLER_IDS = {
