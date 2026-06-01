@@ -30,7 +30,8 @@ from .combobox import GTK3ComboBox
 from .container import GTK3Container
 
 # from .entry import GTK3Entry
-# from .frame import GTK3Frame
+from .frame import GTK3Frame
+
 # from .label import (
 #    GTK3Label,
 #    do_make_label_group,
@@ -57,7 +58,7 @@ __all__ = [
     "GTK3ComboBox",
     #    "GTK3Entry",
     #    "GTK3FileChooserButton",
-    #    "GTK3Frame",
+    "GTK3Frame",
     "GTK3GObjectMixin",
     #    "GTK3Label",
     #    "GTK3MatrixView",
