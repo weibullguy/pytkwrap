@@ -12,6 +12,7 @@ and never through this __init__.py to avoid circular imports.
 from .adjustment import GTK3Adjustment
 from .bin import GTK3Bin
 from .buttons import (
+    GTK3AppChooserButton,
     GTK3Button,
     GTK3CheckButton,
     GTK3ColorButton,
@@ -75,4 +76,5 @@ __all__ = [
     "do_make_buttonbox",
     #    "do_make_label_group",
     "set_widget_sensitivity",
+    "GTK3AppChooserButton",
 ]

@@ -105,6 +105,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     has_focus: bool
     has_frame: bool
     has_tooltip: bool
+    heading: str | None
     height: int
     height_request: int
     hexpand: bool
@@ -222,7 +223,9 @@ class GTK3WidgetProperties(TypedDict, total=False):
     sensitive: bool
     shadow_type: Gtk.ShadowType | None
     show_day_names: bool
+    show_default_item: bool
     show_details: bool
+    show_dialog_item: bool
     show_editor: bool
     show_emoji_icon: bool
     show_heading: bool
