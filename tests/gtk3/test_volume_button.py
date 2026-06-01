@@ -81,7 +81,7 @@ class TestGTK3VolumeButton(BaseGTK3GObjectTests):
     )
 
     @pytest.mark.unit
-    def test_set_properties(self):
+    def test_do_set_properties(self):
         """Should set the properties to the values passed in the
         GTK3WidgetProperties."""
         dut = self.make_dut()

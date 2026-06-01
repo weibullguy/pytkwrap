@@ -11,7 +11,7 @@ from pubsub import pub
 from pytkwrap.exceptions import UnkAttributeError, UnkSignalError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from tests.common.test_toolkit_mixin import TestPyTkWrapMixin
+from tests.common.test_pytkwrap_mixin import TestPyTkWrapMixin
 
 # pytkwrap Local Imports
 from .test_constants import (

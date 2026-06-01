@@ -782,7 +782,7 @@ EXPECTED_COMBOBOX_PROPERTIES = {
     "wrap_width": 0,
 }
 
-EXPECTED_APP_CHOOSER_BUTTON_HANDLER_IDS = {"custum-item-activated": -1}
+EXPECTED_APP_CHOOSER_BUTTON_HANDLER_IDS = {"custom-item-activated": -1}
 EXPECTED_APP_CHOOSER_BUTTON_METHODS = [
     "append_custom_item",
     "append_separator",

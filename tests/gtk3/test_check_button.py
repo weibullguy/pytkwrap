@@ -103,7 +103,7 @@ class TestGTK3CheckButton(BaseGTK3GObjectTests):
         assert dut.get_image() is None
 
     @pytest.mark.unit
-    def test_set_properties(self):
+    def test_do_set_properties(self):
         """Should set the properties of a GTK3CheckButton to the values in the passed
         GTK3WidgetProperties."""
         dut = self.make_dut()
