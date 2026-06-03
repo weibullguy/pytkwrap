@@ -11,11 +11,11 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.bin import GTK3Bin
+from pytkwrap.gtk3.buttons import GTK3Button
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 
-class GTK3ScaleButton(Gtk.ScaleButton, GTK3Bin):
+class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
     """The GTK3ScaleButton class."""
 
     # Define private class attributes.
@@ -40,7 +40,7 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Bin):
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ScaleButton widget."""
         Gtk.ScaleButton.__init__(self)
-        GTK3Bin.__init__(self)
+        GTK3Button.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_SCALE_BUTTON_ATTRIBUTES)
@@ -80,8 +80,12 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Bin):
         """
         super().do_set_properties(properties)
 
-        self.set_adjustment(self.dic_properties["adjustment"])
-        self.set_icons(self.dic_properties["icons"])
+        if self.dic_properties["adjustment"] is not None:
+            self.set_adjustment(self.dic_properties["adjustment"])
+
+        if len(self.dic_properties["icons"]) > 0:
+            self.set_icons(self.dic_properties["icons"])
+
         self.set_value(self.dic_properties["value"])
 
     def do_get_value(self) -> bool | date | float | int | object | str | None:
@@ -109,5 +113,5 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Bin):
         """
         if not isinstance(value, (float, int, str)):
             value = self.dic_attributes.get("default_value")
-        self.dic_properties["value"] = float(value)
-        self.set_value(float(value))
+        self.dic_properties["value"] = float(value)  # type: ignore[arg-type]
+        self.set_value(float(value))  # type: ignore[arg-type]

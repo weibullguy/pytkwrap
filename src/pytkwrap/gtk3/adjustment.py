@@ -11,13 +11,17 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import (
+    GTK3GObjectMixin,
+    GTK3WidgetAttributes,
+    GTK3WidgetProperties,
+)
 
 
 class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
     """Wrapper for Gtk.Adjustment."""
 
-    _GTK3_ADJUSTMENT_ATTRIBUTES = PyTkWrapAttributes(
+    _GTK3_ADJUSTMENT_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
         edit_signal="value-changed",
     )
@@ -159,4 +163,4 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         if value is None or isinstance(value, (date, tuple)):
             super().do_set_value(value)
             return
-        self.set_value(float(value))
+        self.set_value(float(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long

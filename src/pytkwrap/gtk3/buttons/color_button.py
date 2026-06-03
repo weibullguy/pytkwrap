@@ -82,10 +82,10 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
         if self.dic_properties["rgba"] is not None:
             self.set_rgba(self.dic_properties["rgba"])
         self.set_title(self.dic_properties["title"])
-        self.set_use_alpha(self.dic_properties["use_alpha"])
 
         for _property in [
             "show_editor",
+            "use_alpha",
         ]:
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]

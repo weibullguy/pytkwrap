@@ -451,7 +451,11 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
 
         for _signal in _signals:
             _hid = self.dic_handler_id[_signal]
-            return self._get_signal_owner().handler_block(_hid)
+            _blockmgr: GObject._HandlerBlockManager = (
+                self._get_signal_owner().handler_block(_hid)
+            )
+
+        return _blockmgr
 
     def _get_signal_owner(self) -> Gtk.Widget:
         """Return the object whose signal handler should be blocked.

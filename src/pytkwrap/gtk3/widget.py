@@ -148,7 +148,6 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
         # Set the value of each of the mixin properties.
         self.set_can_default(self.dic_properties["can_default"])
         self.set_can_focus(self.dic_properties["can_focus"])
-        self.set_focus_on_click(self.dic_properties["focus_on_click"])
         self.set_halign(self.dic_properties["halign"])  # type: ignore[arg-type]
         self.set_has_tooltip(self.dic_properties["has_tooltip"])
         self.set_hexpand(self.dic_properties["hexpand"])
@@ -172,7 +171,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
         self.set_vexpand_set(self.dic_properties["vexpand_set"])
         self.set_visible(self.dic_properties["visible"])
 
-        for _property in ["parent"]:
+        for _property in ["focus_on_click", "parent"]:
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
