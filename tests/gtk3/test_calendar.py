@@ -15,6 +15,7 @@ from pubsub import pub
 from pytkwrap.exceptions import WrongTypeError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.calendar import GTK3Calendar
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
@@ -63,6 +64,55 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
         assert "GTK3Calendar.do_set_value(): Wrong type for value" in message
 
     @pytest.mark.unit
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
+        GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.dic_properties == self.expected_properties
+        assert dut.do_get_property("day") == 0
+        assert dut.do_get_property("detail_height_rows") == 0
+        assert dut.do_get_property("detail_width_chars") == 0
+        assert dut.do_get_property("month") == 0
+        assert not dut.do_get_property("no_month_change")
+        assert dut.do_get_property("show_day_names")
+        assert dut.do_get_property("show_details")
+        assert dut.do_get_property("show_heading")
+        assert not dut.do_get_property("show_week_numbers")
+        assert dut.do_get_property("year") == 0
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                day=1,
+                detail_height_rows=2,
+                detail_width_chars=25,
+                month=6,
+                no_month_change=True,
+                show_day_names=False,
+                show_details=False,
+                show_heading=False,
+                show_week_numbers=True,
+                year=2026,
+            )
+        )
+
+        assert dut.do_get_property("day") == 1
+        assert dut.do_get_property("detail_height_rows") == 2
+        assert dut.do_get_property("detail_width_chars") == 25
+        assert dut.do_get_property("month") == 6
+        assert dut.do_get_property("no_month_change")
+        assert not dut.do_get_property("show_day_names")
+        assert not dut.do_get_property("show_details")
+        assert not dut.do_get_property("show_heading")
+        assert dut.do_get_property("show_week_numbers")
+        assert dut.do_get_property("year") == 2026
+
+    @pytest.mark.unit
     def test_do_set_edit_signal_callbacks(self):
         """Should set the callback function for a GTK3Calendar edit signal."""
         dut = self.make_dut()
@@ -87,14 +137,6 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
         """Should set the current date."""
         dut = self.make_dut()
         dut.do_set_value(date(2020, 1, 1))
-
-        assert dut.do_get_value() == date(2020, 1, 1)
-
-    @pytest.mark.unit
-    def test_do_set_value_tuple(self):
-        """Should set the current date."""
-        dut = self.make_dut()
-        dut.do_set_value((2020, 1, 1))
 
         assert dut.do_get_value() == date(2020, 1, 1)
 
@@ -147,6 +189,14 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
 
         with pytest.raises(WrongTypeError):
             dut.do_set_value(None)
+
+    @pytest.mark.unit
+    def test_do_set_value_tuple(self):
+        """Should set the current date."""
+        dut = self.make_dut()
+        dut.do_set_value((2020, 1, 1))
+
+        assert dut.do_get_value() == date(2020, 1, 1)
 
     @pytest.mark.unit
     def test_do_update(self):

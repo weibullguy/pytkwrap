@@ -91,8 +91,22 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
         assert dut.do_get_attribute("y_pos") == 50
 
     @pytest.mark.unit
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
+        GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.do_get_property("lower") == 0.0
+        assert dut.do_get_property("upper") == 0.0
+        assert dut.do_get_value() == 0.0
+        assert dut.do_get_property("step_increment") == 0.0
+        assert dut.do_get_property("page_increment") == 0.0
+        assert dut.do_get_property("page_size") == 0.0
+
+    @pytest.mark.unit
     def test_do_set_properties(self):
-        """Should set the properties of a GTK3Adjustment."""
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
@@ -129,6 +143,16 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
         assert dut.do_get_value() == 1.0
 
     @pytest.mark.unit
+    def test_do_set_value_date(self):
+        """Should a WrongTypeError and pass a do_log_error message when passed a
+        date."""
+        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
+        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
+
+        with pytest.raises(WrongTypeError):
+            dut.do_set_value(date.today())
+
+    @pytest.mark.unit
     def test_do_set_value_float(self):
         """Should set the value of the GTK3Adjustment when passed a float."""
         dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
@@ -143,16 +167,6 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
         dut.do_set_value(8)
 
         assert dut.do_get_value() == 8.0
-
-    @pytest.mark.unit
-    def test_do_set_value_date(self):
-        """Should a WrongTypeError and pass a do_log_error message when passed a
-        date."""
-        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
-        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
-
-        with pytest.raises(WrongTypeError):
-            dut.do_set_value(date.today())
 
     @pytest.mark.unit
     def test_do_set_value_none(self):

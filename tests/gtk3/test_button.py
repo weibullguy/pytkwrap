@@ -72,9 +72,22 @@ class TestButton(BaseGTK3GObjectTests):
         assert dut.get_image() is None
 
     @pytest.mark.unit
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
+        GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.dic_properties == self.expected_properties
+        assert not dut.do_get_property("always_show_image")
+        assert dut.do_get_property("image") is None
+        assert dut.do_get_property("label") == "..."
+        assert dut.do_get_property("relief") == Gtk.ReliefStyle.NORMAL
+        assert not dut.do_get_property("use_underline")
+
+    @pytest.mark.unit
     def test_do_set_properties(self):
-        """Should set the properties of a GTK3Button to the values passed in a
-        GTK3WidgetProperties dict."""
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(

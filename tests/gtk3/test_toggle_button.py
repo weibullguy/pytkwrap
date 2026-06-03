@@ -91,9 +91,19 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         assert dut.dic_properties == self.expected_properties
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
-        """Should set the properties to the values passed in the
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert not dut.get_property("active")
+        assert not dut.get_property("draw_indicator")
+        assert not dut.get_property("inconsistent")
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(

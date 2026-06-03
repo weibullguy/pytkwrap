@@ -38,13 +38,6 @@ from .test_constants import (
 )
 
 
-@pytest.mark.skip(
-    reason=(
-        "Gtk.VolumeButton routinely crashes at the C level in test environments. "
-        "Requires manual testing in a running GTK3 application."
-        "See examples/Volume_button.py for manual test program."
-    )
-)
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3VolumeButton(BaseGTK3DataWidgetTests):
     """Test class for the GTK3VolumeButton."""
@@ -81,53 +74,49 @@ class TestGTK3VolumeButton(BaseGTK3DataWidgetTests):
     )
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
-        """Should set the properties to the values passed in the
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.dic_properties == self.expected_properties
+        assert dut.do_get_property("use_symbolic")
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
-                rgba=Gdk.RGBA(1.0, 1.0, 1.0, 1.0),
-                show_editor=True,
-                title="Choose a Volume",
-                use_alpha=False,
+                use_symbolic=False,
             )
         )
 
-        assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
-        assert dut.get_property("rgba").alpha == 1.0
-        assert dut.get_property("rgba").blue == 1.0
-        assert dut.get_property("rgba").green == 1.0
-        assert dut.get_property("rgba").red == 1.0
-        assert dut.get_property("show-editor")
-        assert dut.get_property("title") == "Choose a Volume"
-        assert not dut.get_property("use-alpha")
+        assert not dut.do_get_property("use_symbolic")
 
     @pytest.mark.unit
     def test_do_update(self):
         """Should update the GTK3VolumeButton with the data package value."""
         dut = self.make_dut()
-        dut.dic_attributes["index"] = 1
+
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
         pub.subscribe(dut.do_update, "rootTopic")
 
-        pub.sendMessage("rootTopic", package={1: Gdk.RGBA(0.3, 0.1, 0.9, 0.75)})
+        pub.sendMessage("rootTopic", package={-1: 0.84})
 
-        assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
-        assert isinstance(dut.get_rgba(), Gdk.RGBA)
-        assert dut.get_property("rgba").alpha == 0.75
-        assert dut.get_property("rgba").blue == 0.9
-        assert dut.get_property("rgba").green == 0.1
-        assert dut.get_property("rgba").red == 0.3
+        assert dut.do_get_value() == 0.84
 
     @pytest.mark.unit
     def test_on_changed(self):
         """on_changed() is called when the GTK3VolumeButton Volume is set."""
         dut = self.make_dut()
-        dut.dic_attributes["index"] = 5
-        dut.dic_attributes["send_topic"] = "Volume_changed"
+
+        dut.dic_attributes["send_topic"] = "volume_changed"
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
 
         pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
 
-        dut.emit("Volume-set")
+        dut.set_value(0.55)
+
+        pub.unsubscribe(self.mock_handler, dut.dic_attributes["send_topic"])

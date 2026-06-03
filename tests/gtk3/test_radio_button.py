@@ -119,9 +119,19 @@ class TestRadioButton(BaseGTK3DataWidgetTests):
         assert dut.get_label() == "Test Radio Button Label"
 
     @pytest.mark.unit
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
+        GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(),
+        )
+
+        assert dut.do_get_property("group") is None
+
+    @pytest.mark.unit
     def test_do_set_properties(self):
-        """Should set the GTKRadioButton properties to the values passed in a
-        GTK3WidgetProperties dict."""
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         btnRadioButton = GTK3RadioButton()
 
         dut = self.make_dut()

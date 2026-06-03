@@ -10,6 +10,7 @@ import pytest
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.cellrenderer import GTK3CellRenderer
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.treeviewcolumn import GTK3TreeViewColumn
 
 # pytkwrap Local Imports
@@ -68,3 +69,77 @@ class TestGTK3TreeViewColumn(BaseGTK3GObjectTests):
 
         assert isinstance(dut, GTK3TreeViewColumn)
         assert dut.do_get_property("cell_area") == _cell_area
+
+    @pytest.mark.unit
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
+        GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.dic_properties == self.expected_properties
+        assert dut.do_get_property("alignment") == 0.0
+        assert dut.do_get_property("cell_area") is None
+        assert not dut.do_get_property("clickable")
+        assert not dut.do_get_property("expand")
+        assert dut.do_get_property("fixed_width") == -1
+        assert dut.do_get_property("max_width") == -1
+        assert dut.do_get_property("min_width") == -1
+        assert not dut.do_get_property("reorderable")
+        assert not dut.do_get_property("resizable")
+        assert dut.do_get_property("sizing") == Gtk.TreeViewColumnSizing.GROW_ONLY
+        assert dut.do_get_property("sort_column_id") == -1
+        assert not dut.do_get_property("sort_indicator")
+        assert dut.do_get_property("sort_order") == Gtk.SortType.ASCENDING
+        assert dut.do_get_property("spacing") == 0
+        assert dut.do_get_property("title") == ""
+        assert dut.do_get_property("visible")
+        assert dut.do_get_property("widget") is None
+        assert dut.do_get_property("width") == 0
+        assert dut.do_get_property("x_offset") == 0
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                alignment=0.33,
+                clickable=True,
+                expand=True,
+                fixed_width=50,
+                max_width=100,
+                min_width=25,
+                reorderable=True,
+                resizable=True,
+                sizing=Gtk.TreeViewColumnSizing.AUTOSIZE,
+                sort_column_id=2,
+                sort_indicator=True,
+                sort_order=Gtk.SortType.DESCENDING,
+                spacing=5,
+                title="Test Title",
+                visible=False,
+                width=20,
+                x_offset=4,
+            )
+        )
+
+        assert dut.do_get_property("alignment") == 0.33
+        assert dut.do_get_property("cell_area") is None
+        assert dut.do_get_property("clickable")
+        assert dut.do_get_property("expand")
+        assert dut.do_get_property("fixed_width") == 50
+        assert dut.do_get_property("max_width") == 100
+        assert dut.do_get_property("min_width") == 25
+        assert dut.do_get_property("reorderable")
+        assert dut.do_get_property("resizable")
+        assert dut.do_get_property("sizing") == Gtk.TreeViewColumnSizing.AUTOSIZE
+        assert dut.do_get_property("sort_column_id") == 2
+        assert dut.do_get_property("sort_indicator")
+        assert dut.do_get_property("sort_order") == Gtk.SortType.DESCENDING
+        assert dut.do_get_property("spacing") == 5
+        assert dut.do_get_property("title") == "Test Title"
+        assert not dut.do_get_property("visible")
+        assert dut.do_get_property("widget") is None
+        assert dut.do_get_property("width") == 20
+        assert dut.do_get_property("x_offset") == 4

@@ -75,9 +75,22 @@ class TestGTK3MenuButton(BaseGTK3GObjectTests):
     )
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
-        """Should set the properties to the values passed in the
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.do_get_property("align_widget") is None
+        assert dut.do_get_property("direction") == Gtk.ArrowType.DOWN
+        assert dut.do_get_property("menu_model") is None
+        assert dut.do_get_property("popover") is None
+        assert dut.do_get_property("popup") is None
+        assert dut.do_get_property("use_popover")
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(

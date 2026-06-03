@@ -72,9 +72,22 @@ class TestGTK3FontButton(BaseGTK3DataWidgetTests):
     )
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
-        """Should set the properties to the values passed in the
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.do_get_property("font_name") == "Sans 12"
+        assert dut.do_get_property("show_size")
+        assert dut.do_get_property("show_style")
+        assert dut.do_get_property("title") == "Pick a Font"
+        assert not dut.do_get_property("use_font")
+        assert not dut.do_get_property("use_size")
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(

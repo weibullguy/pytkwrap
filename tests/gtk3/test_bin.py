@@ -10,6 +10,7 @@ import pytest
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.bin import GTK3Bin
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
@@ -46,3 +47,25 @@ class TestGTK3Bin(BaseGTK3GObjectTests):
         + EXPECTED_BIN_METHODS
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_CONTAINER_PROPERTIES
+
+    @pytest.mark.unit
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
+        GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.dic_properties == self.expected_properties
+        assert dut.do_get_property("border_width") == 0
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                border_width=10,
+            )
+        )
+
+        assert dut.do_get_property("border_width") == 10

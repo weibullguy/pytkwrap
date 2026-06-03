@@ -77,9 +77,25 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
         assert package[-1].alpha == 0.0
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
-        """Should set the properties to the values passed in the
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.dic_properties == self.expected_properties
+        assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
+        assert dut.get_property("rgba").alpha == 1.0
+        assert dut.get_property("rgba").blue == 0.0
+        assert dut.get_property("rgba").green == 0.0
+        assert dut.get_property("rgba").red == 0.0
+        assert not dut.get_property("show-editor")
+        assert dut.get_property("title") == "Pick a Color"
+        assert dut.get_property("use-alpha")
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(

@@ -659,12 +659,12 @@ EXPECTED_SCALE_BUTTON_METHODS = [
     "get_value",
     "set_adjustment",
     "set_icons",
-    "set_values",
+    "set_value",
 ]
 EXPECTED_SCALE_BUTTON_PROPERTIES = {
     "adjustment": None,
-    "icons": None,
-    "size": 16,
+    "icons": [],
+    "size": Gtk.IconSize.SMALL_TOOLBAR,
     "value": 0.0,
 }
 

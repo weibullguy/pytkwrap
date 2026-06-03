@@ -14,7 +14,7 @@ from pytkwrap.gtk3.buttons import GTK3AppChooserButton
 from pytkwrap.gtk3.widget import GTK3WidgetProperties
 
 # pytkwrap Local Imports
-from .conftest import BaseGTK3DataWidgetTests
+from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
     EXPECTED_APP_CHOOSER_BUTTON_HANDLER_IDS,
     EXPECTED_APP_CHOOSER_BUTTON_METHODS,
@@ -38,7 +38,7 @@ from .test_constants import (
 
 
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3AppChooserButton(BaseGTK3DataWidgetTests):
+class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
     """Test class for the GTK3AppChooserButton."""
 
     widget_class = GTK3AppChooserButton
@@ -70,9 +70,19 @@ class TestGTK3AppChooserButton(BaseGTK3DataWidgetTests):
     )
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
-        """Should set the properties to the values passed in the
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.do_get_property("heading") is None
+        assert not dut.do_get_property("show_default_item")
+        assert not dut.do_get_property("show_dialog_item")
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(

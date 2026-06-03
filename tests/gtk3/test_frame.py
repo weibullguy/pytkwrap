@@ -56,7 +56,7 @@ class TestFrame(BaseGTK3GObjectTests):
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
-        """Set the default properties of a GTK3Frame when passed an empty
+        """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
@@ -69,7 +69,7 @@ class TestFrame(BaseGTK3GObjectTests):
 
     @pytest.mark.unit
     def test_do_set_properties(self):
-        """Should set the properties of a GTK3Frame."""
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(

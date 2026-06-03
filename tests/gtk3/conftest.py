@@ -137,8 +137,8 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-015")
     def test_do_set_attributes_default(self):
-        """Should set attributes to their default value when passed an empty
-        PyTkWrapAttributes."""
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
         dut = self.make_dut()
         dut.do_set_attributes(GTK3WidgetAttributes())
 

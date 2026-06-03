@@ -102,23 +102,25 @@ class TestGTK3CheckButton(BaseGTK3DataWidgetTests):
         assert dut.get_image() is None
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
-        """Should set the properties of a GTK3CheckButton to the values in the passed
+    def test_do_set_properties_default(self):
+        """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.do_get_property("label") == "..."
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
-                active=True,
-                draw_indicator=True,
-                inconsistent=True,
+                label="Test Label",
             )
         )
 
-        assert dut.do_get_property("active")
-        assert dut.do_get_property("draw_indicator")
-        assert dut.do_get_property("inconsistent")
-        assert dut.get_active()
-        assert dut.get_inconsistent()
+        assert dut.do_get_property("label") == "Test Label"
 
     @pytest.mark.unit
     def test_do_update(self):
