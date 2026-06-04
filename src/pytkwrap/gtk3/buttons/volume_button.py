@@ -10,7 +10,7 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.buttons.scale_button import GTK3ScaleButton
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):

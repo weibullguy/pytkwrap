@@ -5,14 +5,16 @@
 """
 
 # Standard Library Imports
-# Future Imports
 from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
-from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import (
+    GTK3GObjectMixin,
+    GTK3WidgetAttributes,
+    GTK3WidgetProperties,
+)
 
 
 class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
@@ -20,8 +22,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
 
     _DEFAULT_HEIGHT = -1
     _DEFAULT_WIDTH = -1
-    _GTK3_WIDGET_ATTRIBUTES = PyTkWrapAttributes(
-        index=-1,
+    _GTK3_WIDGET_ATTRIBUTES = GTK3WidgetAttributes(
         x_pos=0,
         y_pos=0,
     )

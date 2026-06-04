@@ -12,7 +12,7 @@ from datetime import date
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.buttons.button import GTK3Button
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3FontButton(Gtk.FontButton, GTK3Button):

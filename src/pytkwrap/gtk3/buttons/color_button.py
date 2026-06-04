@@ -9,10 +9,9 @@ from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
-from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.buttons.button import GTK3Button
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
 class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
@@ -21,7 +20,7 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
     _DEFAULT_WIDTH = 60
-    _GTK3_COLOR_BUTTON_ATTRIBUTES: PyTkWrapAttributes = PyTkWrapAttributes(
+    _GTK3_COLOR_BUTTON_ATTRIBUTES: GTK3WidgetAttributes = GTK3WidgetAttributes(
         default_value=None,
         edit_signal="color-set",
     )

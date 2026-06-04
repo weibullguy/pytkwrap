@@ -107,7 +107,7 @@ class PyTkWrapMixin:
         UnkAttributeError
             If the requested attribute does not exist.
         """
-        if attribute in self._PYTKWRAP_ATTRIBUTES:
+        if attribute in self.dic_attributes:
             return self.dic_attributes.get(attribute)
 
         _error_msg = self.dic_error_message["unk_attribute"].format(
@@ -171,7 +171,7 @@ class PyTkWrapMixin:
         attributes : PyTkWrapAttributes
             Typed dict with the attribute values to set for the widget.
         """
-        for _attr in self._PYTKWRAP_ATTRIBUTES:
+        for _attr in self.dic_attributes:
             self.dic_attributes[_attr] = attributes.get(
                 _attr,
                 self.dic_attributes[_attr],
