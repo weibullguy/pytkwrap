@@ -8,7 +8,7 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.combobox import GTK3ComboBox as GTK3ComboBox
-from pytkwrap.gtk3.widget import GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
     _DEFAULT_HEIGHT: int

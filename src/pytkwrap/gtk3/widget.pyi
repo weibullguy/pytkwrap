@@ -6,10 +6,10 @@ from datetime import date
 from _typeshed import Incomplete
 
 # pytkwrap Package Imports
-from pytkwrap.common.mixins import PyTkWrapAttributes as PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gdk as Gdk
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin as GTK3GObjectMixin
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):

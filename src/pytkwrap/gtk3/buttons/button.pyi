@@ -10,7 +10,7 @@ from _typeshed import Incomplete
 from pytkwrap.gtk3._libs import GdkPixbuf as GdkPixbuf
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.bin import GTK3Bin as GTK3Bin
-from pytkwrap.gtk3.widget import GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 def do_make_buttonbox(
     icons: list[str],
@@ -23,10 +23,10 @@ def do_make_buttonbox(
 ) -> Gtk.ButtonBox: ...
 
 class GTK3Button(Gtk.Button, GTK3Bin):
-    _GTK3_BUTTON_PROPERTIES: Incomplete
-    _GTK3_BUTTON_SIGNALS: Incomplete
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
+    _GTK3_BUTTON_PROPERTIES: Incomplete
+    _GTK3_BUTTON_SIGNALS: Incomplete
     def __init__(self, label: str = "...") -> None: ...
     def do_get_property(
         self, property_name: str

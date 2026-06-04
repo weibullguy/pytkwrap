@@ -9,7 +9,7 @@ from _typeshed import Incomplete
 from pytkwrap.common.mixins import PyTkWrapAttributes as PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.buttons import GTK3Button as GTK3Button
-from pytkwrap.gtk3.widget import GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
     _DEFAULT_HEIGHT: int
