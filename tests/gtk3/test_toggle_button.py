@@ -11,7 +11,7 @@ from pubsub import pub
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.buttons import GTK3ToggleButton
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
@@ -89,6 +89,30 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         assert dut.dic_attributes == self.expected_attributes
         assert dut.dic_handler_id == self.expected_handler_id
         assert dut.dic_properties == self.expected_properties
+
+    @pytest.mark.unit
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
+
+        assert not dut.do_get_attribute("default_value")
+        assert dut.do_get_attribute("edit_signal") == "toggled"
+
+    @pytest.mark.unit
+    def test_do_set_attributes(self):
+        """Should set attributes to the values passed in the GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(
+            GTK3WidgetAttributes(
+                default_value=True,
+                edit_signal="button_toggled",
+            )
+        )
+
+        assert dut.do_get_attribute("default_value")
+        assert dut.do_get_attribute("edit_signal") == "button_toggled"
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):

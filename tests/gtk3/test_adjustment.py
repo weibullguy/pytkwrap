@@ -71,24 +71,43 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
         assert dut.do_get_property("page_size") == 1.0
 
     @pytest.mark.unit
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
+
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.do_get_attribute("axis") is None
+        assert dut.do_get_attribute("canvas") is None
+        assert dut.do_get_attribute("column_types") is None
+        assert dut.do_get_attribute("data_type") is None
+        assert dut.do_get_attribute("default_value") == 0.0
+        assert dut.do_get_attribute("edit_signal") == "value-changed"
+        assert dut.do_get_attribute("figure") is None
+        assert dut.do_get_attribute("font_description") is None
+        assert dut.do_get_attribute("format") is None
+        assert dut.do_get_attribute("index") == -1
+        assert dut.do_get_attribute("listen_topic") == "listen-topic"
+        assert dut.do_get_attribute("n_columns") is None
+        assert dut.do_get_attribute("n_rows") is None
+        assert dut.do_get_attribute("send_topic") == "send-topic"
+        assert dut.do_get_attribute("x_pos") is None
+        assert dut.do_get_attribute("y_pos") is None
+
+    @pytest.mark.unit
     def test_do_set_attributes(self):
-        """Should set the attributes of a GTK3Adjustment."""
+        """Should set attributes to the values passed in the GTK3WidgetAttributes."""
         dut = self.make_dut()
         dut.do_set_attributes(
             GTK3WidgetAttributes(
                 default_value=1.0,
                 edit_signal="adjustment_changed",
-                index=10,
-                x_pos=25,
-                y_pos=50,
             )
         )
 
         assert dut.do_get_attribute("default_value") == 1.0
         assert dut.do_get_attribute("edit_signal") == "adjustment_changed"
-        assert dut.do_get_attribute("index") == 10
-        assert dut.do_get_attribute("x_pos") == 25
-        assert dut.do_get_attribute("y_pos") == 50
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):

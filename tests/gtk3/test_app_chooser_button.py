@@ -9,9 +9,9 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gdk, Gtk
+from pytkwrap.gtk3._libs import Gdk, GObject, Gtk
 from pytkwrap.gtk3.buttons import GTK3AppChooserButton
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
@@ -68,6 +68,33 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         | EXPECTED_COMBOBOX_PROPERTIES
         | EXPECTED_APP_CHOOSER_BUTTON_PROPERTIES
     )
+
+    @pytest.mark.unit
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
+
+        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
+        assert dut.do_get_attribute("default_value") == -1
+        assert dut.do_get_attribute("edit_signal") == "changed"
+
+    @pytest.mark.unit
+    def test_do_set_attributes(self):
+        """Should set attributes to the values passed in the GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(
+            GTK3WidgetAttributes(
+                column_types=[GObject.TYPE_INT],
+                default_value=1,
+                edit_signal="combobox_changed",
+            )
+        )
+
+        assert dut.do_get_attribute("column_types") == [GObject.TYPE_INT]
+        assert dut.do_get_attribute("default_value") == 1
+        assert dut.do_get_attribute("edit_signal") == "combobox_changed"
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):

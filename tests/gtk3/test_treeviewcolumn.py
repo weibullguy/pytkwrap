@@ -10,7 +10,7 @@ import pytest
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.cellrenderer import GTK3CellRenderer
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from pytkwrap.gtk3.treeviewcolumn import GTK3TreeViewColumn
 
 # pytkwrap Local Imports
@@ -69,6 +69,31 @@ class TestGTK3TreeViewColumn(BaseGTK3GObjectTests):
 
         assert isinstance(dut, GTK3TreeViewColumn)
         assert dut.do_get_property("cell_area") == _cell_area
+
+    @pytest.mark.unit
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
+
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.do_get_attribute("axis") is None
+        assert dut.do_get_attribute("canvas") is None
+        assert dut.do_get_attribute("column_types") is None
+        assert dut.do_get_attribute("data_type") is None
+        assert dut.do_get_attribute("default_value") is None
+        assert dut.do_get_attribute("edit_signal") is None
+        assert dut.do_get_attribute("figure") is None
+        assert dut.do_get_attribute("font_description") is None
+        assert dut.do_get_attribute("format") is None
+        assert dut.do_get_attribute("index") == -1
+        assert dut.do_get_attribute("listen_topic") == "listen-topic"
+        assert dut.do_get_attribute("n_columns") is None
+        assert dut.do_get_attribute("n_rows") is None
+        assert dut.do_get_attribute("send_topic") == "send-topic"
+        assert dut.do_get_attribute("x_pos") is None
+        assert dut.do_get_attribute("y_pos") is None
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):

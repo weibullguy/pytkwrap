@@ -11,7 +11,7 @@ from pubsub import pub
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.buttons import GTK3CheckButton
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
@@ -100,6 +100,31 @@ class TestGTK3CheckButton(BaseGTK3DataWidgetTests):
         assert isinstance(dut, GTK3CheckButton)
         assert dut.get_label() == "Test Label"
         assert dut.get_image() is None
+
+    @pytest.mark.unit
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
+
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.do_get_attribute("axis") is None
+        assert dut.do_get_attribute("canvas") is None
+        assert dut.do_get_attribute("column_types") is None
+        assert dut.do_get_attribute("data_type") is None
+        assert not dut.do_get_attribute("default_value")
+        assert dut.do_get_attribute("edit_signal") == "toggled"
+        assert dut.do_get_attribute("figure") is None
+        assert dut.do_get_attribute("font_description") is None
+        assert dut.do_get_attribute("format") is None
+        assert dut.do_get_attribute("index") == -1
+        assert dut.do_get_attribute("listen_topic") == "listen-topic"
+        assert dut.do_get_attribute("n_columns") is None
+        assert dut.do_get_attribute("n_rows") is None
+        assert dut.do_get_attribute("send_topic") == "send-topic"
+        assert dut.do_get_attribute("x_pos") == 0
+        assert dut.do_get_attribute("y_pos") == 0
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):

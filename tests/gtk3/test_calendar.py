@@ -5,7 +5,7 @@
 """
 
 # Standard Library Imports
-from datetime import date
+from datetime import date, datetime
 
 # Third Party Imports
 import pytest
@@ -15,7 +15,7 @@ from pubsub import pub
 from pytkwrap.exceptions import WrongTypeError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.calendar import GTK3Calendar
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
@@ -62,6 +62,40 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
     def wrong_type_error_handler(self, message):
         """Return a WrongTypeError with the given message."""
         assert "GTK3Calendar.do_set_value(): Wrong type for value" in message
+
+    @pytest.mark.unit
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
+
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.do_get_attribute("default_value") == date.today()
+        assert dut.do_get_attribute("edit_signal") == [
+            "day-selected",
+            "month-changed",
+            "next-month",
+            "next-year",
+            "prev-month",
+            "prev-year",
+        ]
+
+    @pytest.mark.unit
+    def test_do_set_attributes(self):
+        """Should set attributes to the values passed in the GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(
+            GTK3WidgetAttributes(
+                default_value=datetime.strptime("2023-10-14", "%Y-%m-%d"),
+                edit_signal="calendar_changed",
+            )
+        )
+
+        assert dut.do_get_attribute("default_value") == datetime.strptime(
+            "2023-10-14", "%Y-%m-%d"
+        )
+        assert dut.do_get_attribute("edit_signal") == "calendar_changed"
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):

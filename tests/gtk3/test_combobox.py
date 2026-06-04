@@ -218,19 +218,31 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         assert dut.get_model().get_column_type(1) == GObject.TYPE_STRING
 
     @pytest.mark.unit
-    def test_do_set_attributes(self):
-        """Set the GTK3ComboBox attributes to the values passed in a
-        WidgetAttributes."""
-        super().test_do_set_attributes()
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
 
+        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
+        assert dut.do_get_attribute("default_value") == -1
+        assert dut.do_get_attribute("edit_signal") == "changed"
+
+    @pytest.mark.unit
+    def test_do_set_attributes(self):
+        """Should set attributes to the values passed in the GTK3WidgetAttributes."""
         dut = self.make_dut()
         dut.do_set_attributes(
             GTK3WidgetAttributes(
                 column_types=[GObject.TYPE_INT],
+                default_value=1,
+                edit_signal="combobox_changed",
             )
         )
 
         assert dut.do_get_attribute("column_types") == [GObject.TYPE_INT]
+        assert dut.do_get_attribute("default_value") == 1
+        assert dut.do_get_attribute("edit_signal") == "combobox_changed"
 
     @pytest.mark.unit
     def test_do_set_attributes_preserves_column_types(self):

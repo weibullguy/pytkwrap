@@ -9,7 +9,7 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 from pytkwrap.exceptions import UnkAttributeError, UnkSignalError
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import GObject, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.common.test_pytkwrap_mixin import TestPyTkWrapMixin
 
@@ -136,13 +136,22 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-015")
-    def test_do_set_attributes_default(self):
-        """Should set attributes to default values when passed an empty
-        GTK3WidgetAttributes."""
+    def test_do_set_attributes(self):
+        """Should set properties to the values passed in the GTK3WidgetAttributes."""
         dut = self.make_dut()
-        dut.do_set_attributes(GTK3WidgetAttributes())
+        dut.do_set_attributes(
+            GTK3WidgetAttributes(
+                column_types=[GObject.TYPE_STRING],
+                index=3,
+                listen_topic="test_listen_topic",
+                send_topic="test_send_topic",
+            )
+        )
 
-        assert dut.dic_attributes == self.expected_attributes
+        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
+        assert dut.do_get_attribute("index") == 3
+        assert dut.do_get_attribute("listen_topic") == "test_listen_topic"
+        assert dut.do_get_attribute("send_topic") == "test_send_topic"
 
     @pytest.mark.unit
     def test_do_set_callbacks(self):

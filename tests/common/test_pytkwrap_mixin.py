@@ -146,15 +146,27 @@ class TestPyTkWrapMixin:
             dut.do_get_attribute("unk_attribute")
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-015")
-    def test_do_set_attributes(self):
-        """Should set attributes to the values in the PyTkWrapAttributes passed in."""
+    def test_do_set_attributes_default(self):
+        """Should set properties to default values when passed an empty
+        PyTkWrapAttributes."""
         dut = PyTkWrapMixin()
-        dut.do_set_attributes(PyTkWrapAttributes(index=3, x_pos=5, y_pos=10))
+        dut.do_set_attributes(PyTkWrapAttributes())
 
-        assert dut.dic_attributes["index"] == 3
-        assert dut.dic_attributes["x_pos"] == 5
-        assert dut.dic_attributes["y_pos"] == 10
+        assert dut.dic_attributes["axis"] is None
+        assert dut.dic_attributes["canvas"] is None
+        assert dut.dic_attributes["data_type"] is None
+        assert dut.dic_attributes["default_value"] is None
+        assert dut.dic_attributes["edit_signal"] is None
+        assert dut.dic_attributes["figure"] is None
+        assert dut.dic_attributes["font_description"] is None
+        assert dut.dic_attributes["format"] is None
+        assert dut.dic_attributes["index"] is None
+        assert dut.dic_attributes["listen_topic"] is None
+        assert dut.dic_attributes["n_columns"] is None
+        assert dut.dic_attributes["n_rows"] is None
+        assert dut.dic_attributes["send_topic"] is None
+        assert dut.dic_attributes["x_pos"] is None
+        assert dut.dic_attributes["y_pos"] is None
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-015")

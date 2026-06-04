@@ -12,7 +12,7 @@ from pubsub import pub
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.buttons import GTK3ScaleButton
-from pytkwrap.gtk3.widget import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
@@ -69,6 +69,30 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
         | EXPECTED_BUTTON_PROPERTIES
         | EXPECTED_SCALE_BUTTON_PROPERTIES
     )
+
+    @pytest.mark.unit
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
+
+        assert dut.do_get_attribute("default_value") == 0.0
+        assert dut.do_get_attribute("edit_signal") == "value-changed"
+
+    @pytest.mark.unit
+    def test_do_set_attributes(self):
+        """Should set attributes to the values passed in the GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(
+            GTK3WidgetAttributes(
+                default_value=5.0,
+                edit_signal="scale_button_changed",
+            )
+        )
+
+        assert dut.do_get_attribute("default_value") == 5.0
+        assert dut.do_get_attribute("edit_signal") == "scale_button_changed"
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
