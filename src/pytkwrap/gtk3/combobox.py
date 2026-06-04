@@ -131,24 +131,6 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
             return self.dic_attributes[attribute]
         return super().do_get_attribute(attribute)
 
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested property.
-
-        Parameters
-        ----------
-        property_name : str
-            The name of the property to retrieve.
-
-        Returns
-        -------
-        bool | date | float | int | object | str | None
-        """
-        if property_name in self._GTK3_COMBOBOX_PROPERTIES:
-            return self.dic_properties.get(property_name)
-        return super().do_get_property(property_name)
-
     def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
         """Set the GTK3ComboBox attributes.
 

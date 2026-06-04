@@ -47,24 +47,6 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
             {_signal: -1 for _signal in self._GTK3_COLOR_BUTTON_SIGNALS}
         )
 
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested property.
-
-        Parameters
-        ----------
-        property_name : str
-            The name of the property to retrieve.
-
-        Returns
-        -------
-        bool | date | float | int | object | str | None
-        """
-        if property_name in self._GTK3_COLOR_BUTTON_PROPERTIES:
-            return self.dic_properties.get(property_name)
-        return super().do_get_property(property_name)
-
     def do_set_properties(
         self,
         properties: Mapping[str, object] | list[list | tuple],

@@ -5,7 +5,6 @@
 """
 
 # Standard Library Imports
-from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
@@ -30,21 +29,3 @@ class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_VOLUME_BUTTON_PROPERTIES)
-
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested property.
-
-        Parameters
-        ----------
-        property_name : str
-            The name of the property to retrieve.
-
-        Returns
-        -------
-        bool | date | float | int | object | str | None
-        """
-        if property_name in self._GTK3_VOLUME_BUTTON_PROPERTIES:
-            return self.dic_properties.get(property_name)
-        return super().do_get_property(property_name)

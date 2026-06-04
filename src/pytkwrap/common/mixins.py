@@ -131,11 +131,19 @@ class PyTkWrapMixin:
         property_name : str
             The name of the property whose value is to be retrieved..
 
+        Returns
+        -------
+        bool | float | int | object | str | None
+            The current value of the property.
+
         Raises
         ------
         UnkPropertyError
             If the property is not in the properties dictionary.
         """
+        if property_name in self.dic_properties:
+            return self.dic_properties.get(property_name)
+
         _error_msg = self.dic_error_message["unk_property"].format(
             f"{type(self).__name__}.do_get_property()",
             property_name,

@@ -61,24 +61,6 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
             {_signal: -1 for _signal in self._GTK3_CALENDAR_SIGNALS}
         )
 
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested property.
-
-        Parameters
-        ----------
-        property_name : str
-            The name of the property to retrieve.
-
-        Returns
-        -------
-        bool | date | float | int | object | str | None
-        """
-        if property_name in self._GTK3_CALENDAR_PROPERTIES:
-            return self.dic_properties.get(property_name)
-        return super().do_get_property(property_name)
-
     def do_get_value(self) -> date:
         """Retrieve a datetime.date representing the selected date in the GTK3Calendar.
 

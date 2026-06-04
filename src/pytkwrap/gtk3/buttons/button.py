@@ -6,7 +6,6 @@
 
 # Standard Library Imports
 from collections.abc import Callable, Mapping
-from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
@@ -130,24 +129,6 @@ class GTK3Button(Gtk.Button, GTK3Bin):
 
         self.set_label(label)
         self.show_all()
-
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested property.
-
-        Parameters
-        ----------
-        property_name : str
-            The name of the property to retrieve.
-
-        Returns
-        -------
-        bool | date | float | int | object | str | None
-        """
-        if property_name in self._GTK3_BUTTON_PROPERTIES:
-            return self.dic_properties.get(property_name)
-        return super().do_get_property(property_name)
 
     def do_set_properties(
         self,

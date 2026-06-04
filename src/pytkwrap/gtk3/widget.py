@@ -6,7 +6,6 @@
 
 # Standard Library Imports
 from collections.abc import Mapping
-from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
@@ -93,24 +92,6 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
         self.dic_properties = dict(self._GTK3_WIDGET_PROPERTIES)
         self.dic_properties["tooltip_markup"] = self._DEFAULT_TOOLTIP
         self.dic_properties["tooltip_text"] = self._DEFAULT_TOOLTIP
-
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested property.
-
-        Parameters
-        ----------
-        property_name : str
-            The name of the property to retrieve.
-
-        Returns
-        -------
-        bool | date | float | int | object | str | None
-        """
-        if property_name in self._GTK3_WIDGET_PROPERTIES:
-            return self.dic_properties.get(property_name)
-        return super().do_get_property(property_name)
 
     def do_set_properties(
         self,
