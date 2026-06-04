@@ -36,9 +36,6 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
     def do_get_attribute(
         self, attribute: str
     ) -> bool | date | float | int | object | str | None: ...
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None: ...
     def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]

@@ -16,9 +16,6 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
     _GTK3_CALENDAR_PROPERTIES: Incomplete
     _GTK3_CALENDAR_SIGNALS: Incomplete
     def __init__(self) -> None: ...
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None: ...
     def do_get_value(self) -> date: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]

@@ -18,9 +18,6 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
     _GTK3_TOGGLE_BUTTON_PROPERTIES: Incomplete
     _GTK3_TOGGLE_BUTTON_SIGNALS: Incomplete
     def __init__(self, label: str = "...") -> None: ...
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...

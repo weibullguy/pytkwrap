@@ -1,6 +1,3 @@
-# Standard Library Imports
-from datetime import date
-
 # Third Party Imports
 from _typeshed import Incomplete
 
@@ -14,6 +11,3 @@ class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
     _DEFAULT_WIDTH: int
     _GTK3_VOLUME_BUTTON_PROPERTIES: Incomplete
     def __init__(self) -> None: ...
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None: ...
