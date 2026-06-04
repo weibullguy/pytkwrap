@@ -1,6 +1,5 @@
 # Standard Library Imports
 from collections.abc import Mapping
-from datetime import date
 
 # Third Party Imports
 from _typeshed import Incomplete
@@ -20,9 +19,6 @@ class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
         cell_renderer: GTK3CellRenderer | None = None,
         cell_area: Gtk.CellArea | None = None,
     ) -> None: ...
-    def do_get_property(
-        self, property_name: str
-    ) -> bool | date | float | int | object | str | None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
