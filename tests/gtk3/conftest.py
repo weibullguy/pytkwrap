@@ -8,7 +8,7 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkAttributeError, UnkSignalError
+from pytkwrap.exceptions import UnkAttributeError, UnkSignalError, WrongTypeError
 from pytkwrap.gtk3._libs import GObject, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.common.test_pytkwrap_mixin import TestPyTkWrapMixin
@@ -38,9 +38,12 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
         "Missing tooltip, please file an issue to have one added."
     )
     expected_default_width = -1
+    expected_get_value = []
     expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS
     expected_methods = EXPECTED_GOBJECT_METHODS
     expected_properties = {}
+    expected_set_value = []
+    expected_set_value_wrong_types = []
 
     def make_dut(self):
         """Override in subclass if constructor needs arguments."""
@@ -204,6 +207,35 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
 class BaseGTK3DataWidgetTests(BaseGTK3GObjectTests):
     """Add GTK3 data manipulation widget-specific assertions to the GObject mixin
     tests."""
+
+    @pytest.mark.unit
+    def test_do_set_value(self):
+        """Should set the date."""
+        dut = self.make_dut()
+
+        for _value in self.expected_set_value:
+            dut.do_set_value(_value[0])
+            assert dut.do_get_value() == _value[1]
+
+    @pytest.mark.unit
+    def test_do_set_value_wrong_type(self):
+        """Should raise a WrongTypeError and send a do_log_error message when passed the
+        wrong data type."""
+        dut = self.make_dut()
+        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
+
+        for _wrong_type in self.expected_set_value_wrong_types:
+            with pytest.raises(WrongTypeError):
+                dut.do_set_value(_wrong_type)
+
+    @pytest.mark.unit
+    def test_do_get_value(self):
+        """Should return the current date."""
+        dut = self.make_dut()
+
+        for _value in self.expected_get_value:
+            dut.do_set_value(_value[0])
+            assert dut.do_get_value() == _value[1]
 
     @pytest.mark.unit
     def test_do_update_none_value(self):

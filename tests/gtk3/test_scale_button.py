@@ -49,6 +49,11 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
     )
     expected_default_height = 30
     expected_default_width = 60
+    expected_get_value = [
+        [8.6, 8.6],
+        [5, 5.0],
+        ["0.75", 0.75],
+    ]
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
@@ -69,6 +74,15 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
         | EXPECTED_BUTTON_PROPERTIES
         | EXPECTED_SCALE_BUTTON_PROPERTIES
     )
+    expected_set_value = [
+        [False, 0.0],
+        [8.6, 8.6],
+        [5, 5.0],
+        ["0.75", 0.75],
+    ]
+    expected_set_value_wrong_types = [
+        ("six", "point", 2),
+    ]
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):

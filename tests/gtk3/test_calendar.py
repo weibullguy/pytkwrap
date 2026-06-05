@@ -12,7 +12,6 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import WrongTypeError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.calendar import GTK3Calendar
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
@@ -44,6 +43,9 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
         | EXPECTED_WIDGET_ATTRIBUTES
         | EXPECTED_CALENDAR_ATTRIBUTES
     )
+    expected_get_value = [
+        [date.today(), date.today()],
+    ]
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
@@ -53,6 +55,17 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
         EXPECTED_GOBJECT_METHODS + EXPECTED_WIDGET_METHODS + EXPECTED_CALENDAR_METHODS
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_CALENDAR_PROPERTIES
+    expected_set_value = [
+        [date(2020, 1, 1), date(2020, 1, 1)],
+        [(2020, 1, 1), date(2020, 1, 1)],
+    ]
+    expected_set_value_wrong_types = [
+        True,
+        14.92,
+        1492,
+        "1492",
+        None,
+    ]
 
     def mock_handler(self, package):
         """Mock handler for on_changed() calls."""
@@ -158,79 +171,6 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
         assert dut.dic_handler_id["next-year"] != -1
         assert dut.dic_handler_id["prev-month"] != -1
         assert dut.dic_handler_id["prev-year"] != -1
-
-    @pytest.mark.unit
-    def test_do_get_value(self):
-        """Should return the current date."""
-        dut = self.make_dut()
-
-        assert dut.do_get_value() == date.today()
-
-    @pytest.mark.unit
-    def test_do_set_value(self):
-        """Should set the current date."""
-        dut = self.make_dut()
-        dut.do_set_value(date(2020, 1, 1))
-
-        assert dut.do_get_value() == date(2020, 1, 1)
-
-    @pytest.mark.unit
-    def test_do_set_value_bool(self):
-        """Should raise a WrongTypeError and send a do_log_error message when passed a
-        bool."""
-        dut = self.make_dut()
-        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
-
-        with pytest.raises(WrongTypeError):
-            dut.do_set_value(True)
-
-    @pytest.mark.unit
-    def test_do_set_value_float(self):
-        """Should raise a WrongTypeError and send a do_log_error message when passed a
-        float."""
-        dut = self.make_dut()
-        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
-
-        with pytest.raises(WrongTypeError):
-            dut.do_set_value(14.92)
-
-    @pytest.mark.unit
-    def test_do_set_value_int(self):
-        """Should raise a WrongTypeError and send a do_log_error message when passed an
-        int."""
-        dut = self.make_dut()
-        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
-
-        with pytest.raises(WrongTypeError):
-            dut.do_set_value(1492)
-
-    @pytest.mark.unit
-    def test_do_set_value_str(self):
-        """Should raise a WrongTypeError and send a do_log_error message when passed a
-        string."""
-        dut = self.make_dut()
-        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
-
-        with pytest.raises(WrongTypeError):
-            dut.do_set_value("1492")
-
-    @pytest.mark.unit
-    def test_do_set_value_none(self):
-        """Should raise a WrongTypeError and send a do_log_error message when passed
-        None."""
-        dut = self.make_dut()
-        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
-
-        with pytest.raises(WrongTypeError):
-            dut.do_set_value(None)
-
-    @pytest.mark.unit
-    def test_do_set_value_tuple(self):
-        """Should set the current date."""
-        dut = self.make_dut()
-        dut.do_set_value((2020, 1, 1))
-
-        assert dut.do_get_value() == date(2020, 1, 1)
 
     @pytest.mark.unit
     def test_do_update(self):

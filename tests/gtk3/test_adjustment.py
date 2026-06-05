@@ -36,9 +36,24 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
 
     widget_class = GTK3Adjustment
     expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_ADJUSTMENT_ATTRIBUTES
+    expected_get_value = [
+        [True, 1.0],
+        [4.3, 4.3],
+        [8, 8.0],
+    ]
     expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS | EXPECTED_ADJUSTMENT_HANDLER_IDS
     expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_ADJUSTMENT_METHODS
     expected_properties = EXPECTED_ADJUSTMENT_PROPERTIES
+    expected_set_value = [
+        [True, 1.0],
+        [4.3, 4.3],
+        [8, 8.0],
+    ]
+    expected_set_value_wrong_types = [
+        date.today(),
+        None,
+        (1, 2),
+    ]
 
     def make_dut(
         self,
@@ -146,54 +161,22 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
         assert dut.do_get_property("page_size") == 1.0
 
     @pytest.mark.unit
+    def test_do_set_value(self):
+        """Should set the value of the GTK3Adjustment."""
+        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
+
+        for _value in self.expected_set_value:
+            dut.do_set_value(_value[0])
+            assert dut.do_get_value() == _value[1]
+
+    @pytest.mark.unit
     def test_do_get_value(self):
-        """Should return the value of the GTK3Adjustment."""
-        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
-        dut.do_set_value(4.3)
-
-        assert dut.do_get_value() == 4.3
-
-    @pytest.mark.unit
-    def test_do_set_value_bool(self):
-        """Should set the value of the GTK3Adjustment when passed a boolean."""
-        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
-        dut.do_set_value(True)
-
-        assert dut.do_get_value() == 1.0
-
-    @pytest.mark.unit
-    def test_do_set_value_date(self):
-        """Should a WrongTypeError and pass a do_log_error message when passed a
-        date."""
-        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
-        pub.subscribe(self.wrong_type_error_handler, "do_log_error")
-
-        with pytest.raises(WrongTypeError):
-            dut.do_set_value(date.today())
-
-    @pytest.mark.unit
-    def test_do_set_value_float(self):
-        """Should set the value of the GTK3Adjustment when passed a float."""
-        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
-        dut.do_set_value(8.732)
-
-        assert dut.do_get_value() == 8.732
-
-    @pytest.mark.unit
-    def test_do_set_value_int(self):
-        """Should set the value of the GTK3Adjustment when passed an int."""
-        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
-        dut.do_set_value(8)
-
-        assert dut.do_get_value() == 8.0
-
-    @pytest.mark.unit
-    def test_do_set_value_none(self):
-        """Should a WrongTypeError and pass a do_log_error message when passed None."""
+        """Should return the current date."""
         dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
 
-        with pytest.raises(WrongTypeError):
-            dut.do_set_value(None)
+        for _value in self.expected_get_value:
+            dut.do_set_value(_value[0])
+            assert dut.do_get_value() == _value[1]
 
     @pytest.mark.unit
     def test_do_update(self):

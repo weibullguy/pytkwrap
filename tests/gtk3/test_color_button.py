@@ -47,6 +47,12 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
     )
     expected_default_height = 30
     expected_default_width = 60
+    expected_get_value = [
+        [
+            Gdk.RGBA(1.0, 0.75, 0.5, 0.25),
+            Gdk.RGBA(1.0, 0.75, 0.5, 0.25),
+        ]
+    ]
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
@@ -68,6 +74,17 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
         | EXPECTED_BUTTON_PROPERTIES
         | EXPECTED_COLOR_BUTTON_PROPERTIES
     )
+    expected_set_value = [
+        [Gdk.RGBA(1.0, 0.75, 0.5, 0.25), Gdk.RGBA(1.0, 0.75, 0.5, 0.25)],
+        [None, Gdk.RGBA(0.0, 0.0, 0.0, 1.0)],
+    ]
+    expected_set_value_wrong_types = [
+        True,
+        8.6,
+        3,
+        "Red",
+        (1, 3, "Blue"),
+    ]
 
     @staticmethod
     def mock_handler(package):

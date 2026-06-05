@@ -49,6 +49,14 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
     )
     expected_default_height = 30
     expected_default_width = 200
+    expected_get_value = [
+        [True, True],
+        [False, False],
+        [4.8, True],
+        [0.0, False],
+        [3, True],
+        [-4, True],
+    ]
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
@@ -70,6 +78,18 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         | EXPECTED_BUTTON_PROPERTIES
         | EXPECTED_TOGGLE_BUTTON_PROPERTIES
     )
+    expected_set_value = [
+        [True, True],
+        [False, False],
+        [4.8, True],
+        [0.0, False],
+        [3, True],
+        [-4, True],
+    ]
+    expected_set_value_wrong_types = [
+        "True",
+        ("True", "False", "Maybe"),
+    ]
 
     def make_dut(self, label="..."):
         """Create a device under test for the GTK3CheckButton."""
@@ -155,27 +175,11 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         assert not dut.do_get_property("draw_indicator")
         assert not dut.do_get_property("inconsistent")
 
-    @pytest.mark.unit
-    def test_do_update_float(self):
-        """Should update the GTK3ToggleButton with a float value."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 1
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(dut.do_update, "rootTopic")
-
         pub.sendMessage("rootTopic", package={1: 6.8})
 
         assert dut.get_property("active")
         assert not dut.get_property("draw_indicator")
         assert not dut.get_property("inconsistent")
-
-    @pytest.mark.unit
-    def test_do_update_int(self):
-        """Should update the GTK3ToggleButton with an int value."""
-        dut = self.make_dut()
-        dut.dic_attributes["index"] = 1
-        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
-        pub.subscribe(dut.do_update, "rootTopic")
 
         pub.sendMessage("rootTopic", package={1: 6})
 

@@ -49,6 +49,10 @@ class TestGTK3FontButton(BaseGTK3DataWidgetTests):
     )
     expected_default_height = 30
     expected_default_width = 60
+    expected_get_value = [
+        ["Sans 12", "Sans 12"],
+        ["Helvetica 10", "Helvetica 10"],
+    ]
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
@@ -70,6 +74,16 @@ class TestGTK3FontButton(BaseGTK3DataWidgetTests):
         | EXPECTED_BUTTON_PROPERTIES
         | EXPECTED_FONT_BUTTON_PROPERTIES
     )
+    expected_set_value = [
+        ["Sans 12", "Sans 12"],
+        ["Helvetica 10", "Helvetica 10"],
+    ]
+    expected_set_value_wrong_type = [
+        False,
+        4.2,
+        6,
+        ("Sans", "16"),
+    ]
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
