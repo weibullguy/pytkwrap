@@ -86,14 +86,13 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
     ) -> None:
         """Set the GTK3ToggleButton active value.
 
-        If the value passed is not a bool, float, or int, the default value is used.
-
         Parameters
         ----------
         value : bool | float | int
             The value to set the GTK3ToggleButton active value.
         """
         if not isinstance(value, (bool, float, int)):
-            value = self.dic_attributes.get("default_value")
+            super().do_set_value(value)
+            return
         self.dic_properties["active"] = bool(value)
         self.set_active(bool(value))

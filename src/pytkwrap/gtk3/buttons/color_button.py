@@ -93,7 +93,10 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
         value : Gtk.RGBA
             The Gtk.RGBA to set the GTK3ColorButton active value.
         """
-        if not isinstance(value, Gdk.RGBA):
+        if value is None:
             value = Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
+        if not isinstance(value, Gdk.RGBA):
+            super().do_set_value(value)
+            return
         self.dic_properties["rgba"] = value
         self.set_rgba(value)

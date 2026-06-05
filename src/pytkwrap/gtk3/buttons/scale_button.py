@@ -86,14 +86,14 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
     ) -> None:
         """Set the GTK3ScaleButton active value.
 
-        If the value passed is not a float, int, or str, the default value is used.
-
         Parameters
         ----------
-        value : float | int | str
+        value : bool | float | int | str
             The value to set the GTK3ScaleButton active value.
         """
+        # Boolean values are also of type int.  False is 0, True is 1.
         if not isinstance(value, (float, int, str)):
-            value = self.dic_attributes.get("default_value")
+            super().do_set_value(value)
+            return
         self.dic_properties["value"] = float(value)  # type: ignore[arg-type]
         self.set_value(float(value))  # type: ignore[arg-type]
