@@ -76,6 +76,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     digits: int
     direction: Gtk.ArrowType
     do_overwrite_confirmation: bool
+    draw_as_radio: bool
     draw_indicator: bool
     editable: bool
     editing_canceled: bool
