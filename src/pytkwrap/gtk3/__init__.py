@@ -33,7 +33,7 @@ from .font import GTK3FontButton
 #    do_make_label_group,
 # )
 # from .matrixview import GTK3MatrixView
-from .menu import GTK3MenuButton, GTK3MenuItem
+from .menu import GTK3CheckMenuItem, GTK3MenuButton, GTK3MenuItem
 from .mixins import GTK3GObjectMixin, GTK3WidgetProperties, set_widget_sensitivity
 from .panel import GTK3Frame
 
@@ -77,4 +77,5 @@ __all__ = [
     #    "do_make_label_group",
     "set_widget_sensitivity",
     "GTK3AppChooserButton",
+    "GTK3CheckMenuItem",
 ]
