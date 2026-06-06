@@ -10,14 +10,10 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .adjustment import GTK3Adjustment
-from .bin import GTK3Bin
-from .buttons import (
+from .button import (
     GTK3AppChooserButton,
     GTK3Button,
     GTK3CheckButton,
-    GTK3ColorButton,
-    GTK3FontButton,
-    GTK3MenuButton,
     GTK3RadioButton,
     GTK3ScaleButton,
     GTK3ToggleButton,
@@ -25,24 +21,26 @@ from .buttons import (
     do_make_buttonbox,
 )
 from .calendar import GTK3Calendar
-from .cellrenderer import GTK3CellRenderer
+from .color import GTK3ColorButton
 from .combobox import GTK3ComboBox
-from .container import GTK3Container
+from .container import GTK3Bin, GTK3Container
 
 # from .entry import GTK3Entry
-from .frame import GTK3Frame
+from .font import GTK3FontButton
 
 # from .label import (
 #    GTK3Label,
 #    do_make_label_group,
 # )
 # from .matrixview import GTK3MatrixView
+from .menu import GTK3MenuButton, GTK3MenuItem
 from .mixins import GTK3GObjectMixin, GTK3WidgetProperties, set_widget_sensitivity
+from .panel import GTK3Frame
 
 # from .plotview import GTK3PlotView
 # from .scrolledwindow import GTK3ScrolledWindow
 # from .textview import GTK3TextView
-from .treeviewcolumn import GTK3TreeViewColumn
+from .treeview import GTK3CellRenderer, GTK3TreeViewColumn
 from .widget import GTK3Widget
 
 __all__ = [
@@ -63,6 +61,7 @@ __all__ = [
     #    "GTK3Label",
     #    "GTK3MatrixView",
     "GTK3MenuButton",
+    "GTK3MenuItem",
     #    "GTK3PlotView",
     "GTK3RadioButton",
     #   "GTK3ScrolledWindow",

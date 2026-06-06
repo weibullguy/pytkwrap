@@ -16,7 +16,7 @@ from gi.overrides.GdkPixbuf import Pixbuf  # type: ignore[import-untyped]
 # pytkwrap Package Imports
 from pytkwrap.common import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import GObject, Gtk
-from pytkwrap.gtk3.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3Bin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 

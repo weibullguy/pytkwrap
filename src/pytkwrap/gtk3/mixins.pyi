@@ -23,6 +23,7 @@ class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
     column_types: list[EllipsisType] | list[GObject.GType] | None
 
 class GTK3WidgetProperties(TypedDict, total=False):
+    accel_path: str | None
     accepts_tab: bool
     action: Gtk.FileChooserAction | None
     action_name: str | None
@@ -239,6 +240,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     spacing: int
     step_increment: float
     style: Gtk.Style | None
+    submenu: Gtk.Menu | None
     tabs: Pango.TabArray | None
     text: str
     text_column: int
