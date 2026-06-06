@@ -9,7 +9,7 @@ import pytest
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.buttons import GTK3Button, do_make_buttonbox
+from pytkwrap.gtk3.button import GTK3Button, do_make_buttonbox
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports

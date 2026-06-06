@@ -10,7 +10,7 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.buttons import GTK3FontButton
+from pytkwrap.gtk3.font.font_button import GTK3FontButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports

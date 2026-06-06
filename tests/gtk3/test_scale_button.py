@@ -11,7 +11,7 @@ from pubsub import pub
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
-from pytkwrap.gtk3.buttons import GTK3ScaleButton
+from pytkwrap.gtk3.button import GTK3ScaleButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports

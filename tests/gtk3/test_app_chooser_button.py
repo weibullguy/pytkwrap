@@ -10,7 +10,7 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, GObject, Gtk
-from pytkwrap.gtk3.buttons import GTK3AppChooserButton
+from pytkwrap.gtk3.button import GTK3AppChooserButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports

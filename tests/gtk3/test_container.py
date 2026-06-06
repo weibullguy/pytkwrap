@@ -9,7 +9,7 @@ import pytest
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3Container
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports

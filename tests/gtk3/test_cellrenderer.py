@@ -9,8 +9,8 @@ import pytest
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.cellrenderer import GTK3CellRenderer
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRenderer
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
