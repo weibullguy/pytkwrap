@@ -9,9 +9,8 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import GObject, Gtk
-from pytkwrap.gtk3.combobox import GTK3ComboBox
+from pytkwrap.gtk3.io import GTK3ComboBox
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports

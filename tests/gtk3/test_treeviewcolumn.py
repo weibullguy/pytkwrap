@@ -10,8 +10,7 @@ import pytest
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRenderer
-from pytkwrap.gtk3.treeview.treeviewcolumn import GTK3TreeViewColumn
+from pytkwrap.gtk3.treeview import GTK3CellRenderer, GTK3TreeViewColumn
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
