@@ -1,7 +1,7 @@
-"""The pytkwrap GTK3 container package.
+"""The pytkwrap GTK3 input-output package.
 
 NOTE: Sub-modules in this package must import siblings directly
-(e.g. from pytkwrap.gtk3.combo import GTK3ComboBox)
+(e.g. from pytkwrap.gtk3.io.combo import GTK3ComboBox)
 and never through this __init__.py to avoid circular imports.
 
 .. author:: Doyle Rowland
@@ -9,12 +9,10 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-from .bin import GTK3Bin
-from .container import GTK3Container
-from .frame import GTK3Frame
+from .calendar import GTK3Calendar
+from .combobox import GTK3ComboBox
 
 __all__ = [
-    "GTK3Bin",
-    "GTK3Container",
-    "GTK3Frame",
+    "GTK3Calendar",
+    "GTK3ComboBox",
 ]

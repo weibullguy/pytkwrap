@@ -9,7 +9,7 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.combobox import GTK3ComboBox
+from pytkwrap.gtk3.io.combobox import GTK3ComboBox
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 

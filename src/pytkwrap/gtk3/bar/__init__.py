@@ -1,3 +1,4 @@
+# pylint: disable=disallowed-name
 """The pytkwrap GTK3 bar-like container package.
 
 NOTE: Sub-modules in this package must import siblings directly
