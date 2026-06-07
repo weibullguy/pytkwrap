@@ -12,9 +12,11 @@ and never through this __init__.py to avoid circular imports.
 from .checkmenuitem import GTK3CheckMenuItem
 from .menu_button import GTK3MenuButton
 from .menuitem import GTK3MenuItem
+from .radiomenuitem import GTK3RadioMenuItem
 
 __all__ = [
     "GTK3CheckMenuItem",
     "GTK3MenuButton",
     "GTK3MenuItem",
+    "GTK3RadioMenuItem",
 ]

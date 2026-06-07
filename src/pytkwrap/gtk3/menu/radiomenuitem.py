@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 CheckMenuItem module.
+"""The pytkwrap GTK3 RadioMenuItem module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -9,32 +9,30 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.menu.menuitem import GTK3MenuItem
+from pytkwrap.gtk3.menu.checkmenuitem import GTK3CheckMenuItem
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3MenuItem):
-    """Adds GTK3-specific CheckMenuItem attributes."""
+class GTK3RadioMenuItem(Gtk.RadioMenuItem, GTK3CheckMenuItem):
+    """Adds GTK3-specific RadioMenuItem attributes."""
 
-    _GTK3_CHECKMENUITEM_PROPERTIES = GTK3WidgetProperties(
-        active=False,
-        draw_as_radio=False,
-        inconsistent=False,
+    _GTK3_RADIOMENUITEM_PROPERTIES = GTK3WidgetProperties(
+        group=None,
     )
-    _GTK3_CHECKMENUITEM_SIGNALS = [
-        "toggled",
+    _GTK3_RADIOMENUITEM_SIGNALS = [
+        "group-changed",
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3CheckMenuItem."""
-        Gtk.CheckMenuItem.__init__(self)
-        GTK3MenuItem.__init__(self)
+        """Initialize an instance of the GTK3RadioMenuItem."""
+        Gtk.RadioMenuItem.__init__(self)
+        GTK3CheckMenuItem.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
-            {_signal: -1 for _signal in self._GTK3_CHECKMENUITEM_SIGNALS}
+            {_signal: -1 for _signal in self._GTK3_RADIOMENUITEM_SIGNALS}
         )
-        self.dic_properties.update(self._GTK3_CHECKMENUITEM_PROPERTIES)
+        self.dic_properties.update(self._GTK3_RADIOMENUITEM_PROPERTIES)
 
     def do_set_properties(
         self,
@@ -51,6 +49,4 @@ class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3MenuItem):
         # Update the property dictionary.
         super().do_set_properties(properties)
 
-        self.set_active(self.dic_properties["active"])
-        self.set_draw_as_radio(self.dic_properties["draw_as_radio"])
-        self.set_inconsistent(self.dic_properties["inconsistent"])
+        self.set_group(self.dic_properties["group"])
