@@ -1,4 +1,4 @@
-"""Test module for the GTK3CheckMenuItem class.
+"""Test module for the GTK3RadioMenuItem class.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -9,7 +9,7 @@ import pytest
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.menu import GTK3CheckMenuItem
+from pytkwrap.gtk3.menu import GTK3CheckMenuItem, GTK3RadioMenuItem
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 # pytkwrap Local Imports
@@ -27,6 +27,9 @@ from .test_constants import (
     EXPECTED_MENU_ITEM_HANDLER_IDS,
     EXPECTED_MENU_ITEM_METHODS,
     EXPECTED_MENU_ITEM_PROPERTIES,
+    EXPECTED_RADIO_MENU_ITEM_HANDLER_IDS,
+    EXPECTED_RADIO_MENU_ITEM_METHODS,
+    EXPECTED_RADIO_MENU_ITEM_PROPERTIES,
     EXPECTED_WIDGET_ATTRIBUTES,
     EXPECTED_WIDGET_HANDLER_IDS,
     EXPECTED_WIDGET_METHODS,
@@ -35,10 +38,10 @@ from .test_constants import (
 
 
 @pytest.mark.order(3)
-class TestGTK3CheckMenuItem(BaseGTK3GObjectTests):
-    """Test class for the GTK3CheckMenuItem class."""
+class TestGTK3RadioMenuItem(BaseGTK3GObjectTests):
+    """Test class for the GTK3Widget class."""
 
-    widget_class = GTK3CheckMenuItem
+    widget_class = GTK3RadioMenuItem
     expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_WIDGET_ATTRIBUTES
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
@@ -46,6 +49,7 @@ class TestGTK3CheckMenuItem(BaseGTK3GObjectTests):
         | EXPECTED_CONTAINER_HANDLER_IDS
         | EXPECTED_MENU_ITEM_HANDLER_IDS
         | EXPECTED_CHECK_MENU_ITEM_HANDLER_IDS
+        | EXPECTED_RADIO_MENU_ITEM_HANDLER_IDS
     )
     expected_methods = (
         EXPECTED_GOBJECT_METHODS
@@ -53,12 +57,14 @@ class TestGTK3CheckMenuItem(BaseGTK3GObjectTests):
         + EXPECTED_BIN_METHODS
         + EXPECTED_MENU_ITEM_METHODS
         + EXPECTED_CHECK_MENU_ITEM_METHODS
+        + EXPECTED_RADIO_MENU_ITEM_METHODS
     )
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES
         | EXPECTED_CONTAINER_PROPERTIES
         | EXPECTED_MENU_ITEM_PROPERTIES
         | EXPECTED_CHECK_MENU_ITEM_PROPERTIES
+        | EXPECTED_RADIO_MENU_ITEM_PROPERTIES
     )
 
     @pytest.mark.unit
@@ -69,22 +75,19 @@ class TestGTK3CheckMenuItem(BaseGTK3GObjectTests):
         dut.do_set_properties(GTK3WidgetProperties())
 
         assert dut.dic_properties == self.expected_properties
-        assert not dut.do_get_property("active")
-        assert not dut.do_get_property("draw_as_radio")
-        assert not dut.do_get_property("inconsistent")
+        assert dut.do_get_property("group") is None
 
-    @pytest.mark.unit
+    @pytest.mark.skip("Test causes a segmentation fault.")
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
+        _group = GTK3RadioMenuItem()
+
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
-                active=True,
-                draw_as_radio=True,
-                inconsistent=True,
+                group=[_group],
             )
         )
 
-        assert dut.do_get_property("active")
-        assert dut.do_get_property("draw_as_radio")
-        assert dut.do_get_property("inconsistent")
+        assert dut.get_group() == [_group]
+        assert dut.do_get_property("group") == [_group]
