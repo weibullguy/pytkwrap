@@ -8,6 +8,7 @@
 import pytest
 
 # pytkwrap Package Imports
+# noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk  # type: ignore[import-untyped]
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetAttributes
 

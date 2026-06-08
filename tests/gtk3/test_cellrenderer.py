@@ -8,6 +8,7 @@
 import pytest
 
 # pytkwrap Package Imports
+# noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from pytkwrap.gtk3.treeview import GTK3CellRenderer

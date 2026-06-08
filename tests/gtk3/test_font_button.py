@@ -10,6 +10,8 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 from pytkwrap.exceptions import WrongTypeError
+
+# noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.font import GTK3FontButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties

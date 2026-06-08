@@ -15,7 +15,7 @@ except ImportError:
 # Third Party Imports
 from gi.repository import Gdk, GObject, Gtk
 
-EXPECTED_GOBJECT_ATTRIBUTES = {
+EXPECTED_GOBJECT_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
     "canvas": None,
     "column_types": None,
@@ -210,7 +210,7 @@ EXPECTED_TREEVIEW_COLUMN_PROPERTIES = {
     "x_offset": 0,
 }
 
-EXPECTED_WIDGET_ATTRIBUTES = {
+EXPECTED_WIDGET_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
     "canvas": None,
     "column_types": None,
@@ -580,7 +580,7 @@ EXPECTED_CONTAINER_PROPERTIES = {"border_width": 0}
 
 EXPECTED_BIN_METHODS = ["get_child"]
 
-EXPECTED_BUTTON_HANDLER_IDS = {"activate": -1, "clicked": -1}
+EXPECTED_BUTTON_HANDLER_IDS = {"activate": -1, "check-resize": -1, "clicked": -1}
 EXPECTED_BUTTON_METHODS = [
     "clicked",
     "get_always_show_image",

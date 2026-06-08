@@ -8,6 +8,7 @@
 import pytest
 
 # pytkwrap Package Imports
+# noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.menu import GTK3RadioMenuItem
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties

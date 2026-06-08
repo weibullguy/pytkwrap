@@ -1,4 +1,4 @@
-"""Test module for the GTK3Widget class.
+"""Test module for the GTK3MenuItem class.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -8,6 +8,7 @@
 import pytest
 
 # pytkwrap Package Imports
+# noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.menu import GTK3MenuItem
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
@@ -33,7 +34,7 @@ from .test_constants import (
 
 @pytest.mark.order(3)
 class TestGTK3MenuItem(BaseGTK3GObjectTests):
-    """Test class for the GTK3Widget class."""
+    """Test class for the GTK3MenuItem class."""
 
     widget_class = GTK3MenuItem
     expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_WIDGET_ATTRIBUTES

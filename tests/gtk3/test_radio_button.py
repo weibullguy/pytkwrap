@@ -9,7 +9,7 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-# Package Imports
+# noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.button import GTK3RadioButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties

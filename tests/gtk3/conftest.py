@@ -9,6 +9,8 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 from pytkwrap.exceptions import UnkAttributeError, UnkSignalError, WrongTypeError
+
+# noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import GObject, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.common.test_pytkwrap_mixin import TestPyTkWrapMixin
@@ -49,9 +51,11 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
         """Override in subclass if constructor needs arguments."""
         return self.widget_class()
 
-    def mock_callback(self, widget) -> None:
+    def mock_callback(self, widget, unk=None) -> None:
         """Callback method for testing."""
         assert isinstance(widget, self.widget_class)
+        if unk is not None:
+            print(unk)
 
     def mock_handler(self, package):
         """Mock handler for on_changed() calls."""
