@@ -234,7 +234,7 @@ class PyTkWrapMixin:
 
         Parameters
         ----------
-        value : bool | date | float | int | str | None
+        value : bool | date | float | int | object | str | tuple | None
             The value to set for the widget.
 
         Raises
@@ -246,7 +246,6 @@ class PyTkWrapMixin:
             f"{type(self).__name__}.do_set_value()",
             value,
             type(value),
-            "bool or float or int or str",
         )
         pub.sendMessage(
             "do_log_error",

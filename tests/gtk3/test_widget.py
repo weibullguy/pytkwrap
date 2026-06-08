@@ -9,7 +9,11 @@ import pytest
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import (
+    GTK3WidgetAttributes,
+    GTK3WidgetProperties,
+    set_widget_sensitivity,
+)
 from pytkwrap.gtk3.widget import GTK3Widget
 
 # pytkwrap Local Imports
@@ -229,3 +233,30 @@ class TestGTK3Widget(BaseGTK3GObjectTests):
         assert (
             dut.dic_properties["width_request"] == self.expected_default_width
         )  # falls back to _DEFAULT_WIDTH
+
+    @pytest.mark.unit
+    def test_do_set_properties_default_tooltip_markup(self):
+        """Should use tooltip text when tooltip markup is set to default value.."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties(tooltip_text="New tooltip."))
+
+        assert dut.do_get_property("tooltip_markup") == "New tooltip."
+
+    @pytest.mark.unit
+    def test_do_set_properties_default_tooltip_text(self):
+        """Should use tooltip markup when tooltip text is set to default value.."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties(tooltip_markup="New tooltip."))
+
+        assert dut.do_get_property("tooltip_text") == "New tooltip."
+
+
+@pytest.mark.integration
+def test_set_widget_sensitivity():
+    dut1 = GTK3Widget()
+    dut2 = GTK3Widget()
+
+    set_widget_sensitivity([dut1, dut2])
+
+    assert dut1.dic_properties["sensitive"]
+    assert dut2.dic_properties["sensitive"]

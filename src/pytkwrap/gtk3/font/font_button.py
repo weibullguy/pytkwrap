@@ -106,6 +106,6 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
             The name of the font to set the GTK3FontButton active value.
         """
         if not isinstance(value, str):
-            value = self.dic_attributes.get("default_value")
+            super().do_set_value(value)
         self.dic_properties["font_name"] = value
         self.set_font(str(value))

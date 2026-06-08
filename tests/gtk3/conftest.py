@@ -254,7 +254,8 @@ class BaseGTK3DataWidgetTests(BaseGTK3GObjectTests):
     def test_do_update_unknown_signal(self):
         """Should raise an UnkSignalError with an unknown edit signal name."""
         dut = self.make_dut()
-        if hasattr(dut.dic_attributes, "edit_signal"):
+
+        if dut.dic_attributes["edit_signal"] is not None:
             dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
             pub.subscribe(self.do_update_error_handler, "do_log_error")
             pub.subscribe(dut.do_update, "rootTopic")
@@ -263,32 +264,16 @@ class BaseGTK3DataWidgetTests(BaseGTK3GObjectTests):
             with pytest.raises(UnkSignalError):
                 pub.sendMessage("rootTopic", package={-1: "Test Package"})
 
-            assert dut.dic_attributes == self.expected_attributes
-
     @pytest.mark.unit
     def test_do_update_wrong_index(self):
         """Should do nothing when the data package key doesn't match the widget's
         index."""
         dut = self.make_dut()
 
-        if hasattr(dut.dic_attributes, "edit_signal"):
+        if dut.dic_attributes["edit_signal"] is not None:
             dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
             pub.subscribe(dut.do_update, "rootTopic")
 
-            pub.sendMessage("rootTopic", package={-1: False})
+            pub.sendMessage("rootTopic", package={10: False})
 
             assert dut.dic_attributes == self.expected_attributes
-
-    @pytest.mark.unit
-    def test_on_changed_unknown_signal(self):
-        """Should raise a UnkSignalError with an unknown edit signal name."""
-        dut = self.make_dut()
-        if hasattr(dut.dic_attributes, "edit_signal"):
-            dut.dic_attributes["send_topic"] = "color_changed"
-            dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
-            pub.subscribe(self.mock_handler, dut.dic_attributes["send_topic"])
-            pub.subscribe(self.on_changed_error_handler, "do_log_error")
-            dut.dic_attributes["edit_signal"] = "unk_signal"
-
-            with pytest.raises(UnkSignalError):
-                dut.emit("color-set")

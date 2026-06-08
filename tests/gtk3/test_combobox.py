@@ -9,6 +9,7 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import WrongTypeError
 from pytkwrap.gtk3._libs import GObject, Gtk
 from pytkwrap.gtk3.io import GTK3ComboBox
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
@@ -215,6 +216,20 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         assert dut.get_model().get_n_columns() == 2
         assert dut.get_model().get_column_type(0) == GObject.TYPE_INT
         assert dut.get_model().get_column_type(1) == GObject.TYPE_STRING
+
+    @pytest.mark.unit
+    def test_do_get_attribute(self):
+        """Should return the value of the attribute name."""
+        dut = self.make_dut()
+
+        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
+
+    @pytest.mark.unit
+    def test_do_get_attribute_from_super(self):
+        """Should return the value of the attribute name."""
+        dut = self.make_dut()
+
+        assert dut.do_get_attribute("axis") is None
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
@@ -480,6 +495,14 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         dut.set_model(None)
 
         assert dut.do_get_options() == {}
+
+    @pytest.mark.unit
+    def test_do_set_value_wrong_type(self):
+        """Should raise a WrongTypeError when passed a wrong data type."""
+        dut = self.make_dut()
+
+        with pytest.raises(WrongTypeError):
+            dut.do_set_value("2")
 
     @pytest.mark.unit
     def test_get_value_simple(self):

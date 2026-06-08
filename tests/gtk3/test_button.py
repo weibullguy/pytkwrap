@@ -151,6 +151,18 @@ class TestButton(BaseGTK3GObjectTests):
         assert dut.get_property("relief") == Gtk.ReliefStyle.NONE
         assert dut.get_property("use_underline")
 
+    @pytest.mark.unit
+    def test_do_set_properties_none_label(self, image_file):
+        """Should not set the label property when passed label=None."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                label=None,
+            )
+        )
+
+        assert dut.get_property("label") == "..."
+
 
 @pytest.mark.integration
 def test_do_make_buttonbox_vertical(image_file):

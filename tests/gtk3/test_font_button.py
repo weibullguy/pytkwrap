@@ -9,6 +9,7 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import WrongTypeError
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.font import GTK3FontButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
@@ -144,6 +145,23 @@ class TestGTK3FontButton(BaseGTK3DataWidgetTests):
         assert dut.do_get_property("title") == "Choose a Font"
         assert dut.do_get_property("use_font")
         assert dut.do_get_property("use_size")
+
+    @pytest.mark.unit
+    def test_do_set_value(self):
+        """Should set the font value."""
+        dut = self.make_dut()
+        dut.do_set_value("Arial 12")
+
+        assert dut.do_get_property("font_name") == "Arial 12"
+        assert dut.get_font() == "Arial 12"
+
+    @pytest.mark.unit
+    def test_do_set_value_wrong_type(self):
+        """Should raise a WrongTypeError if passed a wrong type."""
+        dut = self.make_dut()
+
+        with pytest.raises(WrongTypeError):
+            dut.do_set_value(12)
 
     @pytest.mark.unit
     def test_do_update(self):

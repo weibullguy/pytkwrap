@@ -418,28 +418,12 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
         __widget : GTK3Widget
             The widget that was changed. Unused but required to satisfy the Gtk.Widget()
             callback method structure.
-
-        Raises
-        ------
-        UnkSignalError
-            If the signal name is not valid for this widget.
         """
         _package = {self.dic_attributes["index"]: self.do_get_value()}
-        try:
-            pub.sendMessage(
-                self.dic_attributes["send_topic"],
-                package=_package,
-            )
-        except KeyError as exc:
-            _error_msg = self.dic_error_message["unk_signal"].format(
-                f"{type(self).__name__}.on_changed()",
-                self.dic_attributes["edit_signal"],
-            )
-            pub.sendMessage(
-                "do_log_error",
-                message=_error_msg,
-            )
-            raise UnkSignalError(_error_msg) from exc
+        pub.sendMessage(
+            self.dic_attributes["send_topic"],
+            package=_package,
+        )
 
     def _block_edit_handlers(self) -> GObject._HandlerBlockManager:
         """Block the signal handlers for the widget.

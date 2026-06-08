@@ -130,13 +130,9 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
         """
         if not isinstance(value, (date, tuple)):
             super().do_set_value(value)
-            return
 
         if isinstance(value, tuple):
             value = date(*value)
 
-        if value.month > 0:
-            self.select_month(value.month - 1, value.year)
-
-        if value.day > 0:
-            self.select_day(value.day)
+        self.select_month(value.month - 1, value.year)
+        self.select_day(value.day)

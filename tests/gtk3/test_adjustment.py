@@ -12,6 +12,7 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import WrongTypeError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
@@ -167,6 +168,18 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
         for _value in self.expected_set_value:
             dut.do_set_value(_value[0])
             assert dut.do_get_value() == _value[1]
+
+    @pytest.mark.unit
+    def test_do_set_value_wrong_type(self):
+        """Should raise the WrongTypeError when passed None, date, or a tuple."""
+        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
+
+        with pytest.raises(WrongTypeError):
+            dut.do_set_value(None)
+        with pytest.raises(WrongTypeError):
+            dut.do_set_value(date.today())
+        with pytest.raises(WrongTypeError):
+            dut.do_set_value((1.0, 3.2))
 
     @pytest.mark.unit
     def test_do_get_value(self):

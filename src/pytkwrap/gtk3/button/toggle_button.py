@@ -93,6 +93,5 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
         """
         if not isinstance(value, (bool, float, int)):
             super().do_set_value(value)
-            return
         self.dic_properties["active"] = bool(value)
         self.set_active(bool(value))

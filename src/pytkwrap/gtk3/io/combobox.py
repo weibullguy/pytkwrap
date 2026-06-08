@@ -257,8 +257,7 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
             The index of the item in the GTK3ComboBox to set active.
         """
         if not isinstance(value, (float, int)):
-            return
-
+            super().do_set_value(value)
         self.set_active(int(value))
 
     def get_value_at_index(self, display_index: int = -1) -> str:

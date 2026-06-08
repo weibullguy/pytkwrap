@@ -144,5 +144,4 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         """
         if value is None or isinstance(value, (date, tuple)):
             super().do_set_value(value)
-            return
         self.set_value(float(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
