@@ -9,6 +9,7 @@
 
 # -- Project information -----------------------------------------------------
 project = "pytkwrap"
+# noinspection PyShadowingBuiltins
 copyright = (  # pylint: disable=redefined-builtin
     'since 2007, Doyle "weibullguy" Rowland'
 )
