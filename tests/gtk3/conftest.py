@@ -1,14 +1,12 @@
 # Standard Library Imports
 import os
-import sys
-from io import StringIO
 
 # Third Party Imports
 import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkAttributeError, UnkSignalError, WrongTypeError
+from pytkwrap.exceptions import UnkSignalError, WrongTypeError
 
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import GObject, Gtk
