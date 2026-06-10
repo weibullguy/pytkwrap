@@ -155,6 +155,12 @@ EXPECTED_CELLRENDERERPROGRESS_PROPERTIES = {
     "value": 0,
 }
 
+EXPECTED_CELLRENDERESPINNER_PROPERTIES = {
+    "active": False,
+    "pulse": 0,
+    "size": Gtk.IconSize.MENU,
+}
+
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TREEVIEW_COLUMN_METHODS = [
     "add_attribute",
