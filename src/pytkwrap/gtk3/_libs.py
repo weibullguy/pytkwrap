@@ -20,6 +20,7 @@ except ImportError:
     print("Failed to import package gi; exiting.")
     sys.exit(1)
 # Third Party Imports
+import cairo  # noqa
 from gi.repository import Gdk  # noqa
 from gi.repository import GdkPixbuf  # noqa
 from gi.repository import Gio  # noqa

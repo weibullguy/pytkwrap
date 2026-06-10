@@ -10,6 +10,7 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .cellrenderer import GTK3CellRenderer
+from .cellrendererpixbuf import GTK3CellRendererPixbuf
 
 # from .cellrenderercombo import GTK3CellRendererCombo
 # from .cellrendererspin import GTK3CellRendererSpin
@@ -21,6 +22,7 @@ from .treeviewcolumn import GTK3TreeViewColumn
 __all__ = [
     "GTK3CellRenderer",
     # "GTK3CellRendererCombo",
+    "GTK3CellRendererPixbuf",
     # "GTK3CellRendererSpin",
     # "GTK3CellRendererText",
     # "GTK3CellRendererToggle",
