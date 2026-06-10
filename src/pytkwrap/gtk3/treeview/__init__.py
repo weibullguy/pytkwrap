@@ -12,6 +12,7 @@ and never through this __init__.py to avoid circular imports.
 from .cellrenderer import GTK3CellRenderer
 from .cellrendererpixbuf import GTK3CellRendererPixbuf
 from .cellrendererprogress import GTK3CellRendererProgress
+from .cellrendererspinner import GTK3CellRendererSpinner
 
 # from .cellrenderercombo import GTK3CellRendererCombo
 # from .cellrendererspin import GTK3CellRendererSpin
@@ -25,6 +26,7 @@ __all__ = [
     # "GTK3CellRendererCombo",
     "GTK3CellRendererPixbuf",
     "GTK3CellRendererProgress",
+    "GTK3CellRendererSpinner",
     # "GTK3CellRendererSpin",
     # "GTK3CellRendererText",
     # "GTK3CellRendererToggle",
