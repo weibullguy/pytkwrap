@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Bin module.
+"""The pytkwrap GTK3Bin module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -10,8 +10,9 @@ from pytkwrap.gtk3.container.container import GTK3Container
 
 
 class GTK3Bin(Gtk.Bin, GTK3Container):
-    """Wrapper for Gtk.Bin."""
+    """Wrapper for version 3.0 Gtk.Bin."""
 
     def __init__(self) -> None:
+        """Initialize an instance of the GTK3Bin."""
         Gtk.Bin.__init__(self)
         GTK3Container.__init__(self)

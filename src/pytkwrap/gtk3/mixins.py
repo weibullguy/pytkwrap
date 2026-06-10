@@ -313,7 +313,7 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GObjectMixin."""
+        """Initialize an instance of the GTK3GObjectMixin."""
         GObject.Object.__init__(self)
         PyTkWrapMixin.__init__(self)
 
@@ -328,7 +328,7 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
         callback: FunctionType,
         after: bool = False,
     ) -> None:
-        """Set the callback method for the GObjectMixin.
+        """Set the callback method for the GTK3GObjectMixin.
 
         Parameters
         ----------
@@ -430,12 +430,13 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
 
         Returns
         -------
-        GObject._HandlerBlockManager
+        GObject._HandlerBlockManager | None
         """
         _signals = self.dic_attributes["edit_signal"]
         if not isinstance(_signals, list):
             _signals = [self.dic_attributes["edit_signal"]]
 
+        _blockmgr = None
         for _signal in _signals:
             _hid = self.dic_handler_id[_signal]
             _blockmgr: GObject._HandlerBlockManager = (

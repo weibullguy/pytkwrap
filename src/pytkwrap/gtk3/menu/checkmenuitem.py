@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 CheckMenuItem module.
+"""The pytkwrap GTK3CheckMenuItem module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3MenuItem):
-    """Adds GTK3-specific CheckMenuItem attributes."""
+    """Wrapper for version 3.0 Gtk.CheckMenuItem."""
 
     _GTK3_CHECKMENUITEM_PROPERTIES = GTK3WidgetProperties(
         active=False,
@@ -40,13 +40,13 @@ class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3MenuItem):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the values of the GTK3-specific properties.
+        """Set the values of the GTK3ChecKMenuItem-specific properties.
 
         Parameters
         ----------
-        properties : GTK3MenuItemProperties | list[list | tuple]
-            The typed dict (preferred) or list of lists or list of tuples with the
-            property values to set for the GTK3MenuItem.
+        properties : GTK3WidgetProperties | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3CheckMenuItem.
         """
         # Update the property dictionary.
         super().do_set_properties(properties)

@@ -9,7 +9,6 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-# RAMSTK Local Imports
 from .base_dialog import RAMSTKBaseDialog  # noqa: F401
 from .database_select_dialog import RAMSTKDatabaseSelectDialog  # noqa: F401
 from .date_select_dialog import RAMSTKDateSelectDialog  # noqa: F401

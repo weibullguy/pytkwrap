@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Volume Button module.
+"""The pytkwrap GTK3VolumeButton module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -13,7 +13,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
-    """The GTK3VolumeButton class."""
+    """Wrapper for version 3.0 Gtk.VolumeButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30

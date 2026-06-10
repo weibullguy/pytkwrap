@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Calendar module.
+"""The pytkwrap GTK3Calendar module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -16,7 +16,7 @@ from pytkwrap.gtk3.widget import GTK3Widget
 
 
 class GTK3Calendar(Gtk.Calendar, GTK3Widget):
-    """Wrapper for Gtk.Calendar."""
+    """Wrapper for version 3.0 Gtk.Calendar."""
 
     _GTK3_CALENDAR_ATTRIBUTES = PyTkWrapAttributes(
         default_value=date.today(),
@@ -52,6 +52,7 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
     ]
 
     def __init__(self) -> None:
+        """Initialize an instance of the GTK3Calendar."""
         Gtk.Calendar.__init__(self)
         GTK3Widget.__init__(self)
 
@@ -84,13 +85,13 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the properties of the GTK3Calendar.
+        """Set the values of the GTK3Calendar-specific properties.
 
         Parameters
         ----------
         properties : GTK3WidgetProperties | dict | list[list | tuple]
-            The typed dict, preferred, non-typed dict, list of lists, or list of tuples
-            with the property values to set for the GTK3Adjustment.
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3Calendar.
         """
         # Update the property dictionary.
         super().do_set_properties(properties)
@@ -121,12 +122,12 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None:
-        """Set the value of the GTK3Calendar.
+        """Set the current value of the GTK3Calendar.
 
         Parameters
         ----------
-        value : date
-            The datetime.date to set the value of the GTK3Calendar.
+        value : bool | date | float | int | object | str | tuple | None
+            The value to set for the GTK3Calendar..
         """
         if not isinstance(value, (date, tuple)):
             super().do_set_value(value)

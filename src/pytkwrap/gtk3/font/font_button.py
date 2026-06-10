@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Font Button module.
+"""The pytkwrap GTK3FontButton module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -16,7 +16,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3FontButton(Gtk.FontButton, GTK3Button):
-    """The GTK3FontButton class."""
+    """Wrapper for version 3.0 Gtk.FontButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -38,7 +38,7 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3FontButton widget."""
+        """Initialize an instance of the GTK3FontButton."""
         Gtk.FontButton.__init__(self)
         GTK3Button.__init__(self)
 
@@ -53,7 +53,7 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the properties of the GTK3FontButton.
+        """Set the values of the GTK3FontButton-specific properties.
 
         Note
         ----
@@ -62,8 +62,9 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the GTK3FontButton.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3FontButton.
         """
         super().do_set_properties(properties)
 
@@ -75,7 +76,7 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
         self.set_use_size(self.dic_properties["use_size"])
 
     def do_get_value(self) -> bool | date | float | int | object | str | None:
-        """Retrieve the name of the currently selected font in the GTK3FontButton.
+        """Return the current value of the GTK3FontButton.
 
         Note
         ----
@@ -93,7 +94,7 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
         self,
         value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
-        """Set the GTK3FontButton active value.
+        """Set the current value of the GTK3FontButton.
 
         Note
         ----
@@ -105,7 +106,7 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
         value : str
             The name of the font to set the GTK3FontButton active value.
         """
-        if not isinstance(value, str):
+        if isinstance(value, (bool, date, float, int, tuple)):
             super().do_set_value(value)
         self.dic_properties["font_name"] = value
         self.set_font(str(value))

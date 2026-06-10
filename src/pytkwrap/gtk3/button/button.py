@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Button module.
+"""The pytkwrap GTK3Button module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -86,7 +86,7 @@ def do_make_buttonbox(
 
 
 class GTK3Button(Gtk.Button, GTK3Bin):
-    """The GTK3Button class."""
+    """Wrapper for version 3.0 Gtk.Button."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -139,8 +139,8 @@ class GTK3Button(Gtk.Button, GTK3Bin):
         Parameters
         ----------
         properties : GTK3WidgetProperties | dict | list[list | tuple]
-         the WidgetProperties dict with the property values to set for
-            the Button.
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3Button.
         """
         super().do_set_properties(properties)
 

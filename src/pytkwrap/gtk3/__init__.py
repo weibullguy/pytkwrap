@@ -80,8 +80,21 @@ from .io import GTK3Calendar, GTK3ComboBox
 #    GTK3Layout,
 #    GTK3Table,
 # )
-from .menu import GTK3CheckMenuItem, GTK3MenuButton, GTK3MenuItem, GTK3RadioMenuItem
-from .mixins import GTK3GObjectMixin, GTK3WidgetProperties, set_widget_sensitivity
+from .menu import (
+    GTK3CheckMenuItem,
+    GTK3ImageMenuItem,
+    GTK3MenuButton,
+    GTK3MenuItem,
+    GTK3RadioMenuItem,
+    GTK3SeparatorMenuItem,
+    GTK3TearoffMenuItem,
+)
+from .mixins import (
+    GTK3GObjectMixin,
+    GTK3WidgetAttributes,
+    GTK3WidgetProperties,
+    set_widget_sensitivity,
+)
 
 # from .panel import (
 #    GTK3BasePanel,
@@ -216,7 +229,7 @@ __all__ = [
     #    "GTK3IconInfo",
     #    "GTK3IconTheme",
     #    "GTK3IconView",
-    #    "GTK3ImageMenuItem",
+    "GTK3ImageMenuItem",
     #    "GTK3InfoBar",
     #    "GTK3Label",
     #    "GTK3Layout",
@@ -262,7 +275,7 @@ __all__ = [
     "GTK3ScaleButton",
     #    "GTK3SearchBar",
     #    "GTK3SearchEntry",
-    #    "GTK3SeparatorMenuItem",
+    "GTK3SeparatorMenuItem",
     #    "GTK3SeparatorToolButton",
     #    "GTK3ShortcutsLabel",
     #    "GTK3ShortcutsGroup",
@@ -277,7 +290,7 @@ __all__ = [
     #    "GTK3StatusIcon",
     #    "GTK3StyleContext",
     #    "GTK3Table",
-    #    "GTK3TearoffMenuItem",
+    "GTK3TearoffMenuItem",
     #    "GTK3TextBuffer",
     #    "GTK3TextChildAnchor",
     #    "GTK3TextMark",
@@ -303,6 +316,7 @@ __all__ = [
     #    "GTK3Viewport",
     "GTK3VolumeButton",
     "GTK3Widget",
+    "GTK3WidgetAttributes",
     "GTK3WidgetProperties",
     #    "GTK3Window",
     #    "GTK3WindowGroup",

@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Container module.
+"""The pytkwrap GTK3Container module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,7 @@ from pytkwrap.gtk3.widget import GTK3Widget
 
 
 class GTK3Container(Gtk.Container, GTK3Widget):
-    """Wrapper for Gtk.Container."""
+    """Wrapper for version 3.0 Gtk.Container."""
 
     _GTK3_CONTAINER_PROPERTIES = GTK3WidgetProperties(
         border_width=0,
@@ -27,6 +27,7 @@ class GTK3Container(Gtk.Container, GTK3Widget):
     ]
 
     def __init__(self) -> None:
+        """Initialize an instance of the GTK3Container."""
         Gtk.Container.__init__(self)
         GTK3Widget.__init__(self)
 
@@ -39,13 +40,13 @@ class GTK3Container(Gtk.Container, GTK3Widget):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the properties of the GTK3Calendar.
+        """Set the values of the GTK3Container-specific properties.
 
         Parameters
         ----------
         properties : GTK3WidgetProperties | dict | list[list | tuple]
-            The typed dict, preferred, non-typed dict, list of lists, or list of tuples
-            with the property values to set for the GTK3Container.
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3Container.
         """
         # Update the property dictionary.
         super().do_set_properties(properties)

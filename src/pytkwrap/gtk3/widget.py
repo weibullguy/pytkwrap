@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Widget module.
+"""The pytkwrap GTK3Widget module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -17,7 +17,7 @@ from pytkwrap.gtk3.mixins import (
 
 
 class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
-    """Adds GTK3-specific widget attributes."""
+    """Wrapper for version 3.0 Gtk.Widget."""
 
     _DEFAULT_HEIGHT = -1
     _DEFAULT_WIDTH = -1
@@ -80,7 +80,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3WidgetMixin."""
+        """Initialize an instance of the GTK3Widget."""
         Gtk.Widget.__init__(self)
         GTK3GObjectMixin.__init__(self)
 
@@ -97,13 +97,13 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the values of the GTK3-specific properties.
+        """Set the values of the GTK3Widget-specific properties.
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties | list[list | tuple]
-            The typed dict (preferred) or list of lists or list of tuples with the
-            property values to set for the GTK3Widget.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3Widget.
         """
         # Update the property dictionary.
         super().do_set_properties(properties)

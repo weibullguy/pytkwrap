@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 RadioMenuItem module.
+"""The pytkwrap GTK3RadioMenuItem module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3RadioMenuItem(Gtk.RadioMenuItem, GTK3CheckMenuItem):
-    """Adds GTK3-specific RadioMenuItem attributes."""
+    """Wrapper for version 3.0 Gtk.RadioMenuItem."""
 
     _GTK3_RADIOMENUITEM_PROPERTIES = GTK3WidgetProperties(
         group=None,
@@ -38,13 +38,13 @@ class GTK3RadioMenuItem(Gtk.RadioMenuItem, GTK3CheckMenuItem):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the values of the GTK3-specific properties.
+        """Set the values of the GTK3RadioMenuItem-specific properties.
 
         Parameters
         ----------
-        properties : GTK3MenuItemProperties | list[list | tuple]
-            The typed dict (preferred) or list of lists or list of tuples with the
-            property values to set for the GTK3MenuItem.
+        properties : GTK3WidgetProperties | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3RadioMenuItem.
         """
         # Update the property dictionary.
         super().do_set_properties(properties)

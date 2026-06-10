@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Radio Button module.
+"""The pytkwrap GTK3RadioButton module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3RadioButton(Gtk.RadioButton, GTK3CheckButton):
-    """The GTK3RadioButton class."""
+    """Wrapper for version 3.0 Gtk.RadioButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 40
@@ -34,6 +34,8 @@ class GTK3RadioButton(Gtk.RadioButton, GTK3CheckButton):
         label : str
             The text to display in the GTK3RadioButton label.  The default value is
             an ellipsis (...).
+        group : Gtk.RadioButton | None
+            The group to which the GTK3RadioButton belongs.
         """
         Gtk.RadioButton.__init__(self, label=label)
         GTK3CheckButton.__init__(self, label=label)
@@ -54,8 +56,9 @@ class GTK3RadioButton(Gtk.RadioButton, GTK3CheckButton):
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the GTK3ColorButton.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3RadioButton.
         """
         super().do_set_properties(properties)
 

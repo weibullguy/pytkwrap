@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Toggle Button module.
+"""The pytkwrap GTK3ToggleButton module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -16,7 +16,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
-    """The GTK3ToggleButton class."""
+    """Wrapper for version 3.0 Gtk.ToggleButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -61,8 +61,9 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the GTK3ToggleButton.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3ToggleButton.
         """
         super().do_set_properties(properties)
 
@@ -71,12 +72,12 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
         self.set_mode(self.dic_properties["draw_indicator"])
 
     def do_get_value(self) -> bool | date | float | int | object | str | None:
-        """Retrieve the state of the GTK3ToggleButton.
+        """Return the current value of the GTK3ToggleButton.
 
         Returns
         -------
         bool
-            Whether the GTK3ToggleButton is active (pressed) or not.
+            The current value of the GTK3ToggleButton.
         """
         return self.get_active()
 
@@ -84,12 +85,12 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
         self,
         value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
-        """Set the GTK3ToggleButton active value.
+        """Set the current value of the GTK3ToggleButton.
 
         Parameters
         ----------
-        value : bool | float | int
-            The value to set the GTK3ToggleButton active value.
+        value : bool | date | float | int | object | str | tuple | None
+            The value to set for the GTK3ToggleButton.
         """
         if not isinstance(value, (bool, float, int)):
             super().do_set_value(value)

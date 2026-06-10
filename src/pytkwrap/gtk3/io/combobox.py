@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 ComboBox module.
+"""The pytkwrap GTK3ComboBox module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -21,7 +21,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
 class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
-    """The GTK3ComboBox class."""
+    """Wrapper for version 3.0 Gtk.ComboBox."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT: int = 30
@@ -67,7 +67,7 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
         column_types: list[EllipsisType] | list[GObject.GType] | None = None,
         has_entry: bool = False,
     ) -> None:
-        """Initialize an instance of the GTK3ComboBox widget.
+        """Initialize an instance of the GTK3ComboBox.
 
         Parameters
         ----------
@@ -115,7 +115,7 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
         self,
         attribute: str,
     ) -> bool | date | float | int | object | str | None:
-        """Get the value of the requested BaseWidget attribute.
+        """Get the value of the requested attribute.
 
         Parameters
         ----------
@@ -124,7 +124,7 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
 
         Returns
         -------
-        bool | date | float | int | str | None
+        bool | date | float | int | object | str | None
             The value of the requested attribute.
         """
         if attribute in self._GTK3_COMBOBOX_ATTRIBUTES:
@@ -132,12 +132,13 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
         return super().do_get_attribute(attribute)
 
     def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
-        """Set the GTK3ComboBox attributes.
+        """Set the values of the GTK3ComboBox-specific attributes.
 
         Parameters
         ----------
         attributes : GTK3WidgetAttributes
-            Typed dict with the attribute values to set for the widget.
+            The typed dict, preferred, or non-typed dict with the attribute values to
+            set for the GTK3ComboBox.
         """
         super().do_set_attributes(attributes)
 
@@ -150,12 +151,13 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None:
-        """Set the properties of the GTK3ComboBox.
+        """Set the values of the GTK3ComboBox-specific properties.
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the GTK3ComboBox.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3ComboBox.
         """
         super().do_set_properties(properties)
 

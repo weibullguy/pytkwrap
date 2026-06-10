@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 MenuItem module.
+"""The pytkwrap GTK3MenuItem module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3MenuItem(Gtk.MenuItem, GTK3Bin):
-    """Adds GTK3-specific MenuItem attributes."""
+    """Wrapper for version 3.0 Gtk.MenuItem."""
 
     _GTK3_MENUITEM_PROPERTIES = GTK3WidgetProperties(
         accel_path=None,
@@ -32,7 +32,7 @@ class GTK3MenuItem(Gtk.MenuItem, GTK3Bin):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3MenuItemMixin."""
+        """Initialize an instance of the GTK3MenuItem."""
         Gtk.MenuItem.__init__(self)
         GTK3Bin.__init__(self)
 
@@ -46,13 +46,13 @@ class GTK3MenuItem(Gtk.MenuItem, GTK3Bin):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the values of the GTK3-specific properties.
+        """Set the values of the GTK3MenuItem-specific properties.
 
         Parameters
         ----------
-        properties : GTK3MenuItemProperties | list[list | tuple]
-            The typed dict (preferred) or list of lists or list of tuples with the
-            property values to set for the GTK3MenuItem.
+        properties : GTK3WidgetProperties | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3MenuItem.
         """
         # Update the property dictionary.
         super().do_set_properties(properties)

@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Adjustment module.
+"""The pytkwrap GTK3Adjustment module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -10,6 +10,8 @@ from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
+
+# noinspection PyUnresolvedReferences
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import (
     GTK3GObjectMixin,
@@ -19,7 +21,7 @@ from pytkwrap.gtk3.mixins import (
 
 
 class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
-    """Wrapper for Gtk.Adjustment."""
+    """Wrapper for version 3.0 Gtk.Adjustment."""
 
     _GTK3_ADJUSTMENT_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
@@ -47,6 +49,23 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         page_increment: float = 0.0,
         page_size: float = 0.0,
     ) -> None:
+        """Initialize an instance of the GTK3Adjustment.
+
+        Parameters
+        ----------
+        value : float
+            The value between the lower and upper bound to set for the GTK3Adjustment.
+        lower : float
+            The smallest value the GTK3Adjustment can take.
+        upper : float
+            The largest value the GTK3Adjustment can take.
+        step_increment : float
+            The step increment for the GTK3Adjustment.
+        page_increment : float
+            The page increment for the GTK3Adjustment.
+        page_size : float
+            The page size of the GTK3Adjustment.
+        """
         Gtk.Adjustment.__init__(self)
         GTK3GObjectMixin.__init__(self)
 
@@ -73,23 +92,28 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
     ) -> bool | date | float | int | object | str | None:
         """Get the value of the requested attribute.
 
+        Parameters
+        ----------
+        attribute : str
+            The name of the attribute to retrieve.
+
         Returns
         -------
-        bool | date | float | int | str | None
+        bool | date | float | int | object | str | None
             The value of the requested attribute.
         """
         if attribute in self._GTK3_ADJUSTMENT_ATTRIBUTES:
             return self.dic_attributes.get(attribute)
-
         return super().do_get_attribute(attribute)
 
     def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
-        """Set the GTK3Adjustment attributes.
+        """Set the values of the GTK3Adjustment-specific attributes.
 
         Parameters
         ----------
-        attributes : PyTkWrapAttributes
-            Typed dict with the attribute values to set for the widget.
+        attributes : GTK3WidgetAttributes
+            The typed dict (preferred), or non-typed dict with the attribute values to
+            set for the GTK3Adjustment.
         """
         super().do_set_attributes(attributes)
 
@@ -103,12 +127,12 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the properties of the GTK3Adjustment.
+        """Set the values of the GTK3Adjustment-specific properties.
 
         Parameters
         ----------
         properties : GTK3WidgetProperties | dict | list[list | tuple]
-            The typed dict, preferred, non-typed dict, list of lists, or list of tuples
+            The typed dict (preferred), non-typed dict, list of lists, or list of tuples
             with the property values to set for the GTK3Adjustment.
         """
         # Update the property dictionary.

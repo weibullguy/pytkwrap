@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 TreeViewColumn module.
+"""The pytkwrap GTK3TreeViewColumn module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,7 @@ from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRenderer
 
 
 class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
-    """Wrapper for Gtk.TreeViewColumnt."""
+    """Wrapper for version 3.0 Gtk.TreeViewColumn."""
 
     _GTK3_TREEVIEWCOLUMN_PROPERTIES = GTK3WidgetProperties(
         alignment=0.0,
@@ -47,6 +47,7 @@ class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
         cell_renderer: GTK3CellRenderer | None = None,
         cell_area: Gtk.CellArea | None = None,
     ) -> None:
+        """Initialize an instance of the GTK3TreeViewColumn."""
         Gtk.TreeViewColumn.__init__(self, title, cell_renderer)
         GTK3GObjectMixin.__init__(self)
 
@@ -62,13 +63,13 @@ class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the properties of the GTK3TreeViewColumn.
+        """Set the values of the GTK3TreeViewColumn-specific properties.
 
         Parameters
         ----------
         properties : GTK3WidgetProperties | dict | list[list | tuple]
-            The typed dict, preferred, non-typed dict, list of lists, or list of tuples
-            with the property values to set for the GTK3Adjustment.
+            The typed dict (preferred), non-typed dict, list of lists, or list of tuples
+            with the property values to set for the GTK3TreeViewColumn.
         """
         # Update the property dictionary.
         self.dic_properties |= properties

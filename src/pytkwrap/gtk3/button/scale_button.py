@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Scale Button module.
+"""The pytkwrap GTK3ScaleButton module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -16,7 +16,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
-    """The GTK3ScaleButton class."""
+    """Wrapper for version 3.0 Gtk.ScaleButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -57,8 +57,9 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the GTK3ScaleButton.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3ScaleButton.
         """
         super().do_set_properties(properties)
 
@@ -71,12 +72,12 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
         self.set_value(self.dic_properties["value"])
 
     def do_get_value(self) -> bool | date | float | int | object | str | None:
-        """Retrieve the value displayed in the GTK3ScaleButton.
+        """Return the current value of the GTK3ScaleButton.
 
         Returns
         -------
         float
-            The value displayed in the GTK3ScaleButton.
+            The current value of the GTK3ScaleButton.
         """
         return self.get_value()
 
@@ -84,12 +85,12 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
         self,
         value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
-        """Set the GTK3ScaleButton active value.
+        """Set the current value of the GTK3ScaleButton.
 
         Parameters
         ----------
-        value : bool | float | int | str
-            The value to set the GTK3ScaleButton active value.
+        value : bool | date | float | int | object | str | tuple | None
+            The value to set for the GTK3ScaleButton.
         """
         # Boolean values are also of type int.  False is 0, True is 1.
         if not isinstance(value, (float, int, str)):

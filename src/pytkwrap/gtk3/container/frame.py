@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Frame module.
+"""The pytkwrap GTK3Frame module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3Frame(Gtk.Frame, GTK3Bin):
-    """The GTK3Frame class."""
+    """Wrapper for version 3.0 Gtk.Frame."""
 
     _GTK3_FRAME_PROPERTIES = GTK3WidgetProperties(
         label=None,
@@ -25,7 +25,7 @@ class GTK3Frame(Gtk.Frame, GTK3Bin):
     )
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3Frame widget."""
+        """Initialize an instance of the GTK3Frame."""
         Gtk.Frame.__init__(self)
         GTK3Bin.__init__(self)
 
@@ -35,12 +35,13 @@ class GTK3Frame(Gtk.Frame, GTK3Bin):
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None:
-        """Set the properties of the GTK3Frame.
+        """Set the values of the GTK3Frame-specific properties.
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties
-            THe typed dict with the property values to set for the GTK3Frame.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3Frame.
         """
         super().do_set_properties(properties)
 

@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 App Chooser Button module.
+"""The pytkwrap GTK3AppChooserButton module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
-    """The GTK3AppChooserButton class."""
+    """Wrapper for version 3.0 Gtk.AppChooserButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -45,13 +45,13 @@ class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the properties of the AppChooserButton.
+        """Set the properties of the GTK3AppChooserButton.
 
         Parameters
         ----------
         properties : GTK3WidgetProperties | dict | list[list | tuple]
-         the WidgetProperties dict with the property values to set for
-            the AppChooserButton.
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3AppChooserButton.
         """
         super().do_set_properties(properties)
 

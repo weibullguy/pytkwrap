@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 CellRenderer module.
+"""The pytkwrap GTK3CellRenderer module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -13,7 +13,7 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
-    """Wrapper for Gtk.CellRenderert."""
+    """Wrapper for version 3.0 Gtk.CellRenderer."""
 
     _GTK3_CELLRENDERER_PROPERTIES = GTK3WidgetProperties(
         cell_background=None,
@@ -37,6 +37,7 @@ class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
     ]
 
     def __init__(self) -> None:
+        """Initialize an instance of the GTK3CellRenderer."""
         Gtk.CellRenderer.__init__(self)
         GTK3GObjectMixin.__init__(self)
 
@@ -49,13 +50,13 @@ class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the properties of the GTK3CellRenderer.
+        """Set the values of the GTK3CellRenderer-specific properties.
 
         Parameters
         ----------
         properties : GTK3WidgetProperties | dict | list[list | tuple]
-            The typed dict, preferred, non-typed dict, list of lists, or list of tuples
-            with the property values to set for the GTK3Adjustment.
+            The typed dict (preferred), non-typed dict, list of lists, or list of tuples
+            with the property values to set for the GTK3CellRenderer.
         """
         # Update the property dictionary.
         self.dic_properties |= properties

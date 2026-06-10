@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Color Button module.
+"""The pytkwrap GTK3ColorButton module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -15,7 +15,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
 class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
-    """The GTK3ColorButton class."""
+    """Wrapper for version 3.0 Gtk.ColorButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -36,7 +36,7 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3ColorButton widget."""
+        """Initialize an instance of the GTK3ColorButton."""
         Gtk.ColorButton.__init__(self)
         GTK3Button.__init__(self)
 
@@ -51,12 +51,13 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the properties of the GTK3ColorButton.
+        """Set the values of the GTK3ColorButton-specific properties.
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the GTK3ColorButton.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3ColorButton.
         """
         super().do_set_properties(properties)
 
@@ -73,12 +74,12 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
             )
 
     def do_get_value(self) -> bool | date | float | int | object | str | None:
-        """Retrieve the Gtk.RGBA displayed in the GTK3ColorButton.
+        """Return the current value of the GTK3ColorButton.
 
         Returns
         -------
         Gdk.RGBA
-            The Gdk.RGBA displayed in the GTK3ColorButton.
+            The current Gdk.RGBA displayed in the GTK3ColorButton.
         """
         return self.get_rgba()
 
@@ -86,12 +87,12 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
         self,
         value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
-        """Set the GTK3ColorButton active value.
+        """Set the current value of the GTK3ColorButton.
 
         Parameters
         ----------
         value : Gtk.RGBA
-            The Gtk.RGBA to set the GTK3ColorButton active value.
+            The Gtk.RGBA to set for the GTK3ColorButton.
         """
         if value is None:
             value = Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
