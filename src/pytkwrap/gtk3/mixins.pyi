@@ -17,6 +17,7 @@ from pytkwrap.gtk3._libs import GLib as GLib
 from pytkwrap.gtk3._libs import GObject as GObject
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3._libs import Pango as Pango
+from pytkwrap.gtk3._libs import cairo as cairo
 from pytkwrap.utilities import none_to_default as none_to_default
 
 class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
@@ -94,6 +95,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     font_name: str
     foreground: str
     foreground_rgba: Gdk.RGBA | None
+    gicon: Gio.Icon | None
     group: Gtk.RadioButton | None
     hadjustment: Gtk.Adjustment | None
     halign: Gtk.Align | None
@@ -112,6 +114,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     hscrollbar_policy: Gtk.PolicyType | None
     icon: str
     icons: list[str]
+    icon_name: str | None
     id_column: int
     image: Gtk.Widget | None
     image_position: Gtk.PositionType
@@ -170,6 +173,9 @@ class GTK3WidgetProperties(TypedDict, total=False):
     page_size: float
     parent: Gtk.Container | None
     pattern: str | None
+    pixbuf: Gdk.Pixbuf.Pixbuf | None
+    pixbuf_expander_closed: Gdk.Pixbuf.Pixbuf | None
+    pixbuf_expander_open: Gdk.Pixbuf.Pixbuf | None
     pixels_above_lines: int
     pixels_below_lines: int
     pixels_inside_wrap: int
@@ -240,8 +246,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     sort_order: Gtk.SortType | None
     spacing: int
     step_increment: float
+    stock_detail: str | None
+    stock_size: int
     style: Gtk.Style | None
     submenu: Gtk.Menu | None
+    surface: cairo.Surface | None
     tabs: Pango.TabArray | None
     text: str
     text_column: int
