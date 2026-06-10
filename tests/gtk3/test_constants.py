@@ -135,6 +135,17 @@ EXPECTED_CELL_RENDERER_PROPERTIES = {
     "ypad": 0,
 }
 
+EXPECTED_CELLRENDERERPIXBUF_PROPERTIES = {
+    "gicon": None,
+    "icon_name": None,
+    "pixbuf": None,
+    "pixbuf_expander_closed": None,
+    "pixbuf_expander_open": None,
+    "stock_detail": None,
+    "stock_size": 1,
+    "surface": None,
+}
+
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TREEVIEW_COLUMN_METHODS = [
     "add_attribute",
