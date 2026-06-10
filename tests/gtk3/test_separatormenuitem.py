@@ -1,4 +1,4 @@
-"""Test module for the GTK3ImageMenuItem class.
+"""Test module for the GTK3SeparatorMenuItem class.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -10,7 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.menu import GTK3ImageMenuItem
+from pytkwrap.gtk3.menu import GTK3SeparatorMenuItem
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 # pytkwrap Local Imports
@@ -32,10 +32,10 @@ from .test_constants import (
 )
 
 
-class TestGTK3ImageMenuItem(BaseGTK3GObjectTests):
-    """Test class for the GTK3ImageMenuItem class."""
+class TestGTK3SeparatorMenuItem(BaseGTK3GObjectTests):
+    """Test class for the GTK3SeparatorMenuItem class."""
 
-    widget_class = GTK3ImageMenuItem
+    widget_class = GTK3SeparatorMenuItem
     expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_WIDGET_ATTRIBUTES
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
