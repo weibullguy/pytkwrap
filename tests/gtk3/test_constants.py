@@ -146,6 +146,15 @@ EXPECTED_CELLRENDERERPIXBUF_PROPERTIES = {
     "surface": None,
 }
 
+EXPECTED_CELLRENDERERPROGRESS_PROPERTIES = {
+    "inverted": False,
+    "pulse": -1,
+    "text": None,
+    "text_xalign": 0.5,
+    "text_yalign": 0.5,
+    "value": 0,
+}
+
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TREEVIEW_COLUMN_METHODS = [
     "add_attribute",
