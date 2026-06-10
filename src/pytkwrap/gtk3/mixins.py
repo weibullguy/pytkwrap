@@ -128,6 +128,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     inner_border: Gtk.Border | None
     input_hints: Gtk.InputHints | None
     input_purpose: Gtk.InputPurpose | None
+    inverted: bool
     invisible_char: str
     invisible_char_set: bool
     is_expanded: bool
@@ -203,6 +204,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     progress_pulse_step: float
     propagate_natural_height: bool
     propagate_natural_width: bool
+    pulse: int
     receives_default: bool
     relief: Gtk.ReliefStyle | None
     reorderable: bool
@@ -256,9 +258,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     submenu: Gtk.Menu | None
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
-    text: str
+    text: str | None
     text_column: int
     text_length: int
+    text_xalign: float
+    text_yalign: float
     title: str
     tooltip: str
     tooltip_column: int
