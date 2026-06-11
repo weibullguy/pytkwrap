@@ -628,6 +628,13 @@ EXPECTED_WIDGET_PROPERTIES = {
     "window": None,
 }
 
+EXPECTED_ACTIONBAR_METHODS = [
+    "get_center_widget",
+    "pack_end",
+    "pack_start",
+    "set_center_widget",
+]
+
 EXPECTED_CALENDAR_ATTRIBUTES = {
     "default_value": date.today(),
     "edit_signal": [
