@@ -56,6 +56,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     can_target: bool
     caps_lock_warning: bool
     cell_area: Gtk.CellArea | None
+    cell_area_context: Gtk.CellAreaContext | None
     cell_background: str | None
     cell_background_rgba: Gdk.RGBA | None
     cell_background_set: bool
@@ -81,6 +82,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     do_overwrite_confirmation: bool
     draw_as_radio: bool
     draw_indicator: bool
+    draw_sensitive: bool
     editable: bool
     editable_set: bool
     editing_canceled: bool
@@ -96,6 +98,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     family: str | None
     family_set: bool
     filter: Gtk.FileFilter | None
+    fit_model: bool
     fixed_width: int
     focus_on_click: bool
     font: str | None
