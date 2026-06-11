@@ -39,29 +39,17 @@ from .button import (
 from .color import GTK3ColorButton
 from .container import GTK3Bin, GTK3Container, GTK3Frame
 
-# from dialog import (
+# from .dialog import (
 #    GTK3AboutDialog,
 #    GTK3AppChooserDialog,
 #    GTK3Dialog,
 #    GTK3MessageDialog,
 #    GTK3NativeDialog,
 # )
-# from file import (
-#    GTK3FileChooserButton,
-#    GTK3FileChooserDialog,
-#    GTK3FileChooserNative,
-#    GTK3FileChooserWidget,
-#    GTK3FileFilter,
-#    GTK3RecentAction,
-#    GTK3RecentChooserDialog,
-#    GTK3RecentChooserMenu,
-#    GTK3RecentChooserWidget,
-#    GTK3RecentFilter,
-#    GTK3RecentManager,
-# )
+from .file import GTK3FileFilter
 from .font import GTK3FontButton
 
-# from icon import (
+# from .icon import (
 #    GTK3IconFactory,
 #    GTK3IconInfo,
 #    GTK3IconTheme,
@@ -70,7 +58,7 @@ from .font import GTK3FontButton
 # )
 from .io import GTK3Calendar, GTK3ComboBox
 
-# from layout import (
+# from .layout import (
 #    GTK3DrawingArea,
 #    GTK3Fixed,
 #    GTK3FlowBox,
@@ -140,7 +128,17 @@ from .mixins import (
 #    GTK3ToolItemGroup,
 #    GTK3ToolPalette,
 # )
-from .treeview import GTK3CellRenderer, GTK3TreeViewColumn
+from .treeview import (
+    GTK3CellRenderer,
+    GTK3CellRendererCombo,
+    GTK3CellRendererPixbuf,
+    GTK3CellRendererProgress,
+    GTK3CellRendererSpin,
+    GTK3CellRendererSpinner,
+    GTK3CellRendererText,
+    GTK3CellRendererToggle,
+    GTK3TreeViewColumn,
+)
 
 # from .view import (
 #    GTK3BaseView,
@@ -178,13 +176,13 @@ __all__ = [
     #    "GTK3CellArea",
     #    "GTK3CellAreaContext",
     "GTK3CellRenderer",
-    #    "GTK3CellRendererCombo",
-    #    "GTK3CellRendererPixbuf",
-    #    "GTK3CellRendererProgress",
-    #    "GTK3CellRendererSpin",
-    #    "GTK3CellRendererSpinner",
-    #    "GTK3CellRendererText",
-    #    "GTK3CellRendererToggle",
+    "GTK3CellRendererCombo",
+    "GTK3CellRendererPixbuf",
+    "GTK3CellRendererProgress",
+    "GTK3CellRendererSpin",
+    "GTK3CellRendererSpinner",
+    "GTK3CellRendererText",
+    "GTK3CellRendererToggle",
     #    "GTK3CellView",
     "GTK3CheckButton",
     "GTK3CheckMenuItem",
@@ -208,7 +206,7 @@ __all__ = [
     #    "GTK3FileChooserDialog",
     #    "GTK3FileChooserNative",
     #    "GTK3FileChooserWidget",
-    #    "GTK3FileFilter",
+    "GTK3FileFilter",
     #    "GTK3Fixed",
     #    "GTK3FixedPanel",
     #    "GTK3FlowBox",
