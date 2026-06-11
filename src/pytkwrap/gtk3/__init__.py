@@ -137,6 +137,7 @@ from .treeview import (
     GTK3CellRendererSpinner,
     GTK3CellRendererText,
     GTK3CellRendererToggle,
+    GTK3CellView,
     GTK3TreeViewColumn,
 )
 
@@ -183,7 +184,7 @@ __all__ = [
     "GTK3CellRendererSpinner",
     "GTK3CellRendererText",
     "GTK3CellRendererToggle",
-    #    "GTK3CellView",
+    "GTK3CellView",
     "GTK3CheckButton",
     "GTK3CheckMenuItem",
     "GTK3ColorButton",
