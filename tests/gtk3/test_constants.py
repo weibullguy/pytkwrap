@@ -219,6 +219,12 @@ EXPECTED_CELLRENDERERCOMBO_PROPERTIES = {
     "text_column": -1,
 }
 
+EXPECTED_CELLRENDERERSPIN_PROPERTIES = {
+    "adjustment": None,
+    "climb_rate": 0.0,
+    "digits": 0,
+}
+
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TREEVIEW_COLUMN_METHODS = [
     "add_attribute",
