@@ -253,6 +253,20 @@ EXPECTED_FILE_FILTER_METHODS = [
     "to_gvariant",
 ]
 
+EXPECTED_RECENT_FILTER_METHODS = [
+    "add_age",
+    "add_application",
+    "add_custom",
+    "add_group",
+    "add_mime_type",
+    "add_pattern",
+    "add_pixbuf_formats",
+    "filter",
+    "get_name",
+    "get_needed",
+    "set_name",
+]
+
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TREEVIEW_COLUMN_METHODS = [
     "add_attribute",
