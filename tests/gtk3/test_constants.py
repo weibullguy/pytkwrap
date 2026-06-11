@@ -225,6 +225,22 @@ EXPECTED_CELLRENDERERSPIN_PROPERTIES = {
     "digits": 0,
 }
 
+EXPECTED_CELLRENDERERTOGGLE_HANDLER_IDS = {"toggled": -1}
+EXPECTED_CELLRENDERERTOGGLE_METHODS = [
+    "get_activatable",
+    "get_active",
+    "get_radio",
+    "set_activatable",
+    "set_active",
+    "set_radio",
+]
+EXPECTED_CELLRENDERERTOGGLE_PROPERTIES = {
+    "activatable": True,
+    "active": False,
+    "inconsistent": False,
+    "radio": False,
+}
+
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TREEVIEW_COLUMN_METHODS = [
     "add_attribute",
