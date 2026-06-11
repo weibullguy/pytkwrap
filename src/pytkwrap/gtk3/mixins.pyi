@@ -213,6 +213,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     propagate_natural_height: bool
     propagate_natural_width: bool
     pulse: int
+    radio: bool
     receives_default: bool
     relief: Gtk.ReliefStyle | None
     reorderable: bool
