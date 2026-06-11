@@ -677,6 +677,29 @@ EXPECTED_CALENDAR_PROPERTIES = {
     "year": 0,
 }
 
+EXPECTED_CELL_VIEW_METHODS = [
+    "get_displayed_row",
+    "get_draw_sensitive",
+    "get_fit_model",
+    "get_model",
+    "get_size_of_row",
+    "set_background_rgba",
+    "set_displayed_row",
+    "set_draw_sensitive",
+    "set_fit_model",
+    "set_model",
+]
+EXPECTED_CELL_VIEW_PROPERTIES = {
+    "background": None,
+    "background_rgba": None,
+    "background_set": False,
+    "cell_area": None,
+    "cell_area_context": None,
+    "draw_sensitive": False,
+    "fit_model": False,
+    "model": None,
+}
+
 EXPECTED_CONTAINER_HANDLER_IDS = {
     "add": -1,
     "check-resize": -1,
