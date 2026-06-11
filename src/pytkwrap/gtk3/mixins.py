@@ -38,6 +38,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     active_id: str | None
     activatable: bool
     adjustment: Gtk.Adjustment | None
+    align_set: bool
     align_widget: Gtk.Container | None
     alignment: float | Pango.Alignment | None
     alpha: int
@@ -45,8 +46,9 @@ class GTK3WidgetProperties(TypedDict, total=False):
     angle: float
     app_paintable: bool
     attributes: Pango.AttrList | None
-    background: str
+    background: str | None
     background_rgba: Gdk.RGBA | None
+    background_set: bool
     baseline_row: int
     bold: bool
     border_width: int
@@ -84,8 +86,10 @@ class GTK3WidgetProperties(TypedDict, total=False):
     draw_as_radio: bool
     draw_indicator: bool
     editable: bool
+    editable_set: bool
     editing_canceled: bool
     ellipsize: Pango.EllipsizeMode | None
+    ellipsize_set: bool
     enable_emoji_completion: bool
     enable_grid_lines: Gtk.TreeViewGridLines | None
     enable_tree_lines: bool
@@ -93,12 +97,17 @@ class GTK3WidgetProperties(TypedDict, total=False):
     events: Gdk.EventMask | None
     expand: bool
     extra_widget: Gtk.Widget | None
+    family: str | None
+    family_set: bool
     filter: Gtk.FileFilter | None
     fixed_width: int
     focus_on_click: bool
+    font: str | None
+    font_desc: Pango.FontDescription | None
     font_name: str
-    foreground: str
+    foreground: str | None
     foreground_rgba: Gdk.RGBA | None
+    foreground_set: bool
     gicon: Gio.Icon | None
     group: Gtk.RadioButton | None
     hadjustment: Gtk.Adjustment | None
@@ -141,6 +150,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     label_widget: Gtk.Widget | None
     label_xalign: float
     label_yalign: float
+    language: str | None
+    language_set: bool
     left_margin: int
     level_indentation: int
     lines: int
@@ -151,6 +162,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     margin_end: int
     margin_start: int
     margin_top: int
+    markup: str | None
     max_content_height: int
     max_content_width: int
     max_length: int
@@ -211,12 +223,16 @@ class GTK3WidgetProperties(TypedDict, total=False):
     resizable: bool
     rgba: Gdk.RGBA | None
     right_margin: int
+    rise: int
+    rise_set: bool
     rotation: float
     row_homogeneous: bool
     row_spacing: int
     row_span_column: int
     rubber_banding: bool
+    scale: float
     scale_factor: int
+    scale_set: bool
     scroll_offset: int
     secondary_icon_activatable: bool
     secondary_icon_gicon: Gio.Icon | None
@@ -243,7 +259,10 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_style: bool
     show_week_numbers: bool
     single_line_mode: bool
-    size: Gtk.IconSize | None
+    single_paragraph_mode: bool
+    size: Gtk.IconSize | int | None
+    size_points: float
+    size_set: bool
     sizing: Gtk.TreeViewColumnSizing | None
     snap: bool | None
     snap_to_ticks: bool
@@ -254,7 +273,12 @@ class GTK3WidgetProperties(TypedDict, total=False):
     step_increment: float
     stock_detail: str | None
     stock_size: int
-    style: Gtk.Style | None
+    stretch: Pango.Stretch | None
+    stretch_set: bool
+    strikethrough: bool
+    strikethrough_set: bool
+    style: Gtk.Style | Pango.Style | None
+    style_set: bool
     submenu: Gtk.Menu | None
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
@@ -271,6 +295,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     top_margin: int
     track_visited_links: bool
     truncate_multiline: bool
+    underline: Pango.Underline | None
+    underline_set: bool
     update_policy: Gtk.SpinButtonUpdatePolicy | None
     upper: float
     use_alpha: bool
@@ -285,6 +311,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vadjustment: Gtk.Adjustment | None
     valign: Gtk.Align | None
     value: float | int
+    variant: Pango.Variant | None
+    variant_set: bool
     vertical_alignment: str
     vexpand: bool
     vexpand_set: bool
@@ -448,12 +476,10 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
         if not isinstance(_signals, list):
             _signals = [self.dic_attributes["edit_signal"]]
 
-        _blockmgr = None
+        _blockmgr: GObject._HandlerBlockManager = None
         for _signal in _signals:
             _hid = self.dic_handler_id[_signal]
-            _blockmgr: GObject._HandlerBlockManager = (
-                self._get_signal_owner().handler_block(_hid)
-            )
+            _blockmgr = self._get_signal_owner().handler_block(_hid)
 
         return _blockmgr
 
