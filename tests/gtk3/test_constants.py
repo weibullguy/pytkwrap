@@ -212,6 +212,13 @@ EXPECTED_CELLRENDERERTEXT_PROPERTIES = {
     "wrap_width": -1,
 }
 
+EXPECTED_CELLRENDERERCOMBO_HANDLER_IDS = {"changed": -1}
+EXPECTED_CELLRENDERERCOMBO_PROPERTIES = {
+    "has_entry": True,
+    "model": None,
+    "text_column": -1,
+}
+
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TREEVIEW_COLUMN_METHODS = [
     "add_attribute",
