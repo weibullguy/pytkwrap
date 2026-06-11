@@ -13,7 +13,7 @@ except ImportError:
     print("Failed to import package gi; exiting.")
     sys.exit(1)
 # Third Party Imports
-from gi.repository import Gdk, GObject, Gtk
+from gi.repository import Gdk, GObject, Gtk, Pango
 
 EXPECTED_GOBJECT_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
@@ -159,6 +159,57 @@ EXPECTED_CELLRENDERESPINNER_PROPERTIES = {
     "active": False,
     "pulse": 0,
     "size": Gtk.IconSize.MENU,
+}
+
+EXPECTED_CELLRENDERERTEXT_HANDLER_IDS = {"edited": -1}
+EXPECTED_CELLRENDERERTEXT_METHODS = ["set_fixed_height_from_font"]
+EXPECTED_CELLRENDERERTEXT_PROPERTIES = {
+    "align_set": False,
+    "alignment": Pango.Alignment.LEFT,
+    "attributes": None,
+    "background": None,
+    "background_rgba": None,
+    "background_set": False,
+    "editable": False,
+    "editable_set": False,
+    "ellipsize": Pango.EllipsizeMode.NONE,
+    "ellipsize_set": False,
+    "family": None,
+    "family_set": False,
+    "font": None,
+    "font_desc": None,
+    "foreground": None,
+    "foreground_rgba": None,
+    "foreground_set": False,
+    "language": None,
+    "language_set": False,
+    "markup": None,
+    "max_width_chars": -1,
+    "placeholder_text": None,
+    "rise": 0,
+    "rise_set": False,
+    "scale": 1.0,
+    "scale_set": False,
+    "single_paragraph_mode": False,
+    "size": 0,
+    "size_points": 0.0,
+    "size_set": False,
+    "stretch": Pango.Stretch.NORMAL,
+    "stretch_set": False,
+    "strikethrough": False,
+    "strikethrough_set": False,
+    "style": Pango.Style.NORMAL,
+    "style_set": False,
+    "text": None,
+    "underline": Pango.Underline.NONE,
+    "underline_set": False,
+    "variant": Pango.Variant.NORMAL,
+    "variant_set": False,
+    "weight": 400,
+    "weight_set": False,
+    "width_chars": -1,
+    "wrap_mode": Pango.WrapMode.CHAR,
+    "wrap_width": -1,
 }
 
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
