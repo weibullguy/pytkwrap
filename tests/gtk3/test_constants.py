@@ -241,6 +241,18 @@ EXPECTED_CELLRENDERERTOGGLE_PROPERTIES = {
     "radio": False,
 }
 
+EXPECTED_FILE_FILTER_METHODS = [
+    "add_custom",
+    "add_mime_type",
+    "add_pattern",
+    "add_pixbuf_formats",
+    "filter",
+    "get_name",
+    "get_needed",
+    "set_name",
+    "to_gvariant",
+]
+
 EXPECTED_TREEVIEW_COLUMN_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TREEVIEW_COLUMN_METHODS = [
     "add_attribute",
