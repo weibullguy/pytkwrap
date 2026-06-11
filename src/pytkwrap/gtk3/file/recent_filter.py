@@ -1,0 +1,18 @@
+"""The pytkwrap GTK3RecentFilter module.
+
+.. author:: Doyle Rowland
+.. copyright:: Since 2007, all rights reserved.
+"""
+
+# pytkwrap Package Imports
+from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.mixins import GTK3GObjectMixin
+
+
+class GTK3RecentFilter(Gtk.RecentFilter, GTK3GObjectMixin):
+    """Wrapper for version 3.0 Gtk.RecentFilter."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3RecentFilter."""
+        Gtk.RecentFilter.__init__(self)
+        GTK3GObjectMixin.__init__(self)

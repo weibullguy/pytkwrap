@@ -46,7 +46,7 @@ from .container import GTK3Bin, GTK3Container, GTK3Frame
 #    GTK3MessageDialog,
 #    GTK3NativeDialog,
 # )
-from .file import GTK3FileFilter
+from .file import GTK3FileFilter, GTK3RecentFilter
 from .font import GTK3FontButton
 
 # from .icon import (
@@ -265,7 +265,7 @@ __all__ = [
     #    "GTK3RecentChooserDialog",
     #    "GTK3RecentChooserMenu",
     #    "GTK3RecentChooserWidget",
-    #    "GTK3RecentFilter",
+    "GTK3RecentFilter",
     #    "GTK3RecentManager",
     #    "GTK3ScrollBar",
     #    "GTK3ScrolledWindow",

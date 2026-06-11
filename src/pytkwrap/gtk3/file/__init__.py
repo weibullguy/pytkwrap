@@ -10,5 +10,9 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .file_filter import GTK3FileFilter
+from .recent_filter import GTK3RecentFilter
 
-__all__ = ("GTK3FileFilter",)
+__all__ = (
+    "GTK3FileFilter",
+    "GTK3RecentFilter",
+)
