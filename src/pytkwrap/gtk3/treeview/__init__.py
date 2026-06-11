@@ -16,8 +16,8 @@ from .cellrendererprogress import GTK3CellRendererProgress
 from .cellrendererspin import GTK3CellRendererSpin
 from .cellrendererspinner import GTK3CellRendererSpinner
 from .cellrenderertext import GTK3CellRendererText
+from .cellrenderertoggle import GTK3CellRendererToggle
 
-# from .cellrenderertoggle import GTK3CellRendererToggle
 # from .treeview import GTK3TreeView
 from .treeviewcolumn import GTK3TreeViewColumn
 
@@ -29,7 +29,7 @@ __all__ = [
     "GTK3CellRendererSpinner",
     "GTK3CellRendererSpin",
     "GTK3CellRendererText",
-    # "GTK3CellRendererToggle",
+    "GTK3CellRendererToggle",
     # "GTK3TreeView",
     "GTK3TreeViewColumn",
 ]
