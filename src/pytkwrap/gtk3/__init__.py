@@ -47,7 +47,7 @@ from .font import GTK3FontButton
 #    GTK3IconView,
 #    GTK3StatusIcon,
 # )
-from .io import GTK3Calendar, GTK3ComboBox
+from .io import GTK3Calendar, GTK3ComboBox, GTK3ComboBoxText
 
 # from .layout import (
 #    GTK3DrawingArea,
@@ -181,7 +181,7 @@ __all__ = [
     "GTK3CheckMenuItem",
     "GTK3ColorButton",
     "GTK3ComboBox",
-    #    "GTK3ComboBoxText",
+    "GTK3ComboBoxText",
     #    "GTK3ColorChooserDialog",
     #    "GTK3ColorChooserWidget",
     #    "GTK3ColorSelection",

@@ -11,8 +11,10 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .calendar import GTK3Calendar
 from .combobox import GTK3ComboBox
+from .comboboxtext import GTK3ComboBoxText
 
 __all__ = [
     "GTK3Calendar",
     "GTK3ComboBox",
+    "GTK3ComboBoxText",
 ]
