@@ -944,6 +944,18 @@ EXPECTED_COMBOBOX_PROPERTIES = {
     "wrap_width": 0,
 }
 
+EXPECTED_COMBOBOXTEXT_METHODS = [
+    "append",
+    "append_text",
+    "get_active_text",
+    "insert",
+    "insert_text",
+    "prepend",
+    "prepend_text",
+    "remove",
+    "remove_all",
+]
+
 EXPECTED_APP_CHOOSER_BUTTON_HANDLER_IDS = {"custom-item-activated": -1}
 EXPECTED_APP_CHOOSER_BUTTON_METHODS = [
     "append_custom_item",
