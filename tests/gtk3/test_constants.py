@@ -944,18 +944,6 @@ EXPECTED_COMBOBOX_PROPERTIES = {
     "wrap_width": 0,
 }
 
-EXPECTED_COMBOBOXTEXT_METHODS = [
-    "append",
-    "append_text",
-    "get_active_text",
-    "insert",
-    "insert_text",
-    "prepend",
-    "prepend_text",
-    "remove",
-    "remove_all",
-]
-
 EXPECTED_APP_CHOOSER_BUTTON_HANDLER_IDS = {"custom-item-activated": -1}
 EXPECTED_APP_CHOOSER_BUTTON_METHODS = [
     "append_custom_item",
@@ -972,6 +960,45 @@ EXPECTED_APP_CHOOSER_BUTTON_PROPERTIES = {
     "heading": None,
     "show_default_item": False,
     "show_dialog_item": False,
+}
+
+EXPECTED_COMBOBOXTEXT_METHODS = [
+    "append",
+    "append_text",
+    "get_active_text",
+    "insert",
+    "insert_text",
+    "prepend",
+    "prepend_text",
+    "remove",
+    "remove_all",
+]
+
+EXPECTED_EXPANDER_HANDLER_IDS = {"activate": -1}
+EXPECTED_EXPANDER_METHODS = [
+    "get_expanded",
+    "get_label",
+    "get_label_fill",
+    "get_label_widget",
+    "get_resize_toplevel",
+    "get_use_markup",
+    "get_use_underline",
+    "set_expanded",
+    "set_label",
+    "set_label_fill",
+    "set_label_widget",
+    "set_resize_toplevel",
+    "set_use_markup",
+    "set_use_underline",
+]
+EXPECTED_EXPANDER_PROPERTIES = {
+    "expanded": False,
+    "label": None,
+    "label_fill": False,
+    "label_widget": None,
+    "resize_toplevel": False,
+    "use_markup": False,
+    "use_underline": False,
 }
 
 EXPECTED_FRAME_METHODS = [
