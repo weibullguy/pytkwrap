@@ -88,6 +88,8 @@ from .mixins import (
 #    GTK3PrintOperation,
 #    GTK3PrintSettings,
 # )
+from .popover import GTK3Popover
+
 # from .shortcut import (
 #    GTK3ShortcutsLabel,
 #    GTK3ShortcutsGroup,
@@ -246,6 +248,7 @@ __all__ = [
     #    "GTK3PlacesSidebar",
     #    "GTK3PlotPanel",
     #    "GTK3PlotView",
+    "GTK3Popover",
     #    "GTK3PopoverMenu",
     #    "GTK3PrintContext",
     #    "GTK3PrintOperation",
