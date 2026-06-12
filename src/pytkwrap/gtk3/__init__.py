@@ -28,7 +28,7 @@ from .button import (
     do_make_buttonbox,
 )
 from .color import GTK3ColorButton
-from .container import GTK3Bin, GTK3Container, GTK3Frame
+from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame
 
 # from .dialog import (
 #    GTK3AboutDialog,
@@ -194,7 +194,7 @@ __all__ = [
     #    "GTK3EntryBuffer",
     #    "GTK3EntryCompletion",
     #    "GTK3EventBox",
-    #    "GTK3Expander",
+    "GTK3Expander",
     #    "GTK3FileChooserButton",
     #    "GTK3FileChooserDialog",
     #    "GTK3FileChooserNative",

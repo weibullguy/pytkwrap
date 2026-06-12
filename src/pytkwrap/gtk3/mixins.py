@@ -98,6 +98,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     entry_text_column: int
     events: Gdk.EventMask | None
     expand: bool
+    expanded: bool
     extra_widget: Gtk.Widget | None
     family: str | None
     family_set: bool
@@ -150,6 +151,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     justify: Gtk.Justification | None
     kinetic_scrolling: bool
     label: str | None
+    label_fill: bool
     label_widget: Gtk.Widget | None
     label_xalign: float
     label_yalign: float
@@ -225,6 +227,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     relief: Gtk.ReliefStyle | None
     reorderable: bool
     resizable: bool
+    resize_toplevel: bool
     rgba: Gdk.RGBA | None
     right_margin: int
     rise: int

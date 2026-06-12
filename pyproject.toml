@@ -103,8 +103,8 @@ update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3
 fix = "prek run ruff-check --files {args}"
 format = [
     "prek run black --files {args}",
-    "prek run docformatter --files {args}",
     "prek run isort --files {args}",
+    "prek run docformatter --files {args}",
 ]
 lint = "prek run pylint --files {args}"
 maintain = [
@@ -115,8 +115,8 @@ maintain = [
 security = "bandit -c pyproject.toml -b .bandit.baseline -r {args}"
 wily = "prek run wily --files {args}"
 all = [
-    "fix",
     "format",
+    "fix",
     "lint",
     "maintain",
 ]
