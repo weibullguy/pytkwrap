@@ -324,6 +324,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vexpand: bool
     vexpand_set: bool
     visible: bool
+    visible_submenu: str | None
     visibility: bool
     vscroll_policy: Gtk.ScrollablePolicy | None
     vscrollbar_policy: Gtk.PolicyType | None
