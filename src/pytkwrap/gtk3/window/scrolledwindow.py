@@ -4,6 +4,9 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+# Standard Library Imports
+from collections.abc import Mapping
+
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
@@ -43,7 +46,7 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3Bin):
         hadjustment: GTK3Adjustment | None = None,
         vadjustment: GTK3Adjustment | None = None,
     ) -> None:
-        """Initialize an instance of the ScrolledWindow widget.
+        """Initialize an instance of the GTK3ScrolledWindow.
 
         Parameters
         ----------
@@ -52,7 +55,11 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3Bin):
         vadjustment : GTK3Adjustment | None
             The vertical adjustment to use with the GTK3ScrolledWindow.
         """
-        Gtk.ScrolledWindow.__init__(self, hadjustment, vadjustment)
+        Gtk.ScrolledWindow.__init__(
+            self,
+            hadjustment=hadjustment,
+            vadjustment=vadjustment,
+        )
         GTK3Bin.__init__(self)
 
         # Initialize public instance attributes.
@@ -64,13 +71,17 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3Bin):
         self.dic_properties["hadjustment"] = hadjustment
         self.dic_properties["vadjustment"] = vadjustment
 
-    def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
-        """Set the properties of the GTK3ScrolledWindow widget.
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None:
+        """Set the values of the GTK3ScrolledBar-specific properties.
 
         Parameters
         ----------
-        properties : GTK3WidgetProperties
-            The typed dict with the property values to set for the GTK3ScrolledWindow.
+        properties : GTK3WidgetProperties | dict | list[list | tuple]
+            The typed dict (preferred), non-typed dict, list of lists, or list of
+            tuples with the property values to set for the GTK3ScrolledWindow.
         """
         super().do_set_properties(properties)
 

@@ -11,5 +11,9 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .actionbar import GTK3ActionBar
+from .placessidebar import GTK3PlacesSidebar
 
-__all__ = ["GTK3ActionBar"]
+__all__ = [
+    "GTK3ActionBar",
+    "GTK3PlacesSidebar",
+]

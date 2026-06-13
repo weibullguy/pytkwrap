@@ -11,7 +11,7 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .adjustment import GTK3Adjustment
 from .alignment import GTK3Alignment
-from .bar import GTK3ActionBar
+from .bar import GTK3ActionBar, GTK3PlacesSidebar
 
 # from .book import (
 #    GTK3BaseBook,
@@ -237,7 +237,7 @@ __all__ = [
     #    "GTK3Overlay",
     #    "GTK3PageSetup",
     #    "GTK3Paned",
-    #    "GTK3PlacesSidebar",
+    "GTK3PlacesSidebar",
     #    "GTK3PlotPanel",
     #    "GTK3PlotView",
     "GTK3Popover",
