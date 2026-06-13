@@ -158,6 +158,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     level_indentation: int
     lines: int
     local_only: bool
+    location: Gio.File | None
     lower: float
     margin: int
     margin_bottom: int
@@ -185,6 +186,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     no_show_all: bool
     numeric: bool
     opacity: float
+    open_flags: Gtk.PlacesOpenFlags
     overlay_scrolling: bool
     overwrite: bool
     overwrite_mode: bool
@@ -256,14 +258,20 @@ class GTK3WidgetProperties(TypedDict, total=False):
     shadow_type: Gtk.ShadowType | None
     show_day_names: bool
     show_default_item: bool
+    show_desktop: bool
     show_details: bool
     show_dialog_item: bool
     show_editor: bool
     show_emoji_icon: bool
+    show_enter_location: bool
     show_heading: bool
     show_hidden: bool
+    show_other_locations: bool
+    show_recent: bool
     show_size: bool
+    show_starred_location: bool
     show_style: bool
+    show_trash: bool
     show_week_numbers: bool
     single_line_mode: bool
     single_paragraph_mode: bool
