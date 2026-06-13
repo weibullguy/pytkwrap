@@ -12,8 +12,10 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .actionbar import GTK3ActionBar
 from .placessidebar import GTK3PlacesSidebar
+from .searchbar import GTK3SearchBar
 
 __all__ = [
     "GTK3ActionBar",
     "GTK3PlacesSidebar",
+    "GTK3SearchBar",
 ]

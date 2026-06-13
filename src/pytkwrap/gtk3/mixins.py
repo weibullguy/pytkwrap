@@ -247,6 +247,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     scale_factor: int
     scale_set: bool
     scroll_offset: int
+    search_mode_enabled: bool
     secondary_icon_activatable: bool
     secondary_icon_gicon: Gio.Icon | None
     secondary_icon_name: str | None
@@ -260,6 +261,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     selection_bound: int
     sensitive: bool
     shadow_type: Gtk.ShadowType | None
+    show_close_button: bool
     show_day_names: bool
     show_default_item: bool
     show_desktop: bool
