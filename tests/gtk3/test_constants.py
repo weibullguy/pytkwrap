@@ -1100,13 +1100,46 @@ EXPECTED_POPOVER_PROPERTIES = {
 EXPECTED_POPOVER_MENU_METHODS = ["open_submenu"]
 EXPECTED_POPOVER_MENU_PROPERTIES = {"visible_submenu": None}
 
-EXPECTED_SCROLLED_WINDOW_HANDLER_IDS = {
+EXPECTED_SCROLLEDWINDOW_HANDLER_IDS = {
     "edge-overshot": -1,
     "edge-reached": -1,
     "move-focus-out": -1,
     "scroll-child": -1,
 }
-EXPECTED_SCROLLED_WINDOW_PROPERTIES = {
+EXPECTED_SCROLLEDWINDOW_METHODS = [
+    "get_capture_button_press",
+    "get_hadjustment",
+    "get_hscrollbar",
+    "get_kinetic_scrolling",
+    "get_max_content_height",
+    "get_max_content_width",
+    "get_min_content_height",
+    "get_min_content_width",
+    "get_overlay_scrolling",
+    "get_placement",
+    "get_policy",
+    "get_propagate_natural_height",
+    "get_propagate_natural_width",
+    "get_shadow_type",
+    "get_vadjustment",
+    "get_vscrollbar",
+    "set_capture_button_press",
+    "set_hadjustment",
+    "set_kinetic_scrolling",
+    "set_max_content_height",
+    "set_max_content_width",
+    "set_min_content_height",
+    "set_min_content_width",
+    "set_overlay_scrolling",
+    "set_placement",
+    "set_policy",
+    "set_propagate_natural_height",
+    "set_propagate_natural_width",
+    "set_shadow_type",
+    "set_vadjustment",
+    "unset_placement",
+]
+EXPECTED_SCROLLEDWINDOW_PROPERTIES = {
     "hadjustment": None,
     "hscrollbar_policy": Gtk.PolicyType.AUTOMATIC,
     "kinetic_scrolling": True,
@@ -1115,8 +1148,8 @@ EXPECTED_SCROLLED_WINDOW_PROPERTIES = {
     "min_content_height": -1,
     "min_content_width": -1,
     "overlay_scrolling": True,
-    "propogate_natural_height": False,
-    "propogate_natural_width": False,
+    "propagate_natural_height": False,
+    "propagate_natural_width": False,
     "shadow_type": Gtk.ShadowType.NONE,
     "vadjustment": None,
     "vscrollbar_policy": Gtk.PolicyType.AUTOMATIC,
