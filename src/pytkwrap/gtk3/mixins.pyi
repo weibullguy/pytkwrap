@@ -69,6 +69,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     column_span_column: int
     completion: Gtk.EntryCompletion | None
     composite_child: bool
+    constrain_to: Gtk.PopoverConstraint
     create_folders: bool
     cursor_position: int
     cursor_visible: bool
@@ -198,11 +199,13 @@ class GTK3WidgetProperties(TypedDict, total=False):
     pixels_below_lines: int
     pixels_inside_wrap: int
     placeholder_text: str | None
+    pointing_to: Gdk.Rectangle | None
     popover: Gtk.Popover | None
     populate_all: bool
     popup: Gtk.Menu | None
     popup_fixed_width: bool
     popup_shown: bool
+    position: Gtk.PositionType
     preview_widget: Gtk.Widget | None
     preview_widget_active: bool
     primary_icon_activatable: bool
@@ -220,6 +223,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     pulse: int
     radio: bool
     receives_default: bool
+    relative_to: Gtk.Widget | None
     relief: Gtk.ReliefStyle | None
     reorderable: bool
     resizable: bool
