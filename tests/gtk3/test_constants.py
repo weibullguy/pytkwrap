@@ -1209,6 +1209,14 @@ EXPECTED_PLACESSIDEBAR_PROPERTIES = {
     "show_trash": True,
 }
 
+EXPECTED_SEARCHBAR_METHODS = [
+    "connect_entry",
+    "get_search_mode",
+    "get_show_close_button",
+    "handle_event",
+    "set_search_mode",
+    "set_show_close_button",
+]
 EXPECTED_SEARCHBAR_PROPERTIES = {
     "search_mode_enabled": False,
     "show_close_button": False,
