@@ -141,16 +141,7 @@ from .treeview import (
 #    GTK3PlotView,
 # )
 from .widget import GTK3Widget
-
-# from .window import (
-#    GTK3ApplicationWindow,
-#    GTK3Assistant,
-#    GTK3OffscreenWindow,
-#    GTK3ScrolledWindow,
-#    GTK3ShortcutsWindow.
-#    GTK3Window,
-#    GTK3WindowGroup,
-# )
+from .window import GTK3ScrolledWindow
 
 __all__ = [
     #    "GTK3AboutDialog",
@@ -265,7 +256,7 @@ __all__ = [
     "GTK3RecentFilter",
     #    "GTK3RecentManager",
     #    "GTK3ScrollBar",
-    #    "GTK3ScrolledWindow",
+    "GTK3ScrolledWindow",
     #    "GTK3ShortcutsWindow".
     "GTK3ScaleButton",
     #    "GTK3SearchBar",

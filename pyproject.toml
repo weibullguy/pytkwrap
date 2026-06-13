@@ -41,7 +41,6 @@ dependencies = [
     "prek>=0.3.9",
     "pycairo>=1.29",
     "pygobject>=3.54",
-    "pylint",
     "pypubsub>=4.0",
     "python-dateutil",
 ]
@@ -88,6 +87,7 @@ test-coverage = [
 
 [tool.hatch.envs.lint]
 extra-dependencies = [
+    "astroid<=4.1.dev0,>=4.0.2", # pin to satisfy pylint dependency
     "bandit[toml]",
     "black[d]",
     "docformatter[tomli]>=1.7",
@@ -127,6 +127,7 @@ extra-dependencies = [
     "ty",
 ]
 [tool.hatch.envs.types.scripts]
+update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
 all = [
     "mypy --config ./pyproject.toml {args}",
     "ty check {args}",
