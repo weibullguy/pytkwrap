@@ -1156,7 +1156,7 @@ EXPECTED_SCROLLEDWINDOW_PROPERTIES = {
     "window_placement": Gtk.CornerType.TOP_LEFT,
 }
 
-EXPECTED_PLACES_SIDEBAR_HANDLER_IDS = {
+EXPECTED_PLACESSIDEBAR_HANDLER_IDS = {
     "drag-action-ask": -1,
     "drag-action-requested": -1,
     "drag-perform-drop": -1,
@@ -1171,7 +1171,32 @@ EXPECTED_PLACES_SIDEBAR_HANDLER_IDS = {
     "show-starred-location": -1,
     "unmount": -1,
 }
-EXPECTED_PLACES_SIDEBAR_PROPERTIES = {
+EXPECTED_PLACESSIDEBAR_METHODS = [
+    "add_shortcut",
+    "get_local_only",
+    "get_location",
+    "get_nth_bookmark",
+    "get_open_flags",
+    "get_show_desktop",
+    "get_show_enter_location",
+    "get_show_other_locations",
+    "get_show_recent",
+    "get_show_starred_location",
+    "get_show_trash",
+    "list_shortcuts",
+    "remove_shortcut",
+    "set_drop_targets_visible",
+    "set_local_only",
+    "set_location",
+    "set_open_flags",
+    "set_show_desktop",
+    "set_show_enter_location",
+    "set_show_other_locations",
+    "set_show_recent",
+    "set_show_starred_location",
+    "set_show_trash",
+]
+EXPECTED_PLACESSIDEBAR_PROPERTIES = {
     "local_only": False,
     "location": None,
     "open_flags": Gtk.PlacesOpenFlags.NORMAL,

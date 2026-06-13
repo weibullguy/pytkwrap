@@ -64,7 +64,7 @@ class TestGTK3ScrolledWindow(BaseGTK3GObjectTests):
 
     @pytest.mark.unit
     def test_init_with_adjustment(self):
-        """Should create a GTK3ScrolledWindow with default values for attributes."""
+        """Should create a GTK3ScrolledWindow with adjustments."""
         _hadjustment = GTK3Adjustment()
         _vadjustment = GTK3Adjustment()
 
@@ -75,8 +75,8 @@ class TestGTK3ScrolledWindow(BaseGTK3GObjectTests):
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
-        """do_set_properties() should set the default properties of a ScrolledWindow
-        when an empty WidgetProperties is passed to the method."""
+        """Should set properties to default values when passed an empty
+        GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
@@ -97,8 +97,7 @@ class TestGTK3ScrolledWindow(BaseGTK3GObjectTests):
 
     @pytest.mark.unit
     def test_do_set_properties(self):
-        """do_set_properties() should set the properties of a ScrolledWindow to the
-        values found in the passed WidgetProperties."""
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
         _hadjustment = GTK3Adjustment()
         _vadjustment = GTK3Adjustment()
 
