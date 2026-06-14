@@ -28,7 +28,7 @@ from .button import (
     do_make_buttonbox,
 )
 from .color import GTK3ColorButton
-from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame
+from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame, GTK3Viewport
 
 # from .dialog import (
 #    GTK3AboutDialog,
@@ -297,7 +297,7 @@ __all__ = [
     #    "GTK3TreeStore",
     #    "GTK3TreeView",
     "GTK3TreeViewColumn",
-    #    "GTK3Viewport",
+    "GTK3Viewport",
     "GTK3VolumeButton",
     "GTK3Widget",
     "GTK3WidgetAttributes",

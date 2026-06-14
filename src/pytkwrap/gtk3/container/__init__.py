@@ -13,10 +13,12 @@ from .bin import GTK3Bin
 from .container import GTK3Container
 from .expander import GTK3Expander
 from .frame import GTK3Frame
+from .viewport import GTK3Viewport
 
 __all__ = [
     "GTK3Bin",
     "GTK3Container",
     "GTK3Expander",
     "GTK3Frame",
+    "GTK3Viewport",
 ]
