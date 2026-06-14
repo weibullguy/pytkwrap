@@ -134,6 +134,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     icon: str
     icons: list[str]
     icon_name: str | None
+    icon_widget: Gtk.Widget | None
     id_column: int
     image: Gtk.Widget | None
     image_position: Gtk.PositionType

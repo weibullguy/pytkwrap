@@ -10,6 +10,7 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .separatortoolitem import GTK3SeparatorToolItem
+from .toolbutton import GTK3ToolButton
 from .toolitem import GTK3ToolItem
 
-__all__ = ["GTK3SeparatorToolItem", "GTK3ToolItem"]
+__all__ = ["GTK3SeparatorToolItem", "GTK3ToolButton", "GTK3ToolItem"]
