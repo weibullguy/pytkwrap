@@ -32,6 +32,7 @@ from .test_constants import (
 )
 
 
+@pytest.mark.usefixtures("suppress_stderr")
 class TestFrame(BaseGTK3GObjectTests):
     """Test class for the GTK3Frame."""
 

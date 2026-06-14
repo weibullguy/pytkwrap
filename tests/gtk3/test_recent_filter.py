@@ -22,6 +22,7 @@ from .test_constants import (
 )
 
 
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3RecentFilter(BaseGTK3GObjectTests):
     """Test class for the GTK3RecentFilter class."""
 

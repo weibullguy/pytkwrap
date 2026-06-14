@@ -39,6 +39,7 @@ from .test_constants import (
 )
 
 
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3MenuToolButton(BaseGTK3GObjectTests):
     """Test class for the GTK3MenuToolButton class."""
 

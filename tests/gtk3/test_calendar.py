@@ -34,7 +34,7 @@ from .test_constants import (
 )
 
 
-@pytest.mark.order(3)
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3Calendar(BaseGTK3DataWidgetTests):
     """Test class for the GTK3Calendar class."""
 

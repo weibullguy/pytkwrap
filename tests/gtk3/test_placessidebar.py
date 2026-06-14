@@ -47,6 +47,7 @@ from .test_constants import (
         "Passes in isolation. Requires manual testing."
     )
 )
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3PlacesSidebar(BaseGTK3GObjectTests):
     """Test class for the GTK3PlacesSidebar."""
 

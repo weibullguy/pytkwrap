@@ -21,7 +21,7 @@ from .test_constants import (
 )
 
 
-@pytest.mark.order(2)
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3GObjectMixin(BaseGTK3GObjectTests):
     """Test class for the GTK3GObjectMixin class."""
 

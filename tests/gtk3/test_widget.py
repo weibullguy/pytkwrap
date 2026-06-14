@@ -30,7 +30,7 @@ from .test_constants import (
 )
 
 
-@pytest.mark.order(3)
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3Widget(BaseGTK3GObjectTests):
     """Test class for the GTK3Widget class."""
 

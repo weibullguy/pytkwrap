@@ -32,6 +32,7 @@ from .test_constants import (
 )
 
 
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3ImageMenuItem(BaseGTK3GObjectTests):
     """Test class for the GTK3ImageMenuItem class."""
 

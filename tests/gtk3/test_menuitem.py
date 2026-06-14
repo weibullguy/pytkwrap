@@ -32,7 +32,7 @@ from .test_constants import (
 )
 
 
-@pytest.mark.order(3)
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3MenuItem(BaseGTK3GObjectTests):
     """Test class for the GTK3MenuItem class."""
 

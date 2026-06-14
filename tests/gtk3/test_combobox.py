@@ -48,7 +48,6 @@ COMPOUND_TEST_LIST = [
 ]
 
 
-@pytest.mark.order(4)
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     """Test class for the GTK3ComboBox."""
