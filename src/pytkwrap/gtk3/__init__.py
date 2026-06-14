@@ -114,6 +114,7 @@ from .popover import GTK3Popover
 from .tool import (
     GTK3MenuToolButton,
     GTK3SeparatorToolItem,
+    GTK3ToggleToolButton,
     GTK3ToolButton,
     GTK3ToolItem,
 )
@@ -280,7 +281,7 @@ __all__ = [
     #    "GTK3TextTagTable",
     #    "GTK3TextView",
     "GTK3ToggleButton",
-    #    "GTK3ToggleToolButton",
+    "GTK3ToggleToolButton",
     #    "GTK3ToolBar",
     "GTK3ToolButton",
     "GTK3ToolItem",
