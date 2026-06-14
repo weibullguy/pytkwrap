@@ -1261,8 +1261,20 @@ EXPECTED_TOOLITEM_PROPERTIES = {
 EXPECTED_SEPARATORTOOLITEM_METHODS = ["get_draw", "set_draw"]
 EXPECTED_SEPARATORTOOLITEM_PROPERTIES = {"draw": True}
 
-EXPECTED_TOOL_BUTTON_HANDLER_IDS = {"clicked": -1}
-EXPECTED_TOOL_BUTTON_PROPERTIES = {
+EXPECTED_TOOLBUTTON_HANDLER_IDS = {"clicked": -1}
+EXPECTED_TOOLBUTTON_METHODS = [
+    "get_icon_name",
+    "get_icon_widget",
+    "get_label",
+    "get_label_widget",
+    "get_use_underline",
+    "set_icon_name",
+    "set_icon_widget",
+    "set_label",
+    "set_label_widget",
+    "set_use_underline",
+]
+EXPECTED_TOOLBUTTON_PROPERTIES = {
     "icon_name": None,
     "icon_widget": None,
     "label": None,
