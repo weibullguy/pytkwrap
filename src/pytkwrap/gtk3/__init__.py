@@ -113,6 +113,7 @@ from .popover import GTK3Popover
 # )
 from .tool import (
     GTK3MenuToolButton,
+    GTK3RadioToolButton,
     GTK3SeparatorToolItem,
     GTK3ToggleToolButton,
     GTK3ToolButton,
@@ -244,7 +245,7 @@ __all__ = [
     #    "GTK3ProgressBar",
     "GTK3RadioButton",
     "GTK3RadioMenuItem",
-    #    "GTK3RadioToolButton",
+    "GTK3RadioToolButton",
     #    "GTK3RecentAction",
     #    "GTK3RecentChooserDialog",
     #    "GTK3RecentChooserMenu",
