@@ -1298,6 +1298,12 @@ EXPECTED_TOGGLETOOLBUTTON_PROPERTIES = {"active": False}
 EXPECTED_RADIOTOOLBUTTON_METHODS = ["get_group", "set_group"]
 EXPECTED_RADIOTOOLBUTTON_PROPERTIES = {"group": None}
 
+EXPECTED_VIEWPORT_METHODS = [
+    "get_bin_window",
+    "get_shadow_type",
+    "get_view_window",
+    "set_shadow_type",
+]
 EXPECTED_VIEWPORT_PROPERTIES = {"shadow_type": Gtk.ShadowType.IN}
 
 EXPECTED_WINDOW_HANDLER_IDS = {

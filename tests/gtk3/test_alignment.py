@@ -25,6 +25,7 @@ from .test_constants import (
 )
 
 
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3Alignment(BaseGTK3GObjectTests):
     """Test class for the GTK3Alignment class."""
 

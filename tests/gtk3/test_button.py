@@ -33,6 +33,7 @@ from .test_constants import (
 )
 
 
+@pytest.mark.usefixtures("suppress_stderr")
 class TestButton(BaseGTK3GObjectTests):
     """Test class for the GTK3Button."""
 
