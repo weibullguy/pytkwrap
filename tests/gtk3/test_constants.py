@@ -1282,8 +1282,14 @@ EXPECTED_TOOLBUTTON_PROPERTIES = {
     "use_underline": False,
 }
 
-EXPECTED_MENU_TOOL_BUTTON_HANDLER_IDS = {"show-menu": -1}
-EXPECTED_MENU_TOOL_BUTTON_PROPERTIES = {"menu": None}
+EXPECTED_MENUTOOLBUTTON_HANDLER_IDS = {"show-menu": -1}
+EXPECTED_MENUTOOLBUTTON_METHODS = [
+    "get_menu",
+    "set_arrow_tooltip_markup",
+    "set_arrow_tooltip_text",
+    "set_menu",
+]
+EXPECTED_MENUTOOLBUTTON_PROPERTIES = {"menu": None}
 
 EXPECTED_TOGGLE_TOOL_BUTTON_HANDLER_IDS = {"toggled": -1}
 EXPECTED_TOGGLE_TOOL_BUTTON_PROPERTIES = {"active": False}
