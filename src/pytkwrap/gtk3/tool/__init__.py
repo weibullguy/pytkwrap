@@ -7,3 +7,8 @@ and never through this __init__.py to avoid circular imports.
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
 """
+
+# pytkwrap Local Imports
+from .toolitem import GTK3ToolItem
+
+__all__ = ["GTK3ToolItem"]

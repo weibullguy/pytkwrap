@@ -148,6 +148,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     is_expanded: bool
     is_expander: bool
     is_focus: bool
+    is_important: bool
     justification: Gtk.Justification | None
     justify: Gtk.Justification | None
     kinetic_scrolling: bool
@@ -338,7 +339,9 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vexpand: bool
     vexpand_set: bool
     visible: bool
+    visible_horizontal: bool
     visible_submenu: str | None
+    visible_vertical: bool
     visibility: bool
     vscroll_policy: Gtk.ScrollablePolicy | None
     vscrollbar_policy: Gtk.PolicyType | None
