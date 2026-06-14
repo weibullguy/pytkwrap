@@ -138,7 +138,7 @@ from .treeview import (
 #    GTK3PlotView,
 # )
 from .widget import GTK3Widget
-from .window import GTK3ScrolledWindow
+from .window import GTK3ScrolledWindow, GTK3Window
 
 __all__ = [
     #    "GTK3AboutDialog",
@@ -302,7 +302,7 @@ __all__ = [
     "GTK3Widget",
     "GTK3WidgetAttributes",
     "GTK3WidgetProperties",
-    #    "GTK3Window",
+    "GTK3Window",
     #    "GTK3WindowGroup",
     "do_make_buttonbox",
     #    "do_make_label_group",

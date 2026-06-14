@@ -29,6 +29,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     """Type for GTK3 widget properties."""
 
     accel_path: str | None
+    accept_focus: bool
     accepts_tab: bool
     action: Gtk.FileChooserAction | None
     action_name: str | None
@@ -45,6 +46,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     always_show_image: bool
     angle: float
     app_paintable: bool
+    application: Gtk.Application | None
+    attached_to: Gtk.Widget | None
     attributes: Pango.AttrList | None
     background: str | None
     background_rgba: Gdk.RGBA | None
@@ -78,6 +81,10 @@ class GTK3WidgetProperties(TypedDict, total=False):
     cursor_position: int
     cursor_visible: bool
     day: int
+    decorated: bool
+    default_height: int
+    default_width: int
+    deletable: bool
     destroy_with_parent: bool
     detail_height_rows: int
     detail_width_chars: int
@@ -108,6 +115,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     fit_model: bool
     fixed_width: int
     focus_on_click: bool
+    focus_on_map: bool
+    focus_visible: bool
     font: str | None
     font_desc: Pango.FontDescription | None
     font_name: str
@@ -115,6 +124,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     foreground_rgba: Gdk.RGBA | None
     foreground_set: bool
     gicon: Gio.Icon | None
+    gravity: Gdk.Gravity
     group: Gtk.RadioButton | Gtk.RadioToolButton | None
     hadjustment: Gtk.Adjustment | None
     halign: Gtk.Align | None
@@ -122,16 +132,19 @@ class GTK3WidgetProperties(TypedDict, total=False):
     has_entry: bool
     has_focus: bool
     has_frame: bool
+    has_resize_grip: bool
     has_tooltip: bool
+    has_toplevel_focus: bool
     heading: str | None
     height: int
     height_request: int
     hexpand: bool
     hexpand_set: bool
+    hide_titlebar_when_maximized: bool
     horizontal_alignment: str
     hscroll_policy: Gtk.ScrollablePolicy | None
     hscrollbar_policy: Gtk.PolicyType | None
-    icon: str
+    icon: str | None
     icons: list[str]
     icon_name: str | None
     icon_widget: Gtk.Widget | None
@@ -147,10 +160,12 @@ class GTK3WidgetProperties(TypedDict, total=False):
     inverted: bool
     invisible_char: str
     invisible_char_set: bool
+    is_active: bool
     is_expanded: bool
     is_expander: bool
     is_focus: bool
     is_important: bool
+    is_maximized: bool
     justification: Gtk.Justification | None
     justify: Gtk.Justification | None
     kinetic_scrolling: bool
@@ -184,6 +199,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     min_content_width: int
     min_width: int
     mnemonic_widget: Gtk.Widget | None
+    mnemonics_visible: bool
     modal: bool
     mode: Gtk.CellRendererMode
     model: Gtk.TreeModel | None
@@ -242,6 +258,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     right_margin: int
     rise: int
     rise_set: bool
+    role: str | None
     rotation: float
     row_homogeneous: bool
     row_spacing: int
@@ -250,6 +267,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     scale: float
     scale_factor: int
     scale_set: bool
+    screen: Gdk.Screen | None
     scroll_offset: int
     search_mode_enabled: bool
     secondary_icon_activatable: bool
@@ -289,12 +307,15 @@ class GTK3WidgetProperties(TypedDict, total=False):
     size_points: float
     size_set: bool
     sizing: Gtk.TreeViewColumnSizing | None
+    skip_pager_hint: bool
+    skip_taskbar_hint: bool
     snap: bool | None
     snap_to_ticks: bool
     sort_column_id: int
     sort_indicator: bool
     sort_order: Gtk.SortType | None
     spacing: int
+    startup_id: str | None
     step_increment: float
     stock_detail: str | None
     stock_size: int
@@ -312,18 +333,22 @@ class GTK3WidgetProperties(TypedDict, total=False):
     text_length: int
     text_xalign: float
     text_yalign: float
-    title: str
+    title: str | None
     tooltip: str
     tooltip_column: int
     tooltip_markup: str
     tooltip_text: str
     top_margin: int
     track_visited_links: bool
+    transient_for: Gtk.Window | None
     truncate_multiline: bool
+    type: Gtk.WindowType
+    type_hint: Gdk.WindowTypeHint
     underline: Pango.Underline | None
     underline_set: bool
     update_policy: Gtk.SpinButtonUpdatePolicy | None
     upper: float
+    urgency_hint: bool
     use_alpha: bool
     use_font: bool
     use_markup: bool
@@ -356,6 +381,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     width_request: int
     window: Gdk.Window | None
     window_placement: Gtk.CornerType | None
+    window_position: Gtk.WindowPosition
     wrap: bool
     wrap_mode: Gtk.WrapMode | Pango.WrapMode | None
     wrap_width: int
