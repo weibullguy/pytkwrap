@@ -111,7 +111,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     foreground_rgba: Gdk.RGBA | None
     foreground_set: bool
     gicon: Gio.Icon | None
-    group: Gtk.RadioButton | None
+    group: Gtk.RadioButton | Gtk.RadioToolButton | None
     hadjustment: Gtk.Adjustment | None
     halign: Gtk.Align | None
     has_default: bool
