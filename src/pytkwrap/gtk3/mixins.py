@@ -178,6 +178,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_length: int
     max_width: int
     max_width_chars: int
+    menu: Gtk.Menu | None
     menu_model: Gio.MenuModel | None
     min_content_height: int
     min_content_width: int
