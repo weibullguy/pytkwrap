@@ -111,7 +111,7 @@ from .popover import GTK3Popover
 #    GTK3TextTag,
 #    GTK3TextTagTable,
 # )
-from .tool import GTK3ToolItem
+from .tool import GTK3SeparatorToolItem, GTK3ToolItem
 from .treeview import (
     GTK3CellRenderer,
     GTK3CellRendererCombo,
@@ -253,6 +253,7 @@ __all__ = [
     #    "GTK3SearchEntry",
     "GTK3SeparatorMenuItem",
     #    "GTK3SeparatorToolButton",
+    "GTK3SeparatorToolItem",
     #    "GTK3ShortcutsLabel",
     #    "GTK3ShortcutsGroup",
     #    "GTK3ShortcutsSection",

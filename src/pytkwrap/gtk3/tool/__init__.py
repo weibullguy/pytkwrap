@@ -9,6 +9,7 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
+from .separatortoolitem import GTK3SeparatorToolItem
 from .toolitem import GTK3ToolItem
 
-__all__ = ["GTK3ToolItem"]
+__all__ = ["GTK3SeparatorToolItem", "GTK3ToolItem"]

@@ -37,13 +37,13 @@ class GTK3ToolItem(Gtk.ToolItem, GTK3Bin):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the values of the GTK3Widget-specific properties.
+        """Set the values of the GTK3ToolItem-specific properties.
 
         Parameters
         ----------
         properties : GTK3WidgetProperties | dict | list[list | tuple]
             The typed dict (preferred), non-typed dict, list of lists, or list of
-            tuples with the property values to set for the GTK3Widget.
+            tuples with the property values to set for the GTK3ToolItem.
         """
         # Update the property dictionary.
         super().do_set_properties(properties)
