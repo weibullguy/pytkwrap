@@ -290,6 +290,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_enter_location: bool
     show_heading: bool
     show_hidden: bool
+    show_menubar: bool
     show_other_locations: bool
     show_recent: bool
     show_size: bool
