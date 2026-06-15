@@ -1444,6 +1444,15 @@ EXPECTED_WINDOW_PROPERTIES = {
     "window_position": Gtk.WindowPosition.NONE,
 }
 
+EXPECTED_APPLICATIONWINDOW_METHODS = [
+    "get_help_overlay",
+    "get_id",
+    "get_show_menubar",
+    "set_help_overlay",
+    "set_show_menubar",
+]
+EXPECTED_APPLICATIONWINDOW_PROPERTIES = {"show_menubar": True}
+
 EXPECTED_ASSISTANT_HANDLER_IDS = {
     "apply": -1,
     "cancel": -1,
