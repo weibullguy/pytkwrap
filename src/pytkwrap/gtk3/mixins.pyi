@@ -43,8 +43,10 @@ class GTK3WidgetProperties(TypedDict, total=False):
     angle: float
     app_paintable: bool
     application: Gtk.Application | None
+    artists: list
     attached_to: Gtk.Widget | None
     attributes: Pango.AttrList | None
+    authors: list
     background: str | None
     background_rgba: Gdk.RGBA | None
     background_set: bool
@@ -70,9 +72,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     column_homogeneous: bool
     column_spacing: int
     column_span_column: int
+    comments: str | None
     completion: Gtk.EntryCompletion | None
     composite_child: bool
     constrain_to: Gtk.PopoverConstraint
+    copyright: str | None
     create_folders: bool
     cursor_position: int
     cursor_visible: bool
@@ -88,6 +92,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     digits: int
     direction: Gtk.ArrowType
     do_overwrite_confirmation: bool
+    documenters: list
     draw: bool
     draw_as_radio: bool
     draw_indicator: bool
@@ -174,9 +179,13 @@ class GTK3WidgetProperties(TypedDict, total=False):
     language_set: bool
     left_margin: int
     level_indentation: int
+    license: str | None
+    license_type: Gtk.License
     lines: int
     local_only: bool
     location: Gio.File | None
+    logo: GdkPixbuf.Pixbuf | None
+    logo_icon_name: str
     lower: float
     margin: int
     margin_bottom: int
@@ -238,6 +247,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     primary_icon_storage_type: Gtk.ImageType | None
     primary_icon_tooltip_markup: str | None
     primary_icon_tooltip_text: str | None
+    program_name: str | None
     progress_fraction: float
     progress_pulse_step: float
     propagate_natural_height: bool
@@ -338,6 +348,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     top_margin: int
     track_visited_links: bool
     transient_for: Gtk.Window | None
+    translator_credits: str | None
     truncate_multiline: bool
     type: Gtk.WindowType
     type_hint: Gdk.WindowTypeHint
@@ -361,6 +372,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     value: float | int
     variant: Pango.Variant | None
     variant_set: bool
+    version: str | None
     vertical_alignment: str
     vexpand: bool
     vexpand_set: bool
@@ -371,6 +383,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     visibility: bool
     vscroll_policy: Gtk.ScrollablePolicy | None
     vscrollbar_policy: Gtk.PolicyType | None
+    website: str | None
+    website_label: str | None
     weight: int
     weight_set: bool
     widget: object
@@ -381,6 +395,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     window_placement: Gtk.CornerType | None
     window_position: Gtk.WindowPosition
     wrap: bool
+    wrap_license: bool
     wrap_mode: Gtk.WrapMode | Pango.WrapMode | None
     wrap_width: int
     x_offset: int
