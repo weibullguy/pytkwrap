@@ -1557,11 +1557,12 @@ EXPECTED_ABOUTDIALOG_PROPERTIES = {
     "wrap_license": False,
 }
 
-EXPECTED_APP_CHOOSER_DIALOG_PROPERTIES = {"gfile": None, "heading": None}
+EXPECTED_APPCHOOSERDIALOG_METHODS = ["get_heading", "get_widget", "set_heading"]
+EXPECTED_APPCHOOSERDIALOG_PROPERTIES = {"gfile": None, "heading": None}
 
-EXPECTED_COLOR_CHOOSER_DIALOG_PROPERTIES = {"show_editor": False}
+EXPECTED_COLORCHOOSERDIALOG_PROPERTIES = {"show_editor": False}
 
-EXPECTED_MESSAGE_DIALOG_PROPERTIES = {
+EXPECTED_MESSAGEDIALOG_PROPERTIES = {
     "buttons": Gtk.ButtonsType.NONE,
     "message_area": None,
     "message_type": Gtk.MessageType.INFO,
@@ -1571,8 +1572,8 @@ EXPECTED_MESSAGE_DIALOG_PROPERTIES = {
     "use_markup": False,
 }
 
-EXPECTED_SHORTCUTS_WINDOW_HANDLER_IDS = {"close": -1, "search": -1}
-EXPECTED_SHORTCUTS_WINDOW_PROPERTIES = {
+EXPECTED_SHORTCUTSWINDOW_HANDLER_IDS = {"close": -1, "search": -1}
+EXPECTED_SHORTCUTSWINDOW_PROPERTIES = {
     "section_name": "internal-search",
     "view_name": None,
 }
