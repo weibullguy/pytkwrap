@@ -1488,6 +1488,21 @@ EXPECTED_ASSISTANT_METHODS = [
 EXPECTED_ASSISTANT_PROPERTIES = {"use_header_bar": -1}
 
 EXPECTED_DIALOG_HANDLER_IDS = {"close": -1, "response": -1}
+EXPECTED_DIALOG_METHODS = [
+    "add_action_widget",
+    "add_button",
+    "add_buttons",
+    "get_action_area",
+    "get_content_area",
+    "get_header_bar",
+    "get_response_for_widget",
+    "get_widget_for_response",
+    "response",
+    "run",
+    "set_alternative_button_order_from_array",
+    "set_default_response",
+    "set_response_sensitive",
+]
 EXPECTED_DIALOG_PROPERTIES = {"use_header_bar": -1}
 
 EXPECTED_ABOUT_DIALOG_HANDLER_IDS = {"activate-link": -1}
