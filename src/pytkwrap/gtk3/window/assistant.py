@@ -4,8 +4,6 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
-# Standard Library Imports
-
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
@@ -27,7 +25,13 @@ class GTK3Assistant(Gtk.Assistant, GTK3Window):
     ]
 
     def __init__(self, use_header_bar: bool = False) -> None:
-        """Initialize an instance of the GTK3Assistant."""
+        """Initialize an instance of the GTK3Assistant.
+
+        Parameters
+        ----------
+        use_header_bar : bool, optional
+            Whether to use the header-bar for action buttons.
+        """
         Gtk.Assistant.__init__(self, use_header_bar=use_header_bar)
         GTK3Window.__init__(self)
 

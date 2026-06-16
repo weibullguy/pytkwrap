@@ -29,14 +29,7 @@ from .button import (
 )
 from .color import GTK3ColorButton
 from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame, GTK3Viewport
-
-# from .dialog import (
-#    GTK3AboutDialog,
-#    GTK3AppChooserDialog,
-#    GTK3Dialog,
-#    GTK3MessageDialog,
-#    GTK3NativeDialog,
-# )
+from .dialog import GTK3Dialog
 from .file import GTK3FileFilter, GTK3RecentFilter
 from .font import GTK3FontButton
 
@@ -179,7 +172,7 @@ __all__ = [
     #    "GTK3ColorSelectionDialog",
     "GTK3Container",
     #    "GTK3CSSProvider",
-    #    "GTK3Dialog",
+    "GTK3Dialog",
     #    "GTK3DrawingArea",
     #    "GTK3Entry",
     #    "GTK3EntryBuffer",

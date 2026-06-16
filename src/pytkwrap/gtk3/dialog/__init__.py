@@ -9,8 +9,13 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-from .base_dialog import RAMSTKBaseDialog  # noqa: F401
-from .database_select_dialog import RAMSTKDatabaseSelectDialog  # noqa: F401
-from .date_select_dialog import RAMSTKDateSelectDialog  # noqa: F401
-from .file_chooser_dialog import RAMSTKFileChooserDialog  # noqa: F401
-from .message_dialog import RAMSTKMessageDialog  # noqa: F401
+from .dialog import GTK3Dialog
+
+# from .database_select_dialog import RAMSTKDatabaseSelectDialog  # noqa: F401
+# from .date_select_dialog import RAMSTKDateSelectDialog  # noqa: F401
+# from .file_chooser_dialog import RAMSTKFileChooserDialog  # noqa: F401
+# from .message_dialog import RAMSTKMessageDialog  # noqa: F401
+
+__all__ = [
+    "GTK3Dialog",
+]
