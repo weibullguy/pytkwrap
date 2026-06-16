@@ -348,6 +348,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     urgency_hint: bool
     use_alpha: bool
     use_font: bool
+    use_header_bar: bool | int
     use_markup: bool
     use_popover: bool
     use_preview_label: bool
