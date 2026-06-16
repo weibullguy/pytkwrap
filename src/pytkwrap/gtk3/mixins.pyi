@@ -124,6 +124,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     foreground: str | None
     foreground_rgba: Gdk.RGBA | None
     foreground_set: bool
+    gfile: Gio.File | None
     gicon: Gio.Icon | None
     gravity: Gdk.Gravity
     group: Gtk.RadioButton | Gtk.RadioToolButton | None
