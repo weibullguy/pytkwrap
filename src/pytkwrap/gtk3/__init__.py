@@ -29,7 +29,7 @@ from .button import (
 )
 from .color import GTK3ColorButton
 from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame, GTK3Viewport
-from .dialog import GTK3Dialog
+from .dialog import GTK3AboutDialog, GTK3Dialog
 from .file import GTK3FileFilter, GTK3RecentFilter
 from .font import GTK3FontButton
 
@@ -134,7 +134,7 @@ from .widget import GTK3Widget
 from .window import GTK3ApplicationWindow, GTK3Assistant, GTK3ScrolledWindow, GTK3Window
 
 __all__ = [
-    #    "GTK3AboutDialog",
+    "GTK3AboutDialog",
     "GTK3ActionBar",
     "GTK3Adjustment",
     "GTK3Alignment",

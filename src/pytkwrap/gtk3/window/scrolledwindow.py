@@ -75,7 +75,7 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3Bin):
         self,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
-        """Set the values of the GTK3ScrolledBar-specific properties.
+        """Set the values of the GTK3ScrolledWindow-specific properties.
 
         Parameters
         ----------
