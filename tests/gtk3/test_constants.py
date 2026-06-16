@@ -1460,6 +1460,31 @@ EXPECTED_ASSISTANT_HANDLER_IDS = {
     "escape": -1,
     "prepare": -1,
 }
+EXPECTED_ASSISTANT_METHODS = [
+    "add_action_widget",
+    "append_page",
+    "commit",
+    "get_current_page",
+    "get_n_pages",
+    "get_nth_page",
+    "get_page_complete",
+    "get_page_has_padding",
+    "get_page_title",
+    "get_page_type",
+    "insert_page",
+    "next_page",
+    "prepend_page",
+    "previous_page",
+    "remove_action_widget",
+    "remove_page",
+    "set_current_page",
+    "set_forward_page_func",
+    "set_page_complete",
+    "set_page_has_padding",
+    "set_page_title",
+    "set_page_type",
+    "update_buttons_state",
+]
 EXPECTED_ASSISTANT_PROPERTIES = {"use_header_bar": -1}
 
 EXPECTED_DIALOG_HANDLER_IDS = {"close": -1, "response": -1}
