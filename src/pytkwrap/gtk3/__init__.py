@@ -27,7 +27,7 @@ from .button import (
     GTK3VolumeButton,
     do_make_buttonbox,
 )
-from .color import GTK3ColorButton
+from .color import GTK3ColorButton, GTK3ColorChooserDialog
 from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame, GTK3Viewport
 from .dialog import GTK3AboutDialog, GTK3AppChooserDialog, GTK3Dialog, GTK3MessageDialog
 from .file import GTK3FileFilter, GTK3RecentFilter
@@ -166,7 +166,7 @@ __all__ = [
     "GTK3ColorButton",
     "GTK3ComboBox",
     "GTK3ComboBoxText",
-    #    "GTK3ColorChooserDialog",
+    "GTK3ColorChooserDialog",
     #    "GTK3ColorChooserWidget",
     #    "GTK3ColorSelection",
     #    "GTK3ColorSelectionDialog",
