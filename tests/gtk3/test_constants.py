@@ -1562,6 +1562,12 @@ EXPECTED_APPCHOOSERDIALOG_PROPERTIES = {"gfile": None, "heading": None}
 
 EXPECTED_COLORCHOOSERDIALOG_PROPERTIES = {"show_editor": False}
 
+EXPECTED_MESSAGEDIALOG_METHODS = [
+    "format_secondary_markup",
+    "format_secondary_text",
+    "get_message_area",
+    "set_markup",
+]
 EXPECTED_MESSAGEDIALOG_PROPERTIES = {
     "buttons": Gtk.ButtonsType.NONE,
     "message_area": None,
