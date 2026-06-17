@@ -60,6 +60,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     bottom_margin: int
     buffer: Gtk.EntryBuffer | Gtk.TextBuffer | None
     button_sensitivity: Gtk.SensitivityType | None
+    buttons: Gtk.ButtonsType
     can_default: bool
     can_focus: bool
     can_target: bool
@@ -205,6 +206,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_width_chars: int
     menu: Gtk.Menu | None
     menu_model: Gio.MenuModel | None
+    message_area: Gtk.Widget
+    message_type: Gtk.MessageType
     min_content_height: int
     min_content_width: int
     min_width: int
@@ -289,6 +292,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     secondary_icon_storage_type: Gtk.ImageType | None
     secondary_icon_tooltip_markup: str | None
     secondary_icon_tooltip_text: str | None
+    secondary_text: str | None
+    secondary_use_markup: bool
     selectable: bool
     select_multiple: bool
     selection_bound: int

@@ -12,9 +12,11 @@ and never through this __init__.py to avoid circular imports.
 from .aboutdialog import GTK3AboutDialog
 from .appchooserdialog import GTK3AppChooserDialog
 from .dialog import GTK3Dialog
+from .messagedialog import GTK3MessageDialog
 
 __all__ = [
     "GTK3AboutDialog",
     "GTK3AppChooserDialog",
     "GTK3Dialog",
+    "GTK3MessageDialog",
 ]
