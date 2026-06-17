@@ -28,6 +28,7 @@ from .test_constants import (
 )
 
 
+@pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3CellRendererSpin(BaseGTK3GObjectTests):
     """Test class for the GTK3CellRendererSpin class."""
 

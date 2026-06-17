@@ -1578,6 +1578,8 @@ EXPECTED_MESSAGEDIALOG_PROPERTIES = {
     "use_markup": False,
 }
 
+EXPECTED_COLORCHOOSERDIALOG_PROPERTIES = {"show_editor": False}
+
 EXPECTED_SHORTCUTSWINDOW_HANDLER_IDS = {"close": -1, "search": -1}
 EXPECTED_SHORTCUTSWINDOW_PROPERTIES = {
     "section_name": "internal-search",
