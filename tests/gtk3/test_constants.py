@@ -1580,6 +1580,14 @@ EXPECTED_MESSAGEDIALOG_PROPERTIES = {
 
 EXPECTED_COLORCHOOSERDIALOG_PROPERTIES = {"show_editor": False}
 
+EXPECTED_COLORSELECTIONDIALOG_METHODS = ["get_color_selection"]
+EXPECTED_COLORSELECTIONDIALOG_PROPERTIES = {
+    "cancel_button": Gtk.Widget,
+    "color_selection": Gtk.Widget,
+    "help_button": Gtk.Widget,
+    "ok_button": Gtk.Widget,
+}
+
 EXPECTED_SHORTCUTSWINDOW_HANDLER_IDS = {"close": -1, "search": -1}
 EXPECTED_SHORTCUTSWINDOW_PROPERTIES = {
     "section_name": "internal-search",
