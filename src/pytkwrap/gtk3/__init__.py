@@ -136,7 +136,13 @@ from .treeview import (
 #    GTK3PlotView,
 # )
 from .widget import GTK3Widget
-from .window import GTK3ApplicationWindow, GTK3Assistant, GTK3ScrolledWindow, GTK3Window
+from .window import (
+    GTK3ApplicationWindow,
+    GTK3Assistant,
+    GTK3ScrolledWindow,
+    GTK3ShortcutsWindow,
+    GTK3Window,
+)
 
 __all__ = [
     "GTK3AboutDialog",
@@ -263,7 +269,7 @@ __all__ = [
     #    "GTK3ShortcutsGroup",
     #    "GTK3ShortcutsSection",
     #    "GTK3ShortcutsShortcut",
-    #    "GTK3ShortcutsWindow",
+    "GTK3ShortcutsWindow",
     #    "GTK3SpinButton",
     #    "GTK3Stack",
     #    "GTK3StackSidebar",

@@ -294,6 +294,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     secondary_icon_tooltip_text: str | None
     secondary_text: str | None
     secondary_use_markup: bool
+    section_name: str
     selectable: bool
     select_multiple: bool
     selection_bound: int
@@ -386,6 +387,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vertical_alignment: str
     vexpand: bool
     vexpand_set: bool
+    view_name: str | None
     visible: bool
     visible_horizontal: bool
     visible_submenu: str | None
