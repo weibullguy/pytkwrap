@@ -10,5 +10,6 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .font_button import GTK3FontButton
+from .fontchooserdialog import GTK3FontChooserDialog
 
-__all__ = ["GTK3FontButton"]
+__all__ = ["GTK3FontButton", "GTK3FontChooserDialog"]

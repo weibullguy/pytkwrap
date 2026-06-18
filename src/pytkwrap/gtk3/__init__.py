@@ -31,7 +31,7 @@ from .color import GTK3ColorButton, GTK3ColorChooserDialog, GTK3ColorSelectionDi
 from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame, GTK3Viewport
 from .dialog import GTK3AboutDialog, GTK3AppChooserDialog, GTK3Dialog, GTK3MessageDialog
 from .file import GTK3FileChooserDialog, GTK3FileFilter, GTK3RecentFilter
-from .font import GTK3FontButton
+from .font import GTK3FontButton, GTK3FontChooserDialog
 
 # from .icon import (
 #    GTK3IconFactory,
@@ -189,7 +189,7 @@ __all__ = [
     #    "GTK3FlowBox",
     #    "GTK3FlowBoxChild",
     "GTK3FontButton",
-    #    "GTK3FontChooserDialog",
+    "GTK3FontChooserDialog",
     #    "GTK3FontChooserWidget",
     #    "GTK3FontSelection",
     #    "GTK3FontSelectionDialog",
