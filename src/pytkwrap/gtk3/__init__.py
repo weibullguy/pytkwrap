@@ -30,7 +30,12 @@ from .button import (
 from .color import GTK3ColorButton, GTK3ColorChooserDialog, GTK3ColorSelectionDialog
 from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame, GTK3Viewport
 from .dialog import GTK3AboutDialog, GTK3AppChooserDialog, GTK3Dialog, GTK3MessageDialog
-from .file import GTK3FileChooserDialog, GTK3FileFilter, GTK3RecentFilter
+from .file import (
+    GTK3FileChooserDialog,
+    GTK3FileFilter,
+    GTK3RecentChooserDialog,
+    GTK3RecentFilter,
+)
 from .font import GTK3FontButton, GTK3FontChooserDialog
 
 # from .icon import (
@@ -240,7 +245,7 @@ __all__ = [
     "GTK3RadioMenuItem",
     "GTK3RadioToolButton",
     #    "GTK3RecentAction",
-    #    "GTK3RecentChooserDialog",
+    "GTK3RecentChooserDialog",
     #    "GTK3RecentChooserMenu",
     #    "GTK3RecentChooserWidget",
     "GTK3RecentFilter",
