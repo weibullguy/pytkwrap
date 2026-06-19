@@ -54,6 +54,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     background: str | None
     background_rgba: Gdk.RGBA | None
     background_set: bool
+    baseline_position: Gtk.BaselinePosition
     baseline_row: int
     bold: bool
     border_width: int
@@ -148,6 +149,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     hexpand: bool
     hexpand_set: bool
     hide_titlebar_when_maximized: bool
+    homogeneous: bool
     horizontal_alignment: str
     hscroll_policy: Gtk.ScrollablePolicy | None
     hscrollbar_policy: Gtk.PolicyType | None

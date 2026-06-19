@@ -28,7 +28,14 @@ from .button import (
     do_make_buttonbox,
 )
 from .color import GTK3ColorButton, GTK3ColorChooserDialog, GTK3ColorSelectionDialog
-from .container import GTK3Bin, GTK3Container, GTK3Expander, GTK3Frame, GTK3Viewport
+from .container import (
+    GTK3Bin,
+    GTK3Box,
+    GTK3Container,
+    GTK3Expander,
+    GTK3Frame,
+    GTK3Viewport,
+)
 from .dialog import GTK3AboutDialog, GTK3AppChooserDialog, GTK3Dialog, GTK3MessageDialog
 from .file import (
     GTK3FileChooserDialog,
@@ -88,14 +95,8 @@ from .mixins import (
 #    GTK3PrintSettings,
 # )
 from .popover import GTK3Popover
+from .shortcut import GTK3ShortcutsWindow
 
-# from .shortcut import (
-#    GTK3ShortcutsLabel,
-#    GTK3ShortcutsGroup,
-#    GTK3ShortcutsSection,
-#    GTK3ShortcutsShortcut,
-#    GTK3ShortcutsWindow,
-# )
 # from .style import (
 #    GTK3CSSProvider,
 #    GTK3StyleContext,
@@ -136,13 +137,7 @@ from .treeview import (
 #    GTK3PlotView,
 # )
 from .widget import GTK3Widget
-from .window import (
-    GTK3ApplicationWindow,
-    GTK3Assistant,
-    GTK3ScrolledWindow,
-    GTK3ShortcutsWindow,
-    GTK3Window,
-)
+from .window import GTK3ApplicationWindow, GTK3Assistant, GTK3ScrolledWindow, GTK3Window
 
 __all__ = [
     "GTK3AboutDialog",
@@ -157,7 +152,7 @@ __all__ = [
     #    "GTK3BasePanel",
     #    "GTK3BaseView",
     "GTK3Bin",
-    #    "GTK3Box",
+    "GTK3Box",
     "GTK3Button",
     #    "GTK3ButtonBox",
     "GTK3Calendar",

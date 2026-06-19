@@ -12,13 +12,11 @@ and never through this __init__.py to avoid circular imports.
 from .applicationwindow import GTK3ApplicationWindow
 from .assistant import GTK3Assistant
 from .scrolledwindow import GTK3ScrolledWindow
-from .shortcutswindow import GTK3ShortcutsWindow
 from .window import GTK3Window
 
 __all__ = [
     "GTK3ApplicationWindow",
     "GTK3Assistant",
     "GTK3ScrolledWindow",
-    "GTK3ShortcutsWindow",
     "GTK3Window",
 ]
