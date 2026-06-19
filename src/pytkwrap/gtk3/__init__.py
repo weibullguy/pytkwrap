@@ -31,6 +31,7 @@ from .color import GTK3ColorButton, GTK3ColorChooserDialog, GTK3ColorSelectionDi
 from .container import (
     GTK3Bin,
     GTK3Box,
+    GTK3ButtonBox,
     GTK3Container,
     GTK3Expander,
     GTK3Frame,
@@ -154,7 +155,7 @@ __all__ = [
     "GTK3Bin",
     "GTK3Box",
     "GTK3Button",
-    #    "GTK3ButtonBox",
+    "GTK3ButtonBox",
     "GTK3Calendar",
     #    "GTK3CellArea",
     #    "GTK3CellAreaContext",

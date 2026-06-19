@@ -185,6 +185,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     label_yalign: float
     language: str | None
     language_set: bool
+    layout_style: Gtk.ButtonBoxStyle
     left_margin: int
     level_indentation: int
     license: str | None
