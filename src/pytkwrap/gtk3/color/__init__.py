@@ -11,10 +11,12 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .color_button import GTK3ColorButton
 from .colorchooserdialog import GTK3ColorChooserDialog
+from .colorchooserwidget import GTK3ColorChooserWidget
 from .colorselectiondialog import GTK3ColorSelectionDialog
 
 __all__ = [
     "GTK3ColorButton",
     "GTK3ColorChooserDialog",
+    "GTK3ColorChooserWidget",
     "GTK3ColorSelectionDialog",
 ]
