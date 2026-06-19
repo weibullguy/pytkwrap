@@ -1612,3 +1612,15 @@ EXPECTED_BOX_PROPERTIES = {
     "homogeneous": False,
     "spacing": 0,
 }
+
+EXPECTED_BUTTONBOX_METHODS = [
+    "get_child_non_homogeneous",
+    "get_child_secondary",
+    "get_layout",
+    "set_child_non_homogeneous",
+    "set_child_secondary",
+    "set_layout",
+]
+EXPECTED_BUTTONBOX_PROPERTIES = {
+    "layout_style": Gtk.ButtonBoxStyle.END,
+}
