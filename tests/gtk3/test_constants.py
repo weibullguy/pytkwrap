@@ -1591,3 +1591,24 @@ EXPECTED_SHORTCUTSWINDOW_PROPERTIES = {
     "section_name": "internal-search",
     "view_name": None,
 }
+
+EXPECTED_BOX_METHODS = [
+    "get_baseline_position",
+    "get_center_widget",
+    "get_homogeneous",
+    "get_spacing",
+    "pack_end",
+    "pack_start",
+    "query_child_packing",
+    "reorder_child",
+    "set_baseline_position",
+    "set_center_widget",
+    "set_child_packing",
+    "set_homogeneous",
+    "set_spacing",
+]
+EXPECTED_BOX_PROPERTIES = {
+    "baseline_position": Gtk.BaselinePosition.CENTER,
+    "homogeneous": False,
+    "spacing": 0,
+}
