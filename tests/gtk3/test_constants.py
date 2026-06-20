@@ -1626,3 +1626,26 @@ EXPECTED_BUTTONBOX_PROPERTIES = {
 }
 
 EXPECTED_COLORCHOOSERWIDGET_PROPERTIES = {"show_editor": False}
+
+EXPECTED_COLORSELECTION_HANDLER_IDS = {"color-changed": -1}
+EXPECTED_COLORSELECTION_METHODS = [
+    "get_current_alpha",
+    "get_current_rgba",
+    "get_has_opacity_control",
+    "get_has_palette",
+    "get_previous_alpha",
+    "get_previous_rgba",
+    "is_adjusting",
+    "set_current_alpha",
+    "set_current_rgba",
+    "set_has_opacity_control",
+    "set_has_palette",
+    "set_previous_alpha",
+    "set_previous_rgba",
+]
+EXPECTED_COLORSELECTION_PROPERTIES = {
+    "current_alpha": 65535,
+    "current_rgba": None,
+    "has_opacity_control": False,
+    "has_palette": False,
+}
