@@ -31,6 +31,7 @@ from .color import (
     GTK3ColorButton,
     GTK3ColorChooserDialog,
     GTK3ColorChooserWidget,
+    GTK3ColorSelection,
     GTK3ColorSelectionDialog,
 )
 from .container import (
@@ -180,7 +181,7 @@ __all__ = [
     "GTK3ComboBoxText",
     "GTK3ColorChooserDialog",
     "GTK3ColorChooserWidget",
-    #    "GTK3ColorSelection",
+    "GTK3ColorSelection",
     "GTK3ColorSelectionDialog",
     "GTK3Container",
     #    "GTK3CSSProvider",

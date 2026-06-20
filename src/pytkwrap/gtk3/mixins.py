@@ -84,6 +84,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     constrain_to: Gtk.PopoverConstraint
     copyright: str | None
     create_folders: bool
+    current_alpha: int
+    current_rgba: Gdk.RGBA | None
     cursor_position: int
     cursor_visible: bool
     day: int
@@ -140,6 +142,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     has_entry: bool
     has_focus: bool
     has_frame: bool
+    has_opacity_control: bool
+    has_palette: bool
     has_resize_grip: bool
     has_tooltip: bool
     has_toplevel_focus: bool
