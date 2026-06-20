@@ -21,11 +21,27 @@ from .test_constants import (
 )
 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        "--filechooserbutton",
+        action="store_true",
+        default=False,
+        help="Run tests for the Gtk.FileChooserButton class.",
+    )
+
+
 @pytest.fixture(scope="function")
 def image_file():
     _parent_dir_ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     _image_ = os.path.join(_parent_dir_, "data/pytkwrap.png")
     return _image_
+
+
+@pytest.fixture(autouse=True)
+def skip_if_not_filechooserbutton(request):
+    """Skip the test if the Gtk.FileChooserButton class is not available."""
+    if not request.config.getoption("--filechooserbutton", default=False):
+        pytest.skip("--filechooserbutton was not specified..")
 
 
 class BaseGTK3GObjectTests(TestPyTkWrapMixin):

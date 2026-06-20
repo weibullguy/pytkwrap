@@ -1649,3 +1649,16 @@ EXPECTED_COLORSELECTION_PROPERTIES = {
     "has_opacity_control": False,
     "has_palette": False,
 }
+
+EXPECTED_FILECHOOSERBUTTON_HANDLER_IDS = {"file-set": -1}
+EXPECTED_FILECHOOSERBUTTON_METHODS = [
+    "get_title",
+    "get_width_chars",
+    "set_title",
+    "set_width_chars",
+]
+EXPECTED_FILECHOOSERBUTTON_PROPERTIES = {
+    "dialog": None,
+    "title": "Select a File",
+    "width_chars": -1,
+}
