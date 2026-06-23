@@ -271,6 +271,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     reorderable: bool
     resizable: bool
     resize_toplevel: bool
+    revealed: bool
     rgba: Gdk.RGBA | None
     right_margin: int
     rise: int
