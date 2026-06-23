@@ -104,7 +104,7 @@ from .mixins import (
 #    GTK3PrintSettings,
 # )
 from .popover import GTK3Popover
-from .shortcut import GTK3ShortcutsWindow
+from .shortcut import GTK3ShortcutLabel, GTK3ShortcutsWindow
 
 # from .style import (
 #    GTK3CSSProvider,
@@ -267,7 +267,7 @@ __all__ = [
     "GTK3SeparatorMenuItem",
     #    "GTK3SeparatorToolButton",
     "GTK3SeparatorToolItem",
-    #    "GTK3ShortcutsLabel",
+    "GTK3ShortcutLabel",
     #    "GTK3ShortcutsGroup",
     #    "GTK3ShortcutsSection",
     #    "GTK3ShortcutsShortcut",
