@@ -1,4 +1,4 @@
-"""Test module for the GTK3FileChooserButton class.
+"""Test module for the GTK3FileChooserWidget class.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -10,8 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.dialog import GTK3Dialog
-from pytkwrap.gtk3.file import GTK3FileChooserButton
+from pytkwrap.gtk3.file import GTK3FileChooserWidget
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 # pytkwrap Local Imports
@@ -22,9 +21,8 @@ from .test_constants import (
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
-    EXPECTED_FILECHOOSERBUTTON_HANDLER_IDS,
-    EXPECTED_FILECHOOSERBUTTON_METHODS,
-    EXPECTED_FILECHOOSERBUTTON_PROPERTIES,
+    EXPECTED_FILECHOOSERWIDGET_HANDLER_IDS,
+    EXPECTED_FILECHOOSERWIDGET_PROPERTIES,
     EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
@@ -35,12 +33,11 @@ from .test_constants import (
 )
 
 
-@pytest.mark.usefixtures("skip_if_not_filechooserbutton")
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3FileChooserButton(BaseGTK3GObjectTests):
-    """Test class for the GTK3FileChooserButton class."""
+class TestGTK3FileChooserWidget(BaseGTK3GObjectTests):
+    """Test class for the GTK3FileChooserWidget class."""
 
-    widget_class = GTK3FileChooserButton
+    widget_class = GTK3FileChooserWidget
     expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_WIDGET_ATTRIBUTES
     expected_default_height = -1
     expected_default_width = -1
@@ -48,20 +45,19 @@ class TestGTK3FileChooserButton(BaseGTK3GObjectTests):
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
         | EXPECTED_CONTAINER_HANDLER_IDS
-        | EXPECTED_FILECHOOSERBUTTON_HANDLER_IDS
+        | EXPECTED_FILECHOOSERWIDGET_HANDLER_IDS
     )
     expected_methods = (
         EXPECTED_GOBJECT_METHODS
         + EXPECTED_WIDGET_METHODS
         + EXPECTED_CONTAINER_METHODS
         + EXPECTED_BOX_METHODS
-        + EXPECTED_FILECHOOSERBUTTON_METHODS
     )
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES
         | EXPECTED_CONTAINER_PROPERTIES
         | EXPECTED_BOX_PROPERTIES
-        | EXPECTED_FILECHOOSERBUTTON_PROPERTIES
+        | EXPECTED_FILECHOOSERWIDGET_PROPERTIES
     )
 
     @pytest.mark.unit
@@ -72,23 +68,16 @@ class TestGTK3FileChooserButton(BaseGTK3GObjectTests):
         dut.do_set_properties(GTK3WidgetProperties())
 
         assert dut.dic_properties == self.expected_properties
-        assert dut.do_get_property("dialog") is None
-        assert dut.do_get_property("title") == "Select a File"
-        assert dut.do_get_property("width_chars") == -1
+        assert not dut.do_get_property("search_mode")
 
     @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        _dialog = GTK3Dialog()
-
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
-                dialog=_dialog,
-                title="Test Title",
-                width_chars=25,
+                search_mode=True,
             )
         )
 
-        assert dut.get_property("title") == "Test Title"
-        assert dut.get_property("width_chars") == 25
+        assert dut.get_property("search_mode")

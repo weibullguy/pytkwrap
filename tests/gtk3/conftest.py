@@ -37,7 +37,7 @@ def image_file():
     return _image_
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture()
 def skip_if_not_filechooserbutton(request):
     """Skip the test if the Gtk.FileChooserButton class is not available."""
     if not request.config.getoption("--filechooserbutton", default=False):
