@@ -1678,3 +1678,25 @@ EXPECTED_FILECHOOSERWIDGET_HANDLER_IDS = {
     "up-folder": -1,
 }
 EXPECTED_FILECHOOSERWIDGET_PROPERTIES = {"search_mode": False}
+
+EXPECTED_INFOBAR_HANDLER_IDS = {"close": -1, "response": -1}
+EXPECTED_INFOBAR_METHODS = [
+    "add_action_widget",
+    "add_button",
+    "get_action_area",
+    "get_content_area",
+    "get_message_type",
+    "get_revealed",
+    "get_show_close_button",
+    "response",
+    "set_default_response",
+    "set_message_type",
+    "set_response_sensitive",
+    "set_revealed",
+    "set_show_close_button",
+]
+EXPECTED_INFOBAR_PROPERTIES = {
+    "message_type": Gtk.MessageType.INFO,
+    "revealed": True,
+    "show_close_button": False,
+}
