@@ -25,6 +25,7 @@ class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
 
 class GTK3WidgetProperties(TypedDict, total=False):
     accel_path: str | None
+    accelerator: str | None
     accept_focus: bool
     accepts_tab: bool
     action: Gtk.FileChooserAction | None
@@ -95,6 +96,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     dialog: Gtk.Dialog | None
     digits: int
     direction: Gtk.ArrowType
+    disabled_text: str | None
     do_overwrite_confirmation: bool
     documenters: list
     draw: bool
