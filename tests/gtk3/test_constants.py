@@ -1700,3 +1700,11 @@ EXPECTED_INFOBAR_PROPERTIES = {
     "revealed": True,
     "show_close_button": False,
 }
+
+EXPECTED_SHORTCUTLABEL_METHODS = [
+    "get_accelerator",
+    "get_disabled_text",
+    "set_accelerator",
+    "set_disabled_text",
+]
+EXPECTED_SHORTCUTLABEL_PROPERTIES = {"accelerator": None, "disabled_text": None}
