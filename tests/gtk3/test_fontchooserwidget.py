@@ -1,4 +1,4 @@
-"""Test module for the GTK3RecentChooserDialog class.
+"""Test module for the GTK3FontChooserWidget class.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -9,19 +9,17 @@ import pytest
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gdk, GdkPixbuf, Gtk
-from pytkwrap.gtk3.file import GTK3RecentChooserDialog
+from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.font import GTK3FontChooserWidget
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
 from .test_constants import (
-    EXPECTED_BIN_METHODS,
+    EXPECTED_BOX_METHODS,
+    EXPECTED_BOX_PROPERTIES,
     EXPECTED_CONTAINER_HANDLER_IDS,
     EXPECTED_CONTAINER_METHODS,
     EXPECTED_CONTAINER_PROPERTIES,
-    EXPECTED_DIALOG_HANDLER_IDS,
-    EXPECTED_DIALOG_METHODS,
-    EXPECTED_DIALOG_PROPERTIES,
     EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,
@@ -29,36 +27,31 @@ from .test_constants import (
     EXPECTED_WIDGET_HANDLER_IDS,
     EXPECTED_WIDGET_METHODS,
     EXPECTED_WIDGET_PROPERTIES,
-    EXPECTED_WINDOW_HANDLER_IDS,
-    EXPECTED_WINDOW_METHODS,
-    EXPECTED_WINDOW_PROPERTIES,
 )
 
 
+@pytest.mark.usefixtures("skip_if_not_isolated")
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3RecentChooserDialog(BaseGTK3GObjectTests):
-    """Test class for the GTK3RecentChooserDialog class."""
+class TestGTK3FontChooserWidget(BaseGTK3GObjectTests):
+    """Test class for the GTK3FontChooserWidget class."""
 
-    widget_class = GTK3RecentChooserDialog
+    widget_class = GTK3FontChooserWidget
     expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_WIDGET_ATTRIBUTES
+    expected_default_height = -1
+    expected_default_width = -1
     expected_handler_id = (
         EXPECTED_GOBJECT_HANDLER_IDS
         | EXPECTED_WIDGET_HANDLER_IDS
         | EXPECTED_CONTAINER_HANDLER_IDS
-        | EXPECTED_WINDOW_HANDLER_IDS
-        | EXPECTED_DIALOG_HANDLER_IDS
     )
     expected_methods = (
         EXPECTED_GOBJECT_METHODS
         + EXPECTED_WIDGET_METHODS
         + EXPECTED_CONTAINER_METHODS
-        + EXPECTED_BIN_METHODS
-        + EXPECTED_WINDOW_METHODS
-        + EXPECTED_DIALOG_METHODS
+        + EXPECTED_BOX_METHODS
     )
     expected_properties = (
         EXPECTED_WIDGET_PROPERTIES
         | EXPECTED_CONTAINER_PROPERTIES
-        | EXPECTED_WINDOW_PROPERTIES
-        | EXPECTED_DIALOG_PROPERTIES
+        | EXPECTED_BOX_PROPERTIES
     )

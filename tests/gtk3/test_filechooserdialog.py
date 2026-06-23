@@ -35,13 +35,7 @@ from .test_constants import (
 )
 
 
-@pytest.mark.skip(
-    reason=(
-        "GTK3FileChooserDialog crashes at the C level when run as part of the full "
-        "test suite due to GIO volume monitor initialization conflicts. Passes in "
-        "isolation. Requires manual testing."
-    )
-)
+@pytest.mark.usefixtures("skip_if_not_isolated")
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3FileChooserDialog(BaseGTK3GObjectTests):
     """Test class for the GTK3FileChooserDialog class."""

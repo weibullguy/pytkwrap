@@ -286,7 +286,7 @@ norecursedirs = [
     "build",
     "dist",
 ]
-testpaths = ["tests", "tests/common"]
+testpaths = ["tests", "tests/common", "tests/gtk3"]
 markers = [
     "unit: marks the test as a unit test.",
     "integration: marks the test as an integration test.",

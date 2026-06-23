@@ -35,7 +35,7 @@ from .test_constants import (
 )
 
 
-@pytest.mark.usefixtures("skip_if_not_filechooserbutton")
+@pytest.mark.usefixtures("skip_if_not_isolated")
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3FileChooserButton(BaseGTK3GObjectTests):
     """Test class for the GTK3FileChooserButton class."""

@@ -23,7 +23,7 @@ from .test_constants import (
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--filechooserbutton",
+        "--isolated",
         action="store_true",
         default=False,
         help="Run tests for the Gtk.FileChooserButton class.",
@@ -37,11 +37,15 @@ def image_file():
     return _image_
 
 
-@pytest.fixture()
-def skip_if_not_filechooserbutton(request):
-    """Skip the test if the Gtk.FileChooserButton class is not available."""
-    if not request.config.getoption("--filechooserbutton", default=False):
-        pytest.skip("--filechooserbutton was not specified..")
+@pytest.fixture(scope="class")
+def skip_if_not_isolated(request):
+    """Skip the test if the class needs to be tested in isolation."""
+    if not request.config.getoption("--isolated", default=False):
+        pytest.skip(
+            "Testing this widget crashes at the C level when run as part of the full "
+            "test suite due to GIO volume monitor initialization conflicts. Passes in "
+            "isolation. --isolated was not specified."
+        )
 
 
 class BaseGTK3GObjectTests(TestPyTkWrapMixin):
