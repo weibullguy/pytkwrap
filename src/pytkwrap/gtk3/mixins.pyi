@@ -286,6 +286,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     scale_set: bool
     screen: Gdk.Screen | None
     scroll_offset: int
+    search_mode: bool
     search_mode_enabled: bool
     secondary_icon_activatable: bool
     secondary_icon_gicon: Gio.Icon | None
