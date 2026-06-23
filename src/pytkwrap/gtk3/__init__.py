@@ -52,7 +52,7 @@ from .file import (
     GTK3RecentChooserDialog,
     GTK3RecentFilter,
 )
-from .font import GTK3FontButton, GTK3FontChooserDialog
+from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
 
 # from .icon import (
 #    GTK3IconFactory,
@@ -205,9 +205,7 @@ __all__ = [
     #    "GTK3FlowBoxChild",
     "GTK3FontButton",
     "GTK3FontChooserDialog",
-    #    "GTK3FontChooserWidget",
-    #    "GTK3FontSelection",
-    #    "GTK3FontSelectionDialog",
+    "GTK3FontChooserWidget",
     "GTK3Frame",
     #    "GTK3GLArea",
     "GTK3GObjectMixin",
