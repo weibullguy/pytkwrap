@@ -1708,3 +1708,10 @@ EXPECTED_SHORTCUTLABEL_METHODS = [
     "set_disabled_text",
 ]
 EXPECTED_SHORTCUTLABEL_PROPERTIES = {"accelerator": None, "disabled_text": None}
+
+EXPECTED_SHORTCUTSGROUP_PROPERTIES = {
+    "accel_size_group": None,
+    "title": "",
+    "title_size_group": None,
+    "view": None,
+}
