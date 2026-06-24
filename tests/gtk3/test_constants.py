@@ -1715,3 +1715,11 @@ EXPECTED_SHORTCUTSGROUP_PROPERTIES = {
     "title_size_group": None,
     "view": None,
 }
+
+EXPECTED_SHORTCUTSSECTION_HANDLER_IDS = {"change-current-page": -1}
+EXPECTED_SHORTCUTSSECTION_PROPERTIES = {
+    "max_height": 15,
+    "section_name": None,
+    "title": None,
+    "view_name": None,
+}
