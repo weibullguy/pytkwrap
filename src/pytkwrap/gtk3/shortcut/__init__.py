@@ -10,9 +10,11 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .shortcutlabel import GTK3ShortcutLabel
+from .shortcutsgroup import GTK3ShortcutsGroup
 from .shortcutswindow import GTK3ShortcutsWindow
 
 __all__ = [
     "GTK3ShortcutLabel",
+    "GTK3ShortcutsGroup",
     "GTK3ShortcutsWindow",
 ]
