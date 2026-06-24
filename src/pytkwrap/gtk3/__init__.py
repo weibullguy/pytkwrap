@@ -108,6 +108,7 @@ from .shortcut import (
     GTK3ShortcutLabel,
     GTK3ShortcutsGroup,
     GTK3ShortcutsSection,
+    GTK3ShortcutsShortcut,
     GTK3ShortcutsWindow,
 )
 
@@ -274,7 +275,7 @@ __all__ = [
     "GTK3ShortcutLabel",
     "GTK3ShortcutsGroup",
     "GTK3ShortcutsSection",
-    #    "GTK3ShortcutsShortcut",
+    "GTK3ShortcutsShortcut",
     "GTK3ShortcutsWindow",
     #    "GTK3SpinButton",
     #    "GTK3Stack",

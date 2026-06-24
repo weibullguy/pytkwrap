@@ -163,6 +163,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     icon: str | None
     icons: list[str]
     icon_name: str | None
+    icon_set: bool
     icon_widget: Gtk.Widget | None
     id_column: int
     image: Gtk.Widget | None
@@ -313,6 +314,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     selection_bound: int
     sensitive: bool
     shadow_type: Gtk.ShadowType | None
+    shortcut_type: Gtk.ShortcutType | None
     show_close_button: bool
     show_day_names: bool
     show_default_item: bool
@@ -357,6 +359,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     style: Gtk.Style | Pango.Style | None
     style_set: bool
     submenu: Gtk.Menu | None
+    subtitle: str | None
+    subtitle_set: bool
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
     text: str | None

@@ -12,11 +12,13 @@ and never through this __init__.py to avoid circular imports.
 from .shortcutlabel import GTK3ShortcutLabel
 from .shortcutsgroup import GTK3ShortcutsGroup
 from .shortcutssection import GTK3ShortcutsSection
+from .shortcutsshortcut import GTK3ShortcutsShortcut
 from .shortcutswindow import GTK3ShortcutsWindow
 
 __all__ = [
     "GTK3ShortcutLabel",
     "GTK3ShortcutsGroup",
     "GTK3ShortcutsSection",
+    "GTK3ShortcutsShortcut",
     "GTK3ShortcutsWindow",
 ]
