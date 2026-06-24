@@ -207,6 +207,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     markup: str | None
     max_content_height: int
     max_content_width: int
+    max_height: int
     max_length: int
     max_width: int
     max_width_chars: int
@@ -302,7 +303,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     secondary_icon_tooltip_text: str | None
     secondary_text: str | None
     secondary_use_markup: bool
-    section_name: str
+    section_name: str | None
     selectable: bool
     select_multiple: bool
     selection_bound: int
