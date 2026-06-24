@@ -1737,3 +1737,6 @@ EXPECTED_SHORTCUTSSHORTCUT_PROPERTIES = {
     "title": "",
     "title_size_group": None,
 }
+
+EXPECTED_STACKSWITCHER_METHODS = ["get_stack", "set_stack"]
+EXPECTED_STACKSWITCHER_PROPERTIES = {"icon_size": 1, "stack": None}
