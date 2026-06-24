@@ -1723,3 +1723,17 @@ EXPECTED_SHORTCUTSSECTION_PROPERTIES = {
     "title": None,
     "view_name": None,
 }
+
+EXPECTED_SHORTCUTSSHORTCUT_PROPERTIES = {
+    "accel_size_group": None,
+    "accelerator": None,
+    "action_name": None,
+    "direction": Gtk.TextDirection.NONE,
+    "icon": None,
+    "icon_set": False,
+    "shortcut_type": Gtk.ShortcutType.ACCELERATOR,
+    "subtitle": "",
+    "subtitle_set": False,
+    "title": "",
+    "title_size_group": None,
+}
