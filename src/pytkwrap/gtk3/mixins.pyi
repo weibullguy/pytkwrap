@@ -25,6 +25,7 @@ class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
 
 class GTK3WidgetProperties(TypedDict, total=False):
     accel_path: str | None
+    accel_size_group: Gtk.SizeGroup | None
     accelerator: str | None
     accept_focus: bool
     accepts_tab: bool
@@ -359,6 +360,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     text_xalign: float
     text_yalign: float
     title: str | None
+    title_size_group: Gtk.SizeGroup | None
     tooltip: str
     tooltip_column: int
     tooltip_markup: str
@@ -394,6 +396,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vertical_alignment: str
     vexpand: bool
     vexpand_set: bool
+    view: str | None
     view_name: str | None
     visible: bool
     visible_horizontal: bool
