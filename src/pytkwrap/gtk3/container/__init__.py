@@ -15,6 +15,7 @@ from .buttonbox import GTK3ButtonBox
 from .container import GTK3Container
 from .expander import GTK3Expander
 from .frame import GTK3Frame
+from .stackswitcher import GTK3StackSwitcher
 from .viewport import GTK3Viewport
 
 __all__ = [
@@ -24,5 +25,6 @@ __all__ = [
     "GTK3Container",
     "GTK3Expander",
     "GTK3Frame",
+    "GTK3StackSwitcher",
     "GTK3Viewport",
 ]

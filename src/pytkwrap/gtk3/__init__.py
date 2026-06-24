@@ -41,6 +41,7 @@ from .container import (
     GTK3Container,
     GTK3Expander,
     GTK3Frame,
+    GTK3StackSwitcher,
     GTK3Viewport,
 )
 from .dialog import GTK3AboutDialog, GTK3AppChooserDialog, GTK3Dialog, GTK3MessageDialog
@@ -280,7 +281,7 @@ __all__ = [
     #    "GTK3SpinButton",
     #    "GTK3Stack",
     #    "GTK3StackSidebar",
-    #    "GTK3StackSwitcher",
+    "GTK3StackSwitcher",
     #    "GTK3StatusBar",
     #    "GTK3StatusIcon",
     #    "GTK3StyleContext",

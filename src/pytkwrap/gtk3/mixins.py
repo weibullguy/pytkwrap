@@ -164,6 +164,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     icons: list[str]
     icon_name: str | None
     icon_set: bool
+    icon_size: int
     icon_widget: Gtk.Widget | None
     id_column: int
     image: Gtk.Widget | None
@@ -348,6 +349,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     sort_indicator: bool
     sort_order: Gtk.SortType | None
     spacing: int
+    stack: Gtk.Stack | None
     startup_id: str | None
     step_increment: float
     stock_detail: str | None
