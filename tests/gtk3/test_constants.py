@@ -1740,3 +1740,13 @@ EXPECTED_SHORTCUTSSHORTCUT_PROPERTIES = {
 
 EXPECTED_STACKSWITCHER_METHODS = ["get_stack", "set_stack"]
 EXPECTED_STACKSWITCHER_PROPERTIES = {"icon_size": 1, "stack": None}
+
+EXPECTED_STATUSBAR_HANDLER_IDS = {"text-popped": -1, "text-pushed": -1}
+EXPECTED_STATUSBAR_METHODS = [
+    "get_context_id",
+    "get_message_area",
+    "pop",
+    "push",
+    "remove",
+    "remove_all",
+]
