@@ -1803,3 +1803,33 @@ EXPECTED_FLOWBOX_PROPERTIES = {
     "row_spacing": 0,
     "selection_mode": Gtk.SelectionMode.SINGLE,
 }
+
+EXPECTED_GRID_ATTRIBUTES = {"n_columns": 1, "n_rows": 1}
+EXPECTED_GRID_METHODS = [
+    "attach",
+    "attach_next_to",
+    "get_baseline_row",
+    "get_child_at",
+    "get_column_homogeneous",
+    "get_column_spacing",
+    "get_row_baseline_position",
+    "get_row_homogeneous",
+    "get_row_spacing",
+    "insert_column",
+    "insert_row",
+    "remove_column",
+    "remove_row",
+    "set_baseline_row",
+    "set_column_homogeneous",
+    "set_column_spacing",
+    "set_row_baseline_position",
+    "set_row_homogeneous",
+    "set_row_spacing",
+]
+EXPECTED_GRID_PROPERTIES = {
+    "baseline_row": 0,
+    "column_homogeneous": False,
+    "column_spacing": 0,
+    "row_homogeneous": False,
+    "row_spacing": 0,
+}
