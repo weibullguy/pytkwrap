@@ -1750,3 +1750,5 @@ EXPECTED_STATUSBAR_METHODS = [
     "remove",
     "remove_all",
 ]
+
+EXPECTED_FIXED_METHODS = ["move", "put"]
