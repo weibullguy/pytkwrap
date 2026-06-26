@@ -11,8 +11,10 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .fixed import GTK3Fixed
 from .flowbox import GTK3FlowBox
+from .grid import GTK3Grid
 
 __all__ = [
     "GTK3Fixed",
     "GTK3FlowBox",
+    "GTK3Grid",
 ]

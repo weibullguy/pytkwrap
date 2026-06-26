@@ -69,7 +69,7 @@ from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
 #    GTK3StatusIcon,
 # )
 from .io import GTK3Calendar, GTK3ComboBox, GTK3ComboBoxText
-from .layout import GTK3Fixed, GTK3FlowBox
+from .layout import GTK3Fixed, GTK3FlowBox, GTK3Grid
 from .menu import (
     GTK3CheckMenuItem,
     GTK3ImageMenuItem,
@@ -212,7 +212,7 @@ __all__ = [
     "GTK3Frame",
     #    "GTK3GLArea",
     "GTK3GObjectMixin",
-    #    "GTK3Grid",
+    "GTK3Grid",
     #    "GTK3HandleBox",
     #    "GTK3HeaderBar",
     #    "GTK3HSV",
