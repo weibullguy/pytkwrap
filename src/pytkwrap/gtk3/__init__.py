@@ -46,7 +46,6 @@ from .container import (
     GTK3ButtonBox,
     GTK3Container,
     GTK3Expander,
-    GTK3Fixed,
     GTK3Frame,
     GTK3StackSwitcher,
     GTK3Viewport,
@@ -70,17 +69,7 @@ from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
 #    GTK3StatusIcon,
 # )
 from .io import GTK3Calendar, GTK3ComboBox, GTK3ComboBoxText
-
-# from .layout import (
-#    GTK3DrawingArea,
-#    GTK3Fixed,
-#    GTK3FlowBox,
-#    GTK3FlowBoxChild,
-#    GTK3GLArea,
-#    GTK3Grid,
-#    GTK3Layout,
-#    GTK3Table,
-# )
+from .layout import GTK3Fixed, GTK3FlowBox
 from .menu import (
     GTK3CheckMenuItem,
     GTK3ImageMenuItem,
@@ -215,7 +204,7 @@ __all__ = [
     "GTK3FileFilter",
     "GTK3Fixed",
     #    "GTK3FixedPanel",
-    #    "GTK3FlowBox",
+    "GTK3FlowBox",
     #    "GTK3FlowBoxChild",
     "GTK3FontButton",
     "GTK3FontChooserDialog",

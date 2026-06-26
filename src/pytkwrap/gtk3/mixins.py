@@ -36,6 +36,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     action: Gtk.FileChooserAction | None
     action_name: str | None
     action_target: GLib.Variant | None
+    activate_on_single_click: bool
     activates_default: bool
     active: bool | int
     active_id: str | None
@@ -211,6 +212,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     margin_start: int
     margin_top: int
     markup: str | None
+    max_children_per_line: int
     max_content_height: int
     max_content_width: int
     max_height: int
@@ -221,6 +223,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     menu_model: Gio.MenuModel | None
     message_area: Gtk.Widget
     message_type: Gtk.MessageType
+    min_children_per_line: int
     min_content_height: int
     min_content_width: int
     min_width: int
@@ -313,6 +316,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     selectable: bool
     select_multiple: bool
     selection_bound: int
+    selection_mode: Gtk.SelectionMode
     sensitive: bool
     shadow_type: Gtk.ShadowType | None
     shortcut_type: Gtk.ShortcutType | None

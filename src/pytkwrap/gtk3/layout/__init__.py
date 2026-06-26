@@ -7,3 +7,12 @@ and never through this __init__.py to avoid circular imports.
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
 """
+
+# pytkwrap Local Imports
+from .fixed import GTK3Fixed
+from .flowbox import GTK3FlowBox
+
+__all__ = [
+    "GTK3Fixed",
+    "GTK3FlowBox",
+]
