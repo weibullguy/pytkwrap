@@ -10,8 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container import GTK3Fixed
-from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+from pytkwrap.gtk3.layout import GTK3Fixed
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
