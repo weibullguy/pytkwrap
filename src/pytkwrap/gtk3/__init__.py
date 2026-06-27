@@ -13,6 +13,7 @@ from .adjustment import GTK3Adjustment
 from .alignment import GTK3Alignment
 from .bar import (
     GTK3ActionBar,
+    GTK3HeaderBar,
     GTK3InfoBar,
     GTK3PlacesSidebar,
     GTK3SearchBar,
@@ -214,7 +215,7 @@ __all__ = [
     "GTK3GObjectMixin",
     "GTK3Grid",
     #    "GTK3HandleBox",
-    #    "GTK3HeaderBar",
+    "GTK3HeaderBar",
     #    "GTK3HSV",
     #    "GTK3IconFactory",
     #    "GTK3IconInfo",
