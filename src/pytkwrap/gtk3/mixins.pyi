@@ -87,8 +87,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     current_rgba: Gdk.RGBA | None
     cursor_position: int
     cursor_visible: bool
+    custom_title: str | None
     day: int
     decorated: bool
+    decoration_layout: Gtk.DecorationLayout | None
+    decoration_layout_set: bool
     default_height: int
     default_width: int
     deletable: bool
@@ -145,6 +148,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     has_opacity_control: bool
     has_palette: bool
     has_resize_grip: bool
+    has_subtitle: bool
     has_tooltip: bool
     has_toplevel_focus: bool
     heading: str | None
