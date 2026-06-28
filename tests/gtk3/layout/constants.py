@@ -96,3 +96,12 @@ EXPECTED_GRID_PROPERTIES = {
     "row_homogeneous": False,
     "row_spacing": 0,
 }
+
+EXPECTED_LAYOUT_METHODS = [
+    "get_bin_window",
+    "get_size",
+    "move",
+    "put",
+    "set_size",
+]
+EXPECTED_LAYOUT_PROPERTIES = {"height": 100, "width": 100}
