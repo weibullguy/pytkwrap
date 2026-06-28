@@ -81,6 +81,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     column_homogeneous: bool
     column_spacing: int
     column_span_column: int
+    columns: int
     comments: str | None
     completion: Gtk.EntryCompletion | None
     composite_child: bool
@@ -189,6 +190,9 @@ class GTK3WidgetProperties(TypedDict, total=False):
     is_focus: bool
     is_important: bool
     is_maximized: bool
+    item_orientation: Gtk.Orientation | None
+    item_padding: int
+    item_width: int
     justification: Gtk.Justification | None
     justify: Gtk.Justification | None
     kinetic_scrolling: bool
@@ -216,6 +220,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     margin_start: int
     margin_top: int
     markup: str | None
+    markup_column: int
     max_children_per_line: int
     max_content_height: int
     max_content_width: int
@@ -252,6 +257,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     parent: Gtk.Container | None
     pattern: str | None
     pixbuf: Gdk.Pixbuf.Pixbuf | None
+    pixbuf_column: int
     pixbuf_expander_closed: Gdk.Pixbuf.Pixbuf | None
     pixbuf_expander_open: Gdk.Pixbuf.Pixbuf | None
     pixels_above_lines: int

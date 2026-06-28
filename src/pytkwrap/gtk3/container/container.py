@@ -31,10 +31,10 @@ class GTK3Container(Gtk.Container, GTK3Widget):
         Gtk.Container.__init__(self)
         GTK3Widget.__init__(self)
 
-        self.dic_properties.update(self._GTK3_CONTAINER_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_CONTAINER_SIGNALS}
         )
+        self.dic_properties.update(self._GTK3_CONTAINER_PROPERTIES)
 
     def do_set_properties(
         self,

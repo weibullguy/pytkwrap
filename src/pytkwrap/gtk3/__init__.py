@@ -61,14 +61,7 @@ from .file import (
     GTK3RecentFilter,
 )
 from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
-
-# from .icon import (
-#    GTK3IconFactory,
-#    GTK3IconInfo,
-#    GTK3IconTheme,
-#    GTK3IconView,
-#    GTK3StatusIcon,
-# )
+from .icon import GTK3IconView
 from .io import GTK3Calendar, GTK3ComboBox, GTK3ComboBoxText
 from .layout import GTK3Fixed, GTK3FlowBox, GTK3Grid
 from .menu import (
@@ -220,7 +213,7 @@ __all__ = [
     #    "GTK3IconFactory",
     #    "GTK3IconInfo",
     #    "GTK3IconTheme",
-    #    "GTK3IconView",
+    "GTK3IconView",
     "GTK3ImageMenuItem",
     "GTK3InfoBar",
     #    "GTK3Label",
