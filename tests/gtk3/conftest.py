@@ -14,7 +14,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.common.test_pytkwrap_mixin import TestPyTkWrapMixin
 
 # pytkwrap Local Imports
-from .test_constants import (
+from .constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,

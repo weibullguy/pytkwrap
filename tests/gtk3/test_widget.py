@@ -19,7 +19,7 @@ from pytkwrap.gtk3.widget import GTK3Widget
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3GObjectTests
-from .test_constants import (
+from .constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
     EXPECTED_GOBJECT_METHODS,

@@ -21,7 +21,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from .conftest import BaseGTK3DataWidgetTests
-from .test_constants import (
+from .constants import (
     EXPECTED_ADJUSTMENT_ATTRIBUTES,
     EXPECTED_ADJUSTMENT_HANDLER_IDS,
     EXPECTED_ADJUSTMENT_METHODS,
