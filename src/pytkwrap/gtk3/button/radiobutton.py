@@ -9,7 +9,7 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.check_button import GTK3CheckButton
+from pytkwrap.gtk3.button.checkbutton import GTK3CheckButton
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 

@@ -11,7 +11,7 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .checkmenuitem import GTK3CheckMenuItem
 from .imagemenuitem import GTK3ImageMenuItem
-from .menu_button import GTK3MenuButton
+from .menubutton import GTK3MenuButton
 from .menuitem import GTK3MenuItem
 from .popovermenu import GTK3PopoverMenu
 from .radiomenuitem import GTK3RadioMenuItem

@@ -9,7 +9,7 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-from .color_button import GTK3ColorButton
+from .colorbutton import GTK3ColorButton
 from .colorchooserdialog import GTK3ColorChooserDialog
 from .colorchooserwidget import GTK3ColorChooserWidget
 from .colorselection import GTK3ColorSelection

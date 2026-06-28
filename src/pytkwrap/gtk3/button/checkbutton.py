@@ -6,7 +6,7 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.toggle_button import GTK3ToggleButton
+from pytkwrap.gtk3.button.togglebutton import GTK3ToggleButton
 
 
 class GTK3CheckButton(Gtk.CheckButton, GTK3ToggleButton):

@@ -9,13 +9,13 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-from .app_chooser_button import GTK3AppChooserButton
+from .appchooserbutton import GTK3AppChooserButton
 from .button import GTK3Button, do_make_buttonbox
-from .check_button import GTK3CheckButton
-from .radio_button import GTK3RadioButton
-from .scale_button import GTK3ScaleButton
-from .toggle_button import GTK3ToggleButton
-from .volume_button import GTK3VolumeButton
+from .checkbutton import GTK3CheckButton
+from .radiobutton import GTK3RadioButton
+from .scalebutton import GTK3ScaleButton
+from .togglebutton import GTK3ToggleButton
+from .volumebutton import GTK3VolumeButton
 
 # from .spin_button import GTK3SpinButton
 

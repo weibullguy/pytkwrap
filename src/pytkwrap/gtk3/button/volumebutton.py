@@ -8,7 +8,7 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.scale_button import GTK3ScaleButton
+from pytkwrap.gtk3.button.scalebutton import GTK3ScaleButton
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 

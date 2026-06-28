@@ -9,12 +9,12 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-from .file_filter import GTK3FileFilter
 from .filechooserbutton import GTK3FileChooserButton
 from .filechooserdialog import GTK3FileChooserDialog
 from .filechooserwidget import GTK3FileChooserWidget
-from .recent_filter import GTK3RecentFilter
+from .filefilter import GTK3FileFilter
 from .recentchooserdialog import GTK3RecentChooserDialog
+from .recentfilter import GTK3RecentFilter
 
 __all__ = (
     "GTK3FileChooserButton",
