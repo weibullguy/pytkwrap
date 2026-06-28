@@ -63,7 +63,7 @@ from .file import (
 from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
 from .icon import GTK3IconView
 from .io import GTK3Calendar, GTK3ComboBox, GTK3ComboBoxText
-from .layout import GTK3Fixed, GTK3FlowBox, GTK3Grid
+from .layout import GTK3Fixed, GTK3FlowBox, GTK3Grid, GTK3Layout
 from .menu import (
     GTK3CheckMenuItem,
     GTK3ImageMenuItem,
@@ -217,7 +217,7 @@ __all__ = [
     "GTK3ImageMenuItem",
     "GTK3InfoBar",
     #    "GTK3Label",
-    #    "GTK3Layout",
+    "GTK3Layout",
     #    "GTK3LevelBar",
     #    "GTK3ListBox",
     #    "GTK3ListBoxRow",
