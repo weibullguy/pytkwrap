@@ -48,6 +48,7 @@ from .container import (
     GTK3Container,
     GTK3Expander,
     GTK3Frame,
+    GTK3ListBox,
     GTK3StackSwitcher,
     GTK3Viewport,
 )
@@ -219,7 +220,7 @@ __all__ = [
     #    "GTK3Label",
     "GTK3Layout",
     #    "GTK3LevelBar",
-    #    "GTK3ListBox",
+    "GTK3ListBox",
     #    "GTK3ListBoxRow",
     #    "GTK3ListStore",
     #    "GTK3MatrixPanel",

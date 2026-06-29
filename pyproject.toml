@@ -128,11 +128,12 @@ extra-dependencies = [
 ]
 [tool.hatch.envs.types.scripts]
 update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
+make-stub = "stubgen --include-private -o src {args}"
 all = [
     "mypy --config ./pyproject.toml {args}",
     "ty check {args}",
+    "make-stub",
 ]
-make-stub = "stubgen --include-private -o src {args}"
 
 [tool.hatch.envs.docs]
 extra-dependencies = [
