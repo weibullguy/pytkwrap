@@ -42,6 +42,7 @@ from tests.gtk3.window.constants import (
 )
 
 
+@pytest.mark.usefixtures("skip_if_not_isolated")
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3AppChooserDialog(BaseGTK3GObjectTests):
     """Test class for the GTK3AppChooserDialog class."""

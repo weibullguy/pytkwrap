@@ -1,3 +1,6 @@
+# Standard Library Imports
+import sys
+
 try:
     # Third Party Imports
     import gi
@@ -122,6 +125,50 @@ EXPECTED_FRAME_PROPERTIES = {
     "label_xalign": 0.0,
     "label_yalign": 0.5,
     "shadow_type": Gtk.ShadowType.ETCHED_IN,
+}
+
+EXPECTED_LISTBOX_HANDLER_IDS = {
+    "activate-cursor-row": -1,
+    "move-cursor": -1,
+    "row-activated": -1,
+    "row-selected": -1,
+    "select-all": -1,
+    "selected-rows-changed": -1,
+    "toggle-cursor-row": -1,
+    "unselect-all": -1,
+}
+EXPECTED_LISTBOX_METHODS = [
+    "bind_model",
+    "drag_highlight_row",
+    "drag_unhighlight_row",
+    "get_activate_on_single_click",
+    "get_adjustment",
+    "get_row_at_index",
+    "get_row_at_y",
+    "get_selected_row",
+    "get_selected_rows",
+    "get_selection_mode",
+    "insert",
+    "invalidate_filter",
+    "invalidate_headers",
+    "invalidate_sort",
+    "prepend",
+    "select_all",
+    "select_row",
+    "selected_foreach",
+    "set_activate_on_single_click",
+    "set_adjustment",
+    "set_filter_func",
+    "set_header_func",
+    "set_placeholder",
+    "set_selection_mode",
+    "set_sort_func",
+    "unselect_all",
+    "unselect_row",
+]
+EXPECTED_LISTBOX_PROPERTIES = {
+    "activate_on_single_click": True,
+    "selection_mode": Gtk.SelectionMode.SINGLE,
 }
 
 EXPECTED_STACKSWITCHER_METHODS = ["get_stack", "set_stack"]
