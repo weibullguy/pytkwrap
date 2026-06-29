@@ -13,6 +13,7 @@ from .checkmenuitem import GTK3CheckMenuItem
 from .imagemenuitem import GTK3ImageMenuItem
 from .menubutton import GTK3MenuButton
 from .menuitem import GTK3MenuItem
+from .menushell import GTK3MenuShell
 from .popovermenu import GTK3PopoverMenu
 from .radiomenuitem import GTK3RadioMenuItem
 from .separatormenuitem import GTK3SeparatorMenuItem
@@ -23,6 +24,7 @@ __all__ = [
     "GTK3ImageMenuItem",
     "GTK3MenuButton",
     "GTK3MenuItem",
+    "GTK3MenuShell",
     "GTK3PopoverMenu",
     "GTK3RadioMenuItem",
     "GTK3SeparatorMenuItem",
