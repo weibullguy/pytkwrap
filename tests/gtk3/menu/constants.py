@@ -85,6 +85,34 @@ EXPECTED_MENUITEM_PROPERTIES = {
     "use_underline": False,
 }
 
+EXPECTED_MENUSHELL_HANDLER_IDS = {
+    "activate-current": -1,
+    "cancel": -1,
+    "cycle-focus": -1,
+    "deactivate": -1,
+    "insert": -1,
+    "move-current": -1,
+    "move-selected": -1,
+    "selection-done": -1,
+}
+EXPECTED_MENUSHELL_METHODS = [
+    "activate_item",
+    "append",
+    "bind_model",
+    "cancel",
+    "deactivate",
+    "deselect",
+    "get_parent_shell",
+    "get_selected_item",
+    "get_take_focus",
+    "insert",
+    "prepend",
+    "select_first",
+    "select_item",
+    "set_take_focus",
+]
+EXPECTED_MENUSHELL_PROPERTIES = {"take_focus": True}
+
 EXPECTED_POPOVERMENU_METHODS = ["open_submenu"]
 EXPECTED_POPOVERMENU_PROPERTIES = {"visible_submenu": None}
 
