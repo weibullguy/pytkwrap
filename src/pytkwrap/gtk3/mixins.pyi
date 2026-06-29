@@ -375,6 +375,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     subtitle_set: bool
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
+    take_focus: bool
     text: str | None
     text_column: int
     text_length: int
