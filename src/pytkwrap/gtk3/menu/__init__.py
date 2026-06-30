@@ -12,6 +12,7 @@ and never through this __init__.py to avoid circular imports.
 from .checkmenuitem import GTK3CheckMenuItem
 from .imagemenuitem import GTK3ImageMenuItem
 from .menu import GTK3Menu
+from .menubar import GTK3MenuBar
 from .menubutton import GTK3MenuButton
 from .menuitem import GTK3MenuItem
 from .menushell import GTK3MenuShell
@@ -25,6 +26,7 @@ __all__ = [
     "GTK3CheckMenuItem",
     "GTK3ImageMenuItem",
     "GTK3Menu",
+    "GTK3MenuBar",
     "GTK3MenuButton",
     "GTK3MenuItem",
     "GTK3MenuShell",
