@@ -78,6 +78,17 @@ EXPECTED_MENU_PROPERTIES = {
     "reserve_toggle_size": True,
 }
 
+EXPECTED_MENUBAR_METHODS = [
+    "get_child_pack_direction",
+    "get_pack_direction",
+    "set_child_pack_direction",
+    "set_pack_direction",
+]
+EXPECTED_MENUBAR_PROPERTIES = {
+    "child_pack_direction": Gtk.PackDirection.LTR,
+    "pack_direction": Gtk.PackDirection.LTR,
+}
+
 EXPECTED_MENUBUTTON_METHODS = [
     "get_align_widget",
     "get_direction",
