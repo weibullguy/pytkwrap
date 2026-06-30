@@ -12,7 +12,7 @@ except ImportError:
     print("Failed to import package gi; exiting.")
     sys.exit(1)
 # Third Party Imports
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
 
 EXPECTED_CHECKMENUITEM_HANDLER_IDS = {"toggled": -1}
 EXPECTED_CHECKMENUITEM_METHODS = [
@@ -28,6 +28,54 @@ EXPECTED_CHECKMENUITEM_PROPERTIES = {
     "active": False,
     "draw_as_radio": False,
     "inconsistent": False,
+}
+
+EXPECTED_MENU_HANDLER_IDS = {"move-scroll": -1, "popped-up": -1}
+EXPECTED_MENU_METHODS = [
+    "attach",
+    "attach_to_widget",
+    "detach",
+    "get_accel_group",
+    "get_accel_path",
+    "get_active",
+    "get_attach_widget",
+    "get_monitor",
+    "get_reserve_toggle_size",
+    "place_on_monitor",
+    "popdown",
+    "popup_at_pointer",
+    "popup_at_rect",
+    "popup_at_widget",
+    "reorder_child",
+    "reposition",
+    "set_accel_group",
+    "set_accel_path",
+    "set_active",
+    "set_monitor",
+    "set_reserve_toggle_size",
+    "set_screen",
+]
+EXPECTED_MENU_PROPERTIES = {
+    "accel_group": None,
+    "accel_path": None,
+    "active": -1,
+    "anchor_hints": (
+        Gdk.AnchorHints.FLIP_X
+        | Gdk.AnchorHints.FLIP_Y
+        | Gdk.AnchorHints.SLIDE_X
+        | Gdk.AnchorHints.SLIDE_Y
+        | Gdk.AnchorHints.RESIZE_X
+        | Gdk.AnchorHints.RESIZE_Y
+        | Gdk.AnchorHints.FLIP
+        | Gdk.AnchorHints.SLIDE
+        | Gdk.AnchorHints.RESIZE
+    ),
+    "attach_widget": None,
+    "menu_type_hint": Gdk.WindowTypeHint.POPUP_MENU,
+    "monitor": -1,
+    "rect_anchor_dx": 0,
+    "rect_anchor_dy": 0,
+    "reserve_toggle_size": True,
 }
 
 EXPECTED_MENUBUTTON_METHODS = [
