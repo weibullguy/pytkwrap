@@ -124,6 +124,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     ellipsize_set: bool
     enable_emoji_completion: bool
     enable_grid_lines: Gtk.TreeViewGridLines | None
+    enable_popup: bool
     enable_tree_lines: bool
     entry_text_column: int
     events: Gdk.EventMask | None
@@ -148,6 +149,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     gicon: Gio.Icon | None
     gravity: Gdk.Gravity
     group: Gtk.RadioButton | Gtk.RadioToolButton | None
+    group_name: str | None
     hadjustment: Gtk.Adjustment | None
     halign: Gtk.Align | None
     has_default: bool
@@ -259,6 +261,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     overwrite: bool
     overwrite_mode: bool
     pack_direction: Gtk.PackDirection
+    page: int
     page_increment: float
     page_size: float
     parent: Gtk.Container | None
@@ -320,6 +323,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     scale_set: bool
     screen: Gdk.Screen | None
     scroll_offset: int
+    scrollable: bool
     search_mode: bool
     search_mode_enabled: bool
     secondary_icon_activatable: bool
@@ -340,6 +344,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     sensitive: bool
     shadow_type: Gtk.ShadowType | None
     shortcut_type: Gtk.ShortcutType | None
+    show_border: bool
     show_close_button: bool
     show_day_names: bool
     show_default_item: bool
@@ -358,6 +363,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_size: bool
     show_starred_location: bool
     show_style: bool
+    show_tabs: bool
     show_trash: bool
     show_week_numbers: bool
     single_line_mode: bool
@@ -390,6 +396,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     subtitle_set: bool
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
+    tab_position: Gtk.PositionType
     take_focus: bool
     text: str | None
     text_column: int

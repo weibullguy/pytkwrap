@@ -19,11 +19,7 @@ from .bar import (
     GTK3SearchBar,
     GTK3Statusbar,
 )
-
-# from .book import (
-#    GTK3BaseBook,
-#    GTK3Notebook,
-# )
+from .book import GTK3Notebook
 from .button import (
     GTK3AppChooserButton,
     GTK3Button,
@@ -237,7 +233,7 @@ __all__ = [
     "GTK3MenuToolButton",
     "GTK3MessageDialog",
     #    "GTK3NativeDialog",
-    #    "GTK3Notebook",
+    "GTK3Notebook",
     #    "GTK3OffscreenWindow",
     #    "GTK3Overlay",
     #    "GTK3PageSetup",
