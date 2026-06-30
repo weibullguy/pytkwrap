@@ -75,6 +75,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     cell_background_set: bool
     cell_foreground_rgba: Gdk.RGBA | None
     child: Gtk.Widget | None
+    child_pack_direction: Gtk.PackDirection
     clickable: bool
     climb_rate: float
     column_homogeneous: bool
@@ -254,6 +255,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     overwrite: bool
     overwrite_mode: bool
     page_increment: float
+    pack_direction: Gtk.PackDirection
     page_size: float
     parent: Gtk.Container | None
     pattern: str | None
