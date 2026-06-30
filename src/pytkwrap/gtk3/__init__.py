@@ -68,6 +68,7 @@ from .layout import GTK3Fixed, GTK3FlowBox, GTK3Grid, GTK3Layout
 from .menu import (
     GTK3CheckMenuItem,
     GTK3ImageMenuItem,
+    GTK3Menu,
     GTK3MenuButton,
     GTK3MenuItem,
     GTK3MenuShell,
@@ -226,7 +227,7 @@ __all__ = [
     #    "GTK3ListStore",
     #    "GTK3MatrixPanel",
     #    "GTK3MatrixView",
-    #    "GTK3Menu",
+    "GTK3Menu",
     #    "GTK3MenuBar",
     "GTK3MenuButton",
     "GTK3MenuItem",

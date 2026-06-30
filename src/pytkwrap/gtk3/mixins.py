@@ -28,6 +28,7 @@ class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
 class GTK3WidgetProperties(TypedDict, total=False):
     """Type for GTK3 widget properties."""
 
+    accel_group: Gtk.AccelGroup
     accel_path: str | None
     accel_size_group: Gtk.SizeGroup | None
     accelerator: str | None
@@ -47,10 +48,12 @@ class GTK3WidgetProperties(TypedDict, total=False):
     alignment: float | Pango.Alignment | None
     alpha: int
     always_show_image: bool
+    anchor_hints: Gdk.AnchorHints
     angle: float
     app_paintable: bool
     application: Gtk.Application | None
     artists: list
+    attach_widget: Gtk.Widget | None
     attached_to: Gtk.Widget | None
     attributes: Pango.AttrList | None
     authors: list
@@ -230,6 +233,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_width_chars: int
     menu: Gtk.Menu | None
     menu_model: Gio.MenuModel | None
+    menu_type_hint: Gdk.WindowTypeHint
     message_area: Gtk.Widget
     message_type: Gtk.MessageType
     min_children_per_line: int
@@ -241,6 +245,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     modal: bool
     mode: Gtk.CellRendererMode
     model: Gtk.TreeModel | None
+    monitor: int
     monospace: bool
     month: int
     name: str
@@ -289,9 +294,12 @@ class GTK3WidgetProperties(TypedDict, total=False):
     pulse: int
     radio: bool
     receives_default: bool
+    rect_anchor_dx: int
+    rect_anchor_dy: int
     relative_to: Gtk.Widget | None
     relief: Gtk.ReliefStyle | None
     reorderable: bool
+    reserve_toggle_size: bool
     resizable: bool
     resize_toplevel: bool
     revealed: bool
