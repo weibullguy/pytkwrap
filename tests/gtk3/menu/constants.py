@@ -167,3 +167,6 @@ EXPECTED_POPOVERMENU_PROPERTIES = {"visible_submenu": None}
 EXPECTED_RADIOMENUITEM_HANDLER_IDS = {"group-changed": -1}
 EXPECTED_RADIOMENUITEM_METHODS = ["get_group", "join_group", "set_group"]
 EXPECTED_RADIOMENUITEM_PROPERTIES = {"group": None}
+
+EXPECTED_RECENTCHOOSERMENU_METHODS = ["get_show_numbers", "set_show_numbers"]
+EXPECTED_RECENTCHOOSERMENU_PROPERTIES = {"show_numbers": False}
