@@ -74,6 +74,7 @@ from .menu import (
     GTK3MenuShell,
     GTK3PopoverMenu,
     GTK3RadioMenuItem,
+    GTK3RecentChooserMenu,
     GTK3SeparatorMenuItem,
     GTK3TearoffMenuItem,
 )
@@ -254,7 +255,7 @@ __all__ = [
     "GTK3RadioToolButton",
     #    "GTK3RecentAction",
     "GTK3RecentChooserDialog",
-    #    "GTK3RecentChooserMenu",
+    "GTK3RecentChooserMenu",
     #    "GTK3RecentChooserWidget",
     "GTK3RecentFilter",
     #    "GTK3RecentManager",
