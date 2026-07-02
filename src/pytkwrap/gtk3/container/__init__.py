@@ -16,6 +16,7 @@ from .container import GTK3Container
 from .expander import GTK3Expander
 from .frame import GTK3Frame
 from .listbox import GTK3ListBox
+from .paned import GTK3Paned
 from .stackswitcher import GTK3StackSwitcher
 from .viewport import GTK3Viewport
 
@@ -27,6 +28,7 @@ __all__ = [
     "GTK3Expander",
     "GTK3Frame",
     "GTK3ListBox",
+    "GTK3Paned",
     "GTK3StackSwitcher",
     "GTK3Viewport",
 ]

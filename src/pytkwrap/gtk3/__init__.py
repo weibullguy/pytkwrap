@@ -45,6 +45,7 @@ from .container import (
     GTK3Expander,
     GTK3Frame,
     GTK3ListBox,
+    GTK3Paned,
     GTK3StackSwitcher,
     GTK3Viewport,
 )
@@ -237,7 +238,7 @@ __all__ = [
     #    "GTK3OffscreenWindow",
     #    "GTK3Overlay",
     #    "GTK3PageSetup",
-    #    "GTK3Paned",
+    "GTK3Paned",
     "GTK3PlacesSidebar",
     #    "GTK3PlotPanel",
     #    "GTK3PlotView",
