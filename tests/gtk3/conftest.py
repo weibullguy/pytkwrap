@@ -26,7 +26,7 @@ def pytest_addoption(parser):
         "--isolated",
         action="store_true",
         default=False,
-        help="Run tests for the Gtk.FileChooserButton class.",
+        help="Run tests for the classes that must be run in isolation.",
     )
 
 

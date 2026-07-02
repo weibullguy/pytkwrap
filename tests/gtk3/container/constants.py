@@ -171,6 +171,33 @@ EXPECTED_LISTBOX_PROPERTIES = {
     "selection_mode": Gtk.SelectionMode.SINGLE,
 }
 
+EXPECTED_PANED_HANDLER_IDS = {
+    "accept-position": -1,
+    "cancel-position": -1,
+    "cycle-child-focus": -1,
+    "cycle-handle-focus": -1,
+    "move-handle": -1,
+    "toggle-handle-focus": -1,
+}
+EXPECTED_PANED_METHODS = [
+    "add1",
+    "add2",
+    "get_child1",
+    "get_child2",
+    "get_handle_window",
+    "get_position",
+    "get_wide_handle",
+    "pack1",
+    "pack2",
+    "set_position",
+    "set_wide_handle",
+]
+EXPECTED_PANED_PROPERTIES = {
+    "position": 0,
+    "position_set": False,
+    "wide_handle": False,
+}
+
 EXPECTED_STACKSWITCHER_METHODS = ["get_stack", "set_stack"]
 EXPECTED_STACKSWITCHER_PROPERTIES = {"icon_size": 1, "stack": None}
 
