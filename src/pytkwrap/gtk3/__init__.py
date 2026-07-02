@@ -46,6 +46,7 @@ from .container import (
     GTK3Frame,
     GTK3ListBox,
     GTK3Paned,
+    GTK3Socket,
     GTK3StackSwitcher,
     GTK3Viewport,
 )
@@ -271,6 +272,7 @@ __all__ = [
     "GTK3ShortcutsShortcut",
     "GTK3ShortcutsWindow",
     #    "GTK3SpinButton",
+    "GTK3Socket",
     #    "GTK3Stack",
     #    "GTK3StackSidebar",
     "GTK3StackSwitcher",
