@@ -276,7 +276,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     popup: Gtk.Menu | None
     popup_fixed_width: bool
     popup_shown: bool
-    position: Gtk.PositionType
+    position: Gtk.PositionType | int
+    position_set: bool
     preview_widget: Gtk.Widget | None
     preview_widget_active: bool
     primary_icon_activatable: bool
@@ -449,6 +450,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     website_label: str | None
     weight: int
     weight_set: bool
+    wide_handle: bool
     widget: object
     width: int
     width_chars: int
