@@ -198,6 +198,9 @@ EXPECTED_PANED_PROPERTIES = {
     "wide_handle": False,
 }
 
+EXPECTED_SOCKET_HANDLER_IDS = {"plug-added": -1, "plug-removed": -1}
+EXPECTED_SOCKET_METHODS = ["add_id", "get_id", "get_plug_window"]
+
 EXPECTED_STACKSWITCHER_METHODS = ["get_stack", "set_stack"]
 EXPECTED_STACKSWITCHER_PROPERTIES = {"icon_size": 1, "stack": None}
 
