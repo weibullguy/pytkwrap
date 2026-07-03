@@ -168,6 +168,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     hexpand: bool
     hexpand_set: bool
     hide_titlebar_when_maximized: bool
+    hhomogeneous: bool
     homogeneous: bool
     horizontal_alignment: str
     hscroll_policy: Gtk.ScrollablePolicy | None
@@ -187,6 +188,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     inner_border: Gtk.Border | None
     input_hints: Gtk.InputHints | None
     input_purpose: Gtk.InputPurpose | None
+    interpolate_size: bool
     inverted: bool
     invisible_char: str
     invisible_char_set: bool
@@ -413,6 +415,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     top_margin: int
     track_visited_links: bool
     transient_for: Gtk.Window | None
+    transition_duration: int
+    transition_type: Gtk.StackTransitionType
     translator_credits: str | None
     truncate_multiline: bool
     type: Gtk.WindowType
@@ -441,9 +445,12 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vertical_alignment: str
     vexpand: bool
     vexpand_set: bool
+    vhomogeneous: bool
     view: str | None
     view_name: str | None
     visible: bool
+    visible_child: Gtk.Widget | None
+    visible_child_name: str | None
     visible_horizontal: bool
     visible_submenu: str | None
     visible_vertical: bool
