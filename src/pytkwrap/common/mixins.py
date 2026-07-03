@@ -171,7 +171,7 @@ class PyTkWrapMixin:
         )
         raise NoValueError(_error_msg)
 
-    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
+    def do_set_attributes(self, attributes: Mapping[str, object]) -> None:
         """Set the PyTkWrapMixin attributes.
 
         Parameters

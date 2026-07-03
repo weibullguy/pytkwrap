@@ -12,9 +12,11 @@ and never through this __init__.py to avoid circular imports.
 from .calendar import GTK3Calendar
 from .combobox import GTK3ComboBox
 from .comboboxtext import GTK3ComboBoxText
+from .textview import GTK3TextView
 
 __all__ = [
     "GTK3Calendar",
     "GTK3ComboBox",
     "GTK3ComboBoxText",
+    "GTK3TextView",
 ]

@@ -62,7 +62,7 @@ from .file import (
 )
 from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
 from .icon import GTK3IconView
-from .io import GTK3Calendar, GTK3ComboBox, GTK3ComboBoxText
+from .io import GTK3Calendar, GTK3ComboBox, GTK3ComboBoxText, GTK3TextView
 from .layout import GTK3Fixed, GTK3FlowBox, GTK3Grid, GTK3Layout
 from .menu import (
     GTK3CheckMenuItem,
@@ -287,7 +287,7 @@ __all__ = [
     #    "GTK3TextMark",
     #    "GTK3TextTag",
     #    "GTK3TextTagTable",
-    #    "GTK3TextView",
+    "GTK3TextView",
     "GTK3ToggleButton",
     "GTK3ToggleToolButton",
     #    "GTK3ToolBar",
