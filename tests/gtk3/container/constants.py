@@ -201,6 +201,41 @@ EXPECTED_PANED_PROPERTIES = {
 EXPECTED_SOCKET_HANDLER_IDS = {"plug-added": -1, "plug-removed": -1}
 EXPECTED_SOCKET_METHODS = ["add_id", "get_id", "get_plug_window"]
 
+EXPECTED_STACK_METHODS = [
+    "add_named",
+    "add_titled",
+    "get_child_by_name",
+    "get_hhomogeneous",
+    "get_homogeneous",
+    "get_interpolate_size",
+    "get_transition_duration",
+    "get_transition_running",
+    "get_transition_type",
+    "get_vhomogeneous",
+    "get_visible_child",
+    "get_visible_child_name",
+    "set_hhomogeneous",
+    "set_homogeneous",
+    "set_interpolate_size",
+    "set_transition_duration",
+    "set_transition_type",
+    "set_vhomogeneous",
+    "set_visible_child",
+    "set_visible_child_full",
+    "set_visible_child_name",
+]
+
+EXPECTED_STACK_PROPERTIES = {
+    "hhomogeneous": True,
+    "homogeneous": True,
+    "interpolate_size": False,
+    "transition_duration": 200,
+    "transition_type": Gtk.StackTransitionType.NONE,
+    "vhomogeneous": True,
+    "visible_child": None,
+    "visible_child_name": None,
+}
+
 EXPECTED_STACKSWITCHER_METHODS = ["get_stack", "set_stack"]
 EXPECTED_STACKSWITCHER_PROPERTIES = {"icon_size": 1, "stack": None}
 
