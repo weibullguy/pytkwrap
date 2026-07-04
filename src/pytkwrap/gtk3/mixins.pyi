@@ -174,7 +174,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     icon: str | None
     icons: list[str]
     icon_set: bool
-    icon_size: int
+    icon_size: Gtk.IconSize | int
+    icon_size_set: bool
     icon_name: str | None
     icon_widget: Gtk.Widget | None
     id_column: int
@@ -406,6 +407,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     text_yalign: float
     title: str | None
     title_size_group: Gtk.SizeGroup | None
+    toolbar_style: Gtk.ToolbarStyle
     tooltip: str
     tooltip_column: int
     tooltip_markup: str
