@@ -82,6 +82,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     child_pack_direction: Gtk.PackDirection
     clickable: bool
     climb_rate: float
+    collapsed: bool
     column_homogeneous: bool
     column_spacing: int
     column_span_column: int
@@ -162,6 +163,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     has_subtitle: bool
     has_tooltip: bool
     has_toplevel_focus: bool
+    header_relief: Gtk.ReliefStyle
     heading: str | None
     height: int
     height_request: int

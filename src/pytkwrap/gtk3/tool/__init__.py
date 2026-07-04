@@ -15,6 +15,7 @@ from .separatortoolitem import GTK3SeparatorToolItem
 from .toggletoolbutton import GTK3ToggleToolButton
 from .toolbutton import GTK3ToolButton
 from .toolitem import GTK3ToolItem
+from .toolitemgroup import GTK3ToolItemGroup
 
 __all__ = [
     "GTK3MenuToolButton",
@@ -23,4 +24,5 @@ __all__ = [
     "GTK3ToggleToolButton",
     "GTK3ToolButton",
     "GTK3ToolItem",
+    "GTK3ToolItemGroup",
 ]

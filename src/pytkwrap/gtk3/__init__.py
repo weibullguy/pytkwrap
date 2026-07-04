@@ -127,6 +127,7 @@ from .tool import (
     GTK3ToggleToolButton,
     GTK3ToolButton,
     GTK3ToolItem,
+    GTK3ToolItemGroup,
 )
 from .treeview import (
     GTK3CellRenderer,
@@ -293,7 +294,7 @@ __all__ = [
     #    "GTK3ToolBar",
     "GTK3ToolButton",
     "GTK3ToolItem",
-    #    "GTK3ToolItemGroup",
+    "GTK3ToolItemGroup",
     #    "GTK3ToolPalette",
     #    "GTK3TreeModelFilter",
     #    "GTK3TreeModelRow",
