@@ -16,6 +16,7 @@ from .toggletoolbutton import GTK3ToggleToolButton
 from .toolbutton import GTK3ToolButton
 from .toolitem import GTK3ToolItem
 from .toolitemgroup import GTK3ToolItemGroup
+from .toolpalette import GTK3ToolPalette
 
 __all__ = [
     "GTK3MenuToolButton",
@@ -25,4 +26,5 @@ __all__ = [
     "GTK3ToolButton",
     "GTK3ToolItem",
     "GTK3ToolItemGroup",
+    "GTK3ToolPalette",
 ]
