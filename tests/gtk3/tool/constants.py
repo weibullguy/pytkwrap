@@ -33,6 +33,36 @@ EXPECTED_TOGGLETOOLBUTTON_HANDLER_IDS = {"toggled": -1}
 EXPECTED_TOGGLETOOLBUTTON_METHODS = ["get_active", "set_active"]
 EXPECTED_TOGGLETOOLBUTTON_PROPERTIES = {"active": False}
 
+EXPECTED_TOOLBAR_HANDLER_IDS = {
+    "focus-home-or-end": -1,
+    "orientation-changed": -1,
+    "popup-context-menu": -1,
+    "style-changed": -1,
+}
+EXPECTED_TOOLBAR_METHODS = [
+    "get_drop_index",
+    "get_icon_size",
+    "get_item_index",
+    "get_n_items",
+    "get_nth_item",
+    "get_relief_style",
+    "get_show_arrow",
+    "get_style",
+    "insert",
+    "set_drop_highlight_item",
+    "set_icon_size",
+    "set_show_arrow",
+    "set_style",
+    "unset_icon_size",
+    "unset_style",
+]
+EXPECTED_TOOLBAR_PROPERTIES = {
+    "icon_size": Gtk.IconSize.LARGE_TOOLBAR,
+    "icon_size_set": False,
+    "show_arrow": True,
+    "toolbar_style": Gtk.ToolbarStyle.BOTH_HORIZ,
+}
+
 EXPECTED_TOOLBUTTON_HANDLER_IDS = {"clicked": -1}
 EXPECTED_TOOLBUTTON_METHODS = [
     "get_icon_name",
