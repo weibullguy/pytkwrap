@@ -1,3 +1,19 @@
+# Standard Library Imports
+import sys
+
+try:
+    # Third Party Imports
+    import gi
+
+    gi.require_version("Gdk", "3.0")
+    gi.require_version("GLib", "2.0")
+    gi.require_version("Gtk", "3.0")
+except ImportError:
+    print("Failed to import package gi; exiting.")
+    sys.exit(1)
+# Third Party Imports
+from gi.repository import Gtk, Pango
+
 EXPECTED_MENUTOOLBUTTON_HANDLER_IDS = {"show-menu": -1}
 EXPECTED_MENUTOOLBUTTON_METHODS = [
     "get_menu",
@@ -72,4 +88,30 @@ EXPECTED_TOOLITEM_PROPERTIES = {
     "is_important": False,
     "visible_horizontal": True,
     "visible_vertical": True,
+}
+
+EXPECTED_TOOLITEMGROUP_METHODS = [
+    "get_collapsed",
+    "get_drop_item",
+    "get_ellipsize",
+    "get_header_relief",
+    "get_item_position",
+    "get_label",
+    "get_label_widget",
+    "get_n_items",
+    "get_nth_item",
+    "insert",
+    "set_collapsed",
+    "set_ellipsize",
+    "set_header_relief",
+    "set_item_position",
+    "set_label",
+    "set_label_widget",
+]
+EXPECTED_TOOLITEMGROUP_PROPERTIES = {
+    "collapsed": False,
+    "ellipsize": Pango.EllipsizeMode.NONE,
+    "header_relief": Gtk.ReliefStyle.NORMAL,
+    "label": "",
+    "label_widget": None,
 }
