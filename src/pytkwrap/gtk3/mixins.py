@@ -350,6 +350,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     sensitive: bool
     shadow_type: Gtk.ShadowType | None
     shortcut_type: Gtk.ShortcutType | None
+    show_arrow: bool
     show_border: bool
     show_close_button: bool
     show_day_names: bool

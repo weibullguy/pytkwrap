@@ -125,6 +125,7 @@ from .tool import (
     GTK3RadioToolButton,
     GTK3SeparatorToolItem,
     GTK3ToggleToolButton,
+    GTK3Toolbar,
     GTK3ToolButton,
     GTK3ToolItem,
     GTK3ToolItemGroup,
@@ -292,7 +293,7 @@ __all__ = [
     "GTK3TextView",
     "GTK3ToggleButton",
     "GTK3ToggleToolButton",
-    #    "GTK3ToolBar",
+    "GTK3Toolbar",
     "GTK3ToolButton",
     "GTK3ToolItem",
     "GTK3ToolItemGroup",
@@ -316,5 +317,4 @@ __all__ = [
     "do_make_buttonbox",
     #    "do_make_label_group",
     "set_widget_sensitivity",
-    "GTK3Statusbar",
 ]

@@ -13,6 +13,7 @@ from .menutoolbutton import GTK3MenuToolButton
 from .radiotoolbutton import GTK3RadioToolButton
 from .separatortoolitem import GTK3SeparatorToolItem
 from .toggletoolbutton import GTK3ToggleToolButton
+from .toolbar import GTK3Toolbar
 from .toolbutton import GTK3ToolButton
 from .toolitem import GTK3ToolItem
 from .toolitemgroup import GTK3ToolItemGroup
@@ -23,6 +24,7 @@ __all__ = [
     "GTK3RadioToolButton",
     "GTK3SeparatorToolItem",
     "GTK3ToggleToolButton",
+    "GTK3Toolbar",
     "GTK3ToolButton",
     "GTK3ToolItem",
     "GTK3ToolItemGroup",
