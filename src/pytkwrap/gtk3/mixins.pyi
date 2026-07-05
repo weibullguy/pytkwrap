@@ -122,16 +122,19 @@ class GTK3WidgetProperties(TypedDict, total=False):
     enable_emoji_completion: bool
     enable_grid_lines: Gtk.TreeViewGridLines | None
     enable_popup: bool
+    enable_search: bool
     enable_tree_lines: bool
     entry_text_column: int
     events: Gdk.EventMask | None
     expand: bool
     expanded: bool
+    expander_column: Gtk.TreeViewColumn | None
     extra_widget: Gtk.Widget | None
     family: str | None
     family_set: bool
     filter: Gtk.FileFilter | None
     fit_model: bool
+    fixed_height_mode: bool
     fixed_width: int
     focus_on_click: bool
     focus_on_map: bool
@@ -160,6 +163,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     has_tooltip: bool
     has_toplevel_focus: bool
     header_relief: Gtk.ReliefStyle
+    headers_clickable: bool
+    headers_visible: bool
     heading: str | None
     height: int
     height_request: int
@@ -169,6 +174,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     hhomogeneous: bool
     homogeneous: bool
     horizontal_alignment: str
+    hover_expand: bool
+    hover_selection: bool
     hscroll_policy: Gtk.ScrollablePolicy | None
     hscrollbar_policy: Gtk.PolicyType | None
     icon: str | None
@@ -326,6 +333,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     screen: Gdk.Screen | None
     scrollable: bool
     scroll_offset: int
+    search_column: int
     search_mode: bool
     search_mode_enabled: bool
     secondary_icon_activatable: bool
@@ -357,6 +365,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_editor: bool
     show_emoji_icon: bool
     show_enter_location: bool
+    show_expanders: bool
     show_heading: bool
     show_hidden: bool
     show_menubar: bool
