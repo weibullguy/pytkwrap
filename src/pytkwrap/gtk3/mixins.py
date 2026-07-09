@@ -200,7 +200,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     input_purpose: Gtk.InputPurpose | None
     interpolate_size: bool
     inverted: bool
-    invisible_char: str
+    invisible_char: int | str
     invisible_char_set: bool
     is_active: bool
     is_expanded: bool
