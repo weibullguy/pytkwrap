@@ -289,6 +289,14 @@ EXPECTED_ENTRY_PROPERTIES = {
     "xalign": 0.0,
 }
 
+EXPECTED_SEARCHENTRY_HANDLER_IDS = {
+    "next-match": -1,
+    "previous-match": -1,
+    "search-changed": -1,
+    "stop-search": -1,
+}
+EXPECTED_SEARCHENTRY_METHODS = ["handle_event"]
+
 SIMPLE_TEST_LIST = [
     "Index 1",
     "Index 2",
