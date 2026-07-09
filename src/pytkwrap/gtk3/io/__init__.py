@@ -13,6 +13,7 @@ from .calendar import GTK3Calendar
 from .combobox import GTK3ComboBox
 from .comboboxtext import GTK3ComboBoxText
 from .entry import GTK3Entry
+from .searchentry import GTK3SearchEntry
 from .textview import GTK3TextView
 
 __all__ = [
@@ -20,5 +21,6 @@ __all__ = [
     "GTK3ComboBox",
     "GTK3ComboBoxText",
     "GTK3Entry",
+    "GTK3SearchEntry",
     "GTK3TextView",
 ]
