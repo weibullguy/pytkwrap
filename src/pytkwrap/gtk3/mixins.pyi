@@ -53,6 +53,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     attached_to: Gtk.Widget | None
     attributes: Pango.AttrList | None
     authors: list
+    auto_render: bool
     background: str | None
     background_rgba: Gdk.RGBA | None
     background_set: bool
@@ -152,13 +153,16 @@ class GTK3WidgetProperties(TypedDict, total=False):
     group_name: str | None
     hadjustment: Gtk.Adjustment | None
     halign: Gtk.Align | None
+    has_alpha: bool
     has_default: bool
+    has_depth_buffer: bool
     has_entry: bool
     has_focus: bool
     has_frame: bool
     has_opacity_control: bool
     has_palette: bool
     has_resize_grip: bool
+    has_stencil_buffer: bool
     has_subtitle: bool
     has_tooltip: bool
     has_toplevel_focus: bool
@@ -437,6 +441,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     upper: float
     urgency_hint: bool
     use_alpha: bool
+    use_es: bool
     use_font: bool
     use_header_bar: bool | int
     use_markup: bool
