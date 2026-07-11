@@ -85,6 +85,54 @@ EXPECTED_SCALEBUTTON_PROPERTIES = {
     "value": 0.0,
 }
 
+EXPECTED_SPINBUTTON_ATTRIBUTES = {
+    "data_type": float,
+    "default_value": 0.0,
+    "edit_signal": "value-changed",
+    "format": "{:3.1f}",
+}
+EXPECTED_SPINBUTTON_HANDLER_IDS = {
+    "change-value": -1,
+    "input": -1,
+    "output": -1,
+    "value-changed": -1,
+    "wrapped": -1,
+}
+EXPECTED_SPINBUTTON_METHODS = [
+    "configure",
+    "get_adjustment",
+    "get_digits",
+    "get_increments",
+    "get_numeric",
+    "get_range",
+    "get_snap_to_ticks",
+    "get_update_policy",
+    "get_value",
+    "get_value_as_int",
+    "get_wrap",
+    "set_adjustment",
+    "set_digits",
+    "set_increments",
+    "set_numeric",
+    "set_range",
+    "set_snap_to_ticks",
+    "set_update_policy",
+    "set_value",
+    "set_wrap",
+    "spin",
+    "update",
+]
+EXPECTED_SPINBUTTON_PROPERTIES = {
+    "adjustment": None,
+    "climb_rate": 0.0,
+    "digits": 0,
+    "numeric": False,
+    "snap_to_ticks": False,
+    "update_policy": Gtk.SpinButtonUpdatePolicy.ALWAYS,
+    "value": 0.0,
+    "wrap": False,
+}
+
 EXPECTED_TOGGLEBUTTON_ATTRIBUTES = {"default_value": False, "edit_signal": "toggled"}
 EXPECTED_TOGGLEBUTTON_HANDLER_IDS = {"toggled": -1}
 EXPECTED_TOGGLEBUTTON_METHODS = [
