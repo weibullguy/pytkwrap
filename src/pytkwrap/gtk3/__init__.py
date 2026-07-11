@@ -71,7 +71,14 @@ from .io import (
     GTK3SearchEntry,
     GTK3TextView,
 )
-from .layout import GTK3DrawingArea, GTK3Fixed, GTK3FlowBox, GTK3Grid, GTK3Layout
+from .layout import (
+    GTK3DrawingArea,
+    GTK3Fixed,
+    GTK3FlowBox,
+    GTK3GLArea,
+    GTK3Grid,
+    GTK3Layout,
+)
 from .menu import (
     GTK3CheckMenuItem,
     GTK3ImageMenuItem,
@@ -220,7 +227,7 @@ __all__ = [
     "GTK3FontChooserDialog",
     "GTK3FontChooserWidget",
     "GTK3Frame",
-    #    "GTK3GLArea",
+    "GTK3GLArea",
     "GTK3GObjectMixin",
     "GTK3Grid",
     #    "GTK3HandleBox",

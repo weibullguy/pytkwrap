@@ -12,6 +12,7 @@ and never through this __init__.py to avoid circular imports.
 from .drawingarea import GTK3DrawingArea
 from .fixed import GTK3Fixed
 from .flowbox import GTK3FlowBox
+from .glarea import GTK3GLArea
 from .grid import GTK3Grid
 from .layout import GTK3Layout
 
@@ -19,6 +20,7 @@ __all__ = [
     "GTK3DrawingArea",
     "GTK3Fixed",
     "GTK3FlowBox",
+    "GTK3GLArea",
     "GTK3Grid",
     "GTK3Layout",
 ]
