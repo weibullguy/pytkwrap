@@ -66,6 +66,31 @@ EXPECTED_INFOBAR_PROPERTIES = {
     "revealed": True,
     "show_close_button": False,
 }
+
+EXPECTED_LEVELBAR_HANDLER_IDS = {"offset-changed": -1}
+EXPECTED_LEVELBAR_METHODS = [
+    "add_offset_value",
+    "get_inverted",
+    "get_max_value",
+    "get_min_value",
+    "get_mode",
+    "get_offset_value",
+    "get_value",
+    "remove_offset_value",
+    "set_inverted",
+    "set_max_value",
+    "set_min_value",
+    "set_mode",
+    "set_value",
+]
+EXPECTED_LEVELBAR_PROPERTIES = {
+    "inverted": False,
+    "max_value": 1.0,
+    "min_value": 0.0,
+    "mode": Gtk.LevelBarMode.CONTINUOUS,
+    "value": 0.0,
+}
+
 EXPECTED_PLACESSIDEBAR_HANDLER_IDS = {
     "drag-action-ask": -1,
     "drag-action-requested": -1,
