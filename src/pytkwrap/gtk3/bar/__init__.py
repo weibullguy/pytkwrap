@@ -13,6 +13,7 @@ and never through this __init__.py to avoid circular imports.
 from .actionbar import GTK3ActionBar
 from .headerbar import GTK3HeaderBar
 from .infobar import GTK3InfoBar
+from .levelbar import GTK3LevelBar
 from .placessidebar import GTK3PlacesSidebar
 from .searchbar import GTK3SearchBar
 from .statusbar import GTK3Statusbar
@@ -21,6 +22,7 @@ __all__ = [
     "GTK3ActionBar",
     "GTK3HeaderBar",
     "GTK3InfoBar",
+    "GTK3LevelBar",
     "GTK3PlacesSidebar",
     "GTK3SearchBar",
     "GTK3Statusbar",

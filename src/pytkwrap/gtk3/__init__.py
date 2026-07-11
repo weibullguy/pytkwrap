@@ -15,6 +15,7 @@ from .bar import (
     GTK3ActionBar,
     GTK3HeaderBar,
     GTK3InfoBar,
+    GTK3LevelBar,
     GTK3PlacesSidebar,
     GTK3SearchBar,
     GTK3Statusbar,
@@ -31,13 +32,7 @@ from .button import (
     GTK3VolumeButton,
     do_make_buttonbox,
 )
-from .color import (
-    GTK3ColorButton,
-    GTK3ColorChooserDialog,
-    GTK3ColorChooserWidget,
-    GTK3ColorSelection,
-    GTK3ColorSelectionDialog,
-)
+from .color import GTK3ColorButton, GTK3ColorChooserDialog, GTK3ColorChooserWidget
 from .container import (
     GTK3Bin,
     GTK3Box,
@@ -203,8 +198,6 @@ __all__ = [
     "GTK3ComboBoxText",
     "GTK3ColorChooserDialog",
     "GTK3ColorChooserWidget",
-    "GTK3ColorSelection",
-    "GTK3ColorSelectionDialog",
     "GTK3Container",
     #    "GTK3CSSProvider",
     "GTK3Dialog",
@@ -241,7 +234,7 @@ __all__ = [
     "GTK3InfoBar",
     #    "GTK3Label",
     "GTK3Layout",
-    #    "GTK3LevelBar",
+    "GTK3LevelBar",
     "GTK3ListBox",
     #    "GTK3ListBoxRow",
     #    "GTK3ListStore",
