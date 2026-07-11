@@ -14,10 +14,9 @@ from .button import GTK3Button, do_make_buttonbox
 from .checkbutton import GTK3CheckButton
 from .radiobutton import GTK3RadioButton
 from .scalebutton import GTK3ScaleButton
+from .spinbutton import GTK3SpinButton
 from .togglebutton import GTK3ToggleButton
 from .volumebutton import GTK3VolumeButton
-
-# from .spin_button import GTK3SpinButton
 
 __all__ = [
     "GTK3Button",
@@ -25,6 +24,7 @@ __all__ = [
     "GTK3CheckButton",
     "GTK3RadioButton",
     "GTK3ScaleButton",
+    "GTK3SpinButton",
     "GTK3ToggleButton",
     "GTK3VolumeButton",
     "do_make_buttonbox",
