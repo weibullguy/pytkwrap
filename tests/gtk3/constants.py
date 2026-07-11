@@ -42,6 +42,35 @@ EXPECTED_ADJUSTMENT_PROPERTIES = {
     "value": 0.0,
 }
 
+EXPECTED_GLAREA_HANDLER_IDS = {"create-context": -1, "render": -1, "resize": -1}
+EXPECTED_GLAREA_METHODS = [
+    "attach_buffers",
+    "get_auto_render",
+    "get_context",
+    "get_error",
+    "get_has_alpha",
+    "get_has_depth_buffer",
+    "get_has_stencil_buffer",
+    "get_required_version",
+    "get_use_es",
+    "make_current",
+    "queue_render",
+    "set_auto_render",
+    "set_error",
+    "set_has_alpha",
+    "set_has_depth_buffer",
+    "set_has_stencil_buffer",
+    "set_required_version",
+    "set_use_es",
+]
+EXPECTED_GLAREA_PROPERTIES = {
+    "auto_render": True,
+    "has_alpha": False,
+    "has_depth_buffer": False,
+    "has_stencil_buffer": False,
+    "use_es": False,
+}
+
 EXPECTED_GOBJECT_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
     "canvas": None,
