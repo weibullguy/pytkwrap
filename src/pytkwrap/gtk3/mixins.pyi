@@ -246,6 +246,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_length: int
     max_width: int
     max_width_chars: int
+    max_value: float | int
     menu: Gtk.Menu | None
     menu_model: Gio.MenuModel | None
     menu_type_hint: Gdk.WindowTypeHint
@@ -255,10 +256,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     min_content_height: int
     min_content_width: int
     min_width: int
+    min_value: float | int
     mnemonic_widget: Gtk.Widget | None
     mnemonics_visible: bool
     modal: bool
-    mode: Gtk.CellRendererMode
+    mode: Gtk.CellRendererMode | Gtk.LevelBarMode
     model: Gtk.TreeModel | None
     monitor: int
     monospace: bool
