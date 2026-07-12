@@ -137,6 +137,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     extra_widget: Gtk.Widget | None
     family: str | None
     family_set: bool
+    file: str | None
     filter: Gtk.FileFilter | None
     fit_model: bool
     fixed_height_mode: bool
@@ -285,9 +286,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     parent: Gtk.Container | None
     pattern: str | None
     pixbuf: Gdk.Pixbuf.Pixbuf | None
+    pixbuf_animation: Gdk.PixbufAnimation | None
     pixbuf_column: int
     pixbuf_expander_closed: Gdk.Pixbuf.Pixbuf | None
     pixbuf_expander_open: Gdk.Pixbuf.Pixbuf | None
+    pixel_size: int
     pixels_above_lines: int
     pixels_below_lines: int
     pixels_inside_wrap: int
@@ -326,6 +329,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     reserve_toggle_size: bool
     resizable: bool
     resize_toplevel: bool
+    resource: str | None
     revealed: bool
     rgba: Gdk.RGBA | None
     right_margin: int
@@ -448,6 +452,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     urgency_hint: bool
     use_alpha: bool
     use_es: bool
+    use_fallback: bool
     use_font: bool
     use_header_bar: bool | int
     use_markup: bool

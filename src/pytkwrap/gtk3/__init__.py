@@ -58,6 +58,7 @@ from .file import (
 )
 from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
 from .icon import GTK3IconView
+from .image import GTK3Image
 from .io import (
     GTK3Calendar,
     GTK3ComboBox,
@@ -230,6 +231,7 @@ __all__ = [
     #    "GTK3IconInfo",
     #    "GTK3IconTheme",
     "GTK3IconView",
+    "GTK3Image",
     "GTK3ImageMenuItem",
     "GTK3InfoBar",
     #    "GTK3Label",
