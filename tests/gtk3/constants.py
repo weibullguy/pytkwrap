@@ -120,6 +120,42 @@ EXPECTED_GOBJECT_METHODS = [
     "watch_closure",
 ]
 
+EXPECTED_IMAGE_METHODS = [
+    "clear",
+    "get_alignment",
+    "get_animation",
+    "get_gicon",
+    "get_icon_name",
+    "get_icon_set",
+    "get_padding",
+    "get_pixbuf",
+    "get_pixel_size",
+    "get_storage_type",
+    "set_alignment",
+    "set_from_animation",
+    "set_from_file",
+    "set_from_gicon",
+    "set_from_icon_name",
+    "set_from_icon_set",
+    "set_from_pixbuf",
+    "set_from_resource",
+    "set_from_surface",
+    "set_pixel_size",
+    "set_padding",
+]
+EXPECTED_IMAGE_PROPERTIES = {
+    "file": None,
+    "gicon": None,
+    "icon_name": None,
+    "icon_size": 4,
+    "pixbuf": None,
+    "pixbuf_animation": None,
+    "pixel_size": -1,
+    "resource": None,
+    "surface": None,
+    "use_fallback": False,
+}
+
 EXPECTED_POPOVER_HANDLER_IDS = {"closed": -1}
 EXPECTED_POPOVER_METHODS = [
     "bind_model",
