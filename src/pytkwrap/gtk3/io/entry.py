@@ -221,7 +221,7 @@ class GTK3Entry(Gtk.Entry, GTK3Widget):
         """
         _value: str | None = self.get_text()
 
-        return self.dic_attributes["datatype"](_value)
+        return self.dic_attributes["data_type"](_value)
 
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None = None

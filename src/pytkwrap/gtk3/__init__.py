@@ -64,6 +64,7 @@ from .io import (
     GTK3ComboBox,
     GTK3ComboBoxText,
     GTK3Entry,
+    GTK3Label,
     GTK3SearchEntry,
     GTK3TextView,
 )
@@ -234,7 +235,7 @@ __all__ = [
     "GTK3Image",
     "GTK3ImageMenuItem",
     "GTK3InfoBar",
-    #    "GTK3Label",
+    "GTK3Label",
     "GTK3Layout",
     "GTK3LevelBar",
     "GTK3ListBox",
