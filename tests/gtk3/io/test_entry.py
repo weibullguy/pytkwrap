@@ -482,7 +482,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_get_value_float(self):
         """Return a float value when the datatype attribute is set to 'gfloat'."""
         dut = self.make_dut()
-        dut.dic_attributes["datatype"] = float
+        dut.dic_attributes["data_type"] = float
         dut.set_text("38.235")
 
         assert isinstance(dut.do_get_value(), float)
@@ -492,7 +492,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_get_value_int(self):
         """Return an integer value when the datatype attribute is set to 'gint'."""
         dut = self.make_dut()
-        dut.dic_attributes["datatype"] = int
+        dut.dic_attributes["data_type"] = int
         dut.set_text("38")
 
         assert isinstance(dut.do_get_value(), int)
@@ -502,7 +502,7 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     def test_do_get_value_string(self):
         """Return a string value when the datatype attribute is set to 'gchararray'."""
         dut = self.make_dut()
-        dut.dic_attributes["datatype"] = str
+        dut.dic_attributes["data_type"] = str
         dut.set_text("Some Text")
 
         assert isinstance(dut.do_get_value(), str)

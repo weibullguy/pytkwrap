@@ -13,7 +13,7 @@ except ImportError:
     print("Failed to import package gi; exiting.")
     sys.exit(1)
 # Third Party Imports
-from gi.repository import GObject, Gtk
+from gi.repository import GObject, Gtk, Pango
 
 # pytkwrap Package Imports
 from pytkwrap.utilities import FontDescription
@@ -287,6 +287,86 @@ EXPECTED_ENTRY_PROPERTIES = {
     "visibility": True,
     "width_chars": -1,
     "xalign": 0.0,
+}
+
+EXPECTED_LABEL_ATTRIBUTES = {
+    "data_type": str,
+    "default_value": "...",
+}
+EXPECTED_LABEL_HANDLER_IDS = {
+    "activate-current-link": -1,
+    "activate-link": -1,
+    "copy-clipboard": -1,
+    "move-cursor": -1,
+    "populate-popup": -1,
+}
+EXPECTED_LABEL_METHODS = [
+    "get_angle",
+    "get_attributes",
+    "get_ellipsize",
+    "get_justify",
+    "get_label",
+    "get_layout",
+    "get_layout_offsets",
+    "get_line_wrap",
+    "get_line_wrap_mode",
+    "get_lines",
+    "get_max_width_chars",
+    "get_mnemonic_keyval",
+    "get_mnemonic_widget",
+    "get_selectable",
+    "get_selection_bounds",
+    "get_single_line_mode",
+    "get_text",
+    "get_track_visited_links",
+    "get_use_markup",
+    "get_use_underline",
+    "get_width_chars",
+    "get_xalign",
+    "get_yalign",
+    "select_region",
+    "set_angle",
+    "set_attributes",
+    "set_ellipsize",
+    "set_justify",
+    "set_label",
+    "set_line_wrap",
+    "set_line_wrap_mode",
+    "set_lines",
+    "set_markup",
+    "set_markup_with_mnemonic",
+    "set_max_width_chars",
+    "set_mnemonic_widget",
+    "set_pattern",
+    "set_selectable",
+    "set_single_line_mode",
+    "set_text",
+    "set_text_with_mnemonic",
+    "set_track_visited_links",
+    "set_use_markup",
+    "set_use_underline",
+    "set_width_chars",
+    "set_xalign",
+    "set_yalign",
+]
+EXPECTED_LABEL_PROPERTIES = {
+    "angle": 0.0,
+    "attributes": None,
+    "ellipsize": Pango.EllipsizeMode.NONE,
+    "justify": Gtk.Justification.LEFT,
+    "label": "",
+    "lines": -1,
+    "max_width_chars": -1,
+    "mnemonic_widget": None,
+    "pattern": None,
+    "selectable": False,
+    "single_line_mode": False,
+    "track_visited_links": True,
+    "use_markup": False,
+    "use_underline": False,
+    "width_chars": -1,
+    "wrap": False,
+    "wrap_mode": Pango.WrapMode.WORD,
 }
 
 EXPECTED_SEARCHENTRY_HANDLER_IDS = {
