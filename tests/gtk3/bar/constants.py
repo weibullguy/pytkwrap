@@ -144,6 +144,31 @@ EXPECTED_PLACESSIDEBAR_PROPERTIES = {
     "show_trash": True,
 }
 
+EXPECTED_PROGRESSBAR_ATTRIBUTES = {"default_value": 0.0, "data_type": float}
+EXPECTED_PROGRESSBAR_METHODS = [
+    "get_ellipsize",
+    "get_fraction",
+    "get_inverted",
+    "get_pulse_step",
+    "get_show_text",
+    "get_text",
+    "pulse",
+    "set_ellipsize",
+    "set_fraction",
+    "set_inverted",
+    "set_pulse_step",
+    "set_show_text",
+    "set_text",
+]
+EXPECTED_PROGRESSBAR_PROPERTIES = {
+    "ellipsize": Pango.EllipsizeMode.NONE,
+    "fraction": 0.0,
+    "inverted": False,
+    "pulse_step": 0.1,
+    "show_text": False,
+    "text": None,
+}
+
 EXPECTED_SEARCHBAR_METHODS = [
     "connect_entry",
     "get_search_mode",
