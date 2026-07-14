@@ -151,6 +151,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     foreground: str | None
     foreground_rgba: Gdk.RGBA | None
     foreground_set: bool
+    fraction: float
     gfile: Gio.File | None
     gicon: Gio.Icon | None
     gravity: Gdk.Gravity
@@ -319,6 +320,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     propagate_natural_height: bool
     propagate_natural_width: bool
     pulse: int
+    pulse_step: float
     radio: bool
     receives_default: bool
     rect_anchor_dx: int
@@ -390,6 +392,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_starred_location: bool
     show_style: bool
     show_tabs: bool
+    show_text: bool
     show_trash: bool
     show_week_numbers: bool
     single_line_mode: bool

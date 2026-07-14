@@ -17,6 +17,7 @@ from .bar import (
     GTK3InfoBar,
     GTK3LevelBar,
     GTK3PlacesSidebar,
+    GTK3ProgressBar,
     GTK3SearchBar,
     GTK3Statusbar,
 )
@@ -264,7 +265,7 @@ __all__ = [
     #    "GTK3PrintContext",
     #    "GTK3PrintOperation",
     #    "GTK3PrintSettings",
-    #    "GTK3ProgressBar",
+    "GTK3ProgressBar",
     "GTK3RadioButton",
     "GTK3RadioMenuItem",
     "GTK3RadioToolButton",
