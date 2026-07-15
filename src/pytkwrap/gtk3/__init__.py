@@ -115,6 +115,7 @@ from .mixins import (
 from .popover import GTK3Popover
 from .range import GTK3Range
 from .scale import GTK3Scale
+from .separator import GTK3Separator
 from .shortcut import (
     GTK3ShortcutLabel,
     GTK3ShortcutsGroup,
@@ -285,6 +286,7 @@ __all__ = [
     "GTK3ScaleButton",
     "GTK3SearchBar",
     "GTK3SearchEntry",
+    "GTK3Separator",
     "GTK3SeparatorMenuItem",
     #    "GTK3SeparatorToolButton",
     "GTK3SeparatorToolItem",
