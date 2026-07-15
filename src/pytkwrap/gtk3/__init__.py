@@ -112,6 +112,7 @@ from .mixins import (
 #    GTK3PrintSettings,
 # )
 from .popover import GTK3Popover
+from .range import GTK3Range
 from .shortcut import (
     GTK3ShortcutLabel,
     GTK3ShortcutsGroup,
@@ -269,6 +270,7 @@ __all__ = [
     "GTK3RadioButton",
     "GTK3RadioMenuItem",
     "GTK3RadioToolButton",
+    "GTK3Range",
     #    "GTK3RecentAction",
     "GTK3RecentChooserDialog",
     "GTK3RecentChooserMenu",

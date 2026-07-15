@@ -138,6 +138,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     family: str | None
     family_set: bool
     file: str | None
+    fill_level: float
     filter: Gtk.FileFilter | None
     fit_model: bool
     fixed_height_mode: bool
@@ -332,6 +333,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     resizable: bool
     resize_toplevel: bool
     resource: str | None
+    restrict_to_fill: bool
     revealed: bool
     rgba: Gdk.RGBA | None
     right_margin: int
@@ -339,6 +341,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     rise_set: bool
     role: str | None
     rotation: float
+    round_digits: int
     row_homogeneous: bool
     row_spacing: int
     row_span_column: int
@@ -382,6 +385,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_emoji_icon: bool
     show_enter_location: bool
     show_expanders: bool
+    show_fill_level: bool
     show_heading: bool
     show_hidden: bool
     show_menubar: bool
