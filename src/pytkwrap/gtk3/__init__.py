@@ -18,6 +18,7 @@ from .bar import (
     GTK3LevelBar,
     GTK3PlacesSidebar,
     GTK3ProgressBar,
+    GTK3ScrollBar,
     GTK3SearchBar,
     GTK3Statusbar,
 )
@@ -279,7 +280,7 @@ __all__ = [
     "GTK3RecentFilter",
     #    "GTK3RecentManager",
     "GTK3Scale",
-    #    "GTK3ScrollBar",
+    "GTK3ScrollBar",
     "GTK3ScrolledWindow",
     "GTK3ScaleButton",
     "GTK3SearchBar",

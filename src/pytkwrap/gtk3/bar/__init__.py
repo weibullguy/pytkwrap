@@ -16,6 +16,7 @@ from .infobar import GTK3InfoBar
 from .levelbar import GTK3LevelBar
 from .placessidebar import GTK3PlacesSidebar
 from .progressbar import GTK3ProgressBar
+from .scrollbar import GTK3ScrollBar
 from .searchbar import GTK3SearchBar
 from .statusbar import GTK3Statusbar
 
@@ -26,6 +27,7 @@ __all__ = [
     "GTK3LevelBar",
     "GTK3PlacesSidebar",
     "GTK3ProgressBar",
+    "GTK3ScrollBar",
     "GTK3SearchBar",
     "GTK3Statusbar",
 ]
