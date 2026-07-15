@@ -115,6 +115,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     draw_as_radio: bool
     draw_indicator: bool
     draw_sensitive: bool
+    draw_value: bool
     editable: bool
     editable_set: bool
     editing_canceled: bool
@@ -163,6 +164,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     has_focus: bool
     has_frame: bool
     has_opacity_control: bool
+    has_origin: bool
     has_palette: bool
     has_resize_grip: bool
     has_stencil_buffer: bool
@@ -468,6 +470,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     vadjustment: Gtk.Adjustment | None
     valign: Gtk.Align | None
     value: float | int
+    value_pos: Gtk.PositionType
     variant: Pango.Variant | None
     variant_set: bool
     version: str | None
