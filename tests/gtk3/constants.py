@@ -182,6 +182,50 @@ EXPECTED_POPOVER_PROPERTIES = {
     "relative_to": None,
 }
 
+EXPECTED_RANGE_ATTRIBUTES = {"edit_signal": "value-changed"}
+EXPECTED_RANGE_HANDLER_IDS = {
+    "adjust-bounds": -1,
+    "change-value": -1,
+    "move-slider": -1,
+    "value-changed": -1,
+}
+EXPECTED_RANGE_METHODS = [
+    "get_adjustment",
+    "get_fill_level",
+    "get_flippable",
+    "get_inverted",
+    "get_lower_stepper_sensitivity",
+    "get_range_rect",
+    "get_restrict_to_fill_level",
+    "get_round_digits",
+    "get_show_fill_level",
+    "get_slider_range",
+    "get_slider_size_fixed",
+    "get_upper_stepper_sensitivity",
+    "get_value",
+    "set_adjustment",
+    "set_fill_level",
+    "set_flippable",
+    "set_increments",
+    "set_inverted",
+    "set_lower_stepper_sensitivity",
+    "set_range",
+    "set_restrict_to_fill_level",
+    "set_round_digits",
+    "set_show_fill_level",
+    "set_slider_size_fixed",
+    "set_upper_stepper_sensitivity",
+    "set_value",
+]
+EXPECTED_RANGE_PROPERTIES = {
+    "adjustment": None,
+    "fill_level": 1.7976931348623157e308,
+    "inverted": False,
+    "restrict_to_fill_level": True,
+    "round_digits": -1,
+    "show_fill_level": False,
+}
+
 EXPECTED_WIDGET_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
     "canvas": None,
