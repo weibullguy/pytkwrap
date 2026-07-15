@@ -113,6 +113,7 @@ from .mixins import (
 # )
 from .popover import GTK3Popover
 from .range import GTK3Range
+from .scale import GTK3Scale
 from .shortcut import (
     GTK3ShortcutLabel,
     GTK3ShortcutsGroup,
@@ -277,6 +278,7 @@ __all__ = [
     #    "GTK3RecentChooserWidget",
     "GTK3RecentFilter",
     #    "GTK3RecentManager",
+    "GTK3Scale",
     #    "GTK3ScrollBar",
     "GTK3ScrolledWindow",
     "GTK3ScaleButton",
