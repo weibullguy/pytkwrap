@@ -226,6 +226,28 @@ EXPECTED_RANGE_PROPERTIES = {
     "show_fill_level": False,
 }
 
+EXPECTED_SCALE_HANDLER_IDS = {"format-value": -1}
+EXPECTED_SCALE_METHODS = [
+    "add_mark",
+    "clear_marks",
+    "get_digits",
+    "get_draw_value",
+    "get_has_origin",
+    "get_layout",
+    "get_layout_offsets",
+    "get_value_pos",
+    "set_digits",
+    "set_draw_value",
+    "set_has_origin",
+    "set_value_pos",
+]
+EXPECTED_SCALE_PROPERTIES = {
+    "digits": 1,
+    "draw_value": True,
+    "has_origin": True,
+    "value_pos": Gtk.PositionType.TOP,
+}
+
 EXPECTED_WIDGET_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
     "canvas": None,
