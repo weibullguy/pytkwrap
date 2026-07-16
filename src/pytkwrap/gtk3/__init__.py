@@ -123,6 +123,7 @@ from .shortcut import (
     GTK3ShortcutsShortcut,
     GTK3ShortcutsWindow,
 )
+from .spinner import GTK3Spinner
 
 # from .style import (
 #    GTK3CSSProvider,
@@ -296,6 +297,7 @@ __all__ = [
     "GTK3ShortcutsShortcut",
     "GTK3ShortcutsWindow",
     "GTK3SpinButton",
+    "GTK3Spinner",
     "GTK3Socket",
     "GTK3Stack",
     #    "GTK3StackSidebar",
