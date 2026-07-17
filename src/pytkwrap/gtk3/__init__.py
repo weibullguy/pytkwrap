@@ -127,16 +127,7 @@ from .shortcut import (
 from .spinner import GTK3Spinner
 from .style import GTK3CssProvider
 from .switch import GTK3Switch
-
-# from .text import (
-#    GTK3EntryBuffer,
-#    GTK3EntryCompletion,
-#    GTK3TextBuffer,
-#    GTK3TextChildAnchor,
-#    GTK3TextMark,
-#    GTK3TextTag,
-#    GTK3TextTagTable,
-# )
+from .text import GTK3EntryBuffer
 from .tool import (
     GTK3MenuToolButton,
     GTK3RadioToolButton,
@@ -209,7 +200,7 @@ __all__ = [
     "GTK3Dialog",
     "GTK3DrawingArea",
     "GTK3Entry",
-    #    "GTK3EntryBuffer",
+    "GTK3EntryBuffer",
     #    "GTK3EntryCompletion",
     #    "GTK3EventBox",
     "GTK3Expander",
