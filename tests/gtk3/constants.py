@@ -42,6 +42,35 @@ EXPECTED_ADJUSTMENT_PROPERTIES = {
     "value": 0.0,
 }
 
+EXPECTED_CLIPBOARD_HANDLER_IDS = {"owner-change": -1}
+EXPECTED_CLIPBOARD_METHODS = [
+    "clear",
+    "get_display",
+    "get_owner",
+    "get_selection",
+    "request_contents",
+    "request_image",
+    "request_rich_text",
+    "request_targets",
+    "request_text",
+    "request_uris",
+    "set_can_store",
+    "set_image",
+    "set_text",
+    "store",
+    "wait_for_contents",
+    "wait_for_image",
+    "wait_for_rich_text",
+    "wait_for_targets",
+    "wait_for_text",
+    "wait_for_uris",
+    "wait_is_image_available",
+    "wait_is_rich_text_available",
+    "wait_is_target_available",
+    "wait_is_text_available",
+    "wait_is_uris_available",
+]
+
 EXPECTED_GLAREA_HANDLER_IDS = {"create-context": -1, "render": -1, "resize": -1}
 EXPECTED_GLAREA_METHODS = [
     "attach_buffers",
