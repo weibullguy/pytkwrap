@@ -125,11 +125,7 @@ from .shortcut import (
     GTK3ShortcutsWindow,
 )
 from .spinner import GTK3Spinner
-
-# from .style import (
-#    GTK3CSSProvider,
-#    GTK3StyleContext,
-# )
+from .style import GTK3CssProvider
 from .switch import GTK3Switch
 
 # from .text import (
@@ -209,7 +205,7 @@ __all__ = [
     "GTK3ColorChooserDialog",
     "GTK3ColorChooserWidget",
     "GTK3Container",
-    #    "GTK3CSSProvider",
+    "GTK3CssProvider",
     "GTK3Dialog",
     "GTK3DrawingArea",
     "GTK3Entry",
