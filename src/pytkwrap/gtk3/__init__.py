@@ -34,6 +34,7 @@ from .button import (
     GTK3VolumeButton,
     do_make_buttonbox,
 )
+from .clipboard import GTK3Clipboard
 from .color import GTK3ColorButton, GTK3ColorChooserDialog, GTK3ColorChooserWidget
 from .container import (
     GTK3Bin,
@@ -190,8 +191,6 @@ __all__ = [
     "GTK3Button",
     "GTK3ButtonBox",
     "GTK3Calendar",
-    #    "GTK3CellArea",
-    #    "GTK3CellAreaContext",
     "GTK3CellRenderer",
     "GTK3CellRendererCombo",
     "GTK3CellRendererPixbuf",
@@ -203,6 +202,7 @@ __all__ = [
     "GTK3CellView",
     "GTK3CheckButton",
     "GTK3CheckMenuItem",
+    "GTK3Clipboard",
     "GTK3ColorButton",
     "GTK3ComboBox",
     "GTK3ComboBoxText",
@@ -342,4 +342,5 @@ __all__ = [
     "do_make_buttonbox",
     #    "do_make_label_group",
     "set_widget_sensitivity",
+    "GTK3Clipboard",
 ]
