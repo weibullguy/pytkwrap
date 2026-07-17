@@ -417,6 +417,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     spacing: int
     stack: Gtk.Stack | None
     startup_id: str | None
+    state: bool
     step_increment: float
     stock_detail: str | None
     stock_size: int

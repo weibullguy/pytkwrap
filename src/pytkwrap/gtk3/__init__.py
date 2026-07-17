@@ -129,6 +129,8 @@ from .spinner import GTK3Spinner
 #    GTK3CSSProvider,
 #    GTK3StyleContext,
 # )
+from .switch import GTK3Switch
+
 # from .text import (
 #    GTK3EntryBuffer,
 #    GTK3EntryCompletion,
@@ -305,6 +307,7 @@ __all__ = [
     "GTK3Statusbar",
     #    "GTK3StatusIcon",
     #    "GTK3StyleContext",
+    "GTK3Switch",
     #    "GTK3Table",
     "GTK3TearoffMenuItem",
     #    "GTK3TextBuffer",
