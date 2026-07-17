@@ -248,6 +248,13 @@ EXPECTED_SCALE_PROPERTIES = {
     "value_pos": Gtk.PositionType.TOP,
 }
 
+EXPECTED_SPINNER_METHODS = ["start", "stop"]
+EXPECTED_SPINNER_PROPERTIES = {"active": False}
+
+EXPECTED_SWITCH_HANDLER_IDS = {"activate": -1, "state-set": -1}
+EXPECTED_SWITCH_METHODS = ["get_active", "get_state", "set_active", "set_state"]
+EXPECTED_SWITCH_PROPERTIES = {"active": False, "state": False}
+
 EXPECTED_WIDGET_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
     "canvas": None,
