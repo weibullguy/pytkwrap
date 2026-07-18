@@ -60,7 +60,7 @@ from .file import (
     GTK3RecentFilter,
 )
 from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
-from .icon import GTK3IconView
+from .icon import GTK3IconInfo, GTK3IconView
 from .image import GTK3Image
 from .io import (
     GTK3Calendar,
@@ -202,7 +202,6 @@ __all__ = [
     "GTK3Entry",
     "GTK3EntryBuffer",
     "GTK3EntryCompletion",
-    #    "GTK3EventBox",
     "GTK3Expander",
     "GTK3FileChooserButton",
     "GTK3FileChooserDialog",
@@ -212,7 +211,6 @@ __all__ = [
     "GTK3Fixed",
     #    "GTK3FixedPanel",
     "GTK3FlowBox",
-    #    "GTK3FlowBoxChild",
     "GTK3FontButton",
     "GTK3FontChooserDialog",
     "GTK3FontChooserWidget",
@@ -220,11 +218,8 @@ __all__ = [
     "GTK3GLArea",
     "GTK3GObjectMixin",
     "GTK3Grid",
-    #    "GTK3HandleBox",
     "GTK3HeaderBar",
-    #    "GTK3HSV",
-    #    "GTK3IconFactory",
-    #    "GTK3IconInfo",
+    "GTK3IconInfo",
     #    "GTK3IconTheme",
     "GTK3IconView",
     "GTK3Image",
@@ -234,7 +229,6 @@ __all__ = [
     "GTK3Layout",
     "GTK3LevelBar",
     "GTK3ListBox",
-    #    "GTK3ListBoxRow",
     #    "GTK3ListStore",
     #    "GTK3MatrixPanel",
     #    "GTK3MatrixView",
@@ -247,8 +241,6 @@ __all__ = [
     "GTK3MessageDialog",
     #    "GTK3NativeDialog",
     "GTK3Notebook",
-    #    "GTK3OffscreenWindow",
-    #    "GTK3Overlay",
     #    "GTK3PageSetup",
     "GTK3Paned",
     "GTK3PlacesSidebar",
@@ -264,10 +256,8 @@ __all__ = [
     "GTK3RadioMenuItem",
     "GTK3RadioToolButton",
     "GTK3Range",
-    #    "GTK3RecentAction",
     "GTK3RecentChooserDialog",
     "GTK3RecentChooserMenu",
-    #    "GTK3RecentChooserWidget",
     "GTK3RecentFilter",
     #    "GTK3RecentManager",
     "GTK3Scale",
@@ -295,7 +285,6 @@ __all__ = [
     #    "GTK3StatusIcon",
     #    "GTK3StyleContext",
     "GTK3Switch",
-    #    "GTK3Table",
     "GTK3TearoffMenuItem",
     #    "GTK3TextBuffer",
     #    "GTK3TextChildAnchor",
@@ -329,5 +318,4 @@ __all__ = [
     "do_make_buttonbox",
     #    "do_make_label_group",
     "set_widget_sensitivity",
-    "GTK3Clipboard",
 ]
