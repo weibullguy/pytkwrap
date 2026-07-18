@@ -14,6 +14,23 @@ except ImportError:
 # Third Party Imports
 from gi.repository import Gdk, Gtk
 
+EXPECTED_ICONINFO_METHODS = [
+    "get_base_scale",
+    "get_base_size",
+    "get_filename",
+    "is_symbolic",
+    "load_icon",
+    "load_icon_async",
+    "load_icon_finish",
+    "load_surface",
+    "load_symbolic",
+    "load_symbolic_async",
+    "load_symbolic_finish",
+    "load_symbolic_for_context",
+    "load_symbolic_for_context_async",
+    "load_symbolic_for_context_finish",
+]
+
 EXPECTED_ICONVIEW_HANDLER_IDS = {
     "activate-cursor-item": -1,
     "item-activated": -1,
