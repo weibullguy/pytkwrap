@@ -204,6 +204,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     im_module: str | None
     inconsistent: bool
     indent: int
+    inline_completion: bool
+    inline_selection: bool
     inner_border: Gtk.Border | None
     input_hints: Gtk.InputHints | None
     input_purpose: Gtk.InputPurpose | None
@@ -266,6 +268,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     min_content_width: int
     min_width: int
     min_value: float | int
+    minimum_key_length: int
     mnemonic_widget: Gtk.Widget | None
     mnemonics_visible: bool
     modal: bool
@@ -303,8 +306,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     popover: Gtk.Popover | None
     populate_all: bool
     popup: Gtk.Menu | None
+    popup_completion: bool
     popup_fixed_width: bool
+    popup_set_width: bool
     popup_shown: bool
+    popup_single_match: bool
     position: Gtk.PositionType | int
     position_set: bool
     preview_widget: Gtk.Widget | None

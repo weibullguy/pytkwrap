@@ -10,5 +10,9 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .entrybuffer import GTK3EntryBuffer
+from .entrycompletion import GTK3EntryCompletion
 
-__all__ = ("GTK3EntryBuffer",)
+__all__ = (
+    "GTK3EntryBuffer",
+    "GTK3EntryCompletion",
+)

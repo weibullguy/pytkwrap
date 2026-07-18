@@ -127,7 +127,7 @@ from .shortcut import (
 from .spinner import GTK3Spinner
 from .style import GTK3CssProvider
 from .switch import GTK3Switch
-from .text import GTK3EntryBuffer
+from .text import GTK3EntryBuffer, GTK3EntryCompletion
 from .tool import (
     GTK3MenuToolButton,
     GTK3RadioToolButton,
@@ -201,7 +201,7 @@ __all__ = [
     "GTK3DrawingArea",
     "GTK3Entry",
     "GTK3EntryBuffer",
-    #    "GTK3EntryCompletion",
+    "GTK3EntryCompletion",
     #    "GTK3EventBox",
     "GTK3Expander",
     "GTK3FileChooserButton",
