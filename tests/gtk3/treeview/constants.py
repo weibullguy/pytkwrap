@@ -186,6 +186,27 @@ EXPECTED_CELLVIEW_PROPERTIES = {
     "model": None,
 }
 
+EXPECTED_LISTSTORE_ATTRIBUTES = {"column_types": None, "n_columns": 0, "n_rows": 0}
+EXPECTED_LISTSTORE_METHODS = [
+    "append",
+    "clear",
+    "insert",
+    "insert_after",
+    "insert_before",
+    "insert_with_values",
+    "insert_with_valuesv",
+    "iter_is_valid",
+    "move_after",
+    "move_before",
+    "prepend",
+    "remove",
+    "reorder",
+    "set",
+    "set_column_types",
+    "set_value",
+    "swap",
+]
+
 EXPECTED_TREEVIEW_HANDLER_IDS = {
     "columns-changed": -1,
     "cursor-changed": -1,
