@@ -11,6 +11,14 @@ EXPECTED_FILECHOOSERBUTTON_PROPERTIES = {
     "width_chars": -1,
 }
 
+EXPECTED_FILECHOOSERNATIVE_METHODS = [
+    "get_accept_label",
+    "get_cancel_label",
+    "set_accept_label",
+    "set_cancel_label",
+]
+EXPECTED_FILECHOOSERNATIVE_PROPERTIES = {"accept_label": None, "cancel_label": None}
+
 EXPECTED_FILECHOOSERWIDGET_HANDLER_IDS = {
     "desktop-folder": -1,
     "down-folder": -1,

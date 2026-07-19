@@ -21,15 +21,6 @@ from .constants import (
 )
 
 
-def pytest_addoption(parser):
-    parser.addoption(
-        "--isolated",
-        action="store_true",
-        default=False,
-        help="Run tests for the classes that must be run in isolation.",
-    )
-
-
 @pytest.fixture(scope="function")
 def image_file():
     _parent_dir_ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
