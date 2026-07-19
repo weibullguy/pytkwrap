@@ -23,3 +23,17 @@ EXPECTED_PAGESETUP_METHODS = [
     "to_gvariant",
     "to_key_file",
 ]
+
+EXPECTED_PRINTCONTEXT_METHODS = [
+    "create_pango_context",
+    "create_pango_layout",
+    "get_cairo_context",
+    "get_dpi_x",
+    "get_dpi_y",
+    "get_hard_margins",
+    "get_height",
+    "get_page_setup",
+    "get_pango_fontmap",
+    "get_width",
+    "set_cairo_context",
+]
