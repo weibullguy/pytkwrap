@@ -60,6 +60,7 @@ from .dialog import (
 from .file import (
     GTK3FileChooserButton,
     GTK3FileChooserDialog,
+    GTK3FileChooserNative,
     GTK3FileChooserWidget,
     GTK3FileFilter,
     GTK3RecentChooserDialog,
@@ -212,7 +213,7 @@ __all__ = [
     "GTK3Expander",
     "GTK3FileChooserButton",
     "GTK3FileChooserDialog",
-    #    "GTK3FileChooserNative",
+    "GTK3FileChooserNative",
     "GTK3FileChooserWidget",
     "GTK3FileFilter",
     "GTK3Fixed",

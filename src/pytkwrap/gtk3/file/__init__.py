@@ -11,6 +11,7 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .filechooserbutton import GTK3FileChooserButton
 from .filechooserdialog import GTK3FileChooserDialog
+from .filechoosernative import GTK3FileChooserNative
 from .filechooserwidget import GTK3FileChooserWidget
 from .filefilter import GTK3FileFilter
 from .recentchooserdialog import GTK3RecentChooserDialog
@@ -19,6 +20,7 @@ from .recentfilter import GTK3RecentFilter
 __all__ = (
     "GTK3FileChooserButton",
     "GTK3FileChooserDialog",
+    "GTK3FileChooserNative",
     "GTK3FileChooserWidget",
     "GTK3FileFilter",
     "GTK3RecentChooserDialog",
