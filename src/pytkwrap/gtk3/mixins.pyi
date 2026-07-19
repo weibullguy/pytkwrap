@@ -29,6 +29,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     accel_size_group: Gtk.SizeGroup | None
     accelerator: str | None
     accept_focus: bool
+    accept_label: str | None
     accepts_tab: bool
     action: Gtk.FileChooserAction | None
     action_name: str | None
@@ -68,6 +69,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     can_default: bool
     can_focus: bool
     can_target: bool
+    cancel_label: str | None
     caps_lock_warning: bool
     cell_area: Gtk.CellArea | None
     cell_area_context: Gtk.CellAreaContext | None
