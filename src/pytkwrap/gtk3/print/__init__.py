@@ -11,5 +11,6 @@ and never through this __init__.py to avoid circular imports.
 # pytkwrap Local Imports
 from .pagesetup import GTK3PageSetup
 from .printcontext import GTK3PrintContext
+from .printsettings import GTK3PrintSettings
 
-__all__ = ["GTK3PageSetup", "GTK3PrintContext"]
+__all__ = ["GTK3PageSetup", "GTK3PrintContext", "GTK3PrintSettings"]
