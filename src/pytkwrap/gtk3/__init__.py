@@ -149,6 +149,7 @@ from .treeview import (
     GTK3CellRendererText,
     GTK3CellRendererToggle,
     GTK3CellView,
+    GTK3ListStore,
     GTK3TreeView,
     GTK3TreeViewColumn,
 )
@@ -229,7 +230,7 @@ __all__ = [
     "GTK3Layout",
     "GTK3LevelBar",
     "GTK3ListBox",
-    #    "GTK3ListStore",
+    "GTK3ListStore",
     #    "GTK3MatrixPanel",
     #    "GTK3MatrixView",
     "GTK3Menu",
