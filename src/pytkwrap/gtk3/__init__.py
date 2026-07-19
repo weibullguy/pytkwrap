@@ -106,6 +106,7 @@ from .mixins import (
     GTK3WidgetProperties,
     set_widget_sensitivity,
 )
+from .popover import GTK3Popover
 
 # from .panel import (
 #    GTK3BasePanel,
@@ -114,13 +115,7 @@ from .mixins import (
 #    GTK3PlotPanel,
 #    GTK3TreePanel,
 # )
-# from .print import (
-#    GTK3PageSetup,
-#    GTK3PrintContext,
-#    GTK3PrintOperation,
-#    GTK3PrintSettings,
-# )
-from .popover import GTK3Popover
+from .print import GTK3PageSetup
 from .range import GTK3Range
 from .scale import GTK3Scale
 from .separator import GTK3Separator
@@ -249,7 +244,7 @@ __all__ = [
     "GTK3MessageDialog",
     "GTK3NativeDialog",
     "GTK3Notebook",
-    #    "GTK3PageSetup",
+    "GTK3PageSetup",
     "GTK3Paned",
     "GTK3PlacesSidebar",
     #    "GTK3PlotPanel",
