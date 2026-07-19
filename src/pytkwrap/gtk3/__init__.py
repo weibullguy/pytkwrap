@@ -50,7 +50,13 @@ from .container import (
     GTK3StackSwitcher,
     GTK3Viewport,
 )
-from .dialog import GTK3AboutDialog, GTK3AppChooserDialog, GTK3Dialog, GTK3MessageDialog
+from .dialog import (
+    GTK3AboutDialog,
+    GTK3AppChooserDialog,
+    GTK3Dialog,
+    GTK3MessageDialog,
+    GTK3NativeDialog,
+)
 from .file import (
     GTK3FileChooserButton,
     GTK3FileChooserDialog,
@@ -240,7 +246,7 @@ __all__ = [
     "GTK3MenuShell",
     "GTK3MenuToolButton",
     "GTK3MessageDialog",
-    #    "GTK3NativeDialog",
+    "GTK3NativeDialog",
     "GTK3Notebook",
     #    "GTK3PageSetup",
     "GTK3Paned",
