@@ -99,3 +99,24 @@ EXPECTED_MESSAGEDIALOG_PROPERTIES = {
     "text": "",
     "use_markup": False,
 }
+
+EXPECTED_NATIVEDIALOG_HANDLER_IDS = {"response": -1}
+EXPECTED_NATIVEDIALOG_METHODS = [
+    "destroy",
+    "get_modal",
+    "get_title",
+    "get_transient_for",
+    "get_visible",
+    "hide",
+    "run",
+    "set_modal",
+    "set_title",
+    "set_transient_for",
+    "show",
+]
+EXPECTED_NATIVEDIALOG_PROPERTIES = {
+    "modal": False,
+    "title": None,
+    "transient_for": None,
+    "visible": False,
+}
