@@ -115,7 +115,7 @@ from .popover import GTK3Popover
 #    GTK3PlotPanel,
 #    GTK3TreePanel,
 # )
-from .print import GTK3PageSetup
+from .print import GTK3PageSetup, GTK3PrintContext
 from .range import GTK3Range
 from .scale import GTK3Scale
 from .separator import GTK3Separator
@@ -251,7 +251,7 @@ __all__ = [
     #    "GTK3PlotView",
     "GTK3Popover",
     "GTK3PopoverMenu",
-    #    "GTK3PrintContext",
+    "GTK3PrintContext",
     #    "GTK3PrintOperation",
     #    "GTK3PrintSettings",
     "GTK3ProgressBar",
