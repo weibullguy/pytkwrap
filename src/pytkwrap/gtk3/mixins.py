@@ -47,6 +47,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     align_set: bool
     align_widget: Gtk.Container | None
     alignment: float | Pango.Alignment | None
+    allow_async: bool
     alpha: int
     always_show_image: bool
     anchor_hints: Gdk.AnchorHints
@@ -97,15 +98,18 @@ class GTK3WidgetProperties(TypedDict, total=False):
     copyright: str | None
     create_folders: bool
     current_alpha: int
+    current_page: int
     current_rgba: Gdk.RGBA | None
     cursor_position: int
     cursor_visible: bool
+    custom_tab_label: str | None
     custom_title: str | None
     day: int
     decorated: bool
     decoration_layout: Gtk.DecorationLayout | None
     decoration_layout_set: bool
     default_height: int
+    default_page_setup: Gtk.PageSetup | None
     default_width: int
     deletable: bool
     destroy_with_parent: bool
@@ -127,6 +131,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     editing_canceled: bool
     ellipsize: Pango.EllipsizeMode | None
     ellipsize_set: bool
+    embed_page_setup: bool
     enable_emoji_completion: bool
     enable_grid_lines: Gtk.TreeViewGridLines | None
     enable_popup: bool
@@ -137,6 +142,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     expand: bool
     expanded: bool
     expander_column: Gtk.TreeViewColumn | None
+    export_filename: str | None
     extra_widget: Gtk.Widget | None
     family: str | None
     family_set: bool
@@ -173,6 +179,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     has_origin: bool
     has_palette: bool
     has_resize_grip: bool
+    has_selection: bool
     has_stencil_buffer: bool
     has_subtitle: bool
     has_tooltip: bool
@@ -224,6 +231,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     item_orientation: Gtk.Orientation | None
     item_padding: int
     item_width: int
+    job_name: str
     justification: Gtk.Justification | None
     justify: Gtk.Justification | None
     kinetic_scrolling: bool
@@ -279,6 +287,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     monitor: int
     monospace: bool
     month: int
+    n_pages: int
     name: str
     no_month_change: bool
     no_show_all: bool
@@ -325,6 +334,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     primary_icon_storage_type: Gtk.ImageType | None
     primary_icon_tooltip_markup: str | None
     primary_icon_tooltip_text: str | None
+    print_settings: Gtk.PrintSettings | None
     program_name: str | None
     progress_fraction: float
     progress_pulse_step: float
@@ -401,6 +411,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_menubar: bool
     show_numbers: bool
     show_other_locations: bool
+    show_progress: bool
     show_recent: bool
     show_size: bool
     show_starred_location: bool
@@ -438,6 +449,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     submenu: Gtk.Menu | None
     subtitle: str | None
     subtitle_set: bool
+    support_selection: bool
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
     tab_position: Gtk.PositionType
@@ -455,6 +467,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     tooltip_markup: str
     tooltip_text: str
     top_margin: int
+    track_print_status: bool
     track_visited_links: bool
     transient_for: Gtk.Window | None
     transition_duration: int
@@ -465,6 +478,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     type_hint: Gdk.WindowTypeHint
     underline: Pango.Underline | None
     underline_set: bool
+    unit: Gtk.Unit
     update_policy: Gtk.SpinButtonUpdatePolicy | None
     upper: float
     urgency_hint: bool
@@ -472,6 +486,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     use_es: bool
     use_fallback: bool
     use_font: bool
+    use_full_page: bool
     use_header_bar: bool | int
     use_markup: bool
     use_popover: bool
