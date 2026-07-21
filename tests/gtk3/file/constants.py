@@ -60,3 +60,15 @@ EXPECTED_RECENTFILTER_METHODS = [
     "get_needed",
     "set_name",
 ]
+
+EXPECTED_RECENTMANAGER_HANDLER_IDS = {"changed": -1}
+EXPECTED_RECENTMANAGER_METHODS = [
+    "add_full",
+    "add_item",
+    "get_items",
+    "has_item",
+    "lookup_item",
+    "move_item",
+    "purge_items",
+    "remove_item",
+]
