@@ -1,3 +1,19 @@
+# Standard Library Imports
+import sys
+
+try:
+    # Third Party Imports
+    import gi
+
+    gi.require_version("Gdk", "3.0")
+    gi.require_version("GLib", "2.0")
+    gi.require_version("Gtk", "3.0")
+except ImportError:
+    print("Failed to import package gi; exiting.")
+    sys.exit(1)
+# Third Party Imports
+from gi.repository import Gdk, Gtk
+
 EXPECTED_PAGESETUP_METHODS = [
     "copy",
     "get_bottom_margin",
@@ -37,6 +53,68 @@ EXPECTED_PRINTCONTEXT_METHODS = [
     "get_width",
     "set_cairo_context",
 ]
+
+EXPECTED_PRINTOPERATION_HANDLER_IDS = {
+    "begin-print": -1,
+    "create-custom-widget": -1,
+    "custom-widget-apply": -1,
+    "done": -1,
+    "draw-page": -1,
+    "end-print": -1,
+    "paginate": -1,
+    "preview": -1,
+    "request-page-setup": -1,
+    "status-changed": -1,
+    "update-custom-widget": -1,
+}
+EXPECTED_PRINTOPERATION_METHODS = [
+    "cancel",
+    "draw_page_finish",
+    "get_default_page_setup",
+    "get_embed_page_setup",
+    "get_error",
+    "get_has_selection",
+    "get_n_pages_to_print",
+    "get_print_settings",
+    "get_status",
+    "get_status_string",
+    "get_support_selection",
+    "is_finished",
+    "run",
+    "set_allow_async",
+    "set_current_page",
+    "set_custom_tab_label",
+    "set_default_page_setup",
+    "set_defer_drawing",
+    "set_embed_page_setup",
+    "set_export_filename",
+    "set_has_selection",
+    "set_job_name",
+    "set_n_pages",
+    "set_print_settings",
+    "set_show_progress",
+    "set_support_selection",
+    "set_track_print_status",
+    "set_unit",
+    "set_use_full_page",
+]
+EXPECTED_PRINTOPERATION_PROPERTIES = {
+    "allow_async": False,
+    "current_page": -1,
+    "custom_tab_label": None,
+    "default_page_setup": None,
+    "embed_page_setup": False,
+    "export_filename": None,
+    "has_selection": False,
+    "job_name": "",
+    "n_pages": -1,
+    "print_settings": None,
+    "show_progress": False,
+    "support_selection": False,
+    "track_print_status": False,
+    "unit": Gtk.Unit.NONE,
+    "use_full_page": False,
+}
 
 EXPECTED_PRINTSETTINGS_METHODS = [
     "copy",
