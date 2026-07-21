@@ -65,6 +65,7 @@ from .file import (
     GTK3FileFilter,
     GTK3RecentChooserDialog,
     GTK3RecentFilter,
+    GTK3RecentManager,
 )
 from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
 from .icon import GTK3IconInfo, GTK3IconTheme, GTK3IconView
@@ -267,7 +268,7 @@ __all__ = [
     "GTK3RecentChooserDialog",
     "GTK3RecentChooserMenu",
     "GTK3RecentFilter",
-    #    "GTK3RecentManager",
+    "GTK3RecentManager",
     "GTK3Scale",
     "GTK3ScrollBar",
     "GTK3ScrolledWindow",

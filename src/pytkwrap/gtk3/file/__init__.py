@@ -16,6 +16,7 @@ from .filechooserwidget import GTK3FileChooserWidget
 from .filefilter import GTK3FileFilter
 from .recentchooserdialog import GTK3RecentChooserDialog
 from .recentfilter import GTK3RecentFilter
+from .recentmanager import GTK3RecentManager
 
 __all__ = (
     "GTK3FileChooserButton",
@@ -25,4 +26,5 @@ __all__ = (
     "GTK3FileFilter",
     "GTK3RecentChooserDialog",
     "GTK3RecentFilter",
+    "GTK3RecentManager",
 )
