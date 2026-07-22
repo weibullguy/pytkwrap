@@ -297,6 +297,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     page_increment: float
     pack_direction: Gtk.PackDirection
     page_size: float
+    paint_clock: Gdk.FrameClock | None
     parent: Gtk.Container | None
     pattern: str | None
     pixbuf: Gdk.Pixbuf.Pixbuf | None
