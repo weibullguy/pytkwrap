@@ -1,19 +1,3 @@
-# Standard Library Imports
-import sys
-
-try:
-    # Third Party Imports
-    import gi
-
-    gi.require_version("Gdk", "3.0")
-    gi.require_version("GLib", "2.0")
-    gi.require_version("Gtk", "3.0")
-except ImportError:
-    print("Failed to import package gi; exiting.")
-    sys.exit(1)
-# Third Party Imports
-from gi.repository import Gdk, Gtk
-
 EXPECTED_CSSPROVIDER_HANDLER_IDS = {"parsing-error": -1}
 EXPECTED_CSSPROVIDER_METHODS = [
     "load_from_data",
@@ -22,3 +6,57 @@ EXPECTED_CSSPROVIDER_METHODS = [
     "load_from_resource",
     "to_string",
 ]
+
+EXPECTED_STYLECONTEXT_HANDLER_IDS = {"changed": -1}
+EXPECTED_STYLECONTEXT_METHODS = [
+    "add_class",
+    "add_provider",
+    "add_region",
+    "cancel_animations",
+    "get_background_color",
+    "get_border",
+    "get_border_color",
+    "get_color",
+    "get_direction",
+    "get_font",
+    "get_frame_clock",
+    "get_junction_sides",
+    "get_margin",
+    "get_padding",
+    "get_parent",
+    "get_path",
+    "get_property",
+    "get_scale",
+    "get_screen",
+    "get_section",
+    "get_state",
+    "get_style_property",
+    "has_class",
+    "has_region",
+    "invalidate",
+    "list_classes",
+    "list_regions",
+    "lookup_color",
+    "lookup_icon_set",
+    "notify_state_change",
+    "pop_animatable_region",
+    "push_animatable_region",
+    "remove_class",
+    "remove_provider",
+    "remove_region",
+    "restore",
+    "save",
+    "scroll_animations",
+    "set_background",
+    "set_direction",
+    "set_frame_clock",
+    "set_junction_sides",
+    "set_parent",
+    "set_path",
+    "set_scale",
+    "set_screen",
+    "set_state",
+    "state_is_running",
+    "to_string",
+]
+EXPECTED_STYLECONTEXT_PROPERTIES = {"paint_clock": None, "parent": None, "screen": None}
