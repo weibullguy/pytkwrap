@@ -133,7 +133,7 @@ from .shortcut import (
     GTK3ShortcutsWindow,
 )
 from .spinner import GTK3Spinner
-from .style import GTK3CssProvider
+from .style import GTK3CssProvider, GTK3StyleContext
 from .switch import GTK3Switch
 from .text import GTK3EntryBuffer, GTK3EntryCompletion
 from .tool import (
@@ -291,8 +291,7 @@ __all__ = [
     #    "GTK3StackSidebar",
     "GTK3StackSwitcher",
     "GTK3Statusbar",
-    #    "GTK3StatusIcon",
-    #    "GTK3StyleContext",
+    "GTK3StyleContext",
     "GTK3Switch",
     "GTK3TearoffMenuItem",
     #    "GTK3TextBuffer",

@@ -10,7 +10,9 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .cssprovider import GTK3CssProvider
+from .stylecontext import GTK3StyleContext
 
 __all__ = [
     "GTK3CssProvider",
+    "GTK3StyleContext",
 ]
