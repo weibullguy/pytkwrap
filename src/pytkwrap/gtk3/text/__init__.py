@@ -12,9 +12,11 @@ and never through this __init__.py to avoid circular imports.
 from .entrybuffer import GTK3EntryBuffer
 from .entrycompletion import GTK3EntryCompletion
 from .textbuffer import GTK3TextBuffer
+from .textmark import GTK3TextMark
 
 __all__ = (
     "GTK3EntryBuffer",
     "GTK3EntryCompletion",
     "GTK3TextBuffer",
+    "GTK3TextMark",
 )

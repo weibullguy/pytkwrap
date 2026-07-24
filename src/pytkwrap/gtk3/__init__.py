@@ -135,7 +135,7 @@ from .shortcut import (
 from .spinner import GTK3Spinner
 from .style import GTK3CssProvider, GTK3StyleContext
 from .switch import GTK3Switch
-from .text import GTK3EntryBuffer, GTK3EntryCompletion, GTK3TextBuffer
+from .text import GTK3EntryBuffer, GTK3EntryCompletion, GTK3TextBuffer, GTK3TextMark
 from .tool import (
     GTK3MenuToolButton,
     GTK3RadioToolButton,
@@ -294,8 +294,7 @@ __all__ = [
     "GTK3Switch",
     "GTK3TearoffMenuItem",
     "GTK3TextBuffer",
-    #    "GTK3TextChildAnchor",
-    #    "GTK3TextMark",
+    "GTK3TextMark",
     #    "GTK3TextTag",
     #    "GTK3TextTagTable",
     "GTK3TextView",
