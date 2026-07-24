@@ -175,3 +175,10 @@ EXPECTED_TEXTMARK_METHODS = [
     "set_visible",
 ]
 EXPECTED_TEXTMARK_PROPERTIES = {"left_gravity": False, "name": None}
+
+EXPECTED_TEXTTAGTABLE_HANDLER_IDS = {
+    "tag-added": -1,
+    "tag-changed": -1,
+    "tag-removed": -1,
+}
+EXPECTED_TEXTTAGTABLE_METHODS = ["add", "foreach", "get_size", "lookup", "remove"]
