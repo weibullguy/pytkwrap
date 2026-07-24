@@ -153,6 +153,7 @@ from .tool import (
     GTK3ToolItemGroup,
     GTK3ToolPalette,
 )
+from .tooltip import GTK3Tooltip
 from .treeview import (
     GTK3CellRenderer,
     GTK3CellRendererCombo,
@@ -310,6 +311,7 @@ __all__ = [
     "GTK3ToolItem",
     "GTK3ToolItemGroup",
     "GTK3ToolPalette",
+    "GTK3Tooltip",
     #    "GTK3TreeModelFilter",
     #    "GTK3TreeModelRow",
     #    "GTK3TreeModelRowIter",
