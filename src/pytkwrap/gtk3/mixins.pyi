@@ -450,6 +450,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
     tab_pos: Gtk.PositionType
+    tag_table: Gtk.TextTagTable | None
     take_focus: bool
     text: str | None
     text_column: int
