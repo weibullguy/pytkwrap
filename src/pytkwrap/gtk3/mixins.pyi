@@ -239,6 +239,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     language: str | None
     language_set: bool
     layout_style: Gtk.ButtonBoxStyle
+    left_gravity: bool
     left_margin: int
     level_indentation: int
     license: str | None
@@ -284,7 +285,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     monospace: bool
     month: int
     n_pages: int
-    name: str
+    name: str | None
     no_month_change: bool
     no_show_all: bool
     numeric: bool
