@@ -284,6 +284,16 @@ EXPECTED_SWITCH_HANDLER_IDS = {"activate": -1, "state-set": -1}
 EXPECTED_SWITCH_METHODS = ["get_active", "get_state", "set_active", "set_state"]
 EXPECTED_SWITCH_PROPERTIES = {"active": False, "state": False}
 
+EXPECTED_TOOLTIP_METHODS = [
+    "set_custom",
+    "set_icon",
+    "set_icon_from_gicon",
+    "set_icon_from_icon_name",
+    "set_markup",
+    "set_text",
+    "set_tip_area",
+]
+
 EXPECTED_WIDGET_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
     "canvas": None,
