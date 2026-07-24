@@ -165,3 +165,13 @@ EXPECTED_TEXTBUFFER_METHODS = [
     "unregister_serialize_format",
 ]
 EXPECTED_TEXTBUFFER_PROPERTIES = {"tag_table": None, "text": ""}
+
+EXPECTED_TEXTMARK_METHODS = [
+    "get_buffer",
+    "get_deleted",
+    "get_left_gravity",
+    "get_name",
+    "get_visible",
+    "set_visible",
+]
+EXPECTED_TEXTMARK_PROPERTIES = {"left_gravity": False, "name": None}
