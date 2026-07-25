@@ -20,6 +20,7 @@ from .cellrenderertoggle import GTK3CellRendererToggle
 from .cellview import GTK3CellView
 from .liststore import GTK3ListStore
 from .treemodelsort import GTK3TreeModelSort
+from .treestore import GTK3TreeStore
 from .treeview import GTK3TreeView
 from .treeviewcolumn import GTK3TreeViewColumn
 
@@ -35,6 +36,7 @@ __all__ = [
     "GTK3CellView",
     "GTK3ListStore",
     "GTK3TreeModelSort",
+    "GTK3TreeStore",
     "GTK3TreeView",
     "GTK3TreeViewColumn",
 ]
