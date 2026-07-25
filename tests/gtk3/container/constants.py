@@ -251,6 +251,9 @@ EXPECTED_STACK_PROPERTIES = {
     "visible_child_name": None,
 }
 
+EXPECTED_STACKSIDEBAR_METHODS = ["get_stack", "set_stack"]
+EXPECTED_STACKSIDEBAR_PROPERTIES = {"stack": None}
+
 EXPECTED_STACKSWITCHER_METHODS = ["get_stack", "set_stack"]
 EXPECTED_STACKSWITCHER_PROPERTIES = {"icon_size": 1, "stack": None}
 
