@@ -207,6 +207,18 @@ EXPECTED_LISTSTORE_METHODS = [
     "swap",
 ]
 
+EXPECTED_TREEMODELSORT_METHODS = [
+    "clear_cache",
+    "convert_child_iter_to_iter",
+    "convert_child_path_to_path",
+    "convert_iter_to_child_iter",
+    "convert_path_to_child_path",
+    "get_model",
+    "iter_is_valid",
+    "reset_default_sort_func",
+]
+EXPECTED_TREEMODELSORT_PROPERTIES = {"model": None}
+
 EXPECTED_TREEVIEW_HANDLER_IDS = {
     "columns-changed": -1,
     "cursor-changed": -1,
