@@ -182,6 +182,7 @@ from .widget import GTK3Widget
 from .window import (
     GTK3ApplicationWindow,
     GTK3Assistant,
+    GTK3Plug,
     GTK3ScrolledWindow,
     GTK3Window,
     GTK3WindowGroup,
@@ -272,7 +273,7 @@ __all__ = [
     "GTK3PlacesSidebar",
     #    "GTK3PlotPanel",
     #    "GTK3PlotView",
-    # "GTK3Plug",
+    "GTK3Plug",
     "GTK3Popover",
     "GTK3PopoverMenu",
     "GTK3PrintContext",
