@@ -250,3 +250,11 @@ EXPECTED_WINDOW_PROPERTIES = {
     "urgency_hint": False,
     "window_position": Gtk.WindowPosition.NONE,
 }
+
+EXPECTED_WINDOWGROUP_METHODS = [
+    "add_window",
+    "get_current_device_grab",
+    "get_current_grab",
+    "list_windows",
+    "remove_window",
+]
