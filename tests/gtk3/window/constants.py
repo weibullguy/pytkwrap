@@ -57,6 +57,15 @@ EXPECTED_ASSISTANT_METHODS = [
 ]
 EXPECTED_ASSISTANT_PROPERTIES = {"use_header_bar": -1}
 
+EXPECTED_PLUG_HANDLER_IDS = {"embedded": -1}
+EXPECTED_PLUG_METHODS = [
+    "construct",
+    "construct_for_display",
+    "get_embedded",
+    "get_id",
+    "get_socket_window",
+]
+
 EXPECTED_SCROLLEDWINDOW_HANDLER_IDS = {
     "edge-overshot": -1,
     "edge-reached": -1,
