@@ -219,6 +219,27 @@ EXPECTED_TREEMODELSORT_METHODS = [
 ]
 EXPECTED_TREEMODELSORT_PROPERTIES = {"model": None}
 
+EXPECTED_TREESTORE_ATTRIBUTES = {"column_types": None, "n_columns": 0, "n_rows": 0}
+EXPECTED_TREESTORE_METHODS = [
+    "append",
+    "clear",
+    "insert",
+    "insert_after",
+    "insert_before",
+    "insert_with_values",
+    "is_ancestor",
+    "iter_depth",
+    "iter_is_valid",
+    "move_after",
+    "move_before",
+    "prepend",
+    "remove",
+    "set",
+    "set_column_types",
+    "set_value",
+    "swap",
+]
+
 EXPECTED_TREEVIEW_HANDLER_IDS = {
     "columns-changed": -1,
     "cursor-changed": -1,
