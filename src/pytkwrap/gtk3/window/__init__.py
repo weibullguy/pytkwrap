@@ -13,10 +13,12 @@ from .applicationwindow import GTK3ApplicationWindow
 from .assistant import GTK3Assistant
 from .scrolledwindow import GTK3ScrolledWindow
 from .window import GTK3Window
+from .windowgroup import GTK3WindowGroup
 
 __all__ = [
     "GTK3ApplicationWindow",
     "GTK3Assistant",
     "GTK3ScrolledWindow",
     "GTK3Window",
+    "GTK3WindowGroup",
 ]
