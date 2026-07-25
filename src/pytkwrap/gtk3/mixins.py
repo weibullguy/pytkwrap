@@ -356,6 +356,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     resize_toplevel: bool
     resource: str | None
     restrict_to_fill: bool
+    reveal_child: bool
     revealed: bool
     rgba: Gdk.RGBA | None
     right_margin: int

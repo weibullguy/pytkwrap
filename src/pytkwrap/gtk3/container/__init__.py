@@ -17,6 +17,7 @@ from .expander import GTK3Expander
 from .frame import GTK3Frame
 from .listbox import GTK3ListBox
 from .paned import GTK3Paned
+from .revealer import GTK3Revealer
 from .socket import GTK3Socket
 from .stack import GTK3Stack
 from .stackswitcher import GTK3StackSwitcher
@@ -31,6 +32,7 @@ __all__ = [
     "GTK3Frame",
     "GTK3ListBox",
     "GTK3Paned",
+    "GTK3Revealer",
     "GTK3Socket",
     "GTK3Stack",
     "GTK3StackSwitcher",
