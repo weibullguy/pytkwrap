@@ -198,6 +198,21 @@ EXPECTED_PANED_PROPERTIES = {
     "wide_handle": False,
 }
 
+EXPECTED_REVEALER_METHODS = [
+    "get_child_revealed",
+    "get_reveal_child",
+    "get_transition_duration",
+    "get_transition_type",
+    "set_reveal_child",
+    "set_transition_duration",
+    "set_transition_type",
+]
+EXPECTED_REVEALER_PROPERTIES = {
+    "reveal_child": False,
+    "transition_duration": 250,
+    "transition_type": Gtk.RevealerTransitionType.SLIDE_DOWN,
+}
+
 EXPECTED_SOCKET_HANDLER_IDS = {"plug-added": -1, "plug-removed": -1}
 EXPECTED_SOCKET_METHODS = ["add_id", "get_id", "get_plug_window"]
 
