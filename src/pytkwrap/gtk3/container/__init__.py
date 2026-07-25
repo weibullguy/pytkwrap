@@ -20,6 +20,7 @@ from .paned import GTK3Paned
 from .revealer import GTK3Revealer
 from .socket import GTK3Socket
 from .stack import GTK3Stack
+from .stacksidebar import GTK3StackSidebar
 from .stackswitcher import GTK3StackSwitcher
 from .viewport import GTK3Viewport
 
@@ -35,6 +36,7 @@ __all__ = [
     "GTK3Revealer",
     "GTK3Socket",
     "GTK3Stack",
+    "GTK3StackSidebar",
     "GTK3StackSwitcher",
     "GTK3Viewport",
 ]
