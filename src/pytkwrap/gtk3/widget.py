@@ -153,7 +153,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
         self.set_vexpand_set(self.dic_properties["vexpand_set"])
         self.set_visible(self.dic_properties["visible"])
 
-        for _property in ["focus_on_click", "parent"]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
+        self.set_property("focus-on-click", self.dic_properties["focus_on_click"])
+
+        if self.dic_properties["parent"] is not None:
+            self.set_property("parent", self.dic_properties["parent"])
