@@ -28,6 +28,7 @@ class GTK3InfoBar(Gtk.InfoBar, GTK3Box):
         Gtk.InfoBar.__init__(self)
         GTK3Box.__init__(self)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_INFOBAR_SIGNALS}
         )

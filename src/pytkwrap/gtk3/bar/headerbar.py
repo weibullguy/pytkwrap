@@ -32,6 +32,7 @@ class GTK3HeaderBar(Gtk.HeaderBar, GTK3Container):
         Gtk.HeaderBar.__init__(self)
         GTK3Container.__init__(self)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_HEADERBAR_PROPERTIES)
 
     def do_set_properties(

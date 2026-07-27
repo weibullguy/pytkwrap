@@ -9,14 +9,19 @@ from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3._libs import GObject, Gtk
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.utilities import clamp
 
 
 class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
     """Wrapper for version 3.0 Gtk.LevelBar."""
 
+    _GTK3_LEVELBAR_ATTRIBUTES = GTK3WidgetAttributes(
+        default_value=0.0,
+        edit_signal="changed",
+    )
     _GTK3_LEVELBAR_PROPERTIES = GTK3WidgetProperties(
         inverted=False,
         max_value=1.0,
@@ -34,6 +39,7 @@ class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
         GTK3Widget.__init__(self)
 
         # Initialize public instance attributes.
+        self.dic_attributes.update(self._GTK3_LEVELBAR_ATTRIBUTES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_LEVELBAR_SIGNALS}
         )
@@ -77,10 +83,23 @@ class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
 
         Parameters
         ----------
-        value : float | int | str | None
+        value : float | int | str
             The value to display in the GTK3LevelBar.
         """
         if not isinstance(value, (float, int, str)):
             super().do_set_value(value)
 
+        # Clamp the value to the min and max values.
+        value = clamp(
+            float(value),  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
+            self.dic_properties["min_value"],
+            self.dic_properties["max_value"],
+        )
+
         self.set_value(float(value))  # type: ignore[arg-type]
+        self.dic_properties["value"] = float(value)  # type: ignore[arg-type]
+        self.emit("changed")
+
+    @GObject.Signal
+    def changed(self):
+        """Add the 'changed' signal."""
