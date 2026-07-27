@@ -8,8 +8,10 @@
 from collections.abc import Mapping
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import PytkwrapError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.io.label import GTK3Label
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
@@ -74,3 +76,48 @@ class GTK3Notebook(Gtk.Notebook, GTK3Container):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+    def do_add_page(
+        self,
+        child: Gtk.Widget,
+        tab_label: str | None = None,
+        position: int = -1,
+    ) -> None:
+        """Add a page to the notebook.
+
+        Parameters
+        ----------
+        child : Gtk.Widget
+            The Gtk.Widget to use as the contents of the page.
+        tab_label : str
+            The label to display for the page.
+        position : int, optional
+            The position at which to add the page.  Defaults to the end (-1).  To
+            prepend a page, pass 0.
+        """
+        _tab_label = None
+        if tab_label is not None:
+            _tab_label = GTK3Label()
+            _tab_label.do_set_value(tab_label)
+
+        self.insert_page(child, _tab_label, position)
+
+    def do_remove_page(self, position: int) -> None:
+        """Remove a page from the notebook.
+
+        Parameters
+        ----------
+        position : int
+            The position of the page to remove.
+
+        Raises
+        ------
+        PytkwrapError
+            If the page number is invalid.
+        """
+        if position > self.get_n_pages():
+            raise PytkwrapError(
+                f"Invalid GTK3Notebook page number: {position}.  There are only "
+                f"{self.get_n_pages()} pages."
+            )
+        self.remove_page(position)
