@@ -63,7 +63,8 @@ jobs:
         id: test
         run: |
           pip install -U pip setuptools>12.0 urllib3 hatch importlib_metadata
-          xvfb-run --auto-servernum hatch run unit tests/gtk3/
+          xvfb-run --auto-servernum hatch run test:install
+          xvfb-run --auto-servernum hatch run test:unit tests/gtk3/
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
