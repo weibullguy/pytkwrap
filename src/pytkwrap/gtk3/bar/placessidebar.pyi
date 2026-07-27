@@ -1,3 +1,6 @@
+# Standard Library Imports
+from collections.abc import Mapping
+
 # Third Party Imports
 from _typeshed import Incomplete
 
@@ -10,4 +13,6 @@ class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3ScrolledWindow):
     _GTK3_PLACESSIDEBAR_PROPERTIES: Incomplete
     _GTK3_PLACESSIDEBAR_SIGNALS: Incomplete
     def __init__(self) -> None: ...
-    def do_set_properties(self, properties: GTK3WidgetProperties) -> None: ...
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None: ...
