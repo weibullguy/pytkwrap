@@ -9,10 +9,9 @@ from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk, Pango
+from pytkwrap.gtk3._libs import GObject, Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3Widget
-from pytkwrap.utilities import none_to_default
 
 
 class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
@@ -21,6 +20,7 @@ class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
     _GTK3_PROGRESSBAR_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
         data_type=float,
+        edit_signal="changed",
     )
     _GTK3_PROGRESSBAR_PROPERTIES = GTK3WidgetProperties(
         ellipsize=Pango.EllipsizeMode.NONE,
@@ -36,6 +36,7 @@ class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
         Gtk.ProgressBar.__init__(self)
         GTK3Widget.__init__(self)
 
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_PROGRESSBAR_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_PROGRESSBAR_PROPERTIES)
 
@@ -96,22 +97,9 @@ class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
             _value /= 100.0
 
         self.set_fraction(_value)
+        self.dic_properties["fraction"] = _value
+        self.emit("changed")
 
-    def do_update(
-        self,
-        package: dict[str, bool | date | float | int | str | None],
-    ) -> None:
-        """Update the GTK3ProgressBar with new text from the data package.
-
-        Parameters
-        ----------
-        package : dict
-            The data package to use to update the GTK3ProgressBar.
-        """
-        _index, _value = next(iter(package.items()))
-        _value = none_to_default(_value, self.dic_attributes["default_value"])
-
-        if _index != self.dic_attributes["index"]:
-            return
-
-        self.do_set_value(_value)
+    @GObject.Signal
+    def changed(self):
+        """Add the 'changed' signal."""
