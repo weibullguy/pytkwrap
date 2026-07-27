@@ -34,12 +34,10 @@ class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
         GTK3ComboBox.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_properties.update(self._GTK3_APP_CHOOSER_BUTTON_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_APP_CHOOSER_BUTTON_SIGNALS}
         )
-
-        self.show_all()
+        self.dic_properties.update(self._GTK3_APP_CHOOSER_BUTTON_PROPERTIES)
 
     def do_set_properties(
         self,

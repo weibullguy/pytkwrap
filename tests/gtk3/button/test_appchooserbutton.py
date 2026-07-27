@@ -10,7 +10,7 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gdk, GObject, Gtk
+from pytkwrap.gtk3._libs import Gdk, Gio, GObject, Gtk
 from pytkwrap.gtk3.button import GTK3AppChooserButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.gtk3.button.constants import (
@@ -74,7 +74,12 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         | EXPECTED_APPCHOOSERBUTTON_PROPERTIES
     )
 
-    @pytest.mark.unit
+    def test_callback(self, button, item_name):
+        """Callback method for testing."""
+        assert isinstance(button, GTK3AppChooserButton)
+        assert item_name == "Test"
+
+    @pytest.mark.integration
     def test_do_set_attributes_default(self):
         """Should set attributes to default values when passed an empty
         GTK3WidgetAttributes."""
@@ -85,7 +90,7 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         assert dut.do_get_attribute("default_value") == -1
         assert dut.do_get_attribute("edit_signal") == "changed"
 
-    @pytest.mark.unit
+    @pytest.mark.integration
     def test_do_set_attributes(self):
         """Should set attributes to the values passed in the GTK3WidgetAttributes."""
         dut = self.make_dut()
@@ -127,3 +132,14 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         assert dut.do_get_property("heading") == "Test Heading"
         assert dut.do_get_property("show_default_item")
         assert dut.do_get_property("show_dialog_item")
+
+    @pytest.mark.unit
+    def test_append_custom_item(self):
+        """Should append a custom item to the GTK3AppChooserButton."""
+        dut = self.make_dut()
+        dut.do_set_callbacks("custom-item-activated", self.test_callback)
+        dut.append_custom_item(
+            "Test", "Test Item", Gio.Icon.new_for_string("dialog-information")
+        )
+        dut.set_active_custom_item("Test")
+        dut.emit("custom-item-activated", "Test")
