@@ -8,6 +8,8 @@
 import pytest
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import PytkwrapError
+
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.book import GTK3Notebook
@@ -107,3 +109,75 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
         assert not dut.get_show_tabs()
         assert dut.get_property("tab_pos") == Gtk.PositionType.BOTTOM
         assert dut.get_tab_pos() == Gtk.PositionType.BOTTOM
+
+    @pytest.mark.unit
+    def test_do_add_page(self):
+        """Should add a page to the GTK3Notebook."""
+        _fixed = Gtk.Fixed()
+
+        dut = self.make_dut()
+        dut.do_add_page(_fixed, "Test Label")
+
+        assert dut.get_n_pages() == 1
+        assert dut.get_tab_label_text(_fixed) == "Test Label"
+
+    @pytest.mark.unit
+    def test_do_prepend_page(self):
+        """Should prepend a page to the GTK3Notebook."""
+        _fixed1 = Gtk.Fixed()
+        _fixed2 = Gtk.Fixed()
+
+        dut = self.make_dut()
+        dut.do_add_page(_fixed1, "Test Label")
+        dut.do_add_page(_fixed2, "Prepended Page", position=0)
+
+        assert dut.get_n_pages() == 2
+        assert dut.get_tab_label_text(dut.get_nth_page(0)) == "Prepended Page"
+
+    @pytest.mark.unit
+    def test_do_insert_page(self):
+        """Should insert a page into the GTK3Notebook."""
+        _fixed1 = Gtk.Fixed()
+        _fixed2 = Gtk.Fixed()
+        _fixed3 = Gtk.Fixed()
+
+        dut = self.make_dut()
+        dut.do_add_page(_fixed1, "Test Label")
+        dut.do_add_page(_fixed2, "Inserted Page 1")
+        dut.do_add_page(_fixed3, "Inserted Page 2", position=1)
+
+        assert dut.get_n_pages() == 3
+        assert dut.get_tab_label_text(dut.get_nth_page(1)) == "Inserted Page 2"
+
+    @pytest.mark.unit
+    def test_do_remove_page(self):
+        """Should remove a page from the GTK3Notebook."""
+        _fixed1 = Gtk.Fixed()
+        _fixed2 = Gtk.Fixed()
+        _fixed3 = Gtk.Fixed()
+
+        dut = self.make_dut()
+        dut.do_add_page(_fixed1, "Test Label")
+        dut.do_add_page(_fixed2, "Test Label 2")
+        dut.do_add_page(_fixed3, "Test Label 3")
+
+        assert dut.get_n_pages() == 3
+
+        dut.do_remove_page(1)
+
+        assert dut.get_n_pages() == 2
+        assert dut.get_tab_label_text(dut.get_nth_page(1)) == "Test Label 3"
+
+    @pytest.mark.unit
+    def test_do_remove_page_no_page(self):
+        """Should not raise an exception when trying to remove a page that does not
+        exist."""
+        dut = self.make_dut()
+        dut.do_add_page(Gtk.Fixed(), "Test Label 1")
+        dut.do_add_page(Gtk.Fixed(), "Test Label 2")
+        dut.do_add_page(Gtk.Fixed(), "Test Label 3")
+
+        with pytest.raises(PytkwrapError):
+            dut.do_remove_page(10)
+
+        assert dut.get_n_pages() == 3
