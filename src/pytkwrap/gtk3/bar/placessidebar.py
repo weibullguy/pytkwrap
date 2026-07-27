@@ -4,6 +4,9 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+# Standard Library Imports
+from collections.abc import Mapping
+
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
@@ -52,7 +55,10 @@ class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3ScrolledWindow):
         )
         self.dic_properties.update(self._GTK3_PLACESSIDEBAR_PROPERTIES)
 
-    def do_set_properties(self, properties: GTK3WidgetProperties) -> None:
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None:
         """Set the values of the GTK3PlacesSidebar-specific properties.
 
         Parameters
@@ -61,10 +67,14 @@ class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3ScrolledWindow):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3PlacesSidebar.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.set_local_only(self.dic_properties["local_only"])
-        self.set_location(self.dic_properties["location"])
+
+        if self.dic_properties["location"] is not None:
+            self.set_location(self.dic_properties["location"])
+
         self.set_open_flags(self.dic_properties["open_flags"])
         self.set_show_desktop(self.dic_properties["show_desktop"])
         self.set_show_enter_location(self.dic_properties["show_enter_location"])
