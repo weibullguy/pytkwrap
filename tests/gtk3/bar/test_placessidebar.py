@@ -44,7 +44,7 @@ from tests.gtk3.window.constants import (
 )
 
 
-@pytest.mark.usefixtures("skip_if_not_isolated")
+# @pytest.mark.usefixtures("skip_if_not_isolated")
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3PlacesSidebar(BaseGTK3GObjectTests):
     """Test class for the GTK3PlacesSidebar."""
@@ -94,7 +94,15 @@ class TestGTK3PlacesSidebar(BaseGTK3GObjectTests):
     @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        _gfile = Gio.File.new_for_path(f"{os.getcwd()}/tests/data")
+        # Standard Library Imports
+        import tempfile
+
+        _location = f"{tempfile.gettempdir()}/tests/data"
+        os.makedirs(_location, exist_ok=True)
+        if not os.path.isdir(_location):
+            pytest.fail(f"Test directory does not exist: {_location}")
+
+        _gfile = Gio.File.new_for_path(f"{_location}")
 
         dut = self.make_dut()
         dut.do_set_properties(
@@ -113,12 +121,24 @@ class TestGTK3PlacesSidebar(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("local_only")
-        assert dut.do_get_property("location").get_path() == f"{os.getcwd()}/tests/data"
+        assert dut.get_local_only()
+        assert dut.do_get_property("location") == _gfile
+        # These will still return None because the location is not a shortcut for the
+        # PlacesSidebar.
+        assert dut.get_property("location") is None
+        assert dut.get_location() is None
         assert dut.get_property("open_flags") == Gtk.PlacesOpenFlags.NEW_TAB
+        assert dut.get_open_flags() == Gtk.PlacesOpenFlags.NEW_TAB
         assert dut.get_property("populate_all")
         assert not dut.get_property("show_desktop")
+        assert not dut.get_show_desktop()
         assert dut.get_property("show_enter_location")
+        assert dut.get_show_enter_location()
         assert dut.get_property("show_other_locations")
+        assert dut.get_show_other_locations()
         assert not dut.get_property("show_recent")
+        assert not dut.get_show_recent()
         assert dut.get_property("show_starred_location")
+        assert dut.get_show_starred_location()
         assert not dut.get_property("show_trash")
+        assert not dut.get_show_trash()

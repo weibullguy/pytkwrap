@@ -88,6 +88,9 @@ class TestGTK3InfoBar(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("message_type") == Gtk.MessageType.WARNING
-        assert not dut.do_get_property("revealed")
-        assert dut.do_get_property("show_close_button")
+        assert dut.get_property("message_type") == Gtk.MessageType.WARNING
+        assert dut.get_message_type() == Gtk.MessageType.WARNING
+        assert not dut.get_property("revealed")
+        assert not dut.get_revealed()
+        assert dut.get_property("show_close_button")
+        assert dut.get_show_close_button()

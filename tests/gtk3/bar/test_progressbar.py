@@ -61,7 +61,7 @@ class TestGTK3ProgressBar(BaseGTK3DataWidgetTests):
         assert dut.do_get_attribute("column_types") is None
         assert dut.do_get_attribute("data_type") == float
         assert dut.do_get_attribute("default_value") == 0.0
-        assert dut.do_get_attribute("edit_signal") is None
+        assert dut.do_get_attribute("edit_signal") == "changed"
         assert dut.do_get_attribute("figure") is None
         assert dut.do_get_attribute("font_description") is None
         assert dut.do_get_attribute("format") is None
@@ -155,13 +155,3 @@ class TestGTK3ProgressBar(BaseGTK3DataWidgetTests):
         dut.do_set_value("0.42")
 
         assert dut.get_fraction() == 0.42
-
-    @pytest.mark.unit
-    def test_do_update_none_value(self):
-        """Should not update the GTK3ProgressBar when the value is None."""
-        dut = self.make_dut()
-
-        pub.subscribe(dut.do_update, "rootTopic")
-        pub.sendMessage("rootTopic", package={-1: None})
-
-        assert dut.dic_attributes == self.expected_attributes

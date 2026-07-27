@@ -8,6 +8,8 @@
 import pytest
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import PytkwrapError
+
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.bar import GTK3Statusbar
@@ -62,7 +64,115 @@ class TestGTK3Statusbar(BaseGTK3GObjectTests):
         | EXPECTED_BOX_PROPERTIES
     )
 
+    def make_dut(self, contexts=None):
+        return self.widget_class(contexts)
+
+    def test_callback(self, widget, context_id, message):
+        """Callback method for testing."""
+        assert isinstance(widget, GTK3Statusbar)
+        assert isinstance(context_id, int)
+        assert isinstance(message, str)
+        assert message == "Test General Message"
+
     @pytest.mark.unit
+    def test_init(self):
+        """Should initialize an instance of a GTK3Statusbar."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3Statusbar)
+        assert dut.dic_properties == self.expected_properties
+        assert dut.dic_context_id == {}
+
+    @pytest.mark.unit
+    def test_init_with_context_id(self):
+        """Should initialize an instance of a GTK3Statusbar with a context ID."""
+        dut = self.make_dut(contexts=["general", "errors"])
+
+        assert isinstance(dut, GTK3Statusbar)
+        assert dut.dic_context_id == {"general": 1, "errors": 2}
+        assert dut.get_context_id("general") == 1
+        assert dut.get_context_id("errors") == 2
+
+    @pytest.mark.unit
+    def test_do_add_message(self):
+        """Should push a message to the statusbar."""
+        dut = self.make_dut(contexts=["general", "errors"])
+        dut.do_set_callbacks("text-pushed", self.test_callback)
+        dut.do_add_message("general", "Test General Message")
+
+        assert dut.dic_context_id["general"] == 1
+        assert dut.get_context_id("general") == 1
+        assert dut.dic_message_id["Test General Message"] == 1
+
+    @pytest.mark.unit
+    def test_do_add_message_no_context(self):
+        """Should push a message to the statusbar with the default context."""
+        dut = self.make_dut()
+
+        with pytest.raises(PytkwrapError):
+            dut.do_add_message("general", "Test General Message")
+
+    @pytest.mark.unit
+    def test_do_add_message_no_message(self):
+        """Should push a message to the statusbar with an empty message."""
+        dut = self.make_dut(contexts=["general", "errors"])
+
+        with pytest.raises(PytkwrapError):
+            dut.do_add_message("general", None)
+
+    @pytest.mark.unit
+    def test_do_remove_message(self):
+        """Should remove a message from the statusbar."""
+        dut = self.make_dut(contexts=["general", "errors"])
+        dut.do_set_callbacks("text-popped", self.test_callback)
+        dut.do_add_message("general", "Test General Message")
+        dut.do_remove_message("general", "Test General Message")
+
+    @pytest.mark.unit
+    def test_do_remove_all_messages(self):
+        """Should remove all messages from the statusbar."""
+        dut = self.make_dut(contexts=["general", "errors"])
+        dut.do_add_message("general", "Test General Message 1")
+        dut.do_add_message("general", "Test General Message 2")
+        dut.do_remove_message("general", remove_all=True)
+
+    @pytest.mark.unit
+    def test_do_remove_first_message(self):
+        """Should remove the first message from the statusbar."""
+        dut = self.make_dut(contexts=["general", "errors"])
+        dut.do_add_message("general", "Test General Message 1")
+        dut.do_add_message("general", "Test General Message 2")
+        dut.do_remove_message("general")
+
+    @pytest.mark.unit
+    def test_do_remove_message_no_context(self):
+        """Should raise a PytkwrapError when passed a context that does not exist."""
+        dut = self.make_dut(contexts=["general", "errors"])
+        dut.do_add_message("general", "Test General Message")
+
+        with pytest.raises(PytkwrapError):
+            dut.do_remove_message(None, "Test General Message")
+
+    @pytest.mark.unit
+    def test_do_remove_all_messages_no_context(self):
+        """Should raise a PytkwrapError when passed a context that does not exist."""
+        dut = self.make_dut(contexts=["general", "errors"])
+        dut.do_add_message("general", "Test General Message 1")
+        dut.do_add_message("general", "Test General Message 2")
+
+        with pytest.raises(PytkwrapError):
+            dut.do_remove_message("new_context", remove_all=True)
+
+    @pytest.mark.unit
+    def test_do_remove_message_no_message(self):
+        """Should raise a PytkwrapError when passed a non-existent message."""
+        dut = self.make_dut(contexts=["general", "errors"])
+        dut.do_add_message("general", "Test General Message")
+
+        with pytest.raises(PytkwrapError):
+            dut.do_remove_message("general", "Non-existent message")
+
+    @pytest.mark.integration
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
@@ -74,7 +184,7 @@ class TestGTK3Statusbar(BaseGTK3GObjectTests):
         assert not dut.do_get_property("homogeneous")
         assert dut.do_get_property("spacing") == 0
 
-    @pytest.mark.unit
+    @pytest.mark.integration
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
@@ -87,5 +197,8 @@ class TestGTK3Statusbar(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("baseline_position") == Gtk.BaselinePosition.TOP
+        assert dut.get_baseline_position() == Gtk.BaselinePosition.TOP
         assert dut.get_property("homogeneous")
+        assert dut.get_homogeneous()
         assert dut.get_property("spacing") == 10
+        assert dut.get_spacing() == 10

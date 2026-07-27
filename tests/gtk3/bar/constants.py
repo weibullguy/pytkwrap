@@ -67,6 +67,7 @@ EXPECTED_INFOBAR_PROPERTIES = {
     "show_close_button": False,
 }
 
+EXPECTED_LEVELBAR_ATTRIBUTES = {"default_value": 0.0, "edit_signal": "changed"}
 EXPECTED_LEVELBAR_HANDLER_IDS = {"offset-changed": -1}
 EXPECTED_LEVELBAR_METHODS = [
     "add_offset_value",
@@ -144,7 +145,21 @@ EXPECTED_PLACESSIDEBAR_PROPERTIES = {
     "show_trash": True,
 }
 
-EXPECTED_PROGRESSBAR_ATTRIBUTES = {"default_value": 0.0, "data_type": float}
+EXPECTED_PROGRESSBAR_ATTRIBUTES = {
+    "default_value": 0.0,
+    "data_type": float,
+    "edit_signal": "changed",
+}
+EXPECTED_PROGRESSBAR_HANDLER_IDS = {
+    "pulse": -1,
+    "value-changed": -1,
+    "wrapped": -1,
+    "pulse-step-changed": -1,
+    "ellipsize-changed": -1,
+    "inverted-changed": -1,
+    "show-text-changed": -1,
+    "text-changed": -1,
+}
 EXPECTED_PROGRESSBAR_METHODS = [
     "get_ellipsize",
     "get_fraction",

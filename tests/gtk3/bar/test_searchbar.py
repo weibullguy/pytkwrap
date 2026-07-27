@@ -80,5 +80,7 @@ class TestGTK3SearchBar(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("search_mode_enabled")
-        assert dut.do_get_property("show_close_button")
+        assert dut.get_property("search_mode_enabled")
+        assert dut.get_search_mode()
+        assert dut.get_property("show_close_button")
+        assert dut.get_show_close_button()
