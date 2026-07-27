@@ -6,11 +6,15 @@ from datetime import date
 from _typeshed import Incomplete
 
 # pytkwrap Package Imports
+from pytkwrap.gtk3._libs import GObject as GObject
 from pytkwrap.gtk3._libs import Gtk as Gtk
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3Widget as GTK3Widget
+from pytkwrap.utilities import clamp as clamp
 
 class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
+    _GTK3_LEVELBAR_ATTRIBUTES: Incomplete
     _GTK3_LEVELBAR_PROPERTIES: Incomplete
     _GTK3_LEVELBAR_SIGNALS: Incomplete
     def __init__(self) -> None: ...
@@ -21,3 +25,5 @@ class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
+    @GObject.Signal
+    def changed(self) -> None: ...
