@@ -1,3 +1,6 @@
+# Standard Library Imports
+from collections.abc import Mapping
+
 # Third Party Imports
 from _typeshed import Incomplete
 
@@ -15,4 +18,6 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3Bin):
         hadjustment: GTK3Adjustment | None = None,
         vadjustment: GTK3Adjustment | None = None,
     ) -> None: ...
-    def do_set_properties(self, properties: GTK3WidgetProperties) -> None: ...
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None: ...
