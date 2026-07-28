@@ -106,7 +106,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     custom_title: str | None
     day: int
     decorated: bool
-    decoration_layout: Gtk.DecorationLayout | None
+    decoration_layout: str | None
     decoration_layout_set: bool
     default_height: int
     default_page_setup: Gtk.PageSetup | None
@@ -305,11 +305,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     paint_clock: Gdk.FrameClock | None
     parent: Gtk.Container | Gtk.StyleContext | None
     pattern: str | None
-    pixbuf: Gdk.Pixbuf.Pixbuf | None
-    pixbuf_animation: Gdk.PixbufAnimation | None
+    pixbuf: GdkPixbuf.Pixbuf | None
+    pixbuf_animation: GdkPixbuf.PixbufAnimation | None
     pixbuf_column: int
-    pixbuf_expander_closed: Gdk.Pixbuf.Pixbuf | None
-    pixbuf_expander_open: Gdk.Pixbuf.Pixbuf | None
+    pixbuf_expander_closed: GdkPixbuf.Pixbuf | None
+    pixbuf_expander_open: GdkPixbuf.Pixbuf | None
     pixel_size: int
     pixels_above_lines: int
     pixels_below_lines: int
@@ -671,7 +671,7 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
             package=_package,
         )
 
-    def _block_edit_handlers(self) -> GObject._HandlerBlockManager:
+    def _block_edit_handlers(self):
         """Block the signal handlers for the widget.
 
         Returns
@@ -682,7 +682,7 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
         if not isinstance(_signals, list):
             _signals = [self.dic_attributes["edit_signal"]]
 
-        _blockmgr: GObject._HandlerBlockManager = None
+        _blockmgr = None
         for _signal in _signals:
             _hid = self.dic_handler_id[_signal]
             _blockmgr = self._get_signal_owner().handler_block(_hid)

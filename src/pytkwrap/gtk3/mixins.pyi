@@ -102,7 +102,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     custom_title: str | None
     day: int
     decorated: bool
-    decoration_layout: Gtk.DecorationLayout | None
+    decoration_layout: str | None
     decoration_layout_set: bool
     default_height: int
     default_page_setup: Gtk.PageSetup | None
@@ -301,11 +301,11 @@ class GTK3WidgetProperties(TypedDict, total=False):
     paint_clock: Gdk.FrameClock | None
     parent: Gtk.Container | None
     pattern: str | None
-    pixbuf: Gdk.Pixbuf.Pixbuf | None
-    pixbuf_animation: Gdk.PixbufAnimation | None
+    pixbuf: GdkPixbuf.Pixbuf | None
+    pixbuf_animation: GdkPixbuf.PixbufAnimation | None
     pixbuf_column: int
-    pixbuf_expander_closed: Gdk.Pixbuf.Pixbuf | None
-    pixbuf_expander_open: Gdk.Pixbuf.Pixbuf | None
+    pixbuf_expander_closed: GdkPixbuf.Pixbuf | None
+    pixbuf_expander_open: GdkPixbuf.Pixbuf | None
     pixel_size: int
     pixels_above_lines: int
     pixels_below_lines: int
