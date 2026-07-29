@@ -10,7 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container import GTK3ButtonBox
+from pytkwrap.gtk3.container import GTK3ButtonBox, do_make_buttonbox
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -93,3 +93,40 @@ class TestGTK3ButtonBox(BaseGTK3GObjectTests):
 
         assert dut.get_property("layout_style") == Gtk.ButtonBoxStyle.EDGE
         assert dut.get_layout() == Gtk.ButtonBoxStyle.EDGE
+
+    @pytest.mark.integration
+    def test_do_make_buttonbox_vertical(self, image_file):
+        """Should make a vertical buttonbox with a single button."""
+        _buttonbox = do_make_buttonbox(
+            icons=[image_file],
+            tooltips=["Test tooltip"],
+            callbacks=[],
+        )
+
+        assert isinstance(_buttonbox, GTK3ButtonBox)
+        assert _buttonbox.get_layout() == Gtk.ButtonBoxStyle.START
+
+    @pytest.mark.integration
+    def test_do_make_buttonbox_horizontal(self, image_file):
+        """Should make a horizontal buttonbox with a single button."""
+        _buttonbox = do_make_buttonbox(
+            icons=[image_file],
+            tooltips=["Test tooltip"],
+            callbacks=[],
+            orientation="horizontal",
+        )
+
+        assert isinstance(_buttonbox, GTK3ButtonBox)
+        assert _buttonbox.get_layout() == Gtk.ButtonBoxStyle.START
+
+    @pytest.mark.integration
+    def test_do_make_buttonbox_no_tooltip(self, image_file):
+        """Should make a vertical buttonbox with a single button with no tooltip."""
+        _buttonbox = do_make_buttonbox(
+            icons=[image_file],
+            tooltips=[],
+            callbacks=[],
+        )
+
+        assert isinstance(_buttonbox, GTK3ButtonBox)
+        assert _buttonbox.get_layout() == Gtk.ButtonBoxStyle.START
