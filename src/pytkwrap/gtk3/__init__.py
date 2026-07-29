@@ -32,7 +32,6 @@ from .button import (
     GTK3SpinButton,
     GTK3ToggleButton,
     GTK3VolumeButton,
-    do_make_buttonbox,
 )
 from .clipboard import GTK3Clipboard
 from .color import GTK3ColorButton, GTK3ColorChooserDialog, GTK3ColorChooserWidget
@@ -51,6 +50,7 @@ from .container import (
     GTK3StackSidebar,
     GTK3StackSwitcher,
     GTK3Viewport,
+    do_make_buttonbox,
 )
 from .dialog import (
     GTK3AboutDialog,

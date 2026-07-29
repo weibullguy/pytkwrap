@@ -5,84 +5,12 @@
 """
 
 # Standard Library Imports
-from collections.abc import Callable, Mapping
+from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
 from pytkwrap.gtk3.container.bin import GTK3Bin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-
-
-def do_make_buttonbox(
-    icons: list[str],
-    tooltips: list[str],
-    callbacks: list[Callable],
-    height: int = -1,
-    layout: Gtk.ButtonBoxStyle = Gtk.ButtonBoxStyle.START,
-    orientation: str = "vertical",
-    width: int = -1,
-) -> Gtk.ButtonBox:
-    """Create a buttonbox for views.
-
-    This method creates the base buttonbox used by all Views.  Use a
-    buttonbox for a View if there are only buttons to be added.
-
-    Parameters
-    ----------
-    icons : list[str]
-        List of absolute paths to icon image files for each button.
-    tooltips : list[str]
-        List of tooltip markup strings for each button.  If fewer tooltips than icons
-        are present, the remaining buttons get default tooltips.
-    callbacks : list[Callable]
-        List of callback functions for each button's 'clicked' signal.  If fewer
-        callbacks than icons are provided, the remaining buttons are set insensitive.
-    height : int
-        The button height in pixels.  The default value is -1 (natural size).
-    layout : Gtk.ButtonBoxStyle
-        The button layout style.  The default value is Gtk.ButtonBoxStyle.START.
-    orientation : str
-        'horizontal' or 'vertical'.  The default value is 'vertical'.
-    width : int
-        The button width in pixels.  The default value is -1 (natural size).
-
-    Returns
-    -------
-    _buttonbox : Gtk.ButtonBox
-        The buttonbox populated with GTK3Buttons.
-    """
-    # TODO: Change this to a GTK3ButtonBox once that wrapper is done.
-    _buttonbox = Gtk.HButtonBox() if orientation == "horizontal" else Gtk.VButtonBox()
-    _buttonbox.set_layout(layout)
-
-    for _idx, __ in enumerate(icons):
-        _image = Gtk.Image()
-        _icon = GdkPixbuf.Pixbuf.new_from_file_at_size(__, height, width)
-        _image.set_from_pixbuf(_icon)
-
-        _button = GTK3Button()
-        _button.set_image(_image)
-
-        _button.do_set_properties(
-            GTK3WidgetProperties(
-                height_request=height,
-                width_request=width,
-            )
-        )
-
-        try:
-            _button.set_tooltip_markup(tooltips[_idx])
-        except IndexError:
-            _button.set_tooltip_markup("")
-
-        try:
-            _button.connect("clicked", callbacks[_idx])
-        except IndexError:
-            _button.set_sensitive(False)
-
-        _buttonbox.pack_start(_button, True, True, 0)
-
-    return _buttonbox
 
 
 class GTK3Button(Gtk.Button, GTK3Bin):
@@ -109,26 +37,29 @@ class GTK3Button(Gtk.Button, GTK3Bin):
         # "add", "remove", "set-focus-child"
     ]
 
-    def __init__(self, label: str = "...") -> None:
+    def __init__(
+        self,
+        label: str | None = "...",
+    ) -> None:
         """Initialize an instance of the GTK3Button widget.
 
         Parameters
         ----------
-        label : str
+        label : str | None
             The text to display on the GTK3Button.  The default value is an ellipsis
             (...).
         """
-        Gtk.Button.__init__(self)
+        Gtk.Button.__init__(self, label=label)
         GTK3Bin.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_properties.update(self._GTK3_BUTTON_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_BUTTON_SIGNALS}
         )
+        self.dic_properties.update(self._GTK3_BUTTON_PROPERTIES)
 
-        self.set_label(label)
-        self.show_all()
+        if label is not None:
+            self.set_label(label)
 
     def do_set_properties(
         self,
