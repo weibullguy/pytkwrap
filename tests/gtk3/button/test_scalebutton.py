@@ -87,6 +87,33 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
         ("six", "point", 2),
     ]
 
+    def make_dut(
+        self,
+        size: int = Gtk.IconSize.SMALL_TOOLBAR,
+        min_value: float = 0.0,
+        max_value: float = 100.0,
+        step: float = 2,
+        icons: list | None = None,
+    ):
+        """Create a device under test for the GTK3ScaleButton."""
+        return self.widget_class(size, min_value, max_value, step, icons)
+
+    @pytest.mark.unit
+    def test_init_with_size(self):
+        """Should initialize an instance of a GTK3ScaleButton with size."""
+        dut = self.make_dut(size=Gtk.IconSize.BUTTON)
+
+        assert dut.do_get_property("size") == Gtk.IconSize.BUTTON
+        assert dut.get_size() == Gtk.IconSize.BUTTON
+
+    @pytest.mark.unit
+    def test_init_with_icons(self):
+        """Should initialize an instance of a GTK3ScaleButton with icons."""
+        dut = self.make_dut(icons=["gtk-go-up", "gtk-go-down", None])
+
+        assert dut.do_get_property("icons") == ["gtk-go-up", "gtk-go-down", None]
+        assert dut.get_icons() == ["gtk-go-up", "gtk-go-down", None]
+
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set attributes to default values when passed an empty
@@ -127,7 +154,7 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        _adjustment = GTK3Adjustment()
+        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 1.0)
 
         dut = self.make_dut()
         dut.do_set_properties(
@@ -138,9 +165,11 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert dut.do_get_property("adjustment") == _adjustment
-        assert dut.do_get_property("size") == Gtk.IconSize.BUTTON
-        assert dut.do_get_property("value") == 0.68
+        assert dut.get_property("adjustment") == _adjustment
+        assert dut.get_adjustment() == _adjustment
+        assert dut.get_property("size") == Gtk.IconSize.BUTTON
+        assert dut.get_property("value") == 0.68
+        assert dut.get_value() == 0.68
 
     @pytest.mark.unit
     def test_do_update(self):

@@ -91,6 +91,7 @@ class TestGTK3CheckButton(BaseGTK3DataWidgetTests):
 
         dut = self.make_dut()
 
+        assert dut.dic_attributes == self.expected_attributes
         assert dut.get_label() == "..."
         assert dut.get_image() is None
 
@@ -100,7 +101,7 @@ class TestGTK3CheckButton(BaseGTK3DataWidgetTests):
         attributes."""
         dut = self.make_dut("Test Label")
 
-        assert isinstance(dut, GTK3CheckButton)
+        assert dut.dic_attributes == self.expected_attributes
         assert dut.get_label() == "Test Label"
         assert dut.get_image() is None
 
@@ -148,7 +149,8 @@ class TestGTK3CheckButton(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert dut.do_get_property("label") == "Test Label"
+        assert dut.get_property("label") == "Test Label"
+        assert dut.get_label() == "Test Label"
 
     @pytest.mark.unit
     def test_do_update(self):
