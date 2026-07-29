@@ -11,6 +11,7 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.button.button import GTK3Button
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
@@ -37,17 +38,38 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
         "value-changed",
     ]
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        size: int,
+        min_value: float = 0.0,
+        max_value: float = 100.0,
+        step: float = 2,
+        icons: list | None = None,
+    ) -> None:
         """Initialize an instance of the GTK3ScaleButton widget."""
-        Gtk.ScaleButton.__init__(self)
+        Gtk.ScaleButton.__init__(
+            self,
+            adjustment=GTK3Adjustment(min_value, min_value, max_value, step),
+            icons=icons,
+            size=size,
+        )
         GTK3Button.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_SCALE_BUTTON_ATTRIBUTES)
-        self.dic_properties.update(self._GTK3_SCALE_BUTTON_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SCALE_BUTTON_SIGNALS}
         )
+        self.dic_properties.update(self._GTK3_SCALE_BUTTON_PROPERTIES)
+
+        self.dic_properties["adjustment"] = GTK3Adjustment(
+            min_value,
+            min_value,
+            max_value,
+            step,
+        )
+        self.dic_properties["icons"] = icons
+        self.dic_properties["size"] = size
 
     def do_set_properties(
         self,
@@ -70,6 +92,8 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
             self.set_icons(self.dic_properties["icons"])
 
         self.set_value(self.dic_properties["value"])
+
+        self.set_property("size", self.dic_properties["size"])
 
     def do_get_value(self) -> bool | date | float | int | object | str | None:
         """Return the current value of the GTK3ScaleButton.
@@ -95,5 +119,5 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
         # Boolean values are also of type int.  False is 0, True is 1.
         if not isinstance(value, (float, int, str)):
             super().do_set_value(value)
-        self.dic_properties["value"] = float(value)  # type: ignore[arg-type]
-        self.set_value(float(value))  # type: ignore[arg-type]
+        self.dic_properties["value"] = float(value)  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
+        self.set_value(float(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
