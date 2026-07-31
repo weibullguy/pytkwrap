@@ -560,7 +560,6 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3GObjectMixin."""
-        GObject.Object.__init__(self)
         PyTkWrapMixin.__init__(self)
 
         self.dic_attributes |= self._GTK3_GOBJECT_ATTRIBUTES
