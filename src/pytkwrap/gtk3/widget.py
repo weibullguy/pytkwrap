@@ -16,8 +16,8 @@ from pytkwrap.gtk3.mixins import (
 )
 
 
-class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.Widget."""
+class GTK3WidgetMixin(GTK3GObjectMixin):
+    """Mixin for GTK3Widget."""
 
     _DEFAULT_HEIGHT = -1
     _DEFAULT_WIDTH = -1
@@ -80,8 +80,7 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3Widget."""
-        Gtk.Widget.__init__(self)
+        """Initialize an instance of the GTK3WidgetMixin."""
         GTK3GObjectMixin.__init__(self)
 
         # Initialize public instance attributes.
@@ -142,10 +141,6 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
         self.set_opacity(self.dic_properties["opacity"])
         self.set_receives_default(self.dic_properties["receives_default"])
         self.set_sensitive(self.dic_properties["sensitive"])
-        self.set_size_request(
-            self.dic_properties["width_request"],
-            self.dic_properties["height_request"],
-        )
         self.set_tooltip_markup(self.dic_properties["tooltip_markup"])
         self.set_tooltip_text(self.dic_properties["tooltip_text"])
         self.set_valign(self.dic_properties["valign"])  # type: ignore[arg-type]
@@ -153,7 +148,24 @@ class GTK3Widget(Gtk.Widget, GTK3GObjectMixin):
         self.set_vexpand_set(self.dic_properties["vexpand_set"])
         self.set_visible(self.dic_properties["visible"])
 
+        if isinstance(self, Gtk.Widget):
+            self.set_size_request(
+                self.dic_properties["width_request"],
+                self.dic_properties["height_request"],
+            )
+
         self.set_property("focus-on-click", self.dic_properties["focus_on_click"])
 
         if self.dic_properties["parent"] is not None:
             self.set_property("parent", self.dic_properties["parent"])
+
+
+class GTK3Widget(Gtk.Widget, GTK3WidgetMixin):
+    """Wrapper for version 3.0 Gtk.Widget."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Widget."""
+        Gtk.Widget.__init__(self)
+        GTK3WidgetMixin.__init__(self)
+
+        self.show_all()

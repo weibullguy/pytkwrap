@@ -178,7 +178,7 @@ from .treeview import (
 #    GTK3MatrixView,
 #    GTK3PlotView,
 # )
-from .widget import GTK3Widget
+from .widget import GTK3Widget, GTK3WidgetMixin
 from .window import (
     GTK3ApplicationWindow,
     GTK3Assistant,
@@ -334,6 +334,7 @@ __all__ = [
     "GTK3VolumeButton",
     "GTK3Widget",
     "GTK3WidgetAttributes",
+    "GTK3WidgetMixin",
     "GTK3WidgetProperties",
     "GTK3Window",
     "GTK3WindowGroup",
