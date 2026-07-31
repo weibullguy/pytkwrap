@@ -9,10 +9,9 @@ import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3 import GTK3Adjustment
-
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk, Pango
+from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.button import GTK3SpinButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.gtk3.button.constants import (
@@ -69,6 +68,55 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         | EXPECTED_ENTRY_PROPERTIES
         | EXPECTED_SPINBUTTON_PROPERTIES
     )
+
+    def make_dut(
+        self,
+        adjustment: GTK3Adjustment | None = None,
+        climb_rate: float = 0.0,
+        digits: int = 1,
+    ):
+        """Create a device under test for the GTK3SpinButton."""
+        return self.widget_class(
+            adjustment,
+            climb_rate,
+            digits,
+        )
+
+    @pytest.mark.unit
+    def test_init(self):
+        """Should create a GTK3SpinButton."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3SpinButton)
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.dic_properties == self.expected_properties
+        assert dut.get_digits() == 1
+        assert dut.get_increments() == (0.0, 0.0)
+
+    @pytest.mark.unit
+    def test_init_with_adjustment(self):
+        """Should create a GTK3SpinButton with an adjustment."""
+        _adjustment = GTK3Adjustment(0, 0, 10, 1, 10, 0)
+        dut = self.make_dut(_adjustment)
+
+        assert dut.get_adjustment() == _adjustment
+        assert dut.get_digits() == 1
+        assert dut.get_increments() == (1.0, 10.0)
+
+    @pytest.mark.unit
+    def test_init_with_climb_rate(self):
+        """Should create a GTK3SpinButton with a climb rate."""
+        dut = self.make_dut(climb_rate=0.25)
+
+        assert dut.get_property("climb-rate") == 0.25
+
+    @pytest.mark.unit
+    def test_init_with_digits(self):
+        """Should create a GTK3SpinButton with digits."""
+        dut = self.make_dut(digits=2)
+
+        assert dut.get_digits() == 2
+        assert dut.dic_attributes["format"] == "{:3.2f}"
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
@@ -185,8 +233,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         """Return a float value when the datatype attribute is set to 'gfloat'."""
         _adjustment = GTK3Adjustment(0, 0, 100, 1, 10, 0)
 
-        dut = self.make_dut()
-        dut.set_adjustment(_adjustment)
+        dut = self.make_dut(adjustment=_adjustment)
         dut.set_value(38.235)
 
         assert isinstance(dut.do_get_value(), float)
@@ -197,8 +244,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         """Return an integer value when the data_type attribute is set to int."""
         _adjustment = GTK3Adjustment(0, 0, 100, 1, 10, 0)
 
-        dut = self.make_dut()
-        dut.set_adjustment(_adjustment)
+        dut = self.make_dut(adjustment=_adjustment)
         dut.dic_attributes["data_type"] = int
         dut.set_value(38.82)
 
@@ -210,8 +256,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         """Return an integer value when the data_type attribute is set to str."""
         _adjustment = GTK3Adjustment(0, 0, 100, 1, 10, 0)
 
-        dut = self.make_dut()
-        dut.set_adjustment(_adjustment)
+        dut = self.make_dut(adjustment=_adjustment)
         dut.dic_attributes["data_type"] = str
         dut.set_value(38.82)
 
@@ -223,8 +268,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         """Set the value of the GTK3SpinButton with int data_type attribute."""
         _adjustment = GTK3Adjustment(0, 0, 10, 1, 10, 0)
 
-        dut = self.make_dut()
-        dut.set_adjustment(_adjustment)
+        dut = self.make_dut(adjustment=_adjustment)
         dut.dic_attributes["data_type"] = int
         dut.set_value(2.0)
 
@@ -235,8 +279,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         """Set the value of the GTK3SpinButton with str data_type attribute."""
         _adjustment = GTK3Adjustment(0, 0, 10, 1, 10, 0)
 
-        dut = self.make_dut()
-        dut.set_adjustment(_adjustment)
+        dut = self.make_dut(adjustment=_adjustment)
         dut.dic_attributes["data_type"] = str
         dut.set_value(2.0)
 
