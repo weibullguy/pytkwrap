@@ -114,6 +114,21 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         assert dut.dic_properties == self.expected_properties
 
     @pytest.mark.unit
+    def test_init_with_label(self):
+        """Should create a GTK3ToggleButton with a label and default values for
+        attributes."""
+        dut = self.make_dut("Test Label")
+
+        assert dut.get_children()[0].get_label() == "Test Label"
+
+    @pytest.mark.unit
+    def test_init_with_mnemonic(self):
+        """Should create a GTK3ToggleButton with a non-default mnemonic label."""
+        dut = self.make_dut(label="_Test Label")
+
+        assert dut.get_children()[0].get_label() == "_Test Label"
+
+    @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set attributes to default values when passed an empty
         GTK3WidgetAttributes."""
@@ -144,9 +159,9 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
-        assert not dut.get_property("active")
-        assert not dut.get_property("draw_indicator")
-        assert not dut.get_property("inconsistent")
+        assert not dut.do_get_property("active")
+        assert not dut.do_get_property("draw_indicator")
+        assert not dut.do_get_property("inconsistent")
 
     @pytest.mark.unit
     def test_do_set_properties(self):
@@ -161,8 +176,10 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         )
 
         assert dut.get_property("active")
+        assert dut.get_active()
         assert dut.get_property("draw_indicator")
         assert dut.get_property("inconsistent")
+        assert dut.get_inconsistent()
 
     @pytest.mark.unit
     def test_do_update(self):
