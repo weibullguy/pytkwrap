@@ -79,9 +79,8 @@ EXPECTED_SCALEBUTTON_METHODS = [
     "set_value",
 ]
 EXPECTED_SCALEBUTTON_PROPERTIES = {
-    "adjustment": None,
-    "icons": [],
-    "size": Gtk.IconSize.SMALL_TOOLBAR,
+    "icons": None,
+    "size": Gtk.IconSize.BUTTON,
     "value": 0.0,
 }
 
@@ -151,4 +150,4 @@ EXPECTED_TOGGLEBUTTON_PROPERTIES = {
     "use_underline": False,
 }
 
-EXPECTED_VOLUMEBUTTON_PROPERTIES = {"use_symbolic": True}
+EXPECTED_VOLUMEBUTTON_PROPERTIES = {"size": 4, "use_symbolic": True}

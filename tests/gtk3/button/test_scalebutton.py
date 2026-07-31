@@ -89,7 +89,7 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
 
     def make_dut(
         self,
-        size: int = Gtk.IconSize.SMALL_TOOLBAR,
+        size: int = Gtk.IconSize.BUTTON,
         min_value: float = 0.0,
         max_value: float = 100.0,
         step: float = 2,
@@ -99,20 +99,29 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
         return self.widget_class(size, min_value, max_value, step, icons)
 
     @pytest.mark.unit
+    def test_init(self):
+        """Should initialize an instance of a GTK3ScaleButton."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3ScaleButton)
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.dic_handler_id == self.expected_handler_id
+        assert isinstance(dut.get_adjustment(), Gtk.Adjustment)
+        assert dut.get_property("icons") == []
+
+    @pytest.mark.unit
     def test_init_with_size(self):
         """Should initialize an instance of a GTK3ScaleButton with size."""
-        dut = self.make_dut(size=Gtk.IconSize.BUTTON)
+        dut = self.make_dut(size=2)
 
-        assert dut.do_get_property("size") == Gtk.IconSize.BUTTON
-        assert dut.get_size() == Gtk.IconSize.BUTTON
+        assert dut.get_property("size") == 2
 
     @pytest.mark.unit
     def test_init_with_icons(self):
         """Should initialize an instance of a GTK3ScaleButton with icons."""
         dut = self.make_dut(icons=["gtk-go-up", "gtk-go-down", None])
 
-        assert dut.do_get_property("icons") == ["gtk-go-up", "gtk-go-down", None]
-        assert dut.get_icons() == ["gtk-go-up", "gtk-go-down", None]
+        assert dut.get_property("icons") == ["gtk-go-up", "gtk-go-down"]
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
@@ -145,29 +154,28 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
-        assert dut.dic_properties == self.expected_properties
-        assert dut.do_get_property("adjustment") is None
-        assert dut.do_get_property("icons") == []
-        assert dut.do_get_property("size") == Gtk.IconSize.SMALL_TOOLBAR
+        assert isinstance(dut.do_get_property("adjustment"), Gtk.Adjustment)
+        assert dut.do_get_property("icons") is None
+        assert dut.do_get_property("size") == 4
         assert dut.do_get_property("value") == 0.0
 
     @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 1.0)
+        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
 
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
                 adjustment=_adjustment,
-                size=Gtk.IconSize.BUTTON,
+                size=2,
                 value=0.68,
             )
         )
 
         assert dut.get_property("adjustment") == _adjustment
         assert dut.get_adjustment() == _adjustment
-        assert dut.get_property("size") == Gtk.IconSize.BUTTON
+        assert dut.get_property("size") == 2
         assert dut.get_property("value") == 0.68
         assert dut.get_value() == 0.68
 

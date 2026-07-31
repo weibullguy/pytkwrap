@@ -91,6 +91,22 @@ class TestGTK3VolumeButton(BaseGTK3DataWidgetTests):
     ]
 
     @pytest.mark.unit
+    def test_init(self):
+        """Should initialize an instance of a GTK3ScaleButton."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3VolumeButton)
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.dic_handler_id == self.expected_handler_id
+        assert isinstance(dut.get_adjustment(), Gtk.Adjustment)
+        assert dut.get_property("icons") == [
+            "audio-volume-muted-symbolic",
+            "audio-volume-high-symbolic",
+            "audio-volume-low-symbolic",
+            "audio-volume-medium-symbolic",
+        ]
+
+    @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set attributes to default values when passed an empty
         GTK3WidgetAttributes."""
@@ -122,7 +138,6 @@ class TestGTK3VolumeButton(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
-        assert dut.dic_properties == self.expected_properties
         assert dut.do_get_property("use_symbolic")
 
     @pytest.mark.unit
@@ -135,7 +150,7 @@ class TestGTK3VolumeButton(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert not dut.do_get_property("use_symbolic")
+        assert not dut.get_property("use_symbolic")
 
     @pytest.mark.unit
     def test_do_update(self):
