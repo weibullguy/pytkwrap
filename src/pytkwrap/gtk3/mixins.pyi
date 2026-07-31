@@ -24,7 +24,7 @@ class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
     column_types: list[EllipsisType] | list[GObject.GType] | None
 
 class GTK3WidgetProperties(TypedDict, total=False):
-    accel_group: Gtk.AccelGroup | None
+    accel_group: Gtk.AccelGroup
     accel_path: str | None
     accel_size_group: Gtk.SizeGroup | None
     accelerator: str | None
@@ -198,10 +198,10 @@ class GTK3WidgetProperties(TypedDict, total=False):
     hscrollbar_policy: Gtk.PolicyType | None
     icon: str | None
     icons: list[str] | None
+    icon_name: str | None
     icon_set: bool
     icon_size: Gtk.IconSize | int
     icon_size_set: bool
-    icon_name: str | None
     icon_widget: Gtk.Widget | None
     id_column: int
     image: Gtk.Widget | None
@@ -262,9 +262,9 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_content_width: int
     max_height: int
     max_length: int
+    max_value: float | int
     max_width: int
     max_width_chars: int
-    max_value: float | int
     menu: Gtk.Menu | None
     menu_model: Gio.MenuModel | None
     menu_type_hint: Gdk.WindowTypeHint
@@ -294,12 +294,12 @@ class GTK3WidgetProperties(TypedDict, total=False):
     overlay_scrolling: bool
     overwrite: bool
     overwrite_mode: bool
+    pack_direction: Gtk.PackDirection
     page: int
     page_increment: float
-    pack_direction: Gtk.PackDirection
     page_size: float
     paint_clock: Gdk.FrameClock | None
-    parent: Gtk.Container | None
+    parent: Gtk.Container | Gtk.StyleContext | None
     pattern: str | None
     pixbuf: GdkPixbuf.Pixbuf | None
     pixbuf_animation: GdkPixbuf.PixbufAnimation | None
@@ -351,9 +351,9 @@ class GTK3WidgetProperties(TypedDict, total=False):
     resizable: bool
     resize_toplevel: bool
     resource: str | None
-    restrict_to_fill_level: bool
-    revealed: bool
+    restrict_to_fill: bool
     reveal_child: bool
+    revealed: bool
     rgba: Gdk.RGBA | None
     right_margin: int
     rise: int
@@ -369,8 +369,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     scale_factor: int
     scale_set: bool
     screen: Gdk.Screen | None
-    scrollable: bool
     scroll_offset: int
+    scrollable: bool
     search_column: int
     search_mode: bool
     search_mode_enabled: bool
@@ -451,7 +451,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     support_selection: bool
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
-    tab_pos: Gtk.PositionType
+    tab_position: Gtk.PositionType
     tag_table: Gtk.TextTagTable | None
     take_focus: bool
     text: str | None
@@ -552,7 +552,7 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
         self, package: dict[str, bool | date | float | int | str | None]
     ) -> None: ...
     def on_changed(self, /, __widget: object) -> None: ...
-    def _block_edit_handlers(self) -> GObject._HandlerBlockManager: ...
+    def _block_edit_handlers(self): ...
     def _get_signal_owner(self) -> Gtk.Widget: ...
 
 def set_widget_sensitivity(widgets: list, sensitive: bool = True) -> None: ...
