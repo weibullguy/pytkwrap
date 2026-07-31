@@ -89,22 +89,22 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
         """Error handler for do_set_callbacks() errors."""
         assert (
             message
-            == f"{self.widget_class.__name__}.do_set_callbacks(): Unknown signal 'unk_signal'."
+            == f"{self.widget_class.__name__}.do_set_callbacks(): Unknown signal "
+            f"'unk_signal'."
         )
 
     def no_value_error_handler(self, message):
         """Error handler for do_get_value() errors."""
         assert (
             message == f"{self.widget_class.__name__}.do_get_value(): No value set "
-            f"or no method to "
-            "retrieve value."
+            f"or no method to retrieve value."
         )
 
     def on_changed_error_handler(self, message):
         """Error handler for on_changed() errors."""
         assert (
-            message
-            == f"{self.widget_class.__name__}.on_changed(): Unknown signal 'unk_signal'."
+            message == f"{self.widget_class.__name__}.on_changed(): Unknown signal "
+            f"'unk_signal'."
         )
 
     def wrong_type_error_handler(self, message) -> None:

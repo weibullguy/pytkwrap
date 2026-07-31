@@ -55,3 +55,17 @@ class TestGTK3GObjectMixin(BaseGTK3GObjectTests):
         assert dut.do_get_attribute("send_topic") == "send-topic"
         assert dut.do_get_attribute("x_pos") is None
         assert dut.do_get_attribute("y_pos") is None
+
+    @pytest.mark.skip(
+        reason="GTK3GObjectMixin does not inherit from GObject.Object; "
+        "no signals available for the GTK3GObjectMixin."
+    )
+    def test_do_set_callbacks(self):
+        """Should set the callbacks for a pytkwrap widget."""
+
+    @pytest.mark.skip(
+        reason="GTK3GObjectMixin does not inherit from GObject.Object; "
+        "no signals available for the GTK3GObjectMixin."
+    )
+    def test_do_set_callbacks_after(self):
+        """Should set the callbacks for a pytkwrap widget."""
