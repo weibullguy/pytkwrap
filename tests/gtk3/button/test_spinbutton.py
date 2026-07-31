@@ -168,7 +168,14 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set the properties of a GTK3SpinButton."""
-        _adjustment = Gtk.Adjustment(10, 0, 100, 1, 10, 0)
+        _adjustment = Gtk.Adjustment(
+            value=10,
+            lower=0,
+            upper=100,
+            step_increment=1,
+            page_increment=10,
+            page_size=0,
+        )
 
         dut = self.make_dut()
         dut.do_set_properties(
