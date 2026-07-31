@@ -28,8 +28,8 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
     )
     _GTK3_SCALE_BUTTON_PROPERTIES = GTK3WidgetProperties(
         adjustment=None,
-        icons=[],
-        size=Gtk.IconSize.SMALL_TOOLBAR,
+        icons=None,
+        size=4,  # Button sized.
         value=0.0,
     )
     _GTK3_SCALE_BUTTON_SIGNALS = [
@@ -88,7 +88,10 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
         if self.dic_properties["adjustment"] is not None:
             self.set_adjustment(self.dic_properties["adjustment"])
 
-        if len(self.dic_properties["icons"]) > 0:
+        if (
+            self.dic_properties["icons"] is not None
+            and len(self.dic_properties["icons"]) > 0
+        ):
             self.set_icons(self.dic_properties["icons"])
 
         self.set_value(self.dic_properties["value"])

@@ -201,7 +201,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     hscroll_policy: Gtk.ScrollablePolicy | None
     hscrollbar_policy: Gtk.PolicyType | None
     icon: str | None
-    icons: list[str]
+    icons: list[str] | None
     icon_name: str | None
     icon_set: bool
     icon_size: Gtk.IconSize | int
