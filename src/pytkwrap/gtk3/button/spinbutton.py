@@ -10,6 +10,7 @@ from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.io.entry import GTK3Entry
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
@@ -54,9 +55,19 @@ class GTK3SpinButton(Gtk.SpinButton, GTK3Entry):
         "wrapped",
     ]
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        adjustment: GTK3Adjustment | None = None,
+        climb_rate: float = 0.0,
+        digits: int = 1,
+    ) -> None:
         """Initialize an instance of the GTK3SpinButton widget."""
-        Gtk.SpinButton.__init__(self)
+        Gtk.SpinButton.__init__(
+            self,
+            adjustment=adjustment,
+            climb_rate=climb_rate,
+            digits=digits,
+        )
         GTK3Entry.__init__(self)
 
         self.dic_attributes.update(self._GTK3_SPINBUTTON_ATTRIBUTES)
@@ -65,7 +76,7 @@ class GTK3SpinButton(Gtk.SpinButton, GTK3Entry):
         )
         self.dic_properties.update(self._GTK3_SPINBUTTON_PROPERTIES)
 
-        self.show()
+        self.dic_attributes["format"] = f"{{:3.{digits}f}}"
 
     def do_set_properties(
         self,
