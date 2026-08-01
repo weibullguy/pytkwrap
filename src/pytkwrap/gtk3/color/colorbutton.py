@@ -10,12 +10,12 @@ from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.button.button import GTK3Button
+from pytkwrap.gtk3.button.button import GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
-class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
-    """Wrapper for version 3.0 Gtk.ColorButton."""
+class GTK3ColorButtonMixin(GTK3ButtonMixin):
+    """Mixin class for GTK3ColorButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -37,8 +37,7 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ColorButton."""
-        Gtk.ColorButton.__init__(self)
-        GTK3Button.__init__(self)
+        GTK3ButtonMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_COLOR_BUTTON_ATTRIBUTES)
@@ -59,6 +58,7 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3ColorButton.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         if self.dic_properties["rgba"] is not None:
@@ -67,7 +67,6 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
 
         for _property in [
             "show_editor",
-            "use_alpha",
         ]:
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
@@ -96,7 +95,24 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
         """
         if value is None:
             value = Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
+
         if not isinstance(value, Gdk.RGBA):
             super().do_set_value(value)
+            return
+
         self.dic_properties["rgba"] = value
         self.set_rgba(value)
+
+
+class GTK3ColorButton(Gtk.ColorButton, GTK3ColorButtonMixin):
+    """Wrapper for version 3.0 Gtk.ColorButton."""
+
+    def __init__(self, rgba: Gdk.RGBA | None = None) -> None:
+        """Initialize an instance of the GTK3ColorButton."""
+        Gtk.ColorButton.__init__(self, rgba=rgba)
+        GTK3ColorButtonMixin.__init__(self)
+
+        if rgba is not None:
+            self.dic_properties["rgba"] = rgba
+
+        self.show()
