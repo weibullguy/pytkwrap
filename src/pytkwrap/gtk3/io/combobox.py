@@ -14,14 +14,13 @@ from typing import Any
 from gi.overrides.GdkPixbuf import Pixbuf  # type: ignore[import-untyped]
 
 # pytkwrap Package Imports
-from pytkwrap.common import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import GObject, Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
-class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.ComboBox."""
+class GTK3ComboBoxMixin(GTK3BinMixin):
+    """Mixin for GTK3ComboBox."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT: int = 30
@@ -59,32 +58,9 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
         "remove-widget",
     ]
 
-    def __init__(
-        self,
-        display_index: int = 0,
-        simple: bool = True,
-        n_items: int = 1,
-        column_types: list[EllipsisType] | list[GObject.GType] | None = None,
-        has_entry: bool = False,
-    ) -> None:
-        """Initialize an instance of the GTK3ComboBox.
-
-        Parameters
-        ----------
-        display_index : int
-            The index in the GTK3ComboBox Gtk.ListView to display. Default is 0.
-        simple : bool
-            Indicates whether to make a simple (one item) or complex (n_item)
-            GTK3ComboBox. Default is True.
-        n_items : int
-            The number of items (columns) to add.
-        column_types : list
-            The column types to add to the GTK3ComboBox model.
-        has_entry : bool
-            Indicates whether GTK3ComboBox will have an entry.
-        """
-        Gtk.ComboBox.__init__(self)
-        GTK3Bin.__init__(self)
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ComboBox mixin."""
+        GTK3BinMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_COMBOBOX_ATTRIBUTES)
@@ -92,24 +68,6 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_COMBOBOX_SIGNALS}
         )
-        self.dic_attributes["column_types"] = column_types
-        self.dic_properties["has_entry"] = has_entry
-
-        self.display_index: int = display_index
-        self.n_items: int = n_items
-        self.simple: bool = simple
-
-        if self.dic_attributes["column_types"] is None:
-            self.dic_attributes["column_types"] = [GObject.TYPE_STRING] * self.n_items
-
-        self.set_model(Gtk.ListStore(*self.dic_attributes["column_types"]))
-        for _idx, __ in enumerate(self.dic_attributes["column_types"]):
-            _cell = Gtk.CellRendererText()
-            self.pack_end(_cell, True)
-            if _idx == self.display_index:
-                self.add_attribute(_cell, "text", self.display_index)
-
-        self.show()
 
     def do_get_attribute(
         self,
@@ -131,7 +89,7 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
             return self.dic_attributes[attribute]
         return super().do_get_attribute(attribute)
 
-    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
+    def do_set_attributes(self, attributes: Mapping[str, object]) -> None:
         """Set the values of the GTK3ComboBox-specific attributes.
 
         Parameters
@@ -258,9 +216,10 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
         value : bool | date | float | int | object | str | tuple | None
             The index of the item in the GTK3ComboBox to set active.
         """
-        if not isinstance(value, (float, int)):
+        if isinstance(value, (bool, float, int)):
+            self.set_active(int(value))
+        else:
             super().do_set_value(value)
-        self.set_active(int(value))
 
     def get_value_at_index(self, display_index: int = -1) -> str:
         """Return the value in the ComboBox model found at <index> position.
@@ -286,3 +245,55 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3Bin):
             return _model.get_value(_row, display_index)
 
         return ""
+
+
+class GTK3ComboBox(Gtk.ComboBox, GTK3ComboBoxMixin):
+    """Wrapper for version 3.0 Gtk.ComboBox."""
+
+    def __init__(
+        self,
+        display_index: int = 0,
+        simple: bool = True,
+        n_items: int = 1,
+        column_types: list[EllipsisType] | list[GObject.GType] | None = None,
+        has_entry: bool = False,
+    ) -> None:
+        """Initialize an instance of the GTK3ComboBox.
+
+        Parameters
+        ----------
+        display_index : int
+            The index in the GTK3ComboBox Gtk.ListView to display. Default is 0.
+        simple : bool
+            Indicates whether to make a simple (one item) or complex (n_item)
+            GTK3ComboBox. Default is True.
+        n_items : int
+            The number of items (columns) to add.
+        column_types : list
+            The column types to add to the GTK3ComboBox model.
+        has_entry : bool
+            Indicates whether GTK3ComboBox will have an entry.
+        """
+        Gtk.ComboBox.__init__(self)
+        GTK3ComboBoxMixin.__init__(self)
+
+        # Initialize public instance attributes.
+        self.dic_attributes["column_types"] = column_types
+        self.dic_properties["has_entry"] = has_entry
+
+        self.display_index: int = display_index
+        self.n_items: int = n_items
+        self.simple: bool = simple
+
+        if self.dic_attributes["column_types"] is None:
+            self.dic_attributes["column_types"] = [GObject.TYPE_STRING] * self.n_items
+
+        # TODO: Update widgets to use wrapped versions.
+        self.set_model(Gtk.ListStore(*self.dic_attributes["column_types"]))
+        for _idx, __ in enumerate(self.dic_attributes["column_types"]):
+            _cell = Gtk.CellRendererText()
+            self.pack_end(_cell, True)
+            if _idx == self.display_index:
+                self.add_attribute(_cell, "text", self.display_index)
+
+        self.show()
