@@ -10,10 +10,10 @@ from pytkwrap.gtk3._libs import GObject as GObject
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget as GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
 from pytkwrap.utilities import clamp as clamp
 
-class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
+class GTK3LevelBarMixin(GTK3WidgetMixin):
     _GTK3_LEVELBAR_ATTRIBUTES: Incomplete
     _GTK3_LEVELBAR_PROPERTIES: Incomplete
     _GTK3_LEVELBAR_SIGNALS: Incomplete
@@ -25,5 +25,8 @@ class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
+
+class GTK3LevelBar(Gtk.LevelBar, GTK3LevelBarMixin):
+    def __init__(self) -> None: ...
     @GObject.Signal
     def changed(self) -> None: ...
