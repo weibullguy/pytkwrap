@@ -11,12 +11,12 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 from pytkwrap.utilities import clamp
 
 
-class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.LevelBar."""
+class GTK3LevelBarMixin(GTK3WidgetMixin):
+    """Mixin for GTK3LevelBar."""
 
     _GTK3_LEVELBAR_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
@@ -34,9 +34,8 @@ class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3LevelBar."""
-        Gtk.LevelBar.__init__(self)
-        GTK3Widget.__init__(self)
+        """Initialize an instance of the GTK3LevelBar mixin."""
+        GTK3WidgetMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_LEVELBAR_ATTRIBUTES)
@@ -99,6 +98,15 @@ class GTK3LevelBar(Gtk.LevelBar, GTK3Widget):
         self.set_value(float(value))  # type: ignore[arg-type]
         self.dic_properties["value"] = float(value)  # type: ignore[arg-type]
         self.emit("changed")
+
+
+class GTK3LevelBar(Gtk.LevelBar, GTK3LevelBarMixin):
+    """Wrapper for version 3.0 Gtk.LevelBar."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3LevelBar."""
+        Gtk.LevelBar.__init__(self)
+        GTK3LevelBarMixin.__init__(self)
 
     @GObject.Signal
     def changed(self):
