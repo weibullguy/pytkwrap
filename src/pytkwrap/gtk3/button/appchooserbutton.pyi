@@ -6,10 +6,10 @@ from _typeshed import Incomplete
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.combobox import GTK3ComboBox as GTK3ComboBox
+from pytkwrap.gtk3.io.combobox import GTK3ComboBoxMixin as GTK3ComboBoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
+class GTK3AppChooserButtonMixin(GTK3ComboBoxMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
     _GTK3_APP_CHOOSER_BUTTON_PROPERTIES: Incomplete
@@ -18,3 +18,6 @@ class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+
+class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3AppChooserButtonMixin):
+    def __init__(self) -> None: ...

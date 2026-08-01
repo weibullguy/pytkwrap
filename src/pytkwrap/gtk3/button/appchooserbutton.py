@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.io.combobox import GTK3ComboBox
+from pytkwrap.gtk3.io.combobox import GTK3ComboBoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
-    """Wrapper for version 3.0 Gtk.AppChooserButton."""
+class GTK3AppChooserButtonMixin(GTK3ComboBoxMixin):
+    """Mixin for GTK3AppChooserButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -29,9 +29,8 @@ class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3AppChooserButton widget."""
-        Gtk.AppChooserButton.__init__(self)
-        GTK3ComboBox.__init__(self)
+        """Initialize an instance of the GTK3AppChooserButton mixin."""
+        GTK3ComboBoxMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -57,3 +56,12 @@ class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3ComboBox):
             self.set_heading(self.dic_properties["heading"])
         self.set_show_default_item(self.dic_properties["show_default_item"])
         self.set_show_dialog_item(self.dic_properties["show_dialog_item"])
+
+
+class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3AppChooserButtonMixin):
+    """Wrapper for version 3.0 Gtk.AppChooserButton."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3AppChooserButton widget."""
+        Gtk.AppChooserButton.__init__(self)
+        GTK3AppChooserButtonMixin.__init__(self)
