@@ -11,11 +11,11 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
-class GTK3Range(Gtk.Range, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.Range."""
+class GTK3RangeMixin(GTK3WidgetMixin):
+    """Mixin for GTK3Range."""
 
     _GTK3_RANGE_ATTRIBUTES = GTK3WidgetAttributes(
         edit_signal="value-changed",
@@ -36,9 +36,8 @@ class GTK3Range(Gtk.Range, GTK3Widget):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3Range."""
-        Gtk.Range.__init__(self)
-        GTK3Widget.__init__(self)
+        """Initialize an instance of the GTK3Range mixin."""
+        GTK3WidgetMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_RANGE_ATTRIBUTES)
@@ -131,3 +130,12 @@ class GTK3Range(Gtk.Range, GTK3Widget):
         if not isinstance(value, (float, int, str)):
             super().do_set_value(value)
         self.set_value(float(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
+
+
+class GTK3Range(Gtk.Range, GTK3RangeMixin):
+    """Wrapper for version 3.0 Gtk.Range."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Range."""
+        Gtk.Range.__init__(self)
+        GTK3RangeMixin.__init__(self)
