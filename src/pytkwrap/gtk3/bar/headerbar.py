@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container import GTK3Container
+from pytkwrap.gtk3.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3HeaderBar(Gtk.HeaderBar, GTK3Container):
-    """Wrapper for version 3.0 Gtk.HeaderBar."""
+class GTK3HeaderBarMixin(GTK3ContainerMixin):
+    """Mixin for GTK3HeaderBar."""
 
     _GTK3_HEADERBAR_PROPERTIES = GTK3WidgetProperties(
         custom_title=None,
@@ -28,9 +28,8 @@ class GTK3HeaderBar(Gtk.HeaderBar, GTK3Container):
     )
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3HeaderBar."""
-        Gtk.HeaderBar.__init__(self)
-        GTK3Container.__init__(self)
+        """Initialize an instance of the GTK3HeaderBar mixin."""
+        GTK3ContainerMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_HEADERBAR_PROPERTIES)
@@ -61,3 +60,12 @@ class GTK3HeaderBar(Gtk.HeaderBar, GTK3Container):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3HeaderBar(Gtk.HeaderBar, GTK3HeaderBarMixin):
+    """Wrapper for version 3.0 Gtk.HeaderBar."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3HeaderBar."""
+        Gtk.HeaderBar.__init__(self)
+        GTK3HeaderBarMixin.__init__(self)
