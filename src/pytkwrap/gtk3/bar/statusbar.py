@@ -7,24 +7,17 @@
 # pytkwrap Package Imports
 from pytkwrap.exceptions import PytkwrapError
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.box import GTK3Box
+from pytkwrap.gtk3.container.box import GTK3BoxMixin
 
 
-class GTK3Statusbar(Gtk.Statusbar, GTK3Box):
-    """Wrapper for version 3.0 Gtk.Statusbar."""
+class GTK3StatusbarMixin(GTK3BoxMixin):
+    """Mixin for GTK3Statusbar."""
 
     _GTK3_STATUSBAR_SIGNALS = ["text-popped", "text-pushed"]
 
-    def __init__(self, contexts: list[str] | None = None) -> None:
-        """Initialize an instance of the GTK3Statusbar.
-
-        Parameters
-        ----------
-        contexts : list[str] | None
-            The list of context descriptions to associate with the GTK3Statusbar.
-        """
-        Gtk.Statusbar.__init__(self)
-        GTK3Box.__init__(self)
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Statusbar mixin."""
+        GTK3BoxMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -32,10 +25,6 @@ class GTK3Statusbar(Gtk.Statusbar, GTK3Box):
         )
         self.dic_context_id: dict[str, int] = {}
         self.dic_message_id: dict[str, int] = {}
-
-        if contexts is not None:
-            for _context in contexts:
-                self.dic_context_id[_context] = self.get_context_id(_context)
 
     def do_add_message(self, context: str, message: str) -> None:
         """Add the message to the GTK3Statusbar stack.
@@ -102,3 +91,22 @@ class GTK3Statusbar(Gtk.Statusbar, GTK3Box):
                 f"Context '{context}' not found in GTK3Statusbar or message "
                 f"'{message}' not found in GTK3Statusbar {context} stack."
             ) from err
+
+
+class GTK3Statusbar(Gtk.Statusbar, GTK3StatusbarMixin):
+    """Wrapper for version 3.0 Gtk.Statusbar."""
+
+    def __init__(self, contexts: list[str] | None = None) -> None:
+        """Initialize an instance of the GTK3Statusbar.
+
+        Parameters
+        ----------
+        contexts : list[str] | None
+            The list of context descriptions to associate with the GTK3Statusbar.
+        """
+        Gtk.Statusbar.__init__(self)
+        GTK3StatusbarMixin.__init__(self)
+
+        if contexts is not None:
+            for _context in contexts:
+                self.dic_context_id[_context] = self.get_context_id(_context)
