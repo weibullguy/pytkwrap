@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Button(Gtk.Button, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.Button."""
+class GTK3ButtonMixin(GTK3BinMixin):
+    """Mixin class for GTK3Button."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -37,29 +37,15 @@ class GTK3Button(Gtk.Button, GTK3Bin):
         # "add", "remove", "set-focus-child"
     ]
 
-    def __init__(
-        self,
-        label: str | None = "...",
-    ) -> None:
-        """Initialize an instance of the GTK3Button widget.
-
-        Parameters
-        ----------
-        label : str | None
-            The text to display on the GTK3Button.  The default value is an ellipsis
-            (...).
-        """
-        Gtk.Button.__init__(self, label=label)
-        GTK3Bin.__init__(self)
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Button widget."""
+        GTK3BinMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_BUTTON_SIGNALS}
         )
         self.dic_properties.update(self._GTK3_BUTTON_PROPERTIES)
-
-        if label is not None:
-            self.set_label(label)
 
     def do_set_properties(
         self,
@@ -73,6 +59,7 @@ class GTK3Button(Gtk.Button, GTK3Bin):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3Button.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.set_always_show_image(self.dic_properties["always_show_image"])
@@ -93,3 +80,25 @@ class GTK3Button(Gtk.Button, GTK3Bin):
             _image.set_from_pixbuf(_icon)
             self.set_image(_image)
             self.set_image_position(self.dic_properties["image_position"])
+
+
+class GTK3Button(Gtk.Button, GTK3ButtonMixin):
+    """Wrapper for version 3.0 Gtk.Button."""
+
+    def __init__(
+        self,
+        label: str | None = "...",
+    ) -> None:
+        """Initialize an instance of the GTK3Button widget.
+
+        Parameters
+        ----------
+        label : str | None
+            The text to display on the GTK3Button.  The default value is an ellipsis
+            (...).
+        """
+        Gtk.Button.__init__(self, label=label)
+        GTK3ButtonMixin.__init__(self)
+
+        if label is not None:
+            self.dic_properties["label"] = label
