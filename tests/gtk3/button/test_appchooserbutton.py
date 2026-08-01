@@ -107,7 +107,8 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         assert dut.do_get_attribute("edit_signal") == "combobox_changed"
 
     @pytest.mark.unit
-    def test_do_set_properties_default(self):
+    @pytest.mark.filterwarnings("ignore:gtk_combo_box_set_entry_text_column")
+    def test_do_set_properties_default(self, filter_stderr):
         """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
         dut = self.make_dut()
@@ -118,7 +119,8 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         assert not dut.do_get_property("show_dialog_item")
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
+    @pytest.mark.filterwarnings("ignore:gtk_combo_box_set_entry_text_column")
+    def test_do_set_properties(self, filter_stderr):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
