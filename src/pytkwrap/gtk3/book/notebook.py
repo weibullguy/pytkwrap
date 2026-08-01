@@ -10,13 +10,13 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.exceptions import PytkwrapError
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.io.label import GTK3Label
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Notebook(Gtk.Notebook, GTK3Container):
-    """Wrapper for version 3.0 Gtk.Notebook."""
+class GTK3NotebookMixin(GTK3ContainerMixin):
+    """Mixin for GTK3Notebook."""
 
     _GTK3_NOTEBOOK_PROPERTIES = GTK3WidgetProperties(
         enable_popup=False,
@@ -41,10 +41,10 @@ class GTK3Notebook(Gtk.Notebook, GTK3Container):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3Notebook."""
-        Gtk.Notebook.__init__(self)
-        GTK3Container.__init__(self)
+        """Initialize an instance of the GTK3Notebook mixin."""
+        GTK3ContainerMixin.__init__(self)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_NOTEBOOK_SIGNALS}
         )
@@ -121,3 +121,12 @@ class GTK3Notebook(Gtk.Notebook, GTK3Container):
                 f"{self.get_n_pages()} pages."
             )
         self.remove_page(position)
+
+
+class GTK3Notebook(Gtk.Notebook, GTK3NotebookMixin):
+    """Wrapper for version 3.0 Gtk.Notebook."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Notebook."""
+        Gtk.Notebook.__init__(self)
+        GTK3NotebookMixin.__init__(self)

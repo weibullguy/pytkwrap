@@ -455,7 +455,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     support_selection: bool
     surface: cairo.Surface | None
     tabs: Pango.TabArray | None
-    tab_position: Gtk.PositionType
+    tab_pos: Gtk.PositionType
     tag_table: Gtk.TextTagTable | None
     take_focus: bool
     text: str | None
@@ -562,6 +562,7 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
         """Initialize an instance of the GTK3GObjectMixin."""
         PyTkWrapMixin.__init__(self)
 
+        # Initialize public instance attributes.
         self.dic_attributes |= self._GTK3_GOBJECT_ATTRIBUTES
         self.dic_handler_id: dict[str, int] = {
             _signal: -1 for _signal in self._GTK3_GOBJECT_SIGNALS
