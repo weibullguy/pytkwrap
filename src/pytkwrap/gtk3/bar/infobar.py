@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.box import GTK3Box
+from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3InfoBar(Gtk.InfoBar, GTK3Box):
-    """Wrapper for version 3.0 Gtk.InfoBar."""
+class GTK3InfoBarMixin(GTK3BoxMixin):
+    """Mixin for GTK3InfoBar."""
 
     _GTK3_INFOBAR_PROPERTIES = GTK3WidgetProperties(
         message_type=Gtk.MessageType.INFO,
@@ -24,9 +24,8 @@ class GTK3InfoBar(Gtk.InfoBar, GTK3Box):
     _GTK3_INFOBAR_SIGNALS = ["close", "response"]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3InfoBar."""
-        Gtk.InfoBar.__init__(self)
-        GTK3Box.__init__(self)
+        """Initialize an instance of the GTK3InfoBar mixin."""
+        GTK3BoxMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -52,3 +51,12 @@ class GTK3InfoBar(Gtk.InfoBar, GTK3Box):
         self.set_message_type(self.dic_properties["message_type"])
         self.set_revealed(self.dic_properties["revealed"])
         self.set_show_close_button(self.dic_properties["show_close_button"])
+
+
+class GTK3InfoBar(Gtk.InfoBar, GTK3InfoBarMixin):
+    """Wrapper for version 3.0 Gtk.InfoBar."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3InfoBar."""
+        Gtk.InfoBar.__init__(self)
+        GTK3InfoBarMixin.__init__(self)
