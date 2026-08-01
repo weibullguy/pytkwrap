@@ -8,11 +8,11 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk as Gdk
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.buttons.button import GTK3Button as GTK3Button
+from pytkwrap.gtk3.button.button import GTK3ButtonMixin as GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
+class GTK3ColorButtonMixin(GTK3ButtonMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
     _GTK3_COLOR_BUTTON_ATTRIBUTES: GTK3WidgetAttributes
@@ -26,3 +26,6 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3Button):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
+
+class GTK3ColorButton(Gtk.ColorButton, GTK3ColorButtonMixin):
+    def __init__(self, rgba: Gdk.RGBA | None = None) -> None: ...
