@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Box(Gtk.Box, GTK3Container):
-    """Wrapper for version 3.0 Gtk.Box."""
+class GTK3BoxMixin(GTK3ContainerMixin):
+    """Mixin for GTK3Box."""
 
     _GTK3_BOX_PROPERTIES = GTK3WidgetProperties(
         baseline_position=Gtk.BaselinePosition.CENTER,
@@ -23,10 +23,10 @@ class GTK3Box(Gtk.Box, GTK3Container):
     )
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3Box."""
-        Gtk.Box.__init__(self)
-        GTK3Container.__init__(self)
+        """Initialize an instance of the GTK3Box mixin."""
+        GTK3ContainerMixin.__init__(self)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_BOX_PROPERTIES)
 
     def do_set_properties(
@@ -47,3 +47,12 @@ class GTK3Box(Gtk.Box, GTK3Container):
         self.set_baseline_position(self.dic_properties["baseline_position"])
         self.set_homogeneous(self.dic_properties["homogeneous"])
         self.set_spacing(self.dic_properties["spacing"])
+
+
+class GTK3Box(Gtk.Box, GTK3BoxMixin):
+    """Wrapper for version 3.0 Gtk.Box."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Box."""
+        Gtk.Box.__init__(self)
+        GTK3BoxMixin.__init__(self)
