@@ -10,11 +10,11 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.window.scrolledwindow import GTK3ScrolledWindow
+from pytkwrap.gtk3.window.scrolledwindow import GTK3ScrolledWindowMixin
 
 
-class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3ScrolledWindow):
-    """The GTK3PlacesSidebar class."""
+class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
+    """Mixin for GTK3PlacesSidebar."""
 
     _GTK3_PLACESSIDEBAR_PROPERTIES = GTK3WidgetProperties(
         local_only=False,
@@ -45,9 +45,8 @@ class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3ScrolledWindow):
     ]
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3PlacesSidebar."""
-        Gtk.PlacesSidebar.__init__(self)
-        GTK3ScrolledWindow.__init__(self)
+        """Initialize an instance of the GTK3PlacesSidebar mixin."""
+        GTK3ScrolledWindowMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -87,3 +86,12 @@ class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3ScrolledWindow):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3PlacesSidebarMixin):
+    """The GTK3PlacesSidebar class."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3PlacesSidebar."""
+        Gtk.PlacesSidebar.__init__(self)
+        GTK3PlacesSidebarMixin.__init__(self)
