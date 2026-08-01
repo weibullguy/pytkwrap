@@ -1,5 +1,7 @@
 # Standard Library Imports
 import os
+import sys
+import tempfile
 
 # Third Party Imports
 import pytest
@@ -21,6 +23,14 @@ from .constants import (
 )
 
 
+def pytest_configure(config):
+    """Register custom markers to avoid PytestUnknownMarkWarning."""
+    config.addinivalue_line(
+        "markers",
+        "filter_warning(string): filter stderr lines containing the specified string",
+    )
+
+
 @pytest.fixture(scope="function")
 def image_file():
     _parent_dir_ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +47,43 @@ def skip_if_not_isolated(request):
             "test suite due to GIO volume monitor initialization conflicts. Passes in "
             "isolation. --isolated was not specified."
         )
+
+
+@pytest.fixture(scope="class")
+def filter_stderr(request):
+    """Function-scoped fixture that filters stderr lines based on a pytest mark.
+
+    Usage:
+        @pytest.mark.filter_stderr("g_object_notify")
+        def test_my_widget(self, filter_stderr_marker):
+            ...
+    """
+    # Get the marker argument; default to None if not present
+    marker = request.node.get_closest_marker("filter_stderr")
+    filter_string = marker.args[0] if marker and marker.args else None
+
+    original_stderr_fd = os.dup(2)
+
+    with tempfile.TemporaryFile(mode="w+b") as temp_file:
+        try:
+            os.dup2(temp_file.fileno(), 2)
+            yield
+        finally:
+            os.dup2(original_stderr_fd, 2)
+            os.close(original_stderr_fd)
+
+            temp_file.seek(0)
+            captured_lines = temp_file.readlines()
+
+            for line in captured_lines:
+                if isinstance(line, bytes):
+                    line = line.decode("utf-8", errors="replace")
+
+                # Filter only if the mark was provided and the line contains the string
+                if filter_string and filter_string in line:
+                    continue
+
+                sys.stderr.write(line)
 
 
 class BaseGTK3GObjectTests(TestPyTkWrapMixin):

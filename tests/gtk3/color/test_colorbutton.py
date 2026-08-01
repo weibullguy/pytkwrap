@@ -42,6 +42,8 @@ from tests.gtk3.container.constants import (
 )
 
 
+@pytest.mark.filter_warning("gtk_color_chooser_set_rgba")
+@pytest.mark.usefixtures("filter_stderr")
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
     """Test class for the GTK3ColorButton."""
@@ -91,12 +93,39 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
         (1, 3, "Blue"),
     ]
 
+    def make_dut(self, rgba=None):
+        return self.widget_class(rgba=rgba)
+
     @staticmethod
     def mock_handler(package):
         """Mock handler for on_changed() calls."""
         assert isinstance(package, dict)
         assert isinstance(package[-1], Gdk.RGBA)
         assert package[-1].alpha == 0.0
+
+    @pytest.mark.unit
+    def test_init(self):
+        """Should create a GTK3ColorButton with default attribute values."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3ColorButton)
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.dic_properties == self.expected_properties
+        assert dut.get_property("rgba") == Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
+        assert dut.get_rgba() == Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
+        assert not dut.get_property("show-editor")
+        assert dut.get_property("title") == "Pick a Color"
+        assert dut.get_title() == "Pick a Color"
+        assert not dut.get_property("use-alpha")
+
+    @pytest.mark.unit
+    def test_init_with_rgba(self):
+        """Should create a GTK3ColorButton with passed rgba attribute value."""
+        dut = self.make_dut(rgba=Gdk.RGBA(1.0, 0.5, 0.25, 0.75))
+
+        assert isinstance(dut, GTK3ColorButton)
+        assert dut.get_property("rgba") == Gdk.RGBA(1.0, 0.5, 0.25, 0.75)
+        assert dut.get_rgba() == Gdk.RGBA(1.0, 0.5, 0.25, 0.75)
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
@@ -130,17 +159,19 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
         dut.do_set_properties(GTK3WidgetProperties())
 
         assert dut.dic_properties == self.expected_properties
+        assert dut.do_get_property("rgba") is None
         assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
         assert dut.get_property("rgba").alpha == 1.0
         assert dut.get_property("rgba").blue == 0.0
         assert dut.get_property("rgba").green == 0.0
         assert dut.get_property("rgba").red == 0.0
-        assert not dut.get_property("show-editor")
-        assert dut.get_property("title") == "Pick a Color"
-        assert dut.get_property("use-alpha")
+        assert not dut.do_get_property("show_editor")
+        assert dut.do_get_property("title") == "Pick a Color"
+        assert dut.do_get_property("use_alpha")
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
+    @pytest.mark.filterwarnings("ignore:g_object_notify:Warning")
+    def test_do_set_properties(self, filter_stderr):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
@@ -153,12 +184,18 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
         )
 
         assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
+        assert isinstance(dut.get_rgba(), Gdk.RGBA)
         assert dut.get_property("rgba").alpha == 1.0
+        assert dut.get_rgba().alpha == 1.0
         assert dut.get_property("rgba").blue == 1.0
+        assert dut.get_rgba().blue == 1.0
         assert dut.get_property("rgba").green == 1.0
+        assert dut.get_rgba().green == 1.0
         assert dut.get_property("rgba").red == 1.0
+        assert dut.get_rgba().red == 1.0
         assert dut.get_property("show-editor")
         assert dut.get_property("title") == "Choose a Color"
+        assert dut.get_title() == "Choose a Color"
         assert not dut.get_property("use-alpha")
 
     @pytest.mark.unit
@@ -173,13 +210,22 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
         assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
         assert isinstance(dut.get_rgba(), Gdk.RGBA)
         assert dut.get_property("rgba").alpha == 0.75
+        assert dut.get_rgba().alpha == 0.75
         assert dut.get_property("rgba").blue == 0.9
+        assert dut.get_rgba().blue == 0.9
         assert dut.get_property("rgba").green == 0.1
+        assert dut.get_rgba().green == 0.1
         assert dut.get_property("rgba").red == 0.3
+        assert dut.get_rgba().red == 0.3
 
     @pytest.mark.unit
     def test_on_changed(self):
         """on_changed() is called when the GTK3ColorButton color is set."""
+        # Standard Library Imports
+        import gc
+
+        gc.collect()
+
         dut = self.make_dut()
 
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
