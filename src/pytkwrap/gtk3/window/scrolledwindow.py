@@ -10,12 +10,12 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3Bin):
-    """The GTK3ScrolledWindow class."""
+class GTK3ScrolledWindowMixin(GTK3BinMixin):
+    """Mixin for GTK3ScrolledWindow."""
 
     _GTK3_SCROLLEDWINDOW_PROPERTIES = GTK3WidgetProperties(
         border_width=0,
@@ -41,35 +41,15 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3Bin):
         "scroll-child",
     ]
 
-    def __init__(
-        self,
-        hadjustment: GTK3Adjustment | None = None,
-        vadjustment: GTK3Adjustment | None = None,
-    ) -> None:
-        """Initialize an instance of the GTK3ScrolledWindow.
-
-        Parameters
-        ----------
-        hadjustment : GTK3Adjustment | None
-            The horizontal adjustment to use with the GTK3ScrolledWindow.
-        vadjustment : GTK3Adjustment | None
-            The vertical adjustment to use with the GTK3ScrolledWindow.
-        """
-        Gtk.ScrolledWindow.__init__(
-            self,
-            hadjustment=hadjustment,
-            vadjustment=vadjustment,
-        )
-        GTK3Bin.__init__(self)
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ScrolledWindow mixin."""
+        GTK3BinMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SCROLLEDWINDOW_SIGNALS}
         )
         self.dic_properties.update(self._GTK3_SCROLLEDWINDOW_PROPERTIES)
-
-        self.dic_properties["hadjustment"] = hadjustment
-        self.dic_properties["vadjustment"] = vadjustment
 
     def do_set_properties(
         self,
@@ -103,3 +83,31 @@ class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3Bin):
         self.set_propagate_natural_width(self.dic_properties["propagate_natural_width"])
         self.set_shadow_type(self.dic_properties["shadow_type"])
         self.set_vadjustment(self.dic_properties["vadjustment"])
+
+
+class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3ScrolledWindowMixin):
+    """The GTK3ScrolledWindow class."""
+
+    def __init__(
+        self,
+        hadjustment: GTK3Adjustment | None = None,
+        vadjustment: GTK3Adjustment | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3ScrolledWindow.
+
+        Parameters
+        ----------
+        hadjustment : GTK3Adjustment | None
+            The horizontal adjustment to use with the GTK3ScrolledWindow.
+        vadjustment : GTK3Adjustment | None
+            The vertical adjustment to use with the GTK3ScrolledWindow.
+        """
+        Gtk.ScrolledWindow.__init__(
+            self,
+            hadjustment=hadjustment,
+            vadjustment=vadjustment,
+        )
+        GTK3ScrolledWindowMixin.__init__(self)
+
+        self.dic_properties["hadjustment"] = hadjustment
+        self.dic_properties["vadjustment"] = vadjustment
