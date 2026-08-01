@@ -11,9 +11,9 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3._libs import Pango as Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget as GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
 
-class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
+class GTK3ProgressBarMixin(GTK3WidgetMixin):
     _GTK3_PROGRESSBAR_ATTRIBUTES: Incomplete
     _GTK3_PROGRESSBAR_PROPERTIES: Incomplete
     def __init__(self) -> None: ...
@@ -24,5 +24,8 @@ class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None = None
     ) -> None: ...
+
+class GTK3ProgressBar(Gtk.ProgressBar, GTK3ProgressBarMixin):
+    def __init__(self) -> None: ...
     @GObject.Signal
     def changed(self) -> None: ...
