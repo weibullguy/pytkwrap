@@ -214,6 +214,8 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_get_attribute(self):
         """Should return the value of the attribute name."""
+        super().test_do_get_attribute()
+
         dut = self.make_dut()
 
         assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
@@ -286,16 +288,8 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         ]
 
     @pytest.mark.unit
-    def test_do_get_attribute(self):
-        """Should retrieve the value of the passed attribute."""
-        super().test_do_get_attribute()
-
-        dut = self.make_dut()
-
-        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
-
-    @pytest.mark.unit
-    def test_do_set_properties_default(self):
+    @pytest.mark.filterwarnings("ignore:gtk_combo_box_set_entry_text_column")
+    def test_do_set_properties_default(self, filter_stderr):
         """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
         dut = self.make_dut()
@@ -328,7 +322,8 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         assert dut.do_get_property("width_request") == -1
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
+    @pytest.mark.filterwarnings("ignore:gtk_combo_box_set_entry_text_column")
+    def test_do_set_properties(self, filter_stderr):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
