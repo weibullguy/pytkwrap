@@ -334,11 +334,11 @@ __all__ = [
     "GTK3VolumeButton",
     "GTK3Widget",
     "GTK3WidgetAttributes",
-    "GTK3WidgetMixin",
     "GTK3WidgetProperties",
     "GTK3Window",
     "GTK3WindowGroup",
     "do_make_buttonbox",
     #    "do_make_label_group",
     "set_widget_sensitivity",
+    "GTK3WidgetMixin",
 ]
