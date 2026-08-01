@@ -9,9 +9,9 @@ from _typeshed import Incomplete
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget as GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
 
-class GTK3Range(Gtk.Range, GTK3Widget):
+class GTK3RangeMixin(GTK3WidgetMixin):
     _GTK3_RANGE_ATTRIBUTES: Incomplete
     _GTK3_RANGE_PROPERTIES: Incomplete
     _GTK3_RANGE_SIGNALS: Incomplete
@@ -27,3 +27,6 @@ class GTK3Range(Gtk.Range, GTK3Widget):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
+
+class GTK3Range(Gtk.Range, GTK3RangeMixin):
+    def __init__(self) -> None: ...
