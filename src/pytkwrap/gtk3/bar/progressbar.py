@@ -11,11 +11,11 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject, Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
-class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.ProgressBar."""
+class GTK3ProgressBarMixin(GTK3WidgetMixin):
+    """Mixin for GTK3ProgressBar."""
 
     _GTK3_PROGRESSBAR_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
@@ -32,9 +32,8 @@ class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
     )
 
     def __init__(self) -> None:
-        """Initialize an instance of the GTK3ProgressBar."""
-        Gtk.ProgressBar.__init__(self)
-        GTK3Widget.__init__(self)
+        """Initialize an instance of the GTK3ProgressBar mixin."""
+        GTK3WidgetMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_PROGRESSBAR_ATTRIBUTES)
@@ -99,6 +98,15 @@ class GTK3ProgressBar(Gtk.ProgressBar, GTK3Widget):
         self.set_fraction(_value)
         self.dic_properties["fraction"] = _value
         self.emit("changed")
+
+
+class GTK3ProgressBar(Gtk.ProgressBar, GTK3ProgressBarMixin):
+    """Wrapper for version 3.0 Gtk.ProgressBar."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ProgressBar."""
+        Gtk.ProgressBar.__init__(self)
+        GTK3ProgressBarMixin.__init__(self)
 
     @GObject.Signal
     def changed(self):
