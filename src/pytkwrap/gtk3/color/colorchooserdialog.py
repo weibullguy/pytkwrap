@@ -9,21 +9,20 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.dialog.dialog import GTK3Dialog
+from pytkwrap.gtk3.dialog.dialog import GTK3DialogMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ColorChooserDialog(Gtk.ColorChooserDialog, GTK3Dialog):
-    """Wrapper for version 3.0 Gtk.ColorChooserDialog."""
+class GTK3ColorChooserDialogMixin(GTK3DialogMixin):
+    """Mixin class for GTK3ColorChooserDialog."""
 
     _GTK3_COLORCHOOSERDIALOG_PROPERTIES = GTK3WidgetProperties(
         show_editor=False,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ColorChooserDialog."""
-        Gtk.ColorChooserDialog.__init__(self)
-        GTK3Dialog.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ColorChooserDialog mixin."""
+        super().__init__(**kwargs)
 
         self.dic_properties.update(self._GTK3_COLORCHOOSERDIALOG_PROPERTIES)
 
@@ -46,3 +45,12 @@ class GTK3ColorChooserDialog(Gtk.ColorChooserDialog, GTK3Dialog):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3ColorChooserDialog(Gtk.ColorChooserDialog, GTK3ColorChooserDialogMixin):
+    """Wrapper for version 3.0 Gtk.ColorChooserDialog."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ColorChooserDialog."""
+        super().__init__()
+        GTK3ColorChooserDialogMixin.__init__(self)
