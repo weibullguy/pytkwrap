@@ -9,22 +9,22 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3StackSidebar(Gtk.StackSidebar, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.StackSidebar."""
+class GTK3StackSidebarMixin(GTK3BinMixin):
+    """Mixin class for GTK3StackSidebar."""
 
     _GTK3_STACKSIDEBAR_PROPERTIES = GTK3WidgetProperties(
         stack=None,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3StackSidebar."""
-        Gtk.StackSidebar.__init__(self)
-        GTK3Bin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3StackSidebar mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize the property dictionary.
         self.dic_properties.update(self._GTK3_STACKSIDEBAR_PROPERTIES)
 
     def do_set_properties(
@@ -44,3 +44,12 @@ class GTK3StackSidebar(Gtk.StackSidebar, GTK3Bin):
 
         if self.dic_properties["stack"] is not None:
             self.set_stack(self.dic_properties["stack"])
+
+
+class GTK3StackSidebar(Gtk.StackSidebar, GTK3StackSidebarMixin):
+    """Wrapper for version 3.0 Gtk.StackSidebar."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3StackSidebar."""
+        Gtk.StackSidebar.__init__(self)
+        GTK3StackSidebarMixin.__init__(self)

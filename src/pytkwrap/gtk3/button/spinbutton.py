@@ -20,13 +20,13 @@ class GTK3SpinButtonMixin(GTK3EntryMixin):
 
     Attributes
     ----------
-    _GTK3_ENTRY_ATTRIBUTES : GTK3DataWidgetAttributes
+    _GTK3_SPINBUTTON_ATTRIBUTES : GTK3DataWidgetAttributes
         The typed dict containing GTK3SpinButton specific attributes and their default
         values.
-    _GTK3_ENTRY_PROPERTIES : GTK3WidgetProperties
+    _GTK3_SPINBUTTON_PROPERTIES : GTK3WidgetProperties
         The typed dict containing GTK3SpinButton specific properties and their default
         values.
-    _GTK3_ENTRY_SIGNALS : list
+    _GTK3_SPINBUTTON_SIGNALS : list
         The list of signal names specifically associated with the GTK3SpinButton.
     """
 
