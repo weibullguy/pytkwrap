@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.dialog.dialog import GTK3Dialog
+from pytkwrap.gtk3.dialog.dialog import GTK3DialogMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3AboutDialog(Gtk.AboutDialog, GTK3Dialog):
-    """Wrapper for version 3.0 Gtk.AboutDialog."""
+class GTK3AboutDialogMixin(GTK3DialogMixin):
+    """Mixin class for GTK3AboutDialog."""
 
     _GTK3_ABOUTDIALOG_PROPERTIES = GTK3WidgetProperties(
         artists=[],
@@ -37,10 +37,9 @@ class GTK3AboutDialog(Gtk.AboutDialog, GTK3Dialog):
         "activate-link",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3AboutDialog."""
-        Gtk.AboutDialog.__init__(self)
-        GTK3Dialog.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3AboutDialog mixin."""
+        super().__init__(**kwargs)
 
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_ABOUTDIALOG_SIGNALS}
@@ -82,3 +81,12 @@ class GTK3AboutDialog(Gtk.AboutDialog, GTK3Dialog):
             self.set_website_label(self.dic_properties["website_label"])
 
         self.set_wrap_license(self.dic_properties["wrap_license"])
+
+
+class GTK3AboutDialog(Gtk.AboutDialog, GTK3AboutDialogMixin):
+    """Wrapper for version 3.0 Gtk.AboutDialog."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3AboutDialog."""
+        Gtk.AboutDialog.__init__(self)
+        GTK3AboutDialogMixin.__init__(self)
