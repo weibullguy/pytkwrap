@@ -92,9 +92,16 @@ class TestGTK3Expander(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("expanded")
+        assert dut.get_expanded()
         assert dut.get_property("label") == "Test Label"
+        assert dut.get_label() == "Test Label"
         assert dut.get_property("label_fill")
+        assert dut.get_label_fill()
         assert isinstance(dut.get_property("label_widget"), Gtk.Label)
+        assert isinstance(dut.get_label_widget(), Gtk.Label)
         assert dut.get_property("resize_toplevel")
+        assert dut.get_resize_toplevel()
         assert dut.get_property("use_markup")
+        assert dut.get_use_markup()
         assert dut.get_property("use_underline")
+        assert dut.get_use_underline()
