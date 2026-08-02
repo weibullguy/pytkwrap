@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Window(Gtk.Window, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.Window."""
+class GTK3WindowMixin(GTK3BinMixin):
+    """Mixin class for GTK3Window."""
 
     _GTK3_WINDOW_PROPERTIES = GTK3WidgetProperties(
         accept_focus=True,
@@ -54,16 +54,9 @@ class GTK3Window(Gtk.Window, GTK3Bin):
         "set-focus",
     ]
 
-    def __init__(self, wtype: Gtk.WindowType = Gtk.WindowType.TOPLEVEL) -> None:
-        """Initialize an instance of the GTK3Window.
-
-        Parameters
-        ----------
-        wtype : Gtk.WindowType
-            The window type to construct.
-        """
-        Gtk.Window.__init__(self, type=wtype)
-        GTK3Bin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Window mixin."""
+        super().__init__(**kwargs)
 
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_WINDOW_SIGNALS}
@@ -121,3 +114,18 @@ class GTK3Window(Gtk.Window, GTK3Bin):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3Window(Gtk.Window, GTK3WindowMixin):
+    """Wrapper for version 3.0 Gtk.Window."""
+
+    def __init__(self, wtype: Gtk.WindowType = Gtk.WindowType.TOPLEVEL) -> None:
+        """Initialize an instance of the GTK3Window.
+
+        Parameters
+        ----------
+        wtype : Gtk.WindowType
+            The window type to construct.
+        """
+        super().__init__(type=wtype)
+        GTK3WindowMixin.__init__(self)
