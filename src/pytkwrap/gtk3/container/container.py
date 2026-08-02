@@ -26,9 +26,9 @@ class GTK3ContainerMixin(GTK3WidgetMixin):
         "set-focus-child",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3Container."""
-        GTK3WidgetMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -59,5 +59,6 @@ class GTK3Container(Gtk.Container, GTK3ContainerMixin):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3Container."""
+        # GTK3Container does not initialize when calling super().__init__().
         Gtk.Container.__init__(self)
         GTK3ContainerMixin.__init__(self)

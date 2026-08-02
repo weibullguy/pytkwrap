@@ -35,9 +35,9 @@ class GTK3ColorButtonMixin(GTK3ButtonMixin):
         "color-set",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3ColorButton."""
-        GTK3ButtonMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_COLOR_BUTTON_ATTRIBUTES)
@@ -109,7 +109,7 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3ColorButtonMixin):
 
     def __init__(self, rgba: Gdk.RGBA | None = None) -> None:
         """Initialize an instance of the GTK3ColorButton."""
-        Gtk.ColorButton.__init__(self, rgba=rgba)
+        super().__init__(rgba=rgba)
         GTK3ColorButtonMixin.__init__(self)
 
         if rgba is not None:

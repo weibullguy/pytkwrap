@@ -12,15 +12,11 @@ from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 class GTK3BinMixin(GTK3ContainerMixin):
     """Mixin class for GTK3Bin."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3BinMixin."""
-        GTK3ContainerMixin.__init__(self)
 
-
-class GTK3Bin(Gtk.Bin, GTK3BinMixin):
+class GTK3Bin(Gtk.Bin, GTK3ContainerMixin):
     """Wrapper for version 3.0 Gtk.Bin."""
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3Bin."""
         Gtk.Bin.__init__(self)
-        GTK3BinMixin.__init__(self)
+        GTK3ContainerMixin.__init__(self)
