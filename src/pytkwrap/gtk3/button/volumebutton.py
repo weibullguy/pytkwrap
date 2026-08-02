@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.scalebutton import GTK3ScaleButton
+from pytkwrap.gtk3.button.scalebutton import GTK3ScaleButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
-    """Wrapper for version 3.0 Gtk.VolumeButton."""
+class GTK3VolumeButtonMixin(GTK3ScaleButtonMixin):
+    """Mixin for GTK3VolumeButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -23,10 +23,9 @@ class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
         use_symbolic=True,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3VolumeButton widget."""
-        Gtk.VolumeButton.__init__(self)
-        GTK3ScaleButton.__init__(self, 4)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3VolumeButton mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_VOLUME_BUTTON_PROPERTIES)
@@ -46,3 +45,12 @@ class GTK3VolumeButton(Gtk.VolumeButton, GTK3ScaleButton):
         super().do_set_properties(properties)
 
         self.set_property("use-symbolic", self.dic_properties["use_symbolic"])
+
+
+class GTK3VolumeButton(Gtk.VolumeButton, GTK3VolumeButtonMixin):
+    """Wrapper for version 3.0 Gtk.VolumeButton."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3VolumeButton widget."""
+        super().__init__(size=4)
+        GTK3VolumeButtonMixin.__init__(self)

@@ -61,6 +61,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3ScaleButton.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         if self.dic_properties["adjustment"] is not None:
@@ -131,3 +132,5 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
         )
         self.dic_properties["icons"] = icons
         self.dic_properties["size"] = size
+
+        self.do_set_properties(self.dic_properties)
