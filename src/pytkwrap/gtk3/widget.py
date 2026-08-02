@@ -79,9 +79,9 @@ class GTK3WidgetMixin(GTK3GObjectMixin):
         "unrealize",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3WidgetMixin."""
-        GTK3GObjectMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_WIDGET_ATTRIBUTES)
@@ -165,7 +165,7 @@ class GTK3Widget(Gtk.Widget, GTK3WidgetMixin):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3Widget."""
-        Gtk.Widget.__init__(self)
+        super().__init__()
         GTK3WidgetMixin.__init__(self)
 
         self.show_all()

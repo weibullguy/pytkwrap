@@ -558,7 +558,8 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
         "notify",
     ]
 
-    def __init__(self) -> None:
+    # TODO: Update to pass kwargs to PyTkWrapMixin during round 3.
+    def __init__(self, **kwargs) -> None:  # pylint: disable=unused-argument
         """Initialize an instance of the GTK3GObjectMixin."""
         PyTkWrapMixin.__init__(self)
 

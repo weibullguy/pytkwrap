@@ -9,14 +9,14 @@ from collections.abc import Mapping
 from datetime import date, datetime
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk, Pango
+from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 from pytkwrap.utilities import FontDescription
 
 
-class GTK3Entry(Gtk.Entry, GTK3Widget):
-    """The GTK3Entry class.
+class GTK3EntryMixin(GTK3WidgetMixin):
+    """Mixin for GTK3Entry.
 
     Attributes
     ----------
@@ -108,29 +108,16 @@ class GTK3Entry(Gtk.Entry, GTK3Widget):
         "toggle-overwrite",
     ]
 
-    def __init__(
-        self,
-        font: FontDescription | None = None,
-    ) -> None:
-        """Initialize an instance of the GTK3Entry widget.
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Entry mixin."""
+        super().__init__(**kwargs)
 
-        Parameters
-        ----------
-        font : FontDescription | None
-            The font description for the font used by the GTK3Entry.
-        """
-        Gtk.Entry.__init__(self)
-        GTK3Widget.__init__(self)
-
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_ENTRY_ATTRIBUTES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_ENTRY_SIGNALS}
         )
         self.dic_properties.update(self._GTK3_ENTRY_PROPERTIES)
-
-        self.do_set_font_description(font)
-
-        self.show()
 
     def do_set_attributes(self, attributes: Mapping[str, object]) -> None:
         """Set the attributes of the Entry.
@@ -155,6 +142,7 @@ class GTK3Entry(Gtk.Entry, GTK3Widget):
         properties : GTK3WidgetProperties
             The typed dict with the property values to set for the GTK3Entry.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.set_activates_default(self.dic_properties["activates_default"])
@@ -255,4 +243,41 @@ class GTK3Entry(Gtk.Entry, GTK3Widget):
         _font = font or FontDescription()
 
         self.dic_attributes["font_description"] = _font
-        self.override_font(Pango.FontDescription(_font.to_string()))
+
+        # TODO: Replace this with a GTK3CSSProvider during round 3.
+        _css_provider = Gtk.CssProvider()
+        _name = self.get_name() or "custom_entry_font"
+
+        _css_string = f"""entry#{_name} {{{_font.to_css()}}}"""
+
+        _css_provider.load_from_data(_css_string.encode())
+
+        # TODO: Replace this with a GTK3SyleContext during round 3.
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(),  # pylint: disable=no-value-for-parameter
+            _css_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
+
+
+class GTK3Entry(Gtk.Entry, GTK3EntryMixin):
+    """Wrapper class for version 3.0 Gtk.Entry."""
+
+    def __init__(
+        self,
+        buffer: Gtk.EntryBuffer | None = None,
+        font: FontDescription | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3Entry widget.
+
+        Parameters
+        ----------
+        font : FontDescription | None
+            The font description for the font used by the GTK3Entry.
+        """
+        # GTK3Entry fails to initialize if calling super().__init__().
+        Gtk.Entry.__init__(self, buffer=buffer)
+        GTK3EntryMixin.__init__(self)
+
+        self.dic_attributes["font_description"] = font
+        self.do_set_font_description(font)
