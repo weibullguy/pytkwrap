@@ -84,5 +84,6 @@ class TestGTK3StackSwitcher(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("icon_size") == 10
-        assert dut.do_get_property("stack") == _stack
+        assert dut.get_property("icon_size") == 10
+        assert dut.get_property("stack") == _stack
+        assert dut.get_stack() == _stack
