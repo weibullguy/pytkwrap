@@ -76,7 +76,10 @@ class TestGTK3AboutDialog(BaseGTK3GObjectTests):
     )
 
     @pytest.mark.unit
-    def test_do_set_properties_default(self):
+    @pytest.mark.filterwarnings(
+        "ignore:Gtk.Window.set_opacity is deprecated:DeprecationWarning"
+    )
+    def test_do_set_properties_default(self, filter_stderr):
         """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
         dut = self.make_dut()
@@ -123,20 +126,43 @@ class TestGTK3AboutDialog(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("artists") == ["Doyle Rowland"]
-        assert dut.do_get_property("authors") == ["Doyle Rowland"]
-        assert dut.do_get_property("comments") == (
+        assert dut.get_property("artists") == ["Doyle Rowland"]
+        assert dut.get_artists() == ["Doyle Rowland"]
+        assert dut.get_property("authors") == ["Doyle Rowland"]
+        assert dut.get_authors() == ["Doyle Rowland"]
+        assert dut.get_property("comments") == (
             "These are some comments for the AboutDialog."
         )
-        assert dut.do_get_property("copyright") == "2026, Doyle 'weibullguy' Rowland"
-        assert dut.do_get_property("documenters") == ["Doyle Rowland"]
-        assert dut.do_get_property("license") == ""
-        assert dut.do_get_property("license_type") == Gtk.License.BSD_3
-        assert dut.do_get_property("logo") is None
-        assert dut.do_get_property("logo_icon_name") == "pytkwrap logo"
-        assert dut.do_get_property("program_name") == "pytkwrap"
-        assert dut.do_get_property("translator_credits") == "Doyle Rowland"
-        assert dut.do_get_property("version") == "0.1.0"
-        assert dut.do_get_property("website") == "www.no_website.org"
-        assert dut.do_get_property("website_label") == "Go to the website."
-        assert dut.do_get_property("wrap_license")
+        assert dut.get_comments() == "These are some comments for the AboutDialog."
+        assert dut.get_property("copyright") == "2026, Doyle 'weibullguy' Rowland"
+        assert dut.get_copyright() == "2026, Doyle 'weibullguy' Rowland"
+        assert dut.get_property("documenters") == ["Doyle Rowland"]
+        assert dut.get_documenters() == ["Doyle Rowland"]
+        assert (
+            dut.get_property("license")
+            == """This program comes with absolutely no warranty.
+See the <a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a> for details."""
+        )
+        assert (
+            dut.get_license()
+            == """This program comes with absolutely no warranty.
+See the <a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a> for details."""
+        )
+        assert dut.get_property("license_type") == Gtk.License.BSD_3
+        assert dut.get_license_type() == Gtk.License.BSD_3
+        assert dut.get_property("logo") is None
+        assert dut.get_logo() is None
+        assert dut.get_property("logo_icon_name") == "pytkwrap logo"
+        assert dut.get_logo_icon_name() == "pytkwrap logo"
+        assert dut.get_property("program_name") == "pytkwrap"
+        assert dut.get_program_name() == "pytkwrap"
+        assert dut.get_property("translator_credits") == "Doyle Rowland"
+        assert dut.get_translator_credits() == "Doyle Rowland"
+        assert dut.get_property("version") == "0.1.0"
+        assert dut.get_version() == "0.1.0"
+        assert dut.get_property("website") == "www.no_website.org"
+        assert dut.get_website() == "www.no_website.org"
+        assert dut.get_property("website_label") == "Go to the website."
+        assert dut.get_website_label() == "Go to the website."
+        assert dut.get_property("wrap_license")
+        assert dut.get_wrap_license()
