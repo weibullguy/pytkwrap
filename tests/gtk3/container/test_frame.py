@@ -56,6 +56,17 @@ class TestFrame(BaseGTK3GObjectTests):
         | EXPECTED_FRAME_PROPERTIES
     )
 
+    def make_dut(self, label=None):
+        return self.widget_class(label)
+
+    @pytest.mark.unit
+    def test_init_with_label(self):
+        """Should create a GTK3Frame with the passed label."""
+        dut = self.make_dut("Test Frame")
+
+        assert dut.get_property("label") == "Test Frame"
+        assert dut.get_label() == "Test Frame"
+
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set attributes to default values when passed an empty
@@ -105,8 +116,10 @@ class TestFrame(BaseGTK3GObjectTests):
             ),
         )
 
+        assert dut.get_property("label") == "Test Frame Title"
         assert dut.get_label() == "Test Frame Title"
         assert dut.do_get_property("shadow_type") == Gtk.ShadowType.ETCHED_OUT
+        assert dut.get_shadow_type() == Gtk.ShadowType.ETCHED_OUT
 
     @pytest.mark.unit
     def test_do_set_properties_label_widget(self):

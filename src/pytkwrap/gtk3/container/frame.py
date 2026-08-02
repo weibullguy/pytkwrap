@@ -60,8 +60,14 @@ class GTK3FrameMixin(GTK3BinMixin):
 class GTK3Frame(Gtk.Frame, GTK3FrameMixin):
     """Wrapper for version 3.0 Gtk.Frame."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Frame."""
+    def __init__(self, label: str | None = None) -> None:
+        """Initialize an instance of the GTK3Frame.
+
+        Arguments
+        ---------
+        label : str
+            The label to display on the GTK3Frame.
+        """
         # GTK3Frame does not initialize when calling super().__init__().
-        Gtk.Frame.__init__(self)
+        Gtk.Frame.__init__(self, label=label)
         GTK3FrameMixin.__init__(self)
