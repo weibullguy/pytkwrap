@@ -146,29 +146,53 @@ class TestGTK3Window(BaseGTK3GObjectTests):
         )
 
         assert not dut.get_property("accept_focus")
+        assert not dut.get_accept_focus()
         assert dut.get_property("application") == _application
+        assert dut.get_application() == _application
         assert dut.get_property("attached_to") == _attached_to
+        assert dut.get_attached_to() == _attached_to
         assert not dut.get_property("decorated")
+        assert not dut.get_decorated()
         assert dut.get_property("default_height") == 100
         assert dut.get_property("default_width") == 50
+        assert dut.get_default_size() == (50, 100)
         assert not dut.get_property("deletable")
+        assert not dut.get_deletable()
         assert dut.get_property("destroy_with_parent")
+        assert dut.get_destroy_with_parent()
         assert not dut.get_property("focus_on_map")
+        assert not dut.get_focus_on_map()
         assert not dut.get_property("focus_visible")
+        assert not dut.get_focus_visible()
         assert dut.get_property("gravity") == Gdk.Gravity.CENTER
+        assert dut.get_gravity() == Gdk.Gravity.CENTER
         assert not dut.get_property("has_toplevel_focus")
         assert dut.get_property("hide_titlebar_when_maximized")
+        assert dut.get_hide_titlebar_when_maximized()
         assert dut.get_property("icon") == _icon
+        assert dut.get_icon() == _icon
         assert dut.get_property("icon_name") is None
+        assert dut.get_icon_name() is None
         assert not dut.get_property("mnemonics_visible")
+        assert not dut.get_mnemonics_visible()
         assert dut.get_property("modal")
+        assert dut.get_modal()
         assert not dut.get_property("resizable")
+        assert not dut.get_resizable()
         assert dut.get_property("role") == "Test Role"
+        assert dut.get_role() == "Test Role"
         assert isinstance(dut.get_property("screen"), Gdk.Screen)
+        assert isinstance(dut.get_screen(), Gdk.Screen)
         assert dut.get_property("skip_taskbar_hint")
+        assert dut.get_skip_taskbar_hint()
         assert dut.get_property("title") == "Test Window Title"
+        assert dut.get_title() == "Test Window Title"
         assert dut.get_property("transient_for") == _window
+        assert dut.get_transient_for() == _window
         assert dut.get_property("type") == Gtk.WindowType.TOPLEVEL
+        assert dut.get_window_type() == Gtk.WindowType.TOPLEVEL
         assert dut.get_property("type_hint") == Gdk.WindowTypeHint.TOOLTIP
+        assert dut.get_type_hint() == Gdk.WindowTypeHint.TOOLTIP
         assert dut.get_property("urgency_hint")
+        assert dut.get_urgency_hint()
         assert dut.get_property("window_position") == Gtk.WindowPosition.CENTER
