@@ -5,6 +5,7 @@
 """
 
 # Standard Library Imports
+import time
 from datetime import datetime
 
 # Third Party Imports
@@ -36,6 +37,7 @@ from tests.gtk3.io.constants import (
 )
 
 
+@pytest.mark.filter_warning("gtk_color_chooser_set_rgba")
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3Entry(BaseGTK3DataWidgetTests):
     """Test class for the GTK3Entry class."""
@@ -58,9 +60,9 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_ENTRY_PROPERTIES
 
-    def make_dut(self, font_description=None):
+    def make_dut(self, buffer=None, font_description=None):
         """Create a device under test for the GTK3Entry."""
-        return self.widget_class(font_description)
+        return self.widget_class(buffer, font_description)
 
     @pytest.mark.unit
     def test_init(self):
@@ -82,6 +84,41 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
             assert _signal in dut.dic_handler_id
 
     @pytest.mark.unit
+    def test_init_with_buffer(self):
+        """Should create a GTK3Entry with a buffer."""
+        dut = self.make_dut(buffer=Gtk.EntryBuffer.new("Test Buffer", 20))
+
+        assert isinstance(dut, GTK3Entry)
+        assert isinstance(dut.get_property("buffer"), Gtk.EntryBuffer)
+        assert dut.get_buffer() == dut.get_property("buffer")
+        assert dut.get_property("buffer").get_text() == "Test Buffer"
+        assert dut.get_buffer().get_text() == "Test Buffer"
+        assert dut.get_property("buffer").get_length() == 20
+        assert dut.get_buffer().get_length() == 20
+
+    @pytest.mark.unit
+    def test_init_with_font_description(self):
+        """Should create a GTK3Entry with a font description."""
+        dut = self.make_dut(
+            font_description=FontDescription(
+                family="Sans,Serif,Monospace",
+                size=10,
+                style="normal",
+                weight="normal",
+            )
+        )
+
+        assert isinstance(dut, GTK3Entry)
+        assert isinstance(dut.do_get_attribute("font_description"), FontDescription)
+        assert dut.do_get_attribute("font_description").family == "Sans,Serif,Monospace"
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").size == 10
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "normal"
+        assert dut.do_get_attribute("font_description").variant == "normal"
+        assert dut.do_get_attribute("font_description").weight == "normal"
+
+    @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set the default attributes of a GTK3Entry when passed an empty
         WidgetAttributes."""
@@ -90,20 +127,14 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(GTK3WidgetAttributes())
 
-        assert isinstance(
-            dut.do_get_attribute("font_description"),
-            FontDescription,
-        )
-        assert dut.do_get_attribute("font_description").family == (
-            "Sans,Serif,Monospace"
-        )
+        assert isinstance(dut.do_get_attribute("font_description"), FontDescription)
+        assert dut.do_get_attribute("font_description").family == "Sans,Serif,Monospace"
         assert dut.do_get_attribute("font_description").features == ""
-        assert dut.do_get_attribute("font_description").gravity == "south"
         assert dut.do_get_attribute("font_description").size == 10
         assert dut.do_get_attribute("font_description").stretch == ""
-        assert dut.do_get_attribute("font_description").style == "Normal"
-        assert dut.do_get_attribute("font_description").variant == ""
-        assert dut.do_get_attribute("font_description").weight == "Regular"
+        assert dut.do_get_attribute("font_description").style == "normal"
+        assert dut.do_get_attribute("font_description").variant == "normal"
+        assert dut.do_get_attribute("font_description").weight == "normal"
 
     @pytest.mark.unit
     def test_do_set_attributes(self):
@@ -116,7 +147,6 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
             GTK3WidgetAttributes(
                 font_description=FontDescription(
                     family="Sans,Serif,Monospace",
-                    gravity="west",
                     size=10,
                     style="Normal",
                     weight="Bold",
@@ -127,11 +157,10 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         assert isinstance(dut.do_get_attribute("font_description"), FontDescription)
         assert dut.do_get_attribute("font_description").family == "Sans,Serif,Monospace"
         assert dut.do_get_attribute("font_description").features == ""
-        assert dut.do_get_attribute("font_description").gravity == "west"
         assert dut.do_get_attribute("font_description").size == 10
         assert dut.do_get_attribute("font_description").stretch == ""
         assert dut.do_get_attribute("font_description").style == "Normal"
-        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").variant == "normal"
         assert dut.do_get_attribute("font_description").weight == "Bold"
 
     @pytest.mark.unit
@@ -139,9 +168,8 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         """Should not override column_types set in __init__ when no column_types key is
         passed in WidgetAttributes."""
         dut = self.make_dut(
-            FontDescription(
+            font_description=FontDescription(
                 family="Sans,Serif,Monospace",
-                gravity="south",
                 size=10,
                 style="Normal",
                 weight="Bold",
@@ -151,20 +179,18 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
 
         assert dut.do_get_attribute("font_description").family == "Sans,Serif,Monospace"
         assert dut.do_get_attribute("font_description").features == ""
-        assert dut.do_get_attribute("font_description").gravity == "south"
         assert dut.do_get_attribute("font_description").size == 10
         assert dut.do_get_attribute("font_description").stretch == ""
         assert dut.do_get_attribute("font_description").style == "Normal"
-        assert dut.do_get_attribute("font_description").variant == ""
+        assert dut.do_get_attribute("font_description").variant == "normal"
         assert dut.do_get_attribute("font_description").weight == "Bold"
 
     @pytest.mark.unit
     def test_do_set_attributes_overrides_font_description(self):
         """Should override column_types when explicitly passed."""
         dut = self.make_dut(
-            FontDescription(
+            font_description=FontDescription(
                 family="Sans,Serif,Monospace",
-                gravity="south",
                 size=12,
                 style="Normal",
                 weight="Bold",
@@ -174,22 +200,20 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
             GTK3WidgetAttributes(
                 font_description=FontDescription(
                     family="Helvetica",
-                    gravity="east",
                     size=16,
                     style="Italic",
-                    weight="Demi-Bold",
+                    weight="lighter",
                 )
             )
         )
 
         assert dut.do_get_attribute("font_description").family == "Helvetica"
         assert dut.do_get_attribute("font_description").features == ""
-        assert dut.do_get_attribute("font_description").gravity == "east"
         assert dut.do_get_attribute("font_description").size == 16
         assert dut.do_get_attribute("font_description").stretch == ""
         assert dut.do_get_attribute("font_description").style == "Italic"
-        assert dut.do_get_attribute("font_description").variant == ""
-        assert dut.do_get_attribute("font_description").weight == "Demi-Bold"
+        assert dut.do_get_attribute("font_description").variant == "normal"
+        assert dut.do_get_attribute("font_description").weight == "lighter"
 
     @pytest.mark.unit
     def test_do_get_attribute(self):
@@ -199,6 +223,13 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
 
         assert isinstance(dut.do_get_attribute("font_description"), FontDescription)
+        assert dut.do_get_attribute("font_description").family == "Sans,Serif,Monospace"
+        assert dut.do_get_attribute("font_description").features == ""
+        assert dut.do_get_attribute("font_description").size == 10
+        assert dut.do_get_attribute("font_description").stretch == ""
+        assert dut.do_get_attribute("font_description").style == "normal"
+        assert dut.do_get_attribute("font_description").variant == "normal"
+        assert dut.do_get_attribute("font_description").weight == "normal"
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
@@ -207,58 +238,54 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
-        assert not dut.get_property("activates_default")
-        assert dut.get_property("attributes") is None
-        assert isinstance(dut.get_property("buffer"), Gtk.EntryBuffer)
-        assert dut.get_property("caps_lock_warning")
-        assert dut.get_property("completion") is None
-        assert dut.get_property("editable")
-        assert not dut.get_property("editing_canceled")
-        assert not dut.get_property("enable_emoji_completion")
-        assert dut.get_property("has_frame")
-        assert dut.get_property("height-request") == -1
-        assert dut.get_property("im_module") is None
-        assert dut.get_property("input_hints") == Gtk.InputHints.NONE
-        assert dut.get_property("input_purpose") == Gtk.InputPurpose.FREE_FORM
-        assert dut.get_property("invisible_char") == "•"
-        assert not dut.get_property("invisible_char_set")
-        assert dut.get_property("max_length") == 0
-        assert dut.get_property("max_width_chars") == -1
-        assert not dut.get_property("overwrite_mode")
-        assert dut.get_property("placeholder_text") is None
-        assert not dut.get_property("populate_all")
-        assert dut.get_property("primary_icon_activatable")
-        assert dut.get_property("primary_icon_gicon") is None
-        assert dut.get_property("primary_icon_name") is None
-        assert dut.get_property("primary_icon_pixbuf") is None
-        assert dut.get_property("primary_icon_sensitive")
-        assert dut.get_property("primary_icon_storage_type") == Gtk.ImageType.EMPTY
-        assert dut.get_property("primary_icon_tooltip_markup") is None
-        assert dut.get_property("primary_icon_tooltip_text") is None
-        assert dut.get_property("progress_fraction") == 0.0
-        assert dut.get_property("progress_pulse_step") == 0.1
-        assert dut.get_property("scroll_offset") == 0
-        assert dut.get_property("secondary_icon_activatable")
-        assert dut.get_property("secondary_icon_gicon") is None
-        assert dut.get_property("secondary_icon_name") is None
-        assert dut.get_property("secondary_icon_pixbuf") is None
-        assert dut.get_property("secondary_icon_sensitive")
-        assert dut.get_property("secondary_icon_storage_type") == Gtk.ImageType.EMPTY
-        assert dut.get_property("secondary_icon_tooltip_markup") is None
-        assert dut.get_property("secondary_icon_tooltip_text") is None
-        assert dut.get_property("selection_bound") == 0
-        assert not dut.get_property("show_emoji_icon")
-        assert dut.get_property("tabs") is None
-        assert dut.get_property("text") == ""
-        assert dut.get_property("text_length") == 0
-        assert dut.get_property("tooltip-markup") == (
+        assert not dut.do_get_property("activates_default")
+        assert dut.do_get_property("attributes") is None
+        assert dut.do_get_property("buffer") is None
+        assert dut.do_get_property("caps_lock_warning")
+        assert dut.do_get_property("completion") is None
+        assert dut.do_get_property("editable")
+        assert not dut.do_get_property("editing_canceled")
+        assert not dut.do_get_property("enable_emoji_completion")
+        assert dut.do_get_property("has_frame")
+        assert dut.do_get_property("height_request") == -1
+        assert dut.do_get_property("im_module") is None
+        assert dut.do_get_property("input_hints") == Gtk.InputHints.NONE
+        assert dut.do_get_property("input_purpose") == Gtk.InputPurpose.FREE_FORM
+        assert dut.do_get_property("invisible_char") == "•"
+        assert not dut.do_get_property("invisible_char_set")
+        assert dut.do_get_property("max_length") == 0
+        assert dut.do_get_property("max_width_chars") == -1
+        assert not dut.do_get_property("overwrite_mode")
+        assert dut.do_get_property("placeholder_text") is None
+        assert not dut.do_get_property("populate_all")
+        assert dut.do_get_property("primary_icon_activatable")
+        assert dut.do_get_property("primary_icon_gicon") is None
+        assert dut.do_get_property("primary_icon_name") is None
+        assert dut.do_get_property("primary_icon_pixbuf") is None
+        assert dut.do_get_property("primary_icon_sensitive")
+        assert dut.do_get_property("primary_icon_tooltip_markup") is None
+        assert dut.do_get_property("primary_icon_tooltip_text") is None
+        assert dut.do_get_property("progress_fraction") == 0.0
+        assert dut.do_get_property("progress_pulse_step") == 0.1
+        assert dut.do_get_property("scroll_offset") == 0
+        assert dut.do_get_property("secondary_icon_activatable")
+        assert dut.do_get_property("secondary_icon_gicon") is None
+        assert dut.do_get_property("secondary_icon_name") is None
+        assert dut.do_get_property("secondary_icon_pixbuf") is None
+        assert dut.do_get_property("secondary_icon_sensitive")
+        assert dut.do_get_property("secondary_icon_tooltip_markup") is None
+        assert dut.do_get_property("secondary_icon_tooltip_text") is None
+        assert not dut.do_get_property("show_emoji_icon")
+        assert dut.do_get_property("tabs") is None
+        assert dut.do_get_property("text") == ""
+        assert dut.do_get_property("tooltip_markup") == (
             "Missing tooltip, please file an issue to have one added."
         )
-        assert not dut.get_property("truncate_multiline")
-        assert dut.get_property("visibility")
-        assert dut.get_property("width_chars") == -1
-        assert dut.get_property("width-request") == -1
-        assert dut.get_property("xalign") == 0.0
+        assert not dut.do_get_property("truncate_multiline")
+        assert dut.do_get_property("visibility")
+        assert dut.do_get_property("width_chars") == -1
+        assert dut.do_get_property("width_request") == -1
+        assert dut.do_get_property("xalign") == 0.0
 
     @pytest.mark.unit
     def test_do_set_properties(self):
@@ -324,15 +351,19 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         )
 
         assert dut.get_property("activates_default")
+        assert dut.get_activates_default()
         assert isinstance(dut.get_property("attributes"), Pango.AttrList)
-        assert dut.get_property("attributes").get_attributes() == []
+        assert isinstance(dut.get_attributes(), Pango.AttrList)
         assert isinstance(dut.get_property("buffer"), Gtk.EntryBuffer)
+        assert isinstance(dut.get_buffer(), Gtk.EntryBuffer)
         assert not dut.get_property("caps_lock_warning")
         assert isinstance(dut.get_property("completion"), Gtk.EntryCompletion)
+        assert isinstance(dut.get_completion(), Gtk.EntryCompletion)
         assert not dut.get_property("editable")
         assert not dut.get_property("editing_canceled")
         assert dut.get_property("enable_emoji_completion")
         assert not dut.get_property("has_frame")
+        assert not dut.get_has_frame()
         assert dut.get_property("height-request") == 70
         assert dut.get_property("im_module") == "im-ibus"
         assert dut.get_property("input_hints") == Gtk.InputHints.SPELLCHECK
@@ -340,9 +371,13 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         assert dut.get_property("invisible_char") == ":"
         assert dut.get_property("invisible_char_set")
         assert dut.get_property("max_length") == 30
+        assert dut.get_max_length() == 30
         assert dut.get_property("max_width_chars") == 100
+        assert dut.get_max_width_chars() == 100
         assert dut.get_property("overwrite_mode")
+        assert dut.get_overwrite_mode()
         assert dut.get_property("placeholder_text") == "Test Placeholder Text"
+        assert dut.get_placeholder_text() == "Test Placeholder Text"
         assert dut.get_property("populate_all")
         assert not dut.get_property("primary_icon_activatable")
         assert dut.get_property("primary_icon_gicon") is None
@@ -358,7 +393,9 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
             dut.get_property("primary_icon_tooltip_text") == "Primary Icon Tooltip Text"
         )
         assert dut.get_property("progress_fraction") == 0.1
+        assert dut.get_progress_fraction() == 0.1
         assert dut.get_property("progress_pulse_step") == 0.5
+        assert dut.get_progress_pulse_step() == 0.5
         assert dut.get_property("scroll_offset") == 0
         assert dut.get_property("secondary_icon_activatable")
         assert dut.get_property("secondary_icon_gicon") is None
@@ -375,12 +412,17 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         assert dut.get_property("show_emoji_icon")
         assert isinstance(dut.get_property("tabs"), Pango.TabArray)
         assert dut.get_property("tabs").get_size() == 4
+        assert isinstance(dut.get_tabs(), Pango.TabArray)
         assert dut.get_property("text") == "Test Entry Text"
+        assert dut.get_text() == "Test Entry Text"
         assert dut.get_property("text_length") == 15
+        assert dut.get_text_length() == 15
         assert dut.get_property("tooltip-markup") == "Test Entry Tooltip."
         assert dut.get_property("truncate_multiline")
         assert not dut.get_property("visibility")
+        assert not dut.get_visibility()
         assert dut.get_property("width_chars") == 20
+        assert dut.get_width_chars() == 20
         assert dut.get_property("width-request") == 150
         assert dut.get_property("xalign") == pytest.approx(0.6)
 
@@ -518,12 +560,11 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
         assert isinstance(dut.dic_attributes["font_description"], FontDescription)
         assert dut.dic_attributes["font_description"].family == "Sans,Serif,Monospace"
         assert dut.dic_attributes["font_description"].features == ""
-        assert dut.dic_attributes["font_description"].gravity == "south"
         assert dut.dic_attributes["font_description"].size == 10
         assert dut.dic_attributes["font_description"].stretch == ""
-        assert dut.dic_attributes["font_description"].style == "Normal"
-        assert dut.dic_attributes["font_description"].variant == ""
-        assert dut.dic_attributes["font_description"].weight == "Regular"
+        assert dut.dic_attributes["font_description"].style == "normal"
+        assert dut.dic_attributes["font_description"].variant == "normal"
+        assert dut.dic_attributes["font_description"].weight == "normal"
 
     @pytest.mark.unit
     def test_do_set_font_description(self):
@@ -533,18 +574,17 @@ class TestGTK3Entry(BaseGTK3DataWidgetTests):
             FontDescription(
                 family="Helvetica",
                 size=16,
-                style="Roman",
-                variant="All-Caps",
-                weight="Demi Bold",
+                style="Oblique",
+                variant="sMAll-Caps",
+                weight="lighter",
             )
         )
 
         assert isinstance(dut.dic_attributes["font_description"], FontDescription)
         assert dut.dic_attributes["font_description"].family == "Helvetica"
         assert dut.dic_attributes["font_description"].features == ""
-        assert dut.dic_attributes["font_description"].gravity == "south"
         assert dut.dic_attributes["font_description"].size == 16
         assert dut.dic_attributes["font_description"].stretch == ""
-        assert dut.dic_attributes["font_description"].style == "Roman"
-        assert dut.dic_attributes["font_description"].variant == "All-Caps"
-        assert dut.dic_attributes["font_description"].weight == "Demi Bold"
+        assert dut.dic_attributes["font_description"].style == "Oblique"
+        assert dut.dic_attributes["font_description"].variant == "sMAll-Caps"
+        assert dut.dic_attributes["font_description"].weight == "lighter"
