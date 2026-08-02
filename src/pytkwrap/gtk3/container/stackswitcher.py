@@ -9,23 +9,23 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.box import GTK3Box
+from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3StackSwitcher(Gtk.StackSwitcher, GTK3Box):
-    """Wrapper for version 3.0 Gtk.StackSwitcher."""
+class GTK3StackSwitcherMixin(GTK3BoxMixin):
+    """Mixin class for GTK3StackSwitcher."""
 
     _GTK3_STACKSWITCHER_PROPERTIES = GTK3WidgetProperties(
         icon_size=1,
         stack=None,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3StackSwitcher."""
-        Gtk.StackSwitcher.__init__(self)
-        GTK3Box.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3StackSwitcher mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize the property dictionary.
         self.dic_properties.update(self._GTK3_STACKSWITCHER_PROPERTIES)
 
     def do_set_properties(
@@ -49,3 +49,12 @@ class GTK3StackSwitcher(Gtk.StackSwitcher, GTK3Box):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3StackSwitcher(Gtk.StackSwitcher, GTK3StackSwitcherMixin):
+    """Wrapper for version 3.0 Gtk.StackSwitcher."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3StackSwitcher."""
+        Gtk.StackSwitcher.__init__(self)
+        GTK3StackSwitcherMixin.__init__(self)
