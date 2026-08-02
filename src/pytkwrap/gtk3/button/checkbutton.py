@@ -6,15 +6,19 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.togglebutton import GTK3ToggleButton
+from pytkwrap.gtk3.button.togglebutton import GTK3ToggleButtonMixin
 
 
-class GTK3CheckButton(Gtk.CheckButton, GTK3ToggleButton):
-    """Wrapper for version 3.0 Gtk.CheckButton.."""
+class GTK3CheckButtonMixin(GTK3ToggleButtonMixin):
+    """Mixin for GTK3CheckButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 40
     _DEFAULT_WIDTH = 200
+
+
+class GTK3CheckButton(Gtk.CheckButton, GTK3CheckButtonMixin):
+    """Wrapper for version 3.0 Gtk.CheckButton."""
 
     def __init__(self, label="...") -> None:
         """Initialize an instance of the GTK3CheckButton widget.
@@ -25,5 +29,5 @@ class GTK3CheckButton(Gtk.CheckButton, GTK3ToggleButton):
             The text to display in the GTK3CheckButton label.  The default value is
             an ellipsis (...).
         """
-        Gtk.CheckButton.__init__(self, label=label)
-        GTK3ToggleButton.__init__(self, label)
+        super().__init__(label=label)
+        GTK3CheckButtonMixin.__init__(self)
