@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Frame(Gtk.Frame, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.Frame."""
+class GTK3FrameMixin(GTK3BinMixin):
+    """Mixin class for GTK3Frame."""
 
     _GTK3_FRAME_PROPERTIES = GTK3WidgetProperties(
         label=None,
@@ -24,10 +24,9 @@ class GTK3Frame(Gtk.Frame, GTK3Bin):
         shadow_type=Gtk.ShadowType.ETCHED_IN,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Frame."""
-        Gtk.Frame.__init__(self)
-        GTK3Bin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Frame mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_FRAME_PROPERTIES)
@@ -43,6 +42,7 @@ class GTK3Frame(Gtk.Frame, GTK3Bin):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3Frame.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         if self.dic_properties["label_widget"] is not None:
@@ -55,3 +55,13 @@ class GTK3Frame(Gtk.Frame, GTK3Bin):
             self.dic_properties["label_yalign"],
         )
         self.set_shadow_type(self.dic_properties["shadow_type"])
+
+
+class GTK3Frame(Gtk.Frame, GTK3FrameMixin):
+    """Wrapper for version 3.0 Gtk.Frame."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Frame."""
+        # GTK3Frame does not initialize when calling super().__init__().
+        Gtk.Frame.__init__(self)
+        GTK3FrameMixin.__init__(self)
