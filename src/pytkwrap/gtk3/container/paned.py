@@ -34,6 +34,7 @@ class GTK3PanedMixin(GTK3ContainerMixin):
         """Initialize an instance of the GTK3Paned mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_PANED_SIGNALS}
         )

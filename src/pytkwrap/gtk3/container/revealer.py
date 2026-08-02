@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Revealer(Gtk.Revealer, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.Revealer."""
+class GTK3RevealerMixin(GTK3BinMixin):
+    """Mixin class for GTK3Revealer."""
 
     _GTK3_REVEALER_PROPERTIES = GTK3WidgetProperties(
         reveal_child=False,
@@ -22,11 +22,11 @@ class GTK3Revealer(Gtk.Revealer, GTK3Bin):
         transition_type=Gtk.RevealerTransitionType.SLIDE_DOWN,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Revealer."""
-        Gtk.Revealer.__init__(self)
-        GTK3Bin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Revealer mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_REVEALER_PROPERTIES)
 
     def do_set_properties(
@@ -47,3 +47,12 @@ class GTK3Revealer(Gtk.Revealer, GTK3Bin):
         self.set_reveal_child(self.dic_properties["reveal_child"])
         self.set_transition_duration(self.dic_properties["transition_duration"])
         self.set_transition_type(self.dic_properties["transition_type"])
+
+
+class GTK3Revealer(Gtk.Revealer, GTK3RevealerMixin):
+    """Wrapper for version 3.0 Gtk.Revealer."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Revealer."""
+        Gtk.Revealer.__init__(self)
+        GTK3RevealerMixin.__init__(self)
