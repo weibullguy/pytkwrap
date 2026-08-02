@@ -113,7 +113,7 @@ maintain = [
     "radon mi --show {args}",
 ]
 security = "bandit -c pyproject.toml -b .bandit.baseline -r {args}"
-wily = "prek run wily --files {args}"
+wily-build = "wily build src/"
 all = [
     "format",
     "fix",

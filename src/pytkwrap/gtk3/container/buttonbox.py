@@ -10,24 +10,20 @@ from collections.abc import Callable, Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
 from pytkwrap.gtk3.button.button import GTK3Button
-from pytkwrap.gtk3.container.box import GTK3Box
+from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ButtonBox(Gtk.ButtonBox, GTK3Box):
-    """Wrapper for version 3.0 Gtk.ButtonBox."""
+class GTK3ButtonBoxMixin(GTK3BoxMixin):
+    """Mixin class for GTK3ButtonBox."""
 
     _GTK3_BUTTONBOX_PROPERTIES = GTK3WidgetProperties(
         layout_style=Gtk.ButtonBoxStyle.END,
     )
 
-    def __init__(
-        self,
-        orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
-    ) -> None:
-        """Initialize an instance of the GTK3ButtonBox."""
-        Gtk.ButtonBox.__init__(self, orientation=orientation)
-        GTK3Box.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ButtonBox mixin."""
+        super().__init__(**kwargs)
 
         self.dic_properties.update(self._GTK3_BUTTONBOX_PROPERTIES)
 
@@ -47,6 +43,18 @@ class GTK3ButtonBox(Gtk.ButtonBox, GTK3Box):
         super().do_set_properties(properties)
 
         self.set_layout(self.dic_properties["layout_style"])
+
+
+class GTK3ButtonBox(Gtk.ButtonBox, GTK3ButtonBoxMixin):
+    """Wrapper for version 3.0 Gtk.ButtonBox."""
+
+    def __init__(
+        self,
+        orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
+    ) -> None:
+        """Initialize an instance of the GTK3ButtonBox."""
+        super().__init__(orientation=orientation)
+        GTK3ButtonBoxMixin.__init__(self)
 
 
 def do_make_buttonbox(
