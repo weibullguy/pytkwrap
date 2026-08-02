@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ListBox(Gtk.ListBox, GTK3Container):
-    """Wrapper for version 3.0 Gtk.ListBox."""
+class GTK3ListBoxMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3ListBox."""
 
     _GTK3_LISTBOX_PROPERTIES = GTK3WidgetProperties(
         activate_on_single_click=True,
@@ -31,11 +31,11 @@ class GTK3ListBox(Gtk.ListBox, GTK3Container):
         "unselect-all",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ListBox."""
-        Gtk.ListBox.__init__(self)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ListBox mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_LISTBOX_SIGNALS}
         )
@@ -60,3 +60,13 @@ class GTK3ListBox(Gtk.ListBox, GTK3Container):
             self.dic_properties["activate_on_single_click"]
         )
         self.set_selection_mode(self.dic_properties["selection_mode"])
+
+
+class GTK3ListBox(Gtk.ListBox, GTK3ListBoxMixin):
+    """Wrapper for version 3.0 Gtk.ListBox."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ListBox."""
+        # GTK3ListBox does not initialize when calling super().__init__().
+        Gtk.ListBox.__init__(self)
+        GTK3ListBoxMixin.__init__(self)
