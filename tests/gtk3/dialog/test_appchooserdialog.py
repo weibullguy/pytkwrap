@@ -42,6 +42,7 @@ from tests.gtk3.window.constants import (
 )
 
 
+@pytest.mark.filter_warning("G_IS_OBJECT")
 @pytest.mark.usefixtures("skip_if_not_isolated")
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3AppChooserDialog(BaseGTK3GObjectTests):
@@ -73,18 +74,23 @@ class TestGTK3AppChooserDialog(BaseGTK3GObjectTests):
         | EXPECTED_APPCHOOSERDIALOG_PROPERTIES
     )
 
-    def make_dut(self, gfile=None):
-        return GTK3AppChooserDialog(gfile=gfile)
+    def make_dut(self, parent=None, flags=0, gfile=None):
+        return GTK3AppChooserDialog(parent=parent, flags=flags, gfile=gfile)
 
     @pytest.mark.unit
-    def test_init_with_gfile(self):
+    @pytest.mark.filterwarnings("ignore:g_file_info_get_content_type")
+    @pytest.mark.filterwarnings("ignore:g_object_unref:Warning")
+    def test_init_with_gfile(self, filter_stderr):
         _gfile = Gio.File.new_for_path("../data/pytkwrap.png")
         dut = self.make_dut(gfile=_gfile)
 
         assert dut.do_get_property("gfile") == _gfile
 
     @pytest.mark.unit
-    def test_do_set_properties_default(self):
+    @pytest.mark.filterwarnings(
+        "ignore:Gtk.Window.set_opacity is deprecated:DeprecationWarning"
+    )
+    def test_do_set_properties_default(self, filter_stderr):
         """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
         dut = self.make_dut()
@@ -107,3 +113,4 @@ class TestGTK3AppChooserDialog(BaseGTK3GObjectTests):
 
         assert dut.get_property("gfile") is None
         assert dut.get_property("heading") == "Test Heading"
+        assert dut.get_heading() == "Test Heading"
