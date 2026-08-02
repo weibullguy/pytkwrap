@@ -11,12 +11,12 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.button import GTK3Button
+from pytkwrap.gtk3.button.button import GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
-    """Wrapper for version 3.0 Gtk.ToggleButton."""
+class GTK3ToggleButtonMixin(GTK3ButtonMixin):
+    """Mixin for GTK3ToggleButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -34,17 +34,9 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
         "toggled",
     ]
 
-    def __init__(self, label="...") -> None:
-        """Initialize an instance of the GTK3ToggleButton widget.
-
-        Parameters
-        ----------
-        label : str
-            The text to display in the GTK3ToggleButton label.  The default value is
-            an ellipsis (...).
-        """
-        Gtk.ToggleButton.__init__(self)
-        GTK3Button.__init__(self, label)
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ToggleButton widget."""
+        GTK3ButtonMixin.__init__(self)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_TOGGLE_BUTTON_ATTRIBUTES)
@@ -96,3 +88,19 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3Button):
             super().do_set_value(value)
         self.dic_properties["active"] = bool(value)
         self.set_active(bool(value))
+
+
+class GTK3ToggleButton(Gtk.ToggleButton, GTK3ToggleButtonMixin):
+    """Wrapper for version 3.0 Gtk.ToggleButton."""
+
+    def __init__(self, label="...") -> None:
+        """Initialize an instance of the GTK3ToggleButton widget.
+
+        Parameters
+        ----------
+        label : str
+            The text to display in the GTK3ToggleButton label.  The default value is
+            an ellipsis (...).
+        """
+        Gtk.ToggleButton.__init__(self, label=label)
+        GTK3ToggleButtonMixin.__init__(self)
