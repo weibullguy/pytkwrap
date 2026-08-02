@@ -34,9 +34,10 @@ class GTK3ToggleButtonMixin(GTK3ButtonMixin):
         "toggled",
     ]
 
-    def __init__(self) -> None:
+    # TODO: Remove pylint disable once all mixins are refactored to take in kwargs.
+    def __init__(self, **kwargs) -> None:  # pylint: disable=unused-argument
         """Initialize an instance of the GTK3ToggleButton widget."""
-        GTK3ButtonMixin.__init__(self)
+        super().__init__()
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_TOGGLE_BUTTON_ATTRIBUTES)
@@ -102,5 +103,5 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3ToggleButtonMixin):
             The text to display in the GTK3ToggleButton label.  The default value is
             an ellipsis (...).
         """
-        Gtk.ToggleButton.__init__(self, label=label)
+        super().__init__(label=label)
         GTK3ToggleButtonMixin.__init__(self)
