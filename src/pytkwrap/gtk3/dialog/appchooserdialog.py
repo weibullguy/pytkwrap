@@ -9,31 +9,24 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gio, Gtk
-from pytkwrap.gtk3.dialog.dialog import GTK3Dialog
+from pytkwrap.gtk3.dialog.dialog import GTK3DialogMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3AppChooserDialog(Gtk.AppChooserDialog, GTK3Dialog):
-    """Wrapper for version 3.0 Gtk.AppChooserDialog."""
+class GTK3AppChooserDialogMixin(GTK3DialogMixin):
+    """Mixin class for GTK3AppChooserDialog."""
 
     _GTK3_APPCHOOSERDIALOG_PROPERTIES = GTK3WidgetProperties(
         gfile=None,
         heading=None,
     )
 
-    def __init__(self, gfile: Gio.File = None) -> None:
-        """Initialize an instance of the GTK3AppChooserDialog.
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3AppChooserDialog mixin."""
+        super().__init__(**kwargs)
 
-        Parameter
-        ---------
-        gfile : Gio.File | None
-            The Gio.File to be used by the Gtk.AppChooserDialog.
-        """
-        Gtk.AppChooserDialog.__init__(self, gfile=gfile)
-        GTK3Dialog.__init__(self)
-
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_APPCHOOSERDIALOG_PROPERTIES)
-        self.dic_properties["gfile"] = gfile
 
     def do_set_properties(
         self,
@@ -47,7 +40,39 @@ class GTK3AppChooserDialog(Gtk.AppChooserDialog, GTK3Dialog):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3AppChooserDialog.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         if self.dic_properties["heading"] is not None:
             self.set_heading(self.dic_properties["heading"])
+
+
+class GTK3AppChooserDialog(Gtk.AppChooserDialog, GTK3AppChooserDialogMixin):
+    """Wrapper for version 3.0 Gtk.AppChooserDialog."""
+
+    def __init__(
+        self,
+        parent: Gtk.Window | None,
+        flags: Gtk.DialogFlags,
+        gfile: Gio.File = None,
+    ) -> None:
+        """Initialize an instance of the GTK3AppChooserDialog.
+
+        Parameter
+        ---------
+        parent : Gtk.Window | None
+            The parent window for the Gtk.AppChooserDialog.
+        flags : Gtk.DialogFlags
+            THe flags to use for the Gtk.AppChooserDialog.
+        gfile : Gio.File | None
+            The Gio.File to be used by the Gtk.AppChooserDialog.
+        """
+        Gtk.AppChooserDialog.__init__(
+            self,
+            transient_for=parent,
+            flags=flags,
+            gfile=gfile,
+        )
+        GTK3AppChooserDialogMixin.__init__(self)
+
+        self.dic_properties["gfile"] = gfile
