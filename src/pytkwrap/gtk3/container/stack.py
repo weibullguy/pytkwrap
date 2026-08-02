@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Stack(Gtk.Stack, GTK3Container):
-    """Wrapper for version 3.0 Gtk.Stack."""
+class GTK3StackMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3Stack."""
 
     _GTK3_STACK_PROPERTIES = GTK3WidgetProperties(
         hhomogeneous=True,
@@ -27,10 +27,9 @@ class GTK3Stack(Gtk.Stack, GTK3Container):
         visible_child_name=None,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Stack."""
-        Gtk.Stack.__init__(self)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Stack mixin."""
+        super().__init__(**kwargs)
 
         self.dic_properties.update(self._GTK3_STACK_PROPERTIES)
 
@@ -61,3 +60,12 @@ class GTK3Stack(Gtk.Stack, GTK3Container):
 
         if self.dic_properties["visible_child_name"] is not None:
             self.set_visible_child_name(self.dic_properties["visible_child_name"])
+
+
+class GTK3Stack(Gtk.Stack, GTK3StackMixin):
+    """Wrapper for version 3.0 Gtk.Stack."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Stack."""
+        Gtk.Stack.__init__(self)
+        GTK3StackMixin.__init__(self)
