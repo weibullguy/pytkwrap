@@ -81,5 +81,8 @@ class TestGTK3Box(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("baseline_position") == Gtk.BaselinePosition.TOP
+        assert dut.get_baseline_position() == Gtk.BaselinePosition.TOP
         assert dut.get_property("homogeneous")
+        assert dut.get_homogeneous()
         assert dut.get_property("spacing") == 10
+        assert dut.get_spacing() == 10

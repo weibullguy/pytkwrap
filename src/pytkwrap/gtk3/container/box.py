@@ -14,7 +14,7 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3BoxMixin(GTK3ContainerMixin):
-    """Mixin for GTK3Box."""
+    """Mixin class for GTK3Box."""
 
     _GTK3_BOX_PROPERTIES = GTK3WidgetProperties(
         baseline_position=Gtk.BaselinePosition.CENTER,
@@ -22,9 +22,9 @@ class GTK3BoxMixin(GTK3ContainerMixin):
         spacing=0,
     )
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3Box mixin."""
-        GTK3ContainerMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_BOX_PROPERTIES)
@@ -54,5 +54,5 @@ class GTK3Box(Gtk.Box, GTK3BoxMixin):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3Box."""
-        Gtk.Box.__init__(self)
+        super().__init__()
         GTK3BoxMixin.__init__(self)
