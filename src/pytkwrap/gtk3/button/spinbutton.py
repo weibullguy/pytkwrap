@@ -11,12 +11,12 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
-from pytkwrap.gtk3.io.entry import GTK3Entry
+from pytkwrap.gtk3.io.entry import GTK3EntryMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
-class GTK3SpinButton(Gtk.SpinButton, GTK3Entry):
-    """The GTK3SpinButton class.
+class GTK3SpinButtonMixin(GTK3EntryMixin):
+    """Mixin for GTK3SpinButton.
 
     Attributes
     ----------
@@ -55,28 +55,15 @@ class GTK3SpinButton(Gtk.SpinButton, GTK3Entry):
         "wrapped",
     ]
 
-    def __init__(
-        self,
-        adjustment: GTK3Adjustment | None = None,
-        climb_rate: float = 0.0,
-        digits: int = 1,
-    ) -> None:
-        """Initialize an instance of the GTK3SpinButton widget."""
-        Gtk.SpinButton.__init__(
-            self,
-            adjustment=adjustment,
-            climb_rate=climb_rate,
-            digits=digits,
-        )
-        GTK3Entry.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3SpinButton mixin."""
+        super().__init__(**kwargs)
 
         self.dic_attributes.update(self._GTK3_SPINBUTTON_ATTRIBUTES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SPINBUTTON_SIGNALS}
         )
         self.dic_properties.update(self._GTK3_SPINBUTTON_PROPERTIES)
-
-        self.dic_attributes["format"] = f"{{:3.{digits}f}}"
 
     def do_set_properties(
         self,
@@ -138,3 +125,25 @@ class GTK3SpinButton(Gtk.SpinButton, GTK3Entry):
             super().do_set_value(value)
 
         self.set_value(self.dic_attributes["data_type"](value))
+
+
+class GTK3SpinButton(Gtk.SpinButton, GTK3SpinButtonMixin):
+    """Wrapper for version 3.0 Gtk.SpinButton."""
+
+    def __init__(
+        self,
+        adjustment: GTK3Adjustment | None = None,
+        climb_rate: float = 0.0,
+        digits: int = 1,
+    ) -> None:
+        """Initialize an instance of the GTK3SpinButton widget."""
+        # GTK3SpinButton fails to initialize if calling super().__init__().
+        Gtk.SpinButton.__init__(
+            self,
+            adjustment=adjustment,
+            climb_rate=climb_rate,
+            digits=digits,
+        )
+        GTK3SpinButtonMixin.__init__(self)
+
+        self.dic_attributes["format"] = f"{{:3.{digits}f}}"
