@@ -92,4 +92,5 @@ class TestGTK3Container(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("border_width") == 25
+        assert dut.get_property("border_width") == 25
+        assert dut.get_border_width() == 25

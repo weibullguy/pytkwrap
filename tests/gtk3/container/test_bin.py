@@ -94,4 +94,5 @@ class TestGTK3Bin(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("border_width") == 10
+        assert dut.get_property("border_width") == 10
+        assert dut.get_border_width() == 10
