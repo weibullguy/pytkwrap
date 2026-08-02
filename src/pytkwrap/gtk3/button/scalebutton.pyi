@@ -9,15 +9,25 @@ from _typeshed import Incomplete
 from pytkwrap.common.mixins import PyTkWrapAttributes as PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment as GTK3Adjustment
-from pytkwrap.gtk3.button.button import GTK3Button as GTK3Button
+from pytkwrap.gtk3.button.button import GTK3ButtonMixin as GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
+class GTK3ScaleButtonMixin(GTK3ButtonMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
     _GTK3_SCALE_BUTTON_ATTRIBUTES: PyTkWrapAttributes
     _GTK3_SCALE_BUTTON_PROPERTIES: Incomplete
     _GTK3_SCALE_BUTTON_SIGNALS: Incomplete
+    def __init__(self, **kwargs) -> None: ...
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None: ...
+    def do_get_value(self) -> bool | date | float | int | object | str | None: ...
+    def do_set_value(
+        self, value: bool | date | float | int | object | str | tuple | None
+    ) -> None: ...
+
+class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
     def __init__(
         self,
         size: int,
@@ -25,11 +35,4 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
         max_value: float = 100.0,
         step: float = 2,
         icons: list | None = None,
-    ) -> None: ...
-    def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
-    ) -> None: ...
-    def do_get_value(self) -> bool | date | float | int | object | str | None: ...
-    def do_set_value(
-        self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...

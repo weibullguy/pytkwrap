@@ -12,12 +12,12 @@ from datetime import date
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
-from pytkwrap.gtk3.button.button import GTK3Button
+from pytkwrap.gtk3.button.button import GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
-    """Wrapper for version 3.0 Gtk.ScaleButton."""
+class GTK3ScaleButtonMixin(GTK3ButtonMixin):
+    """Mixin for GTK3ScaleButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -38,22 +38,9 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
         "value-changed",
     ]
 
-    def __init__(
-        self,
-        size: int,
-        min_value: float = 0.0,
-        max_value: float = 100.0,
-        step: float = 2,
-        icons: list | None = None,
-    ) -> None:
-        """Initialize an instance of the GTK3ScaleButton widget."""
-        Gtk.ScaleButton.__init__(
-            self,
-            adjustment=GTK3Adjustment(min_value, min_value, max_value, step),
-            icons=icons,
-            size=size,
-        )
-        GTK3Button.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ScaleButton mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_SCALE_BUTTON_ATTRIBUTES)
@@ -61,15 +48,6 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
             {_signal: -1 for _signal in self._GTK3_SCALE_BUTTON_SIGNALS}
         )
         self.dic_properties.update(self._GTK3_SCALE_BUTTON_PROPERTIES)
-
-        self.dic_properties["adjustment"] = GTK3Adjustment(
-            min_value,
-            min_value,
-            max_value,
-            step,
-        )
-        self.dic_properties["icons"] = icons
-        self.dic_properties["size"] = size
 
     def do_set_properties(
         self,
@@ -124,3 +102,32 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3Button):
             super().do_set_value(value)
         self.dic_properties["value"] = float(value)  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
         self.set_value(float(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
+
+
+class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
+    """Wrapper for version 3.0 Gtk.ScaleButton."""
+
+    def __init__(
+        self,
+        size: int,
+        min_value: float = 0.0,
+        max_value: float = 100.0,
+        step: float = 2,
+        icons: list | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3ScaleButton widget."""
+        super().__init__(
+            adjustment=GTK3Adjustment(min_value, min_value, max_value, step),
+            icons=icons,
+            size=size,
+        )
+        GTK3ScaleButtonMixin.__init__(self)
+
+        self.dic_properties["adjustment"] = GTK3Adjustment(
+            min_value,
+            min_value,
+            max_value,
+            step,
+        )
+        self.dic_properties["icons"] = icons
+        self.dic_properties["size"] = size
