@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.checkbutton import GTK3CheckButton
+from pytkwrap.gtk3.button.checkbutton import GTK3CheckButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3RadioButton(Gtk.RadioButton, GTK3CheckButton):
-    """Wrapper for version 3.0 Gtk.RadioButton."""
+class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
+    """Mixin for GTK3RadioButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 40
@@ -26,27 +26,15 @@ class GTK3RadioButton(Gtk.RadioButton, GTK3CheckButton):
         "group-changed",
     ]
 
-    def __init__(self, label="...", group=None) -> None:
-        """Initialize an instance of the GTK3RadioButton widget.
-
-        Parameters
-        ----------
-        label : str
-            The text to display in the GTK3RadioButton label.  The default value is
-            an ellipsis (...).
-        group : Gtk.RadioButton | None
-            The group to which the GTK3RadioButton belongs.
-        """
-        Gtk.RadioButton.__init__(self, label=label)
-        GTK3CheckButton.__init__(self, label=label)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3RadioButton mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_RADIO_BUTTON_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_RADIO_BUTTON_SIGNALS}
         )
-
-        self.join_group(group)
 
     def do_set_properties(
         self,
@@ -60,6 +48,27 @@ class GTK3RadioButton(Gtk.RadioButton, GTK3CheckButton):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3RadioButton.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.join_group(self.dic_properties["group"])
+
+
+class GTK3RadioButton(Gtk.RadioButton, GTK3RadioButtonMixin):
+    """Wrapper for version 3.0 Gtk.RadioButton."""
+
+    def __init__(self, label="...", group=None) -> None:
+        """Initialize an instance of the GTK3RadioButton widget.
+
+        Parameters
+        ----------
+        label : str
+            The text to display in the GTK3RadioButton label.  The default value is
+            an ellipsis (...).
+        group : Gtk.RadioButton | None
+            The group to which the GTK3RadioButton belongs.
+        """
+        super().__init__(label=label)
+        GTK3RadioButtonMixin.__init__(self)
+
+        self.join_group(group)
