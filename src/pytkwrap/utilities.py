@@ -24,97 +24,62 @@ _ = gettext.gettext
 
 
 @dataclass
-class FontDescription:  # pylint: disable=too-many-instance-attributes
+class FontDescription:
     """Structured font description for use across toolkits.
+
+    Note
+    ----
+    Attributes can be passed with lowercase or uppercase letters.  Lowercase letters
+    are preferred for consistency with CSS.
 
     Attributes
     ----------
-    allow_breaks : str
-        Whether to allow line breaks. Default is 'false'.
-    bgalpha : str
-        Background alpha value. Default is '100%'.
-    bgcolor : str
-        Background color. Default is 'white'.
     family : str
         Comma separated list of font families. Default is 'Sans, Serif, Monospace'.
     features : str
-        Font features. Default is empty string.
-    fgalpha : str
-        Foreground alpha value. Default is '100%'.
-    fgcolor : str
-        Foreground color. Default is 'black'.
-    gravity : str
-        Font gravity. Default is 'south'.  Options are 'south', 'east', 'north', 'west'.
-    gravity_hint : str
-        Font gravity hint. Default is 'natural'.
-    insert_hyphens : str
-        Whether to insert hyphens. Default is 'true'.
-    lang : str
-        Language for the font. Default is 'en_US'.
-    letter_spacing : str
-        The inter-letter spacing in 1024ths of a point. Default is 0.0.
-    overline : str
-        Whether to overline text. Default is 'none'.  Options are 'none', 'single'.
-    overline_color : str
-        Overline color. Default is 'black'.
-    rise : str
-        Vertical rise of the text. Default is '0pt'.
-    scale : str
-        Font scale. Default is empty string.  Options are 'superscript', 'subscript',
-        'small-caps'.
+        Font features. Default is an empty string.
     size : int
-        Font size in points. Default is 10.
+        Font size in points or larger, smaller, xx-small, xx-large. Default is 10.
     stretch : str
-        Font stretch. Default is empty string.  Options are 'Ultra-Condensed',
-        'Extra-Condensed', 'Condensed', 'Semi-Condensed', 'Semi-Expanded',
-        'Expanded', 'Extra-Expanded', 'Ultra-Expanded'.
-    strikethrough : str
-        Whether to strikethrough text. Default is 'false'.
-    strikethrough_color : str
-        Strikethrough color. Default is 'black'.
+        Font stretch. Default is an empty string.  Options are 'ultra-Condensed',
+        'extra-condensed', 'condensed', 'semi-condensed', 'semi-expanded',
+        'expanded', 'extra-expanded', 'ultra-expanded'.
     style : str
-        Font style. Default is 'Normal'.  Options are 'Normal', 'Roman', 'Oblique',
-        'Italic'.
-    underline : str
-        Whether to underline text. Default is 'none'.  Options are 'none', 'single',
-        'double', 'low', 'error', 'single-line', 'double-line', 'error-line'.
-    underline_color : str
-        Underline color. Default is 'black'.
+        Font style. Default is 'normal'.  Options are 'normal', 'italic', 'oblique'.
     variant : str
-        Font variant. Default is empty string.  Options are 'Small-Caps',
-        'All-Small-Caps', 'Petite-Caps', 'All-Petite-Caps', 'Unicase', 'Title-Caps'.
+        Font variant. Default is 'normal'.  Options are 'normal', 'small-caps',
     weight : str
-        Font weight. Default is 'Regular'.  Options are 'Thin', 'Ultra-Light',
-        'Extra-Light', 'Light', 'Semi-Light', 'Demi-Light', 'Book', 'Regular',
-        'Medium', 'Semi-Bold', 'Demi-Bold', 'Bold', 'Ultra-Bold', 'Extra-Bold',
-        'Heavy', 'Black', 'Ultra-Black', 'Extra-Black'.
+        Font weight. Default is 'normal'.  Options are 'normal', 'bold', 'bolder',
+        'lighter'.
     """
 
-    allow_breaks: str = "false"
-    bgalpha: str = "100%"
-    bgcolor: str = "white"
     family: str = "Sans,Serif,Monospace"
     features: str = ""
-    fgalpha: str = "100%"
-    fgcolor: str = "black"
-    gravity: str = "south"
-    gravity_hint: str = "natural"
-    insert_hyphens: str = "true"
-    lang: str = "en_US"
-    letter_spacing: float = 0.0
-    overline: str = "none"
-    overline_color: str = "black"
-    rise: str = "0pt"
-    scale: str = ""
     size: int = 10
     stretch: str = ""
-    strikethrough: str = "false"
-    strikethrough_color: str = "black"
-    style: str = "Normal"
-    underline: str = "none"
-    underline_color: str = "black"
-    variant: str = ""
-    weight: str = "Regular"
+    style: str = "normal"
+    variant: str = "normal"
+    weight: str = "normal"
+
+    def to_css(self) -> str:
+        """Convert to a CSS font description string.
+
+        Returns
+        -------
+        str
+            The CSS font description string.
+        """
+        _css_string = f"font-family: {self.family.lower()}; "
+        _css_string += f"font-size: {self.size}pt; "
+        _css_string += f"font-style: {self.style.lower()}; "
+        _css_string += f"font-weight: {self.weight.lower()}; "
+        _css_string += f"font-variant: {self.variant.lower()}; "
+        if self.stretch:
+            _css_string += f"font-stretch: {self.stretch.lower()}; "
+        if self.features:
+            _css_string += f"font-feature-settings: {self.features};"
+
+        return _css_string.strip()
 
     def to_string(self) -> str:
         """Convert to a toolkit font description string.
@@ -130,7 +95,7 @@ class FontDescription:  # pylint: disable=too-many-instance-attributes
         """
         return (
             f"{self.family} {self.style} {self.variant} "
-            f"{self.weight} {self.stretch} {self.gravity} {self.size}"
+            f"{self.weight} {self.stretch} {self.size} {self.features}"
         ).strip()
 
     def to_markup(self) -> str:
@@ -153,39 +118,14 @@ class FontDescription:  # pylint: disable=too-many-instance-attributes
             The opening markup span tag with all font attributes set.
         """
         _parts = [
-            f"allow_breaks='{self.allow_breaks}'",
-            f"bgalpha='{self.bgalpha}'",
-            f"bgcolor='{self.bgcolor}'",
             f"face='{self.family}'",
             f"font_features='{self.features}'",
-            f"fgalpha='{self.fgalpha}'",
-            f"fgcolor='{self.fgcolor}'",
-            f"gravity='{self.gravity}'",
-            f"gravity_hint='{self.gravity_hint}'",
-            f"insert_hyphens='{self.insert_hyphens}'",
-            f"lang='{self.lang}'",
         ]
-
-        if self.letter_spacing:
-            _parts.append(f"letter_spacing='{self.letter_spacing}'")
-
-        _parts += [
-            f"overline='{self.overline}'",
-            f"overline_color='{self.overline_color}'",
-            f"rise='{self.rise}'",
-        ]
-
-        if self.scale:
-            _parts.append(f"font_scale='{self.scale}'")
 
         _parts += [
             f"size='{self.size}pt'",
             f"stretch='{self.stretch}'" if self.stretch else "",
-            f"strikethrough='{self.strikethrough}'",
-            f"strikethrough_color='{self.strikethrough_color}'",
             f"style='{self.style}'",
-            f"underline='{self.underline}'",
-            f"underline_color='{self.underline_color}'",
             f"variant='{self.variant}'" if self.variant else "",
             f"weight='{self.weight}'",
         ]
