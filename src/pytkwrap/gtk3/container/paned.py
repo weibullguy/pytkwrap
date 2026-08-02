@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Paned(Gtk.Paned, GTK3Container):
-    """Wrapper for version 3.0 Gtk.Paned."""
+class GTK3PanedMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3Paned."""
 
     _GTK3_PANED_PROPERTIES = GTK3WidgetProperties(
         position=0,
@@ -30,19 +30,14 @@ class GTK3Paned(Gtk.Paned, GTK3Container):
         "toggle-handle-focus",
     ]
 
-    def __init__(
-        self, orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL
-    ) -> None:
-        """Initialize an instance of the GTK3Paned."""
-        Gtk.Paned.__init__(self, orientation=orientation)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Paned mixin."""
+        super().__init__(**kwargs)
 
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_PANED_SIGNALS}
         )
         self.dic_properties.update(self._GTK3_PANED_PROPERTIES)
-
-        self.orientation = orientation
 
     def do_set_properties(
         self,
@@ -66,3 +61,24 @@ class GTK3Paned(Gtk.Paned, GTK3Container):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3Paned(Gtk.Paned, GTK3PanedMixin):
+    """Wrapper for version 3.0 Gtk.Paned.
+
+    Arguments
+    ---------
+    orientation : Gtk.Orientation
+        The orientation of the paned widget.  The default is Gtk.Orientation.HORIZONTAL.
+    """
+
+    def __init__(
+        self,
+        orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
+    ) -> None:
+        """Initialize an instance of the GTK3Paned."""
+        # GTK3Paned does not initialize when calling super().__init__().
+        Gtk.Paned.__init__(self, orientation=orientation)
+        GTK3PanedMixin.__init__(self)
+
+        self.orientation = orientation
