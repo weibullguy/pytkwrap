@@ -51,7 +51,8 @@ class TestGTK3NativeDialog(BaseGTK3GObjectTests):
         assert not dut.do_get_property("visible")
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
+    @pytest.mark.filterwarnings("ignore:gtk_native_dialog_show")
+    def test_do_set_properties(self, filter_stderr):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
         _window = Gtk.Window()
 
