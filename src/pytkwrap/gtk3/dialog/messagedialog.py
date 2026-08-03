@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.dialog.dialog import GTK3Dialog
+from pytkwrap.gtk3.dialog.dialog import GTK3DialogMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3MessageDialog(Gtk.MessageDialog, GTK3Dialog):
-    """Wrapper for version 3.0 Gtk.MessageDialog."""
+class GTK3MessageDialogMixin(GTK3DialogMixin):
+    """Mixin class for GTK3MessageDialog."""
 
     _GTK3_MESSAGEDIALOG_PROPERTIES = GTK3WidgetProperties(
         buttons=Gtk.ButtonsType.NONE,
@@ -26,19 +26,11 @@ class GTK3MessageDialog(Gtk.MessageDialog, GTK3Dialog):
         use_markup=False,
     )
 
-    def __init__(
-        self,
-        buttons: Gtk.ButtonsType = Gtk.ButtonsType.NONE,
-        message_type: Gtk.MessageType = Gtk.MessageType.INFO,
-    ) -> None:
-        """Initialize an instance of the GTK3MessageDialog."""
-        Gtk.MessageDialog.__init__(self, buttons=buttons, message_type=message_type)
-        Gtk.Widget.set_has_window(self, False)
-        GTK3Dialog.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3MessageDialog mixin."""
+        super().__init__(**kwargs)
 
         self.dic_properties.update(self._GTK3_MESSAGEDIALOG_PROPERTIES)
-        self.dic_properties["buttons"] = buttons
-        self.dic_properties["message_type"] = message_type
 
     def do_set_properties(
         self,
@@ -66,3 +58,20 @@ class GTK3MessageDialog(Gtk.MessageDialog, GTK3Dialog):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3MessageDialog(Gtk.MessageDialog, GTK3MessageDialogMixin):
+    """Wrapper for version 3.0 Gtk.MessageDialog."""
+
+    def __init__(
+        self,
+        buttons: Gtk.ButtonsType = Gtk.ButtonsType.NONE,
+        message_type: Gtk.MessageType = Gtk.MessageType.INFO,
+    ) -> None:
+        """Initialize an instance of the GTK3MessageDialog."""
+        Gtk.MessageDialog.__init__(self, buttons=buttons, message_type=message_type)
+        Gtk.Widget.set_has_window(self, False)
+        GTK3MessageDialogMixin.__init__(self)
+
+        self.dic_properties["buttons"] = buttons
+        self.dic_properties["message_type"] = message_type
