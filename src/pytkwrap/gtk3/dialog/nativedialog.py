@@ -12,8 +12,8 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
-class GTK3NativeDialog(Gtk.NativeDialog, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.NativeDialog."""
+class GTK3NativeDialogMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3NativeDialog."""
 
     _GTK3_NATIVEDIALOG_PROPERTIES = GTK3WidgetProperties(
         modal=False,
@@ -25,11 +25,11 @@ class GTK3NativeDialog(Gtk.NativeDialog, GTK3GObjectMixin):
         "response",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTKNativeDialog."""
-        Gtk.NativeDialog.__init__(self)
-        GTK3GObjectMixin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTKNativeDialog mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_NATIVEDIALOG_SIGNALS}
         )
@@ -58,3 +58,12 @@ class GTK3NativeDialog(Gtk.NativeDialog, GTK3GObjectMixin):
 
         if self.dic_properties["visible"]:
             self.show()
+
+
+class GTK3NativeDialog(Gtk.NativeDialog, GTK3NativeDialogMixin):
+    """Wrapper for version 3.0 Gtk.NativeDialog."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTKNativeDialog."""
+        Gtk.NativeDialog.__init__(self)
+        GTK3NativeDialogMixin.__init__(self)

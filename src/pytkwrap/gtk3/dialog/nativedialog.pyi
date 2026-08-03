@@ -9,11 +9,14 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin as GTK3GObjectMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3NativeDialog(Gtk.NativeDialog, GTK3GObjectMixin):
+class GTK3NativeDialogMixin(GTK3GObjectMixin):
     _GTK3_NATIVEDIALOG_PROPERTIES: Incomplete
     _GTK3_NATIVEDIALOG_SIGNALS: Incomplete
     dic_properties: Incomplete
-    def __init__(self) -> None: ...
+    def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+
+class GTK3NativeDialog(Gtk.NativeDialog, GTK3NativeDialogMixin):
+    def __init__(self) -> None: ...
