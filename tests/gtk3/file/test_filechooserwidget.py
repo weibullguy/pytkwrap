@@ -63,6 +63,16 @@ class TestGTK3FileChooserWidget(BaseGTK3GObjectTests):
         | EXPECTED_FILECHOOSERWIDGET_PROPERTIES
     )
 
+    def make_dut(self, action=Gtk.FileChooserAction.OPEN):
+        return self.widget_class(action=action)
+
+    @pytest.mark.unit
+    def test_init_with_action(self):
+        """Should create a GTK3FileChooserWidget with the passed action."""
+        dut = self.make_dut(action=Gtk.FileChooserAction.SELECT_FOLDER)
+
+        assert dut.get_action() == Gtk.FileChooserAction.SELECT_FOLDER
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
