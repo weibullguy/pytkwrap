@@ -48,6 +48,63 @@ class TestGTK3FileChooserNative(BaseGTK3GObjectTests):
         EXPECTED_FILECHOOSERNATIVE_PROPERTIES | EXPECTED_NATIVEDIALOG_PROPERTIES
     )
 
+    def make_dut(
+        self,
+        title: str | None = None,
+        action: Gtk.FileChooserAction = Gtk.FileChooserAction.OPEN,
+        accept_label: str | None = None,
+        cancel_label: str | None = None,
+    ):
+        return self.widget_class(
+            title=title,
+            action=action,
+            accept_label=accept_label,
+            cancel_label=cancel_label,
+        )
+
+    @pytest.mark.unit
+    def test_init(self):
+        """Should create an instance of the widget class with attributes set to default
+        values."""
+        dut = self.make_dut()
+        assert isinstance(dut, self.widget_class)
+
+    @pytest.mark.unit
+    def test_init_with_title(self):
+        """Should create an instance of the widget class with the passed title."""
+        dut = self.make_dut(title="Test Title")
+
+        assert dut.get_property("title") == "Test Title"
+        assert dut.do_get_property("title") == "Test Title"
+        assert dut.get_title() == "Test Title"
+
+    @pytest.mark.unit
+    def test_init_with_action(self):
+        """Should create an instance of the widget class with the passed action."""
+        dut = self.make_dut(action=Gtk.FileChooserAction.SELECT_FOLDER)
+
+        assert dut.get_action() == Gtk.FileChooserAction.SELECT_FOLDER
+
+    @pytest.mark.unit
+    def test_init_with_accept_label(self):
+        """Should create an instance of the widget class with the passed accept
+        label."""
+        dut = self.make_dut(accept_label="Test Accept")
+
+        assert dut.get_property("accept_label") == "Test Accept"
+        assert dut.do_get_property("accept_label") == "Test Accept"
+        assert dut.get_accept_label() == "Test Accept"
+
+    @pytest.mark.unit
+    def test_init_with_cancel_label(self):
+        """Should create an instance of the widget class with the passed cancel
+        label."""
+        dut = self.make_dut(cancel_label="Test Cancel")
+
+        assert dut.get_property("cancel_label") == "Test Cancel"
+        assert dut.do_get_property("cancel_label") == "Test Cancel"
+        assert dut.get_cancel_label() == "Test Cancel"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -67,5 +124,7 @@ class TestGTK3FileChooserNative(BaseGTK3GObjectTests):
             GTK3WidgetProperties(accept_label="Test Accept", cancel_label="Test Cancel")
         )
 
-        assert dut.do_get_property("accept_label") == "Test Accept"
-        assert dut.do_get_property("cancel_label") == "Test Cancel"
+        assert dut.get_property("accept_label") == "Test Accept"
+        assert dut.get_accept_label() == "Test Accept"
+        assert dut.get_property("cancel_label") == "Test Cancel"
+        assert dut.get_cancel_label() == "Test Cancel"
