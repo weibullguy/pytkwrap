@@ -11,7 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.dialog import GTK3Dialog
-from pytkwrap.gtk3.file import GTK3FileChooserButton
+from pytkwrap.gtk3.file import GTK3FileChooserButton, GTK3FileChooserDialog
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -66,6 +66,35 @@ class TestGTK3FileChooserButton(BaseGTK3GObjectTests):
         | EXPECTED_FILECHOOSERBUTTON_PROPERTIES
     )
 
+    def make_dut(
+        self, title="Select a File", action=Gtk.FileChooserAction.OPEN, dialog=None
+    ):
+        return self.widget_class(title, action, dialog)
+
+    @pytest.mark.unit
+    def test_init_with_title(self):
+        """Should create a GTK3FileChooserButton with the passed title."""
+        dut = self.make_dut(title="Test Title")
+
+        assert dut.get_property("title") == "Test Title"
+        assert dut.do_get_property("title") == "Test Title"
+        assert dut.get_title() == "Test Title"
+
+    @pytest.mark.unit
+    def test_init_with_action(self):
+        """Should create a GTK3FileChooserButton with the passed action."""
+        dut = self.make_dut(action=Gtk.FileChooserAction.SELECT_FOLDER)
+
+        assert dut.get_action() == Gtk.FileChooserAction.SELECT_FOLDER
+
+    @pytest.mark.unit
+    def test_init_with_dialog(self):
+        """Should create a GTK3FileChooserButton with the passed dialog."""
+        _dialog = GTK3FileChooserDialog()
+        dut = self.make_dut(dialog=_dialog)
+
+        assert isinstance(dut, GTK3FileChooserButton)
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -93,4 +122,6 @@ class TestGTK3FileChooserButton(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("title") == "Test Title"
+        assert dut.get_title() == "Test Title"
         assert dut.get_property("width_chars") == 25
+        assert dut.get_width_chars() == 25
