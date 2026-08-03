@@ -67,3 +67,12 @@ class TestGTK3FileChooserDialog(BaseGTK3GObjectTests):
         | EXPECTED_WINDOW_PROPERTIES
         | EXPECTED_DIALOG_PROPERTIES
     )
+
+    @pytest.mark.unit
+    @pytest.mark.filterwarnings(
+        "ignore:Gtk.Window.set_opacity is deprecated:DeprecationWarning"
+    )
+    def test_do_set_properties_default(self, filter_stderr):
+        """Should set properties to default values when passed an empty
+        GTK3WidgetProperties."""
+        super().test_do_set_properties_default()
