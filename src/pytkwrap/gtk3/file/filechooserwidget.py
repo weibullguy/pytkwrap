@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.box import GTK3Box
+from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3FileChooserWidget(Gtk.FileChooserWidget, GTK3Box):
-    """Wrapper for version 3.0 Gtk.FileChooserWidget."""
+class GTK3FileChooserWidgetMixin(GTK3BoxMixin):
+    """Mixin class for GTK3FileChooserWidget."""
 
     _GTK3_FILECHOOSERWIDGET_PROPERTIES = GTK3WidgetProperties(
         search_mode=False,
@@ -34,11 +34,11 @@ class GTK3FileChooserWidget(Gtk.FileChooserWidget, GTK3Box):
         "up-folder",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3FileChooserWidget."""
-        Gtk.FileChooserWidget.__init__(self)
-        GTK3Box.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3FileChooserWidget mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_FILECHOOSERWIDGET_SIGNALS}
         )
@@ -63,3 +63,15 @@ class GTK3FileChooserWidget(Gtk.FileChooserWidget, GTK3Box):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3FileChooserWidget(Gtk.FileChooserWidget, GTK3FileChooserWidgetMixin):
+    """Wrapper for version 3.0 Gtk.FileChooserWidget."""
+
+    def __init__(
+        self,
+        action: Gtk.FileChooserAction = Gtk.FileChooserAction.OPEN,
+    ) -> None:
+        """Initialize an instance of the GTK3FileChooserWidget."""
+        Gtk.FileChooserWidget.__init__(self, action=action)
+        GTK3FileChooserWidgetMixin.__init__(self)
