@@ -8,16 +8,16 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes as PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.buttons.button import GTK3Button as GTK3Button
+from pytkwrap.gtk3.button.button import GTK3ButtonMixin as GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3FontButton(Gtk.FontButton, GTK3Button):
+class GTK3FontButtonMixin(GTK3ButtonMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
     _GTK3_FONT_BUTTON_ATTRIBUTES: PyTkWrapAttributes
     _GTK3_FONT_BUTTON_PROPERTIES: Incomplete
     _GTK3_FONT_BUTTON_SIGNALS: Incomplete
-    def __init__(self) -> None: ...
+    def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
@@ -25,3 +25,6 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
+
+class GTK3FontButton(Gtk.FontButton, GTK3FontButtonMixin):
+    def __init__(self, font_name: str = "Sans 12") -> None: ...

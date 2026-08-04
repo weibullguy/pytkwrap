@@ -11,12 +11,12 @@ from datetime import date
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.button import GTK3Button
+from pytkwrap.gtk3.button.button import GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3FontButton(Gtk.FontButton, GTK3Button):
-    """Wrapper for version 3.0 Gtk.FontButton."""
+class GTK3FontButtonMixin(GTK3ButtonMixin):
+    """Mixin class for GTK3FontButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -37,17 +37,16 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
         "font-set",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3FontButton."""
-        Gtk.FontButton.__init__(self)
-        GTK3Button.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3FontButton mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_FONT_BUTTON_ATTRIBUTES)
-        self.dic_properties.update(self._GTK3_FONT_BUTTON_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_FONT_BUTTON_SIGNALS}
         )
+        self.dic_properties.update(self._GTK3_FONT_BUTTON_PROPERTIES)
 
     def do_set_properties(
         self,
@@ -66,6 +65,7 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3FontButton.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.set_font(self.dic_properties["font_name"])
@@ -110,3 +110,14 @@ class GTK3FontButton(Gtk.FontButton, GTK3Button):
             super().do_set_value(value)
         self.dic_properties["font_name"] = value
         self.set_font(str(value))
+
+
+class GTK3FontButton(Gtk.FontButton, GTK3FontButtonMixin):
+    """Wrapper for version 3.0 Gtk.FontButton."""
+
+    def __init__(self, font_name: str = "Sans 12") -> None:
+        """Initialize an instance of the GTK3FontButton."""
+        Gtk.FontButton.__init__(self, font_name=font_name)
+        GTK3FontButtonMixin.__init__(self)
+
+        self.do_set_value(font_name)

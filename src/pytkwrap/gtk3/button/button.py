@@ -37,9 +37,9 @@ class GTK3ButtonMixin(GTK3BinMixin):
         # "add", "remove", "set-focus-child"
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3Button widget."""
-        GTK3BinMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
