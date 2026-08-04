@@ -12,7 +12,7 @@ import pytest
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.icon import GTK3IconView
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from tests.gtk3.conftest import BaseGTK3GObjectTests
+from tests.gtk3.conftest import BaseGTK3GObjectTests, filter_stderr
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
     EXPECTED_GOBJECT_HANDLER_IDS,
@@ -34,6 +34,7 @@ from tests.gtk3.icon.constants import (
 )
 
 
+@pytest.mark.usefixtures("filter_stderr")
 @pytest.mark.usefixtures("suppress_stderr")
 class TestGTK3IconView(BaseGTK3GObjectTests):
     """Test class for the GTK3IconView class."""
@@ -59,6 +60,18 @@ class TestGTK3IconView(BaseGTK3GObjectTests):
         | EXPECTED_CONTAINER_PROPERTIES
         | EXPECTED_ICONVIEW_PROPERTIES
     )
+
+    def make_dut(self, model=None):
+        return self.widget_class(model)
+
+    @pytest.mark.unit
+    def test_init_with_model(self):
+        """Should initialize an instance of a GTK3IconView with a model."""
+        _model = Gtk.ListStore()
+        dut = self.make_dut(model=_model)
+
+        assert dut.get_property("model") == _model
+        assert dut.get_model() == _model
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
@@ -86,7 +99,8 @@ class TestGTK3IconView(BaseGTK3GObjectTests):
         assert dut.do_get_property("tooltip_column") == -1
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
+    @pytest.mark.filterwarnings("ignore:gtk_list_store_get_column_type")
+    def test_do_set_properties(self, filter_stderr):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
         _model = Gtk.ListStore()
 
