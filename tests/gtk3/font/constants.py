@@ -23,3 +23,5 @@ EXPECTED_FONTBUTTON_PROPERTIES = {
     "use_font": False,
     "use_size": False,
 }
+
+EXPECTED_FONTCHOOSERDIALOG_PROPERTIES = {"title": "Choose a Font"}
