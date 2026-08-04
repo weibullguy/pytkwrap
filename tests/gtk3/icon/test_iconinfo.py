@@ -11,11 +11,6 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.icon import GTK3IconInfo
-from pytkwrap.gtk3.mixins import (
-    GTK3WidgetAttributes,
-    GTK3WidgetProperties,
-    set_widget_sensitivity,
-)
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
