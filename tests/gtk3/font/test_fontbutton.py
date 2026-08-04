@@ -92,6 +92,18 @@ class TestGTK3FontButton(BaseGTK3DataWidgetTests):
         ("Sans", "16"),
     ]
 
+    def make_dut(self, font_name="Sans 12"):
+        return self.widget_class(font_name=font_name)
+
+    @pytest.mark.unit
+    def test_init_with_font(self):
+        """Should create a GTK3FontButton with the passed font."""
+        dut = self.make_dut(font_name="Sans 16")
+
+        assert dut.get_font() == "Sans 16"
+        assert dut.get_property("font_name") == "Sans 16"
+        assert dut.do_get_property("font_name") == "Sans 16"
+
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set attributes to default values when passed an empty
@@ -145,12 +157,18 @@ class TestGTK3FontButton(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert dut.do_get_property("font_name") == "Sans 10"
-        assert not dut.do_get_property("show_size")
-        assert not dut.do_get_property("show_style")
-        assert dut.do_get_property("title") == "Choose a Font"
-        assert dut.do_get_property("use_font")
-        assert dut.do_get_property("use_size")
+        assert dut.get_property("font_name") == "Sans 10"
+        assert dut.get_font() == "Sans 10"
+        assert not dut.get_property("show_size")
+        assert not dut.get_show_size()
+        assert not dut.get_property("show_style")
+        assert not dut.get_show_style()
+        assert dut.get_property("title") == "Choose a Font"
+        assert dut.get_title() == "Choose a Font"
+        assert dut.get_property("use_font")
+        assert dut.get_use_font()
+        assert dut.get_property("use_size")
+        assert dut.get_use_size()
 
     @pytest.mark.unit
     def test_do_set_value(self):
