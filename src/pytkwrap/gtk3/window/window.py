@@ -104,7 +104,9 @@ class GTK3WindowMixin(GTK3BinMixin):
         if self.dic_properties["startup_id"] is not None:
             self.set_startup_id(self.dic_properties["startup_id"])
 
-        self.set_title(self.dic_properties["title"])
+        if self.dic_properties["title"] is not None:
+            self.set_title(self.dic_properties["title"])
+
         self.set_transient_for(self.dic_properties["transient_for"])
         self.set_type_hint(self.dic_properties["type_hint"])
         self.set_urgency_hint(self.dic_properties["urgency_hint"])
