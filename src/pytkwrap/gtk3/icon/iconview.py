@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container import GTK3Container
+from pytkwrap.gtk3.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3IconView(Gtk.IconView, GTK3Container):
-    """Wrapper for version 3.0 Gtk.IconView."""
+class GTK3IconViewMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3IconView."""
 
     _GTK3_ICONVIEW_PROPERTIES = GTK3WidgetProperties(
         activate_on_single_click=False,
@@ -45,11 +45,11 @@ class GTK3IconView(Gtk.IconView, GTK3Container):
         "unselect-all",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3IconView."""
-        Gtk.IconView.__init__(self)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3IconView mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_ICONVIEW_SIGNALS}
         )
@@ -87,3 +87,12 @@ class GTK3IconView(Gtk.IconView, GTK3Container):
         self.set_spacing(self.dic_properties["spacing"])
         self.set_text_column(self.dic_properties["text_column"])
         self.set_tooltip_column(self.dic_properties["tooltip_column"])
+
+
+class GTK3IconView(Gtk.IconView, GTK3IconViewMixin):
+    """Wrapper for version 3.0 Gtk.IconView."""
+
+    def __init__(self, model: Gtk.TreeModel) -> None:
+        """Initialize an instance of the GTK3IconView."""
+        Gtk.IconView.__init__(self, model=model)
+        GTK3IconViewMixin.__init__(self)
