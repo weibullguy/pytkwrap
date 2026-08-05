@@ -11,12 +11,12 @@ from datetime import date, datetime
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 from pytkwrap.utilities import none_to_default
 
 
-class GTK3Label(Gtk.Label, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.Label."""
+class GTK3LabelMixin(GTK3WidgetMixin):
+    """Mixin class for GTK3Label."""
 
     _DEFAULT_HEIGHT = 30
     _DEFAULT_WIDTH = 200
@@ -51,11 +51,11 @@ class GTK3Label(Gtk.Label, GTK3Widget):
         "populate-popup",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Label."""
-        Gtk.Label.__init__(self)
-        GTK3Widget.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Label mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_LABEL_ATTRIBUTES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_LABEL_SIGNALS}
@@ -159,3 +159,15 @@ class GTK3Label(Gtk.Label, GTK3Widget):
             return
 
         self.do_set_value(_value)
+
+
+class GTK3Label(Gtk.Label, GTK3LabelMixin):
+    """Wrapper for version 3.0 Gtk.Label."""
+
+    def __init__(self, label: str = "") -> None:
+        """Initialize an instance of the GTK3Label."""
+        Gtk.Label.__init__(self, label=label)
+        GTK3LabelMixin.__init__(self)
+
+        self.dic_properties["label"] = label
+        self.do_set_properties(self.dic_properties)

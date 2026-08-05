@@ -275,7 +275,6 @@ class GTK3Entry(Gtk.Entry, GTK3EntryMixin):
         font : FontDescription | None
             The font description for the font used by the GTK3Entry.
         """
-        # GTK3Entry fails to initialize if calling super().__init__().
         Gtk.Entry.__init__(self, buffer=buffer)
         GTK3EntryMixin.__init__(self)
 
