@@ -68,7 +68,7 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
         )
 
         self.display_index = 0
-        self._n_items = 0
+        self.n_items = 0
 
     def do_get_attribute(
         self,
