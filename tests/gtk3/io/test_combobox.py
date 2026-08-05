@@ -246,25 +246,21 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
 
     @pytest.mark.unit
     @pytest.mark.filterwarnings("ignore:gtk_combo_box_set_entry_text_column")
-    def test_do_set_properties(self, filter_stderr):
+    def test_do_set_properties(self, filter_stderr, compound_combo):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        dut = self.make_dut()
-        dut.do_set_properties(
+        compound_combo.do_set_properties(
             GTK3WidgetProperties(
-                active=3,
-                active_id="Value of the ID column for the active row.",
+                active=1,
+                active_id="Index 1",
                 border_width=5,
                 button_sensitivity=Gtk.SensitivityType.ON,
                 column_span_column=2,
-                editing_canceled=False,
-                entry_text_column=5,
-                has_entry=True,
+                entry_text_column=1,
                 has_frame=False,
-                id_column=3,
-                model=Gtk.ListStore(),
+                id_column=1,
                 popup_fixed_width=True,
-                row_span_column=2,
-                wrap_width=10,
+                row_span_column=1,
+                wrap_width=0,
                 can_focus=True,
                 height_request=70,
                 sensitive=True,
@@ -275,28 +271,35 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert dut.do_get_property("active") == 3
+        assert compound_combo.get_property("active") == 1
+        assert compound_combo.get_active() == 1
+        assert compound_combo.get_property("active_id") == "is"
+        assert compound_combo.get_active_id() == "is"
+        assert compound_combo.get_property("column_span_column") == 2
+        assert compound_combo.get_column_span_column() == 2
+        assert compound_combo.get_property("entry_text_column") == 1
+        assert compound_combo.get_entry_text_column() == 1
+        assert not compound_combo.get_property("has_entry")
+        assert not compound_combo.get_has_entry()
+        assert not compound_combo.get_property("has_frame")
+        assert compound_combo.get_property("id_column") == 1
+        assert compound_combo.get_id_column() == 1
+        assert compound_combo.get_property("row_span_column") == 1
+        assert compound_combo.get_row_span_column() == 1
+        assert compound_combo.get_property("border_width") == 5
         assert (
-            dut.do_get_property("active_id")
-            == "Value of the ID column for the active row."
+            compound_combo.get_property("button_sensitivity") == Gtk.SensitivityType.ON
         )
-        assert dut.do_get_property("column_span_column") == 2
-        assert dut.do_get_property("entry_text_column") == 5
-        assert dut.do_get_property("has_entry")
-        assert not dut.do_get_property("has_frame")
-        assert dut.do_get_property("id_column") == 3
-        assert dut.do_get_property("row_span_column") == 2
-        assert dut.do_get_property("border_width") == 5
-        assert dut.do_get_property("button_sensitivity") == Gtk.SensitivityType.ON
-        assert dut.do_get_property("can_focus")
-        assert not dut.do_get_property("editing_canceled")
-        assert isinstance(dut.do_get_property("model"), Gtk.ListStore)
-        assert dut.do_get_property("popup_fixed_width")
-        assert dut.do_get_property("wrap_width") == 10
-        assert dut.do_get_property("height_request") == 70
-        assert dut.do_get_property("tooltip_markup") == "<b>Test Combo Tooltip</b>"
-        assert dut.do_get_property("tooltip_text") == "Test Combo Tooltip"
-        assert dut.do_get_property("width_request") == 150
+        assert compound_combo.get_property("can_focus")
+        assert not compound_combo.get_property("editing_canceled")
+        assert isinstance(compound_combo.get_property("model"), Gtk.ListStore)
+        assert compound_combo.get_property("popup_fixed_width")
+        assert compound_combo.get_property("height_request") == 70
+        assert compound_combo.get_property("tooltip_markup") == "Test Combo Tooltip"
+        assert compound_combo.get_property("tooltip_text") == "Test Combo Tooltip"
+        assert compound_combo.get_property("width_request") == 150
+        assert compound_combo.get_property("wrap_width") == 0
+        assert compound_combo.get_wrap_width() == 0
 
     @pytest.mark.unit
     def test_do_load_combobox(self):

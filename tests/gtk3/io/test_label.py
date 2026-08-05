@@ -53,6 +53,25 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_LABEL_PROPERTIES
 
+    def make_dut(self, label=""):
+        return self.widget_class(label=label)
+
+    @pytest.mark.unit
+    def test_init_with_label(self):
+        """Initiate a GTK3Label with a label."""
+        dut = self.make_dut(label="Test Label")
+
+        assert isinstance(dut, GTK3Label)
+        assert dut.get_label() == "Test Label"
+
+    @pytest.mark.unit
+    def test_init_with_mnemonic(self):
+        """Initiate a GTK3Label with a non-default mnemonic label."""
+        dut = self.make_dut(label="_Test Label")
+
+        assert isinstance(dut, GTK3Label)
+        assert dut.get_label() == "_Test Label"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -105,20 +124,28 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         assert dut.get_label() == "Test Label"
         assert dut.get_property("lines") == 2
         assert dut.get_lines() == 2
-        assert dut.get_line_wrap()
         assert dut.get_property("wrap_mode") == Pango.WrapMode.CHAR
         assert dut.get_line_wrap_mode() == Pango.WrapMode.CHAR
-
         assert dut.get_property("attributes") is None
+        assert dut.get_attributes() is None
         assert dut.get_property("max_width_chars") == -1
+        assert dut.get_max_width_chars() == -1
         assert dut.get_property("mnemonic_widget") is None
+        assert dut.get_mnemonic_widget() is None
         assert not dut.get_property("selectable")
+        assert not dut.get_selectable()
         assert not dut.get_property("single_line_mode")
+        assert not dut.get_single_line_mode()
         assert dut.get_property("track_visited_links")
+        assert dut.get_track_visited_links()
         assert not dut.get_property("use_markup")
+        assert not dut.get_use_markup()
         assert not dut.get_property("use_underline")
+        assert not dut.get_use_underline()
         assert dut.get_property("width_chars") == -1
+        assert dut.get_width_chars() == -1
         assert dut.get_property("wrap")
+        assert dut.get_line_wrap()
 
     @pytest.mark.unit
     def test_do_get_value(self):
