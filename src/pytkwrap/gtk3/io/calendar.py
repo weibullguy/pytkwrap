@@ -7,16 +7,17 @@
 # Standard Library Imports
 from collections.abc import Mapping
 from datetime import date
+from typing import cast
 
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
-class GTK3Calendar(Gtk.Calendar, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.Calendar."""
+class GTK3CalendarMixin(GTK3WidgetMixin):
+    """MIxin class for GTK3Calendar."""
 
     _GTK3_CALENDAR_ATTRIBUTES = PyTkWrapAttributes(
         default_value=date.today(),
@@ -51,16 +52,16 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
         "prev-year",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Calendar."""
-        Gtk.Calendar.__init__(self)
-        GTK3Widget.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Calendar mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_CALENDAR_ATTRIBUTES)
-        self.dic_properties.update(self._GTK3_CALENDAR_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_CALENDAR_SIGNALS}
         )
+        self.dic_properties.update(self._GTK3_CALENDAR_PROPERTIES)
 
     def do_get_value(self) -> date:
         """Retrieve a datetime.date representing the selected date in the GTK3Calendar.
@@ -99,16 +100,22 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
         self.set_detail_height_rows(self.dic_properties["detail_height_rows"])
         self.set_detail_width_chars(self.dic_properties["detail_width_chars"])
 
-        if self.dic_properties["show_heading"]:
-            self.set_display_options(Gtk.CalendarDisplayOptions(1))
-        if self.dic_properties["show_day_names"]:
-            self.set_display_options(Gtk.CalendarDisplayOptions(2))
-        if self.dic_properties["show_details"]:
-            self.set_display_options(Gtk.CalendarDisplayOptions(32))
-        if self.dic_properties["no_month_change"]:
-            self.set_display_options(Gtk.CalendarDisplayOptions(4))
-        if self.dic_properties["show_week_numbers"]:
-            self.set_display_options(Gtk.CalendarDisplayOptions(8))
+        _option_map = {
+            "show_heading": Gtk.CalendarDisplayOptions.SHOW_HEADING,
+            "show_day_names": Gtk.CalendarDisplayOptions.SHOW_DAY_NAMES,
+            "show_details": Gtk.CalendarDisplayOptions.SHOW_DETAILS,
+            "no_month_change": Gtk.CalendarDisplayOptions.NO_MONTH_CHANGE,
+            "show_week_numbers": Gtk.CalendarDisplayOptions.SHOW_WEEK_NUMBERS,
+        }
+        _display_options = sum(
+            (
+                flag
+                for key, flag in _option_map.items()
+                if self.dic_properties.get(key, False)
+            ),
+            Gtk.CalendarDisplayOptions(0),
+        )
+        self.set_display_options(_display_options)
 
         for _property in [
             "day",
@@ -127,13 +134,33 @@ class GTK3Calendar(Gtk.Calendar, GTK3Widget):
         Parameters
         ----------
         value : bool | date | float | int | object | str | tuple | None
-            The value to set for the GTK3Calendar..
+            The value to set for the GTK3Calendar.
         """
-        if not isinstance(value, (date, tuple)):
-            super().do_set_value(value)
+        _date: date | None = None
 
         if isinstance(value, tuple):
-            value = date(*value)
+            if len(value) == 3 and all(  # noqa: PLR2004
+                isinstance(val, int) for val in value
+            ):
+                _date = date(*cast(tuple[int, int, int], value))
+            else:
+                super().do_set_value(value)
+        elif isinstance(value, date):
+            _date = value
+        else:
+            super().do_set_value(value)
 
-        self.select_month(value.month - 1, value.year)
-        self.select_day(value.day)
+        if _date is None:
+            return
+
+        self.select_month(_date.month - 1, _date.year)
+        self.select_day(_date.day)
+
+
+class GTK3Calendar(Gtk.Calendar, GTK3CalendarMixin):
+    """Wrapper for version 3.0 Gtk.Calendar."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Calendar."""
+        Gtk.Calendar.__init__(self)
+        GTK3CalendarMixin.__init__(self)
