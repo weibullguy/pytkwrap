@@ -149,16 +149,21 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert dut.do_get_property("day") == 1
-        assert dut.do_get_property("detail_height_rows") == 2
-        assert dut.do_get_property("detail_width_chars") == 25
-        assert dut.do_get_property("month") == 6
-        assert dut.do_get_property("no_month_change")
-        assert not dut.do_get_property("show_day_names")
-        assert not dut.do_get_property("show_details")
-        assert not dut.do_get_property("show_heading")
-        assert dut.do_get_property("show_week_numbers")
-        assert dut.do_get_property("year") == 2026
+        assert dut.get_property("day") == 1
+        assert dut.get_date().day == 1
+        assert dut.get_property("detail-height-rows") == 2
+        assert dut.get_detail_height_rows() == 2
+        assert dut.get_property("detail-width-chars") == 25
+        assert dut.get_detail_width_chars() == 25
+        assert dut.get_property("month") == 6
+        assert dut.get_date().month == 6
+        assert dut.get_property("no-month-change")
+        assert not dut.get_property("show_day_names")
+        assert not dut.get_property("show_details")
+        assert not dut.get_property("show_heading")
+        assert dut.get_property("show_week_numbers")
+        assert dut.get_property("year") == 2026
+        assert dut.get_date().year == 2026
 
     @pytest.mark.unit
     def test_do_set_edit_signal_callbacks(self):
