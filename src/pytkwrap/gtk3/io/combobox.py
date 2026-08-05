@@ -7,14 +7,13 @@
 # Standard Library Imports
 from collections.abc import Mapping
 from datetime import date
-from types import EllipsisType
 from typing import Any
 
 # Third Party Imports
 from gi.overrides.GdkPixbuf import Pixbuf  # type: ignore[import-untyped]
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import GObject, Gtk
+from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
@@ -26,7 +25,6 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
     _DEFAULT_HEIGHT: int = 30
     _DEFAULT_WIDTH: int = 200
     _GTK3_COMBOBOX_ATTRIBUTES = GTK3WidgetAttributes(
-        column_types=[GObject.TYPE_STRING],
         default_value=-1,
         edit_signal="changed",
     )
@@ -69,6 +67,9 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
             {_signal: -1 for _signal in self._GTK3_COMBOBOX_SIGNALS}
         )
 
+        self.display_index = 0
+        self._n_items = 0
+
     def do_get_attribute(
         self,
         attribute: str,
@@ -89,23 +90,6 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
             return self.dic_attributes[attribute]
         return super().do_get_attribute(attribute)
 
-    def do_set_attributes(self, attributes: Mapping[str, object]) -> None:
-        """Set the values of the GTK3ComboBox-specific attributes.
-
-        Parameters
-        ----------
-        attributes : GTK3WidgetAttributes
-            The typed dict, preferred, or non-typed dict with the attribute values to
-            set for the GTK3ComboBox.
-        """
-        super().do_set_attributes(attributes)
-
-        for _attr in ["column_types"]:
-            self.dic_attributes[_attr] = attributes.get(
-                _attr,
-                self.dic_attributes[_attr],
-            )
-
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None:
@@ -117,6 +101,7 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3ComboBox.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.set_active(self.dic_properties["active"])
@@ -129,11 +114,6 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
         self.set_popup_fixed_width(self.dic_properties["popup_fixed_width"])
         self.set_row_span_column(self.dic_properties["row_span_column"])
         self.set_wrap_width(self.dic_properties["wrap_width"])
-
-        if self.dic_properties["model"]:
-            self.dic_properties["model"].set_column_types(  # type: ignore[attr-defined]
-                self.dic_attributes["column_types"]
-            )
         self.set_model(self.dic_properties["model"])
 
         for _property in [
@@ -168,7 +148,9 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
 
     def do_load_combo(
         self,
-        entries: list[str | list[str | int | Pixbuf | None]],
+        entries: list[
+            str | list[str | int | Pixbuf | None] | tuple[str | int | Pixbuf | None],
+        ],
     ) -> None:
         """Load the GTK3ComboBox.
 
@@ -189,11 +171,10 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
         if _hid != -1:
             with self.handler_block(_hid):
                 _model.append([""] * self.n_items)
-                if not self.simple:
-                    for _entry in entries:
-                        _model.append(list(_entry))
-                else:
-                    for _entry in entries:
+                for _entry in entries:
+                    if isinstance(_entry, (list, tuple)):
+                        _model.append(_entry)
+                    else:
                         _model.append([_entry])
 
     def do_get_value(self) -> str:
@@ -252,48 +233,18 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3ComboBoxMixin):
 
     def __init__(
         self,
-        display_index: int = 0,
-        simple: bool = True,
-        n_items: int = 1,
-        column_types: list[EllipsisType] | list[GObject.GType] | None = None,
         has_entry: bool = False,
+        model: Gtk.TreeModel | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3ComboBox.
-
-        Parameters
-        ----------
-        display_index : int
-            The index in the GTK3ComboBox Gtk.ListView to display. Default is 0.
-        simple : bool
-            Indicates whether to make a simple (one item) or complex (n_item)
-            GTK3ComboBox. Default is True.
-        n_items : int
-            The number of items (columns) to add.
-        column_types : list
-            The column types to add to the GTK3ComboBox model.
-        has_entry : bool
-            Indicates whether GTK3ComboBox will have an entry.
-        """
-        Gtk.ComboBox.__init__(self)
+        """Initialize an instance of the GTK3ComboBox."""
+        Gtk.ComboBox.__init__(self, has_entry=has_entry, model=model)
         GTK3ComboBoxMixin.__init__(self)
 
         # Initialize public instance attributes.
-        self.dic_attributes["column_types"] = column_types
         self.dic_properties["has_entry"] = has_entry
+        self.dic_properties["model"] = model
 
-        self.display_index: int = display_index
-        self.n_items: int = n_items
-        self.simple: bool = simple
-
-        if self.dic_attributes["column_types"] is None:
-            self.dic_attributes["column_types"] = [GObject.TYPE_STRING] * self.n_items
-
-        # TODO: Update widgets to use wrapped versions.
-        self.set_model(Gtk.ListStore(*self.dic_attributes["column_types"]))
-        for _idx, __ in enumerate(self.dic_attributes["column_types"]):
-            _cell = Gtk.CellRendererText()
-            self.pack_end(_cell, True)
-            if _idx == self.display_index:
-                self.add_attribute(_cell, "text", self.display_index)
+        if model is not None:
+            self.n_items = model.get_n_columns()
 
         self.show()

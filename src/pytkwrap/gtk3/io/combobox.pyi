@@ -1,7 +1,7 @@
 # Standard Library Imports
 from collections.abc import Mapping
 from datetime import date
-from types import EllipsisType
+from types import EllipsisType as EllipsisType
 from typing import Any
 
 # Third Party Imports
@@ -21,17 +21,21 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
     _GTK3_COMBOBOX_ATTRIBUTES: Incomplete
     _GTK3_COMBOBOX_PROPERTIES: Incomplete
     _GTK3_COMBOBOX_SIGNALS: list[str]
+    display_index: int
+    _n_items: int
     def __init__(self) -> None: ...
     def do_get_attribute(
         self, attribute: str
     ) -> bool | date | float | int | object | str | None: ...
-    def do_set_attributes(self, attributes: Mapping[str, object]) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
     def do_get_options(self) -> dict[int, Any]: ...
     def do_load_combo(
-        self, entries: list[str | list[str | int | Pixbuf | None]]
+        self,
+        entries: list[
+            str | list[str | int | Pixbuf | None] | tuple[str | int | Pixbuf | None]
+        ],
     ) -> None: ...
     def do_get_value(self) -> str: ...
     def do_set_value(
@@ -40,14 +44,7 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
     def get_value_at_index(self, display_index: int = -1) -> str: ...
 
 class GTK3ComboBox(Gtk.ComboBox, GTK3ComboBoxMixin):
-    display_index: int
-    n_items: int
-    simple: bool
+    n_items: Incomplete
     def __init__(
-        self,
-        display_index: int = 0,
-        simple: bool = True,
-        n_items: int = 1,
-        column_types: list[EllipsisType] | list[GObject.GType] | None = None,
-        has_entry: bool = False,
+        self, has_entry: bool = False, model: Gtk.TreeModel | None = None
     ) -> None: ...

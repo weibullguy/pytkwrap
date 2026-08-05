@@ -635,10 +635,10 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
             If the signal name is not valid for the widget.
         """
         _index, _value = next(iter(package.items()))
-        _value = none_to_default(_value, self.dic_attributes["default_value"])
 
         if _index != self.dic_attributes["index"]:
             return
+        _value = none_to_default(_value, self.dic_attributes["default_value"])
 
         try:
             with self._block_edit_handlers():
