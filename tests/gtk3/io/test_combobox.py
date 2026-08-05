@@ -73,27 +73,17 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         | EXPECTED_COMBOBOX_PROPERTIES
     )
 
-    def make_dut(
-        self,
-        display_index=0,
-        simple=True,
-        n_items=1,
-        column_types=None,
-        has_entry=False,
-    ):
+    def make_dut(self, has_entry=False, model=None):
         """Create a device under test for the GTK3ComboBox."""
-        return self.widget_class(
-            display_index=display_index,
-            simple=simple,
-            n_items=n_items,
-            column_types=column_types,
-            has_entry=has_entry,
-        )
+        return self.widget_class(has_entry=has_entry, model=model)
 
     @pytest.fixture
     def compound_combo(self):
         """Create compound GTK3ComboBox device under test."""
-        dut = self.make_dut(display_index=1, simple=False, n_items=3)
+        _model = Gtk.ListStore(
+            GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING
+        )
+        dut = self.make_dut(model=_model)
         dut.index = 1
         dut.dic_attributes["send_topic"] = "combo_changed"
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
@@ -103,7 +93,8 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.fixture
     def simple_combo(self):
         """Create simple (default) GTK3ComboBox device under test."""
-        dut = self.make_dut(column_types=[GObject.TYPE_STRING])
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
         dut.index = 1
         dut.dic_attributes["send_topic"] = "combo_changed"
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
@@ -113,7 +104,8 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.fixture
     def subscribed_combo(self):
         """Create GTK3ComboBox dut that is subscribed to a pubsub message."""
-        dut = self.make_dut(column_types=[GObject.TYPE_STRING])
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
         dut.index = 1
         dut.dic_attributes["send_topic"] = "combo_changed"
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
@@ -144,69 +136,42 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         for _signal in GTK3ComboBox._GTK3_COMBOBOX_SIGNALS:
             assert _signal in dut.dic_handler_id
 
-        assert dut.dic_attributes["column_types"] == [GObject.TYPE_STRING]
         assert not dut.dic_properties["has_entry"]
-        assert dut.display_index == 0
-        assert dut.n_items == 1
-        assert dut.simple
-        assert dut.get_model().get_n_columns() == 1
-        assert dut.get_model().get_column_type(0) == GObject.TYPE_STRING
 
     @pytest.mark.unit
-    def test_init_combobox_compound(self):
-        """Create a GTK3ComboBox with three columns when passed simple=False."""
-        dut = self.make_dut(
-            display_index=2,
-            simple=False,
-            n_items=3,
-            column_types=[
-                GObject.TYPE_STRING,
-                GObject.TYPE_STRING,
-                GObject.TYPE_STRING,
-            ],
-        )
+    def test_init_with_entry(self):
+        """Create a GTK3ComboBox with an entry when passed has_entry=True."""
+        dut = self.make_dut(has_entry=True)
 
         assert isinstance(dut, GTK3ComboBox)
-        assert dut._DEFAULT_HEIGHT == 30
-        assert dut._DEFAULT_WIDTH == 200
-        # All handler IDs should start at -1.
-        assert all(_hid == -1 for _hid in dut.dic_handler_id.values())
-        # ComboBox-specific attributes should be registered.
-        for _attribute in GTK3ComboBox._GTK3_COMBOBOX_ATTRIBUTES:
-            assert _attribute in dut.dic_attributes
-        # ComboBox-specific properties should be registered.
-        for _property in GTK3ComboBox._GTK3_COMBOBOX_PROPERTIES:
-            assert _property in dut.dic_properties
-        # ComboBox-specific signals should be registered.
-        for _signal in GTK3ComboBox._GTK3_COMBOBOX_SIGNALS:
-            assert _signal in dut.dic_handler_id
-
-        assert dut.dic_attributes["column_types"] == [
-            GObject.TYPE_STRING,
-            GObject.TYPE_STRING,
-            GObject.TYPE_STRING,
-        ]
-        assert not dut.dic_properties["has_entry"]
-        assert dut.display_index == 2
-        assert dut.n_items == 3
-        assert not dut.simple
-        assert dut.get_model().get_n_columns() == 3
-        assert dut.get_model().get_column_type(0) == GObject.TYPE_STRING
-        assert dut.get_model().get_column_type(1) == GObject.TYPE_STRING
-        assert dut.get_model().get_column_type(2) == GObject.TYPE_STRING
+        assert dut.dic_properties["has_entry"]
+        assert dut.get_has_entry()
 
     @pytest.mark.unit
-    def test_init_combobox_custom_column_types(self):
-        """Respect custom column_types passed by the caller."""
-        dut = self.make_dut(
-            n_items=2,
-            column_types=[GObject.TYPE_INT, GObject.TYPE_STRING],
-        )
+    def test_init_with_model(self):
+        """Create a GTK3ComboBox with a model when passed a Gtk.TreeModel."""
+        _model = Gtk.ListStore(GObject.TYPE_INT, GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
 
-        assert dut.dic_attributes["column_types"] == [
-            GObject.TYPE_INT,
-            GObject.TYPE_STRING,
-        ]
+        assert isinstance(dut, GTK3ComboBox)
+        assert not dut.dic_properties["has_entry"]
+        assert not dut.get_has_entry()
+        assert dut.get_model() == _model
+        assert dut.get_model().get_n_columns() == 2
+        assert dut.get_model().get_column_type(0) == GObject.TYPE_INT
+        assert dut.get_model().get_column_type(1) == GObject.TYPE_STRING
+
+    @pytest.mark.unit
+    def test_init_with_model_and_entry(self):
+        """Create a GTK3ComboBox with an entry and a model when passed a Gtk.TreeModel
+        and has_entry=True."""
+        _model = Gtk.ListStore(GObject.TYPE_INT, GObject.TYPE_STRING)
+        dut = self.make_dut(has_entry=True, model=_model)
+
+        assert isinstance(dut, GTK3ComboBox)
+        assert dut.dic_properties["has_entry"]
+        assert dut.get_has_entry()
+        assert dut.get_model() == _model
         assert dut.get_model().get_n_columns() == 2
         assert dut.get_model().get_column_type(0) == GObject.TYPE_INT
         assert dut.get_model().get_column_type(1) == GObject.TYPE_STRING
@@ -218,14 +183,8 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
 
         dut = self.make_dut()
 
-        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
-
-    @pytest.mark.unit
-    def test_do_get_attribute_from_super(self):
-        """Should return the value of the attribute name."""
-        dut = self.make_dut()
-
-        assert dut.do_get_attribute("axis") is None
+        assert dut.do_get_attribute("default_value") == -1
+        assert dut.do_get_attribute("edit_signal") == "changed"
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
@@ -234,7 +193,6 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(GTK3WidgetAttributes())
 
-        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
         assert dut.do_get_attribute("default_value") == -1
         assert dut.do_get_attribute("edit_signal") == "changed"
 
@@ -244,48 +202,13 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
         dut.do_set_attributes(
             GTK3WidgetAttributes(
-                column_types=[GObject.TYPE_INT],
                 default_value=1,
                 edit_signal="combobox_changed",
             )
         )
 
-        assert dut.do_get_attribute("column_types") == [GObject.TYPE_INT]
         assert dut.do_get_attribute("default_value") == 1
         assert dut.do_get_attribute("edit_signal") == "combobox_changed"
-
-    @pytest.mark.unit
-    def test_do_set_attributes_preserves_column_types(self):
-        """Should not override column_types set in __init__ when no column_types key is
-        passed in attributes."""
-        dut = self.make_dut(
-            n_items=2,
-            column_types=[GObject.TYPE_INT, GObject.TYPE_STRING],
-        )
-        dut.do_set_attributes(GTK3WidgetAttributes())
-
-        assert dut.do_get_attribute("column_types") == [
-            GObject.TYPE_INT,
-            GObject.TYPE_STRING,
-        ]
-
-    @pytest.mark.unit
-    def test_do_set_attributes_overrides_column_types(self):
-        """do_set_attributes() should override column_types when explicitly passed."""
-        dut = self.make_dut(
-            n_items=2,
-            column_types=[GObject.TYPE_INT, GObject.TYPE_STRING],
-        )
-        dut.do_set_attributes(
-            GTK3WidgetAttributes(
-                column_types=[GObject.TYPE_STRING, GObject.TYPE_STRING]
-            )
-        )
-
-        assert dut.do_get_attribute("column_types") == [
-            GObject.TYPE_STRING,
-            GObject.TYPE_STRING,
-        ]
 
     @pytest.mark.unit
     @pytest.mark.filterwarnings("ignore:gtk_combo_box_set_entry_text_column")
@@ -376,58 +299,28 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         assert dut.do_get_property("width_request") == 150
 
     @pytest.mark.unit
-    def test_do_load_combobox_simple(self):
+    def test_do_load_combobox(self):
         """Load a list of string values into a simple GTK3ComboBox."""
-        dut = self.make_dut()
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
         dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
 
     @pytest.mark.unit
     def test_do_load_combobox_compound(self):
         """Load a list of string values into a non-simple GTK3ComboBox."""
-        dut = self.make_dut(display_index=1, simple=False, n_items=3)
+        _model = Gtk.ListStore(
+            GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING
+        )
+        dut = self.make_dut(model=_model)
         dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(COMPOUND_TEST_LIST)
-
-    @pytest.mark.unit
-    def test_do_load_combobox_simple_not_string_list(self):
-        """Raise a TypeError when passed a list of other than strings to load or a
-        single non-string value."""
-        _test_list = [0, 1, 2, 3, 4]
-        dut = self.make_dut()
-        dut.do_set_callbacks("changed", self.mock_callback)
-
-        with pytest.raises(TypeError):
-            dut.do_load_combo(_test_list)
-        with pytest.raises(TypeError):
-            dut.do_load_combo(10)
-
-    @pytest.mark.unit
-    def test_do_load_combobox_simple_contents(self):
-        """Populate the model with a blank first entry followed by the provided
-        entries."""
-        dut = self.make_dut()
-        dut.do_set_callbacks("changed", self.mock_callback)
-        dut.do_load_combo(SIMPLE_TEST_LIST)
-
-        _options = dut.do_get_options()
-        assert _options == {0: "", 1: "Index 1", 2: "Index 2", 3: "Index 3"}
-
-    @pytest.mark.unit
-    def test_do_load_combobox_compound_contents(self):
-        """Populate the model with a blank first row followed by the provided
-        entries."""
-        dut = self.make_dut(display_index=1, simple=False, n_items=3)
-        dut.do_set_callbacks("changed", self.mock_callback)
-        dut.do_load_combo(COMPOUND_TEST_LIST)
-
-        _options = dut.do_get_options()
-        assert _options == {0: "", 1: "is", 2: "of", 3: "not"}
 
     @pytest.mark.unit
     def test_do_load_combobox_clears_previous_entries(self):
         """Clear the model before loading new entries."""
-        dut = self.make_dut()
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
         dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
         dut.do_load_combo(["Only Entry"])
@@ -438,15 +331,16 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
 
     @pytest.mark.unit
     def test_do_load_combobox_no_model(self):
-        """Return None without raising if model is None."""
+        """Return None without raising and exception if model is None."""
         dut = self.make_dut()
-        dut.set_model(None)
-        dut.do_load_combo(SIMPLE_TEST_LIST)
+
+        assert dut.do_load_combo(SIMPLE_TEST_LIST) is None
 
     @pytest.mark.unit
     def test_do_get_options_simple(self):
         """Return a dict of all the options available in a simple GTK3ComboBox."""
-        dut = self.make_dut()
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
         dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
 
@@ -462,7 +356,11 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_do_get_options_compound(self):
         """Return a dict of all the options available in a non-simple GTK3ComboBox."""
-        dut = self.make_dut(display_index=1, simple=False, n_items=3)
+        _model = Gtk.ListStore(
+            GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING
+        )
+        dut = self.make_dut(model=_model)
+        dut.display_index = 1
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], self.mock_callback)
         dut.do_load_combo(COMPOUND_TEST_LIST)
 
@@ -471,24 +369,17 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
         assert _options == {0: "", 1: "is", 2: "of", 3: "not"}
 
     @pytest.mark.unit
-    def test_do_get_options_empty(self):
-        """Return an empty dict when the model has no rows."""
-        dut = self.make_dut()
-
-        assert dut.do_get_options() == {}
-
-    @pytest.mark.unit
     def test_do_get_options_no_model(self):
         """Return an empty dict when the model is None."""
         dut = self.make_dut()
-        dut.set_model(None)
 
         assert dut.do_get_options() == {}
 
     @pytest.mark.unit
     def test_do_set_value_wrong_type(self):
         """Should raise a WrongTypeError when passed a wrong data type."""
-        dut = self.make_dut()
+        _model = Gtk.ListStore(GObject.TYPE_INT)
+        dut = self.make_dut(model=_model)
 
         with pytest.raises(WrongTypeError):
             dut.do_set_value("2")
@@ -496,7 +387,8 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_get_value_simple(self):
         """Return the value from a simple GTK3ComboBox at index X."""
-        dut = self.make_dut(column_types=[GObject.TYPE_STRING])
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
         dut.dic_attributes["index"] = 1
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
         dut.do_load_combo(SIMPLE_TEST_LIST)
@@ -509,7 +401,11 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_get_value_compound(self):
         """Return the value from a compound GTK3ComboBox at index X."""
-        dut = self.make_dut(display_index=1, simple=False, n_items=3)
+        _model = Gtk.ListStore(
+            GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING
+        )
+        dut = self.make_dut(model=_model)
+        dut.display_index = 1
         dut.dic_attributes["edit_signal"] = "changed"
         dut.dic_attributes["index"] = 1
         dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.on_changed)
@@ -535,14 +431,14 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
     def test_get_value_no_model(self):
         """Return an empty string when the model is None."""
         dut = self.make_dut()
-        dut.set_model(None)
 
         assert not dut.do_get_value()
 
     @pytest.mark.unit
     def test_get_value_no_active_selection(self):
         """Return an empty string when no row is active."""
-        dut = self.make_dut()
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
         dut.do_load_combo(SIMPLE_TEST_LIST)
 
         assert dut.get_active() == -1
@@ -568,7 +464,7 @@ class TestGTK3ComboBox(BaseGTK3DataWidgetTests):
 
         assert compound_combo.get_active() == 2
         assert compound_combo.get_value_at_index(0) == "test"
-        assert compound_combo.do_get_value() == "of"
+        assert compound_combo.do_get_value() == "test"
         assert compound_combo.get_value_at_index(2) == "the"
 
     @pytest.mark.unit

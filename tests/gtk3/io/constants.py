@@ -68,7 +68,6 @@ EXPECTED_CALENDAR_PROPERTIES = {
 }
 
 EXPECTED_COMBOBOX_ATTRIBUTES = {
-    "column_types": [GObject.TYPE_STRING],
     "default_value": -1,
     "edit_signal": "changed",
 }
