@@ -9,9 +9,11 @@ from datetime import date
 
 # Third Party Imports
 import pytest
+from pubsub import pub
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
+from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.io import GTK3TextView
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
@@ -80,7 +82,7 @@ class TestGTK3TextView(BaseGTK3DataWidgetTests):
         None,
     ]
 
-    def make_dut(self, buffer=Gtk.TextBuffer()):
+    def make_dut(self, buffer=None):
         return self.widget_class(buffer)
 
     @pytest.mark.unit
@@ -251,3 +253,37 @@ class TestGTK3TextView(BaseGTK3DataWidgetTests):
         assert dut.get_top_margin() == 80
         assert dut.get_property("wrap_mode") == Gtk.WrapMode.WORD_CHAR
         assert dut.get_wrap_mode() == Gtk.WrapMode.WORD_CHAR
+
+    @pytest.mark.unit
+    def test_do_set_callbacks_no_signal(self):
+        """Should raise an UnkSignalError when the signal name does not exist."""
+        _buffer = Gtk.TextBuffer()
+        dut = self.make_dut(buffer=_buffer)
+        pub.subscribe(self.no_signal_error_handler, "do_log_error")
+
+        with pytest.raises(UnkSignalError):
+            dut.do_set_callbacks("unk_signal", self.mock_callback)
+
+    @pytest.mark.unit
+    def test_do_set_value(self):
+        """Should set the value of the GTK3TextView to the value passed in."""
+        _buffer = Gtk.TextBuffer()
+        dut = self.make_dut(buffer=_buffer)
+
+        for _value in self.expected_set_value:
+            dut.do_set_value(_value[0])
+            assert dut.do_get_value() == _value[1]
+
+    @pytest.mark.unit
+    def test_do_update_none_value(self):
+        """Should update the properties with the default values when passed a data
+        package with a value of None."""
+        _buffer = Gtk.TextBuffer()
+        dut = self.make_dut(buffer=_buffer)
+
+        dut.do_set_callbacks(dut.dic_attributes["edit_signal"], dut.do_update)
+        pub.subscribe(dut.do_update, "rootTopic")
+
+        pub.sendMessage("rootTopic", package={-1: None})
+
+        assert dut.dic_attributes == self.expected_attributes
