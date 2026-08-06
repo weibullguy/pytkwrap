@@ -88,6 +88,9 @@ class TestGTK3CheckMenuItem(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("active")
-        assert dut.do_get_property("draw_as_radio")
-        assert dut.do_get_property("inconsistent")
+        assert dut.get_property("active")
+        assert dut.get_active()
+        assert dut.get_property("draw_as_radio")
+        assert dut.get_draw_as_radio()
+        assert dut.get_property("inconsistent")
+        assert dut.get_inconsistent()
