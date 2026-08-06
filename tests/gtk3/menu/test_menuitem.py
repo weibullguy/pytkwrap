@@ -58,6 +58,27 @@ class TestGTK3MenuItem(BaseGTK3GObjectTests):
         | EXPECTED_MENUITEM_PROPERTIES
     )
 
+    def make_dut(self, label=""):
+        return self.widget_class(label=label)
+
+    @pytest.mark.unit
+    def test_init_with_label(self):
+        """Should create a GTK3MenuItem with a non-default label."""
+        dut = self.make_dut(label="Test Label")
+
+        assert dut.do_get_property("label") == "Test Label"
+        assert dut.get_property("label") == "Test Label"
+        assert dut.get_label() == "Test Label"
+
+    @pytest.mark.unit
+    def test_init_with_mnemonic(self):
+        """Should create a GTK3MenuItem with a non-default mnemonic label."""
+        dut = self.make_dut(label="_Test Label")
+
+        assert dut.do_get_property("label") == "_Test Label"
+        assert dut.get_property("label") == "_Test Label"
+        assert dut.get_label() == "_Test Label"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -84,7 +105,15 @@ class TestGTK3MenuItem(BaseGTK3GObjectTests):
             )
         )
 
+        # To set the accel_path of a MenuItem, it's necessary to set the accel_group
+        # for the Window and the parent Menu of the MenuItem.  Thus, all we can do is
+        # store the accel_path in the MenuItem's properties.
         assert dut.do_get_property("accel_path") == "Test accelerator path"
-        assert dut.do_get_property("label") == "Test Label"
-        assert isinstance(dut.do_get_property("submenu"), Gtk.Menu)
-        assert dut.do_get_property("use_underline")
+        assert dut.get_property("accel_path") is None
+        assert dut.get_accel_path() is None
+        assert dut.get_property("label") == "Test Label"
+        assert dut.get_label() == "Test Label"
+        assert isinstance(dut.get_property("submenu"), Gtk.Menu)
+        assert isinstance(dut.get_submenu(), Gtk.Menu)
+        assert dut.get_property("use_underline")
+        assert dut.get_use_underline()
