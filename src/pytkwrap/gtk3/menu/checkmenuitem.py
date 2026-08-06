@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.menu.menuitem import GTK3MenuItem
+from pytkwrap.gtk3.menu.menuitem import GTK3MenuItemMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3MenuItem):
-    """Wrapper for version 3.0 Gtk.CheckMenuItem."""
+class GTK3CheckMenuItemMixin(GTK3MenuItemMixin):
+    """Mixin class for GTK3CheckMenuItem."""
 
     _GTK3_CHECKMENUITEM_PROPERTIES = GTK3WidgetProperties(
         active=False,
@@ -25,10 +25,9 @@ class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3MenuItem):
         "toggled",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3CheckMenuItem."""
-        Gtk.CheckMenuItem.__init__(self)
-        GTK3MenuItem.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3CheckMenuItem mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -54,3 +53,12 @@ class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3MenuItem):
         self.set_active(self.dic_properties["active"])
         self.set_draw_as_radio(self.dic_properties["draw_as_radio"])
         self.set_inconsistent(self.dic_properties["inconsistent"])
+
+
+class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3CheckMenuItemMixin):
+    """Wrapper for version 3.0 Gtk.CheckMenuItem."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3CheckMenuItem."""
+        Gtk.CheckMenuItem.__init__(self)
+        GTK3CheckMenuItemMixin.__init__(self)
