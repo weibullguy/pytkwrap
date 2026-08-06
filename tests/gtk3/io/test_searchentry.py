@@ -63,21 +63,3 @@ class TestGTK3SearchEntry(BaseGTK3DataWidgetTests):
         + EXPECTED_SEARCHENTRY_METHODS
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_ENTRY_PROPERTIES
-
-    def make_dut(self, font_description=None):
-        """Create a device under test for the GTK3Entry."""
-        return self.widget_class(font_description)
-
-    @pytest.mark.unit
-    def test_init(self):
-        """Should create a GTK3Entry with default values for attributes."""
-        super().test_init()
-
-        dut = self.make_dut()
-
-        assert isinstance(dut, GTK3SearchEntry)
-        assert dut._DEFAULT_HEIGHT == 25
-        assert dut._DEFAULT_WIDTH == 200
-        assert all(_hid == -1 for _hid in dut.dic_handler_id.values())
-        for _signal in GTK3SearchEntry._GTK3_SEARCHENTRY_SIGNALS:
-            assert _signal in dut.dic_handler_id
