@@ -6,12 +6,11 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.io.entry import GTK3Entry
-from pytkwrap.utilities import FontDescription
+from pytkwrap.gtk3.io.entry import GTK3EntryMixin
 
 
-class GTK3SearchEntry(Gtk.SearchEntry, GTK3Entry):
-    """The GTK3SearchEntry class.
+class GTK3SearchEntryMixin(GTK3EntryMixin):
+    """Mixin class for GTK3SearchEntry.
 
     Attributes
     ----------
@@ -26,22 +25,22 @@ class GTK3SearchEntry(Gtk.SearchEntry, GTK3Entry):
         "stop-search",
     ]
 
-    def __init__(
-        self,
-        font: FontDescription | None = None,
-    ) -> None:
-        """Initialize an instance of the GTK3SearchEntry widget.
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3SearchEntry mixin."""
+        super().__init__(**kwargs)
 
-        Parameters
-        ----------
-        font : FontDescription | None
-            The font description for the font used by the GTK3SearchEntry.
-        """
-        Gtk.SearchEntry.__init__(self)
-        GTK3Entry.__init__(self, font=font)
-
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SEARCHENTRY_SIGNALS}
         )
 
         self.show()
+
+
+class GTK3SearchEntry(Gtk.SearchEntry, GTK3SearchEntryMixin):
+    """The GTK3SearchEntry class."""
+
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3SearchEntry widget."""
+        Gtk.SearchEntry.__init__(self)
+        GTK3SearchEntryMixin.__init__(self)
