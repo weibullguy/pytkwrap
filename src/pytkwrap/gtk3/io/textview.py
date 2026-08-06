@@ -15,12 +15,12 @@ from pubsub import pub
 # pytkwrap Package Imports
 from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
-class GTK3TextView(Gtk.TextView, GTK3Container):
-    """Wrapper for version 3.0 Gtk.TextView."""
+class GTK3TextViewMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3TextView."""
 
     _GTK3_TEXTVIEW_ATTRIBUTES = GTK3WidgetAttributes(
         default_value="",
@@ -68,18 +68,18 @@ class GTK3TextView(Gtk.TextView, GTK3Container):
         "toggle-overwrite",
     ]
 
-    def __init__(self, buffer: Gtk.TextBuffer | None = None) -> None:
-        """Initialize an instance of the GTK3TextView."""
-        Gtk.TextView.__init__(self, buffer=buffer)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3TextView mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_TEXTVIEW_ATTRIBUTES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_TEXTVIEW_SIGNALS}
         )
         self.dic_properties.update(self._GTK3_TEXTVIEW_PROPERTIES)
 
-        self.buffer = buffer
+        self.buffer = None
 
     def do_get_attribute(
         self,
@@ -110,6 +110,7 @@ class GTK3TextView(Gtk.TextView, GTK3Container):
             The typed dict (preferred) or non-typed dict with the attribute values to
             set for the GTK3TextView.
         """
+        # Update the attribute dictionary.
         super().do_set_attributes(attributes)
 
         for _attr in ["default_value", "edit_signal"]:
@@ -118,6 +119,9 @@ class GTK3TextView(Gtk.TextView, GTK3Container):
                 self.dic_attributes[_attr],
             )
 
+    # TODO: Remove this and the edit_signal attribute once GTK3TextBuffer wrapper is
+    #  complete.  The applications should initialize the buffer before passing it to
+    #  the GTK3TextView.
     def do_set_callbacks(
         self,
         signal: list[str] | str,
@@ -144,9 +148,6 @@ class GTK3TextView(Gtk.TextView, GTK3Container):
         if not isinstance(signal, list):
             signal = [signal]
 
-        # TODO: Change this once the wrapper for Gtk.TextBuffer() is complete.
-        # self.buffer.do_set_callbacks(signal)
-        # Then remove all below.
         for _signal in signal:
             try:
                 super().do_set_callbacks(signal, callback, after=after)
@@ -246,3 +247,17 @@ class GTK3TextView(Gtk.TextView, GTK3Container):
 
         if self.buffer is not None:
             self.buffer.set_text(str(value))
+
+
+class GTK3TextView(Gtk.TextView, GTK3TextViewMixin):
+    """Wrapper for version 3.0 Gtk.TextView."""
+
+    def __init__(self, buffer: Gtk.TextBuffer | None = None) -> None:
+        """Initialize an instance of the GTK3TextView."""
+        Gtk.TextView.__init__(self, buffer=buffer)
+        GTK3TextViewMixin.__init__(self)
+
+        self.dic_properties["buffer"] = buffer
+        self.do_set_properties(self.dic_properties)
+
+        self.buffer = buffer

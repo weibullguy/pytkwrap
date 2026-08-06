@@ -9,16 +9,16 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.exceptions import UnkSignalError as UnkSignalError
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.container.container import GTK3Container as GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin as GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3TextView(Gtk.TextView, GTK3Container):
+class GTK3TextViewMixin(GTK3ContainerMixin):
     _GTK3_TEXTVIEW_ATTRIBUTES: Incomplete
     _GTK3_TEXTVIEW_PROPERTIES: Incomplete
     _GTK3_TEXTVIEW_SIGNALS: Incomplete
     buffer: Incomplete
-    def __init__(self, buffer: Gtk.TextBuffer | None = None) -> None: ...
+    def __init__(self, **kwargs) -> None: ...
     def do_get_attribute(
         self, attribute: str
     ) -> bool | date | float | int | object | str | None: ...
@@ -33,3 +33,7 @@ class GTK3TextView(Gtk.TextView, GTK3Container):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
+
+class GTK3TextView(Gtk.TextView, GTK3TextViewMixin):
+    buffer: Incomplete
+    def __init__(self, buffer: Gtk.TextBuffer | None = None) -> None: ...
