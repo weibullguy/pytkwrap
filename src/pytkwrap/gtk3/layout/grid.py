@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Grid(Gtk.Grid, GTK3Container):
-    """Wrapper for version 3.0 Gtk.Grid."""
+class GTK3GridMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3Grid."""
 
     _GTK3_GRID_ATTRIBUTES = {"n_columns": 1, "n_rows": 1}
     _GTK3_GRID_PROPERTIES = GTK3WidgetProperties(
@@ -25,11 +25,11 @@ class GTK3Grid(Gtk.Grid, GTK3Container):
         row_spacing=0,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Grid."""
-        Gtk.Grid.__init__(self)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Grid mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_GRID_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_GRID_PROPERTIES)
 
@@ -53,3 +53,12 @@ class GTK3Grid(Gtk.Grid, GTK3Container):
         self.set_column_spacing(self.dic_properties["column_spacing"])
         self.set_row_homogeneous(self.dic_properties["row_homogeneous"])
         self.set_row_spacing(self.dic_properties["row_spacing"])
+
+
+class GTK3Grid(Gtk.Grid, GTK3GridMixin):
+    """Wrapper for version 3.0 Gtk.Grid."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Grid."""
+        Gtk.Grid.__init__(self)
+        GTK3GridMixin.__init__(self)
