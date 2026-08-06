@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3FlowBox(Gtk.FlowBox, GTK3Container):
-    """Wrapper for version 3.0 Gtk.FlowBox."""
+class GTK3FlowBoxMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3FlowBox."""
 
     _GTK3_FLOWBOX_PROPERTIES = GTK3WidgetProperties(
         activate_on_single_click=True,
@@ -35,11 +35,11 @@ class GTK3FlowBox(Gtk.FlowBox, GTK3Container):
         "unselect-all",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3FlowBox."""
-        Gtk.FlowBox.__init__(self)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3FlowBox mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_FLOWBOX_SIGNALS}
         )
@@ -69,3 +69,12 @@ class GTK3FlowBox(Gtk.FlowBox, GTK3Container):
         self.set_min_children_per_line(self.dic_properties["min_children_per_line"])
         self.set_row_spacing(self.dic_properties["row_spacing"])
         self.set_selection_mode(self.dic_properties["selection_mode"])
+
+
+class GTK3FlowBox(Gtk.FlowBox, GTK3FlowBoxMixin):
+    """Wrapper for version 3.0 Gtk.FlowBox."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3FlowBox."""
+        Gtk.FlowBox.__init__(self)
+        GTK3FlowBoxMixin.__init__(self)
