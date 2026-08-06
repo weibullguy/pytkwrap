@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3MenuItem(Gtk.MenuItem, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.MenuItem."""
+class GTK3MenuItemMixin(GTK3BinMixin):
+    """Mixin class for GTK3MenuItem."""
 
     _GTK3_MENUITEM_PROPERTIES = GTK3WidgetProperties(
         accel_path=None,
@@ -31,10 +31,9 @@ class GTK3MenuItem(Gtk.MenuItem, GTK3Bin):
         "toggle-size-request",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3MenuItem."""
-        Gtk.MenuItem.__init__(self)
-        GTK3Bin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3MenuItem mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -61,3 +60,15 @@ class GTK3MenuItem(Gtk.MenuItem, GTK3Bin):
         self.set_label(self.dic_properties["label"])
         self.set_submenu(self.dic_properties["submenu"])
         self.set_use_underline(self.dic_properties["use_underline"])
+
+
+class GTK3MenuItem(Gtk.MenuItem, GTK3MenuItemMixin):
+    """Wrapper for version 3.0 Gtk.MenuItem."""
+
+    def __init__(self, label: str = "") -> None:
+        """Initialize an instance of the GTK3MenuItem."""
+        Gtk.MenuItem.__init__(self, label=label)
+        GTK3MenuItemMixin.__init__(self)
+
+        self.dic_properties["label"] = label
+        self.do_set_properties(self.dic_properties)
