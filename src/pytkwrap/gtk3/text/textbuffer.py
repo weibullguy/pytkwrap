@@ -12,8 +12,8 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
-class GTK3TextBuffer(Gtk.TextBuffer, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.TextBuffer."""
+class GTK3TextBufferMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3TextBuffer."""
 
     _GTK3_TEXTBUFFER_PROPERTIES = GTK3WidgetProperties(
         tag_table=None,
@@ -35,21 +35,15 @@ class GTK3TextBuffer(Gtk.TextBuffer, GTK3GObjectMixin):
         "remove-tag",
     ]
 
-    def __init__(self, table: Gtk.TextTagTable | None = None) -> None:
-        """Initialize an instance of the GTK3TextBuffer.
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3TextBuffer mixin."""
+        super().__init__(**kwargs)
 
-        Parameters
-        ----------
-        table : Gtk.TextTagTable | None
-        """
-        Gtk.TextBuffer.__init__(self, tag_table=table)
-        GTK3GObjectMixin.__init__(self)
-
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_TEXTBUFFER_SIGNALS}
         )
         self.dic_properties = dict(self._GTK3_TEXTBUFFER_PROPERTIES)
-        self.dic_properties["tag_table"] = table
 
     def do_set_properties(
         self,
@@ -67,3 +61,21 @@ class GTK3TextBuffer(Gtk.TextBuffer, GTK3GObjectMixin):
         super().do_set_properties(properties)
 
         self.set_text(self.dic_properties["text"])
+
+
+class GTK3TextBuffer(Gtk.TextBuffer, GTK3TextBufferMixin):
+    """Wrapper for version 3.0 Gtk.TextBuffer."""
+
+    def __init__(self, tag_table: Gtk.TextTagTable | None = None) -> None:
+        """Initialize an instance of the GTK3TextBuffer.
+
+        Parameters
+        ----------
+        tag_table : Gtk.TextTagTable | None
+            A tag table to associate with the GTK3TextBuffer or None to create a new
+            one.
+        """
+        Gtk.TextBuffer.__init__(self, tag_table=tag_table)
+        GTK3TextBufferMixin.__init__(self)
+
+        self.dic_properties["tag_table"] = tag_table
