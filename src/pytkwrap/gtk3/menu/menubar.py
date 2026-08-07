@@ -9,23 +9,23 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.menu.menushell import GTK3MenuShell
+from pytkwrap.gtk3.menu.menushell import GTK3MenuShellMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3MenuBar(Gtk.MenuBar, GTK3MenuShell):
-    """Wrapper for version 3.0 Gtk.MenuBar."""
+class GTK3MenuBarMixin(GTK3MenuShellMixin):
+    """Mixin class for GTK3MenuBar."""
 
     _GTK3_MENUBAR_PROPERTIES = GTK3WidgetProperties(
         child_pack_direction=Gtk.PackDirection.LTR,
         pack_direction=Gtk.PackDirection.LTR,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3MenuBar."""
-        Gtk.MenuBar.__init__(self)
-        GTK3MenuShell.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3MenuBar mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_MENUBAR_PROPERTIES)
 
     def do_set_properties(
@@ -45,3 +45,12 @@ class GTK3MenuBar(Gtk.MenuBar, GTK3MenuShell):
 
         self.set_child_pack_direction(self.dic_properties["child_pack_direction"])
         self.set_pack_direction(self.dic_properties["pack_direction"])
+
+
+class GTK3MenuBar(Gtk.MenuBar, GTK3MenuBarMixin):
+    """Wrapper for version 3.0 Gtk.MenuBar."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3MenuBar."""
+        Gtk.MenuBar.__init__(self)
+        GTK3MenuBarMixin.__init__(self)
