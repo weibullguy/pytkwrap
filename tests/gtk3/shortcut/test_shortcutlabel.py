@@ -62,6 +62,16 @@ class TestGTK3ShortcutLabel(BaseGTK3GObjectTests):
         | EXPECTED_SHORTCUTLABEL_PROPERTIES
     )
 
+    def make_dut(self, accelerator: str | None = None):
+        return self.widget_class(accelerator=accelerator)
+
+    @pytest.mark.unit
+    def test_init_with_accelerator(self):
+        """Should create a GTK3ShortcutLabel with a non-default accelerator."""
+        dut = self.make_dut(accelerator="<ctrl>t")
+
+        assert dut.get_accelerator() == "<ctrl>t"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -85,4 +95,6 @@ class TestGTK3ShortcutLabel(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("accelerator") == "<ctrl>t"
+        assert dut.get_accelerator() == "<ctrl>t"
         assert dut.get_property("disabled_text") == "Test Disabled Text"
+        assert dut.get_disabled_text() == "Test Disabled Text"
