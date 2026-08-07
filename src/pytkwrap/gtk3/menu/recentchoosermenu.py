@@ -9,22 +9,22 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.menu.menu import GTK3Menu
+from pytkwrap.gtk3.menu.menu import GTK3MenuMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3RecentChooserMenu(Gtk.RecentChooserMenu, GTK3Menu):
-    """Wrapper for version 3.0 Gtk.RecentChooserMenu."""
+class GTK3RecentChooserMenuMixin(GTK3MenuMixin):
+    """Mixin class for GTK3RecentChooserMenu."""
 
     _GTK3_RECENTCHOOSERMENU_PROPERTIES = GTK3WidgetProperties(
         show_numbers=False,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3RecentChooserMenu."""
-        Gtk.RecentChooserMenu.__init__(self)
-        GTK3Menu.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3RecentChooserMenu mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_RECENTCHOOSERMENU_PROPERTIES)
 
     def do_set_properties(
@@ -43,3 +43,12 @@ class GTK3RecentChooserMenu(Gtk.RecentChooserMenu, GTK3Menu):
         super().do_set_properties(properties)
 
         self.set_show_numbers(self.dic_properties["show_numbers"])
+
+
+class GTK3RecentChooserMenu(Gtk.RecentChooserMenu, GTK3RecentChooserMenuMixin):
+    """Wrapper for version 3.0 Gtk.RecentChooserMenu."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3RecentChooserMenu."""
+        Gtk.RecentChooserMenu.__init__(self)
+        GTK3RecentChooserMenuMixin.__init__(self)
