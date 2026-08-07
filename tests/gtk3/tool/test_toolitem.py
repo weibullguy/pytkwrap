@@ -85,5 +85,8 @@ class TestGTK3ToolItem(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("is_important")
+        assert dut.get_is_important()
         assert not dut.get_property("visible_horizontal")
+        assert not dut.get_visible_horizontal()
         assert not dut.get_property("visible_vertical")
+        assert not dut.get_visible_vertical()
