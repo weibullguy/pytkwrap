@@ -129,5 +129,7 @@ class TestGTK3MenuButton(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("direction") == Gtk.ArrowType.UP
-        assert not dut.do_get_property("use_popover")
+        assert dut.get_property("direction") == Gtk.ArrowType.UP
+        assert dut.get_direction() == Gtk.ArrowType.UP
+        assert not dut.get_property("use_popover")
+        assert not dut.get_use_popover()
