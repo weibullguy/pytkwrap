@@ -66,6 +66,28 @@ class TestGTK3ToolButton(BaseGTK3GObjectTests):
         | EXPECTED_TOOLBUTTON_PROPERTIES
     )
 
+    def make_dut(self, icon_widget=None, label=None):
+        return self.widget_class(icon_widget=icon_widget, label=label)
+
+    @pytest.mark.unit
+    def test_init_with_icon_widget(self):
+        """Should create a GTK3ToolButton with an icon widget."""
+        _icon_widget = Gtk.Image()
+        dut = self.make_dut(icon_widget=_icon_widget)
+
+        assert dut.do_get_property("icon_widget") == _icon_widget
+        assert dut.get_property("icon_widget") == _icon_widget
+        assert dut.get_icon_widget() == _icon_widget
+
+    @pytest.mark.unit
+    def test_init_with_label(self):
+        """Should create a GTK3ToolButton with a label."""
+        dut = self.make_dut(label="Test Label")
+
+        assert dut.do_get_property("label") == "Test Label"
+        assert dut.get_property("label") == "Test Label"
+        assert dut.get_label() == "Test Label"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -96,7 +118,12 @@ class TestGTK3ToolButton(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("icon_name") is None
+        assert dut.get_icon_name() is None
         assert dut.get_property("icon_widget") is None
+        assert dut.get_icon_widget() is None
         assert dut.get_property("label") == "Test Label"
+        assert dut.get_label() == "Test Label"
         assert dut.get_property("label_widget") == _label
+        assert dut.get_label_widget() == _label
         assert dut.get_property("use_underline")
+        assert dut.get_use_underline()
