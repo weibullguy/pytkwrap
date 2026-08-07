@@ -12,8 +12,8 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
-class GTK3StyleContext(Gtk.StyleContext, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.StyleContext."""
+class GTK3StyleContextMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3StyleContext."""
 
     _GTK3_STYLECONTEXT_PROPERTIES = GTK3WidgetProperties(
         paint_clock=None,
@@ -24,11 +24,11 @@ class GTK3StyleContext(Gtk.StyleContext, GTK3GObjectMixin):
         "changed",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3StyleContext."""
-        Gtk.StyleContext.__init__(self)
-        GTK3GObjectMixin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3StyleContext mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_STYLECONTEXT_SIGNALS}
         )
@@ -56,3 +56,12 @@ class GTK3StyleContext(Gtk.StyleContext, GTK3GObjectMixin):
 
         if self.dic_properties["screen"] is not None:
             self.set_screen(self.dic_properties["screen"])
+
+
+class GTK3StyleContext(Gtk.StyleContext, GTK3StyleContextMixin):
+    """Wrapper for version 3.0 Gtk.StyleContext."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3StyleContext."""
+        Gtk.StyleContext.__init__(self)
+        GTK3StyleContextMixin.__init__(self)
