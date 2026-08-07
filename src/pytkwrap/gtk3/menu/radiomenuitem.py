@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.menu.checkmenuitem import GTK3CheckMenuItem
+from pytkwrap.gtk3.menu.checkmenuitem import GTK3CheckMenuItemMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3RadioMenuItem(Gtk.RadioMenuItem, GTK3CheckMenuItem):
-    """Wrapper for version 3.0 Gtk.RadioMenuItem."""
+class GTK3RadioMenuItemMixin(GTK3CheckMenuItemMixin):
+    """Mixin class for GTK3RadioMenuItem."""
 
     _GTK3_RADIOMENUITEM_PROPERTIES = GTK3WidgetProperties(
         group=None,
@@ -23,10 +23,9 @@ class GTK3RadioMenuItem(Gtk.RadioMenuItem, GTK3CheckMenuItem):
         "group-changed",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3RadioMenuItem."""
-        Gtk.RadioMenuItem.__init__(self)
-        GTK3CheckMenuItem.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3RadioMenuItem mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -50,3 +49,12 @@ class GTK3RadioMenuItem(Gtk.RadioMenuItem, GTK3CheckMenuItem):
         super().do_set_properties(properties)
 
         self.set_group(self.dic_properties["group"])
+
+
+class GTK3RadioMenuItem(Gtk.RadioMenuItem, GTK3RadioMenuItemMixin):
+    """Wrapper for version 3.0 Gtk.RadioMenuItem."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3RadioMenuItem."""
+        Gtk.RadioMenuItem.__init__(self)
+        GTK3RadioMenuItemMixin.__init__(self)
