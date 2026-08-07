@@ -9,23 +9,23 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.box import GTK3Box
+from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ShortcutLabel(Gtk.ShortcutLabel, GTK3Box):
-    """Wrapper for version 3.0 Gtk.ShortcutLabel."""
+class GTK3ShortcutLabelMixin(GTK3BoxMixin):
+    """Mixin class for GTK3ShortcutLabel."""
 
     _GTK3_SHORTCUTLABEL_PROPERTIES = GTK3WidgetProperties(
         accelerator=None,
         disabled_text=None,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ShortcutLabel."""
-        Gtk.ShortcutLabel.__init__(self)
-        GTK3Box.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ShortcutLabel mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_SHORTCUTLABEL_PROPERTIES)
 
     def do_set_properties(
@@ -48,3 +48,12 @@ class GTK3ShortcutLabel(Gtk.ShortcutLabel, GTK3Box):
 
         if self.dic_properties["disabled_text"] is not None:
             self.set_disabled_text(self.dic_properties["disabled_text"])
+
+
+class GTK3ShortcutLabel(Gtk.ShortcutLabel, GTK3ShortcutLabelMixin):
+    """Wrapper for version 3.0 Gtk.ShortcutLabel."""
+
+    def __init__(self, accelerator: str | None = None) -> None:
+        """Initialize an instance of the GTK3ShortcutLabel."""
+        Gtk.ShortcutLabel.__init__(self, accelerator=accelerator)
+        GTK3ShortcutLabelMixin.__init__(self)
