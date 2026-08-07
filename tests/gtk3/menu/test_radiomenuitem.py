@@ -70,6 +70,40 @@ class TestGTK3RadioMenuItem(BaseGTK3GObjectTests):
         | EXPECTED_RADIOMENUITEM_PROPERTIES
     )
 
+    def make_dut(self, group: Gtk.RadioMenuItem | None = None, label: str = ""):
+        return self.widget_class(group=group, label=label)
+
+    @pytest.mark.unit
+    def test_init_with_group(self):
+        """Should create a GTK3RadioMenuItem with a non-default group."""
+        _group = GTK3RadioMenuItem()
+        dut = self.make_dut(group=_group)
+
+        assert dut.get_group() == [dut, _group]
+
+    @pytest.mark.unit
+    def test_init_with_label(self):
+        """Should create a GTK3RadioMenuItem with a non-default label."""
+        dut = self.make_dut(label="Test Radio Button Label")
+
+        assert dut.get_label() == "Test Radio Button Label"
+
+    @pytest.mark.unit
+    def test_init_with_mnemonic(self):
+        """Should create a GTK3RadioMenuItem with a non-default mnemonic label."""
+        dut = self.make_dut(label="_Test Label")
+
+        assert dut.get_label() == "_Test Label"
+
+    @pytest.mark.unit
+    def test_init_with_group_and_label(self):
+        """Should create a GTK3RadioMenuItem with a non-default group and label."""
+        _group = GTK3RadioMenuItem()
+        dut = self.make_dut(group=_group, label="Test Radio Button Label")
+
+        assert dut.get_group() == [dut, _group]
+        assert dut.get_label() == "Test Radio Button Label"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty

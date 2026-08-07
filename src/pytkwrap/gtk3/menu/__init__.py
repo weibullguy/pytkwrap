@@ -10,7 +10,6 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .checkmenuitem import GTK3CheckMenuItem
-from .imagemenuitem import GTK3ImageMenuItem
 from .menu import GTK3Menu
 from .menubar import GTK3MenuBar
 from .menubutton import GTK3MenuButton
@@ -24,7 +23,6 @@ from .tearoffmenuitem import GTK3TearoffMenuItem
 
 __all__ = [
     "GTK3CheckMenuItem",
-    "GTK3ImageMenuItem",
     "GTK3Menu",
     "GTK3MenuBar",
     "GTK3MenuButton",

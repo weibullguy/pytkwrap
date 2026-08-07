@@ -54,7 +54,7 @@ class GTK3RadioMenuItemMixin(GTK3CheckMenuItemMixin):
 class GTK3RadioMenuItem(Gtk.RadioMenuItem, GTK3RadioMenuItemMixin):
     """Wrapper for version 3.0 Gtk.RadioMenuItem."""
 
-    def __init__(self) -> None:
+    def __init__(self, group: Gtk.RadioMenuItem | None = None, label: str = "") -> None:
         """Initialize an instance of the GTK3RadioMenuItem."""
-        Gtk.RadioMenuItem.__init__(self)
+        Gtk.RadioMenuItem.__init__(self, group=group, label=label)
         GTK3RadioMenuItemMixin.__init__(self)

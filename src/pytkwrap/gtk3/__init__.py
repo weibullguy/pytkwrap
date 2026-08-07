@@ -91,7 +91,6 @@ from .layout import (
 )
 from .menu import (
     GTK3CheckMenuItem,
-    GTK3ImageMenuItem,
     GTK3Menu,
     GTK3MenuBar,
     GTK3MenuButton,
@@ -250,7 +249,6 @@ __all__ = [
     "GTK3IconTheme",
     "GTK3IconView",
     "GTK3Image",
-    "GTK3ImageMenuItem",
     "GTK3InfoBar",
     "GTK3Label",
     "GTK3Layout",
