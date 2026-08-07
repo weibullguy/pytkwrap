@@ -68,7 +68,10 @@ class TestGTK3ShortcutsWindow(BaseGTK3GObjectTests):
     )
 
     @pytest.mark.unit
-    def test_do_set_properties_default(self):
+    @pytest.mark.filterwarnings(
+        "ignore:Gtk.Window.set_opacity is deprecated:DeprecationWarning"
+    )
+    def test_do_set_properties_default(self, filter_stderr):
         """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
         dut = self.make_dut()
@@ -90,4 +93,7 @@ class TestGTK3ShortcutsWindow(BaseGTK3GObjectTests):
         )
 
         assert dut.do_get_property("section_name") == "Test Section Name"
-        assert dut.do_get_property("view_name") == "Test View Name"
+        # This property can only be set if there is a Gtk.ShortcutsSection with the
+        # section name passed in.
+        assert dut.get_property("section_name") == "internal-search"
+        assert dut.get_property("view_name") == "Test View Name"
