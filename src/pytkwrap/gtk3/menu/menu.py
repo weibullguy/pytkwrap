@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.menu.menushell import GTK3MenuShell
+from pytkwrap.gtk3.menu.menushell import GTK3MenuShellMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Menu(Gtk.Menu, GTK3MenuShell):
-    """Wrapper for version 3.0 Gtk.Menu."""
+class GTK3MenuMixin(GTK3MenuShellMixin):
+    """Mixin class for GTK3Menu."""
 
     _GTK3_MENU_PROPERTIES = GTK3WidgetProperties(
         accel_group=None,
@@ -43,11 +43,11 @@ class GTK3Menu(Gtk.Menu, GTK3MenuShell):
         "popped-up",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Menu."""
-        Gtk.Menu.__init__(self)
-        GTK3MenuShell.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Menu mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update({_signal: -1 for _signal in self._GTK3_MENU_SIGNALS})
         self.dic_properties.update(self._GTK3_MENU_PROPERTIES)
 
@@ -85,3 +85,12 @@ class GTK3Menu(Gtk.Menu, GTK3MenuShell):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3Menu(Gtk.Menu, GTK3MenuMixin):
+    """Wrapper for version 3.0 Gtk.Menu."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Menu."""
+        Gtk.Menu.__init__(self)
+        GTK3MenuMixin.__init__(self)
