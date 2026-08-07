@@ -50,3 +50,11 @@ class TestGTK3TextMark(BaseGTK3GObjectTests):
         dut = self.make_dut(left_gravity=True)
 
         assert dut.get_left_gravity()
+
+    @pytest.mark.unit
+    def test_init_with_name_and_left_gravity(self):
+        """Should create a GTK3TextMark with left gravity."""
+        dut = self.make_dut(name="Test Name #2", left_gravity=True)
+
+        assert dut.get_left_gravity()
+        assert dut.get_name() == "Test Name #2"
