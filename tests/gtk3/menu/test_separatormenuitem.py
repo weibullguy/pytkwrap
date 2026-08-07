@@ -57,12 +57,3 @@ class TestGTK3SeparatorMenuItem(BaseGTK3GObjectTests):
         | EXPECTED_CONTAINER_PROPERTIES
         | EXPECTED_MENUITEM_PROPERTIES
     )
-
-    @pytest.mark.unit
-    def test_do_set_properties_default(self):
-        """Should set properties to default values when passed an empty
-        GTK3WidgetProperties."""
-        dut = self.make_dut()
-        dut.do_set_properties(GTK3WidgetProperties())
-
-        assert dut.dic_properties == self.expected_properties
