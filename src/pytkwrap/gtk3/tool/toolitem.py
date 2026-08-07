@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ToolItem(Gtk.ToolItem, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.ToolItem."""
+class GTK3ToolItemMixin(GTK3BinMixin):
+    """Mixin class for GTK3ToolItem."""
 
     _GTK3_TOOLITEM_PROPERTIES = GTK3WidgetProperties(
         is_important=False,
@@ -23,11 +23,11 @@ class GTK3ToolItem(Gtk.ToolItem, GTK3Bin):
     )
     _GTK3_TOOLITEM_SIGNALS = ["create-menu-proxy", "toolbar-reconfigured"]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3ToolItem."""
-        Gtk.ToolItem.__init__(self)
-        GTK3Bin.__init__(self)
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_TOOLITEM_SIGNALS}
         )
@@ -48,7 +48,15 @@ class GTK3ToolItem(Gtk.ToolItem, GTK3Bin):
         # Update the property dictionary.
         super().do_set_properties(properties)
 
-        # Set the value of each of the mixin properties.
         self.set_is_important(self.dic_properties["is_important"])
         self.set_visible_horizontal(self.dic_properties["visible_horizontal"])
         self.set_visible_vertical(self.dic_properties["visible_vertical"])
+
+
+class GTK3ToolItem(Gtk.ToolItem, GTK3ToolItemMixin):
+    """Wrapper for version 3.0 Gtk.ToolItem."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ToolItem."""
+        Gtk.ToolItem.__init__(self)
+        GTK3ToolItemMixin.__init__(self)
