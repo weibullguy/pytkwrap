@@ -100,7 +100,6 @@ from .menu import (
     GTK3RadioMenuItem,
     GTK3RecentChooserMenu,
     GTK3SeparatorMenuItem,
-    GTK3TearoffMenuItem,
 )
 from .mixins import (
     GTK3GObjectMixin,
@@ -310,7 +309,6 @@ __all__ = [
     "GTK3Statusbar",
     "GTK3StyleContext",
     "GTK3Switch",
-    "GTK3TearoffMenuItem",
     "GTK3TextBuffer",
     "GTK3TextMark",
     "GTK3TextTagTable",

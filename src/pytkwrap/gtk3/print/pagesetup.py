@@ -9,10 +9,14 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin
 
 
-class GTK3PageSetup(Gtk.PageSetup, GTK3GObjectMixin):
+class GTK3PageSetupMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3PageSetup."""
+
+
+class GTK3PageSetup(Gtk.PageSetup, GTK3PageSetupMixin):
     """Wrapper for version 3.0 Gtk.PageSetup."""
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3PageSetup."""
         Gtk.PageSetup.__init__(self)
-        GTK3GObjectMixin.__init__(self)
+        GTK3PageSetupMixin.__init__(self)

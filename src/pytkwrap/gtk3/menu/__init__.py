@@ -19,7 +19,6 @@ from .popovermenu import GTK3PopoverMenu
 from .radiomenuitem import GTK3RadioMenuItem
 from .recentchoosermenu import GTK3RecentChooserMenu
 from .separatormenuitem import GTK3SeparatorMenuItem
-from .tearoffmenuitem import GTK3TearoffMenuItem
 
 __all__ = [
     "GTK3CheckMenuItem",
@@ -32,5 +31,4 @@ __all__ = [
     "GTK3RadioMenuItem",
     "GTK3RecentChooserMenu",
     "GTK3SeparatorMenuItem",
-    "GTK3TearoffMenuItem",
 ]
