@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.box import GTK3Box
+from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ShortcutsSection(Gtk.ShortcutsSection, GTK3Box):
-    """Wrapper for version 3.0 Gtk.ShortcutsSection."""
+class GTK3ShortcutsSectionMixin(GTK3BoxMixin):
+    """Mixin class for GTK3ShortcutsSection."""
 
     _GTK3_SHORTCUTSSECTION_PROPERTIES = GTK3WidgetProperties(
         max_height=15,
@@ -24,11 +24,11 @@ class GTK3ShortcutsSection(Gtk.ShortcutsSection, GTK3Box):
     )
     _GTK3_SHORTCUTSSECTION_SIGNALS = ["change-current-page"]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ShortcutsSection."""
-        Gtk.ShortcutsSection.__init__(self)
-        GTK3Box.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ShortcutsSection mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SHORTCUTSSECTION_SIGNALS}
         )
@@ -53,3 +53,12 @@ class GTK3ShortcutsSection(Gtk.ShortcutsSection, GTK3Box):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3ShortcutsSection(Gtk.ShortcutsSection, GTK3ShortcutsSectionMixin):
+    """Wrapper for version 3.0 Gtk.ShortcutsSection."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ShortcutsSection."""
+        Gtk.ShortcutsSection.__init__(self)
+        GTK3ShortcutsSectionMixin.__init__(self)
