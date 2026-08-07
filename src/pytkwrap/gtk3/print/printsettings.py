@@ -9,10 +9,14 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin
 
 
-class GTK3PrintSettings(Gtk.PrintSettings, GTK3GObjectMixin):
+class GTK3PrintSettingsMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3PrintSettings."""
+
+
+class GTK3PrintSettings(Gtk.PrintSettings, GTK3PrintSettingsMixin):
     """Wrapper for version 3.0 Gtk.PrintSettings."""
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3PrintSettings."""
         Gtk.PrintSettings.__init__(self)
-        GTK3GObjectMixin.__init__(self)
+        GTK3PrintSettingsMixin.__init__(self)
