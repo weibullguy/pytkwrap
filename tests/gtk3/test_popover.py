@@ -93,7 +93,11 @@ class TestGTK3Popover(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("constrain_to") == Gtk.PopoverConstraint.NONE
+        assert dut.get_constrain_to() == Gtk.PopoverConstraint.NONE
         assert not dut.get_property("modal")
+        assert not dut.get_modal()
         assert isinstance(dut.get_property("pointing_to"), Gdk.Rectangle)
         assert dut.get_property("position") == Gtk.PositionType.LEFT
+        assert dut.get_position() == Gtk.PositionType.LEFT
         assert dut.get_property("relative_to") == _widget
+        assert dut.get_relative_to() == _widget
