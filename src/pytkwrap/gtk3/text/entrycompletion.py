@@ -12,8 +12,8 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
-class GTK3EntryCompletion(Gtk.EntryCompletion, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.EntryCompletion."""
+class GTK3EntryCompletionMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3EntryCompletion."""
 
     _GTK3_ENTRYCOMPLETION_PROPERTIES = GTK3WidgetProperties(
         cell_area=None,
@@ -34,11 +34,11 @@ class GTK3EntryCompletion(Gtk.EntryCompletion, GTK3GObjectMixin):
         "no-matches",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3EntryCompletion."""
-        Gtk.EntryCompletion.__init__(self)
-        GTK3GObjectMixin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3EntryCompletion mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_ENTRYCOMPLETION_SIGNALS}
         )
@@ -66,4 +66,15 @@ class GTK3EntryCompletion(Gtk.EntryCompletion, GTK3GObjectMixin):
         self.set_popup_completion(self.dic_properties["popup_completion"])
         self.set_popup_set_width(self.dic_properties["popup_set_width"])
         self.set_popup_single_match(self.dic_properties["popup_single_match"])
-        self.set_text_column(self.dic_properties["text_column"])
+
+        if self.dic_properties["text_column"] >= 0:
+            self.set_text_column(self.dic_properties["text_column"])
+
+
+class GTK3EntryCompletion(Gtk.EntryCompletion, GTK3EntryCompletionMixin):
+    """Wrapper for version 3.0 Gtk.EntryCompletion."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3EntryCompletion."""
+        Gtk.EntryCompletion.__init__(self)
+        GTK3EntryCompletionMixin.__init__(self)
