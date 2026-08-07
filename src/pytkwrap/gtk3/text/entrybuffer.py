@@ -12,8 +12,8 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
-class GTK3EntryBuffer(Gtk.EntryBuffer, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.EntryBuffer."""
+class GTK3EntryBufferMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3EntryBuffer."""
 
     _GTK3_ENTRYBUFFER_PROPERTIES = GTK3WidgetProperties(
         max_length=0,
@@ -24,11 +24,11 @@ class GTK3EntryBuffer(Gtk.EntryBuffer, GTK3GObjectMixin):
         "inserted-text",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3EntryBuffer."""
-        Gtk.EntryBuffer.__init__(self)
-        GTK3GObjectMixin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3EntryBuffer mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_ENTRYBUFFER_SIGNALS}
         )
@@ -50,4 +50,17 @@ class GTK3EntryBuffer(Gtk.EntryBuffer, GTK3GObjectMixin):
         super().do_set_properties(properties)
 
         self.set_max_length(self.dic_properties["max_length"])
-        self.set_text(self.dic_properties["text"], len(self.dic_properties["text"]))
+
+        if self.dic_properties["text"] is not None:
+            self.set_text(self.dic_properties["text"], len(self.dic_properties["text"]))
+
+
+class GTK3EntryBuffer(Gtk.EntryBuffer, GTK3EntryBufferMixin):
+    """Wrapper for version 3.0 Gtk.EntryBuffer."""
+
+    def __init__(self, text: str = "") -> None:
+        """Initialize an instance of the GTK3EntryBuffer."""
+        Gtk.EntryBuffer.__init__(self, text=text)
+        GTK3EntryBufferMixin.__init__(self)
+
+        self.dic_properties["text"] = text
