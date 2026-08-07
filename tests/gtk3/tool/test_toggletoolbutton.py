@@ -93,3 +93,4 @@ class TestGTK3ToggleToolButton(BaseGTK3GObjectTests):
         )
 
         assert dut.get_property("active")
+        assert dut.get_active()
