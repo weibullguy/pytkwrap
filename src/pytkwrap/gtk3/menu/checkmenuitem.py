@@ -58,7 +58,7 @@ class GTK3CheckMenuItemMixin(GTK3MenuItemMixin):
 class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3CheckMenuItemMixin):
     """Wrapper for version 3.0 Gtk.CheckMenuItem."""
 
-    def __init__(self) -> None:
+    def __init__(self, label: str = "") -> None:
         """Initialize an instance of the GTK3CheckMenuItem."""
-        Gtk.CheckMenuItem.__init__(self)
+        Gtk.CheckMenuItem.__init__(self, label=label)
         GTK3CheckMenuItemMixin.__init__(self)
