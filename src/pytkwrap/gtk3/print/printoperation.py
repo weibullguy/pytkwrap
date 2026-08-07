@@ -12,8 +12,8 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
-class GTK3PrintOperation(Gtk.PrintOperation, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.PrintOperation."""
+class GTK3PrintOperationMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3PrintOperation."""
 
     _GTK3_PRINTOPERATION_PROPERTIES = GTK3WidgetProperties(
         allow_async=False,
@@ -46,11 +46,11 @@ class GTK3PrintOperation(Gtk.PrintOperation, GTK3GObjectMixin):
         "update-custom-widget",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3PrintOperation."""
-        Gtk.PrintOperation.__init__(self)
-        GTK3GObjectMixin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3PrintOperation mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_PRINTOPERATION_SIGNALS}
         )
@@ -88,3 +88,12 @@ class GTK3PrintOperation(Gtk.PrintOperation, GTK3GObjectMixin):
 
         if self.dic_properties["export_filename"] is not None:
             self.set_export_filename(self.dic_properties["export_filename"])
+
+
+class GTK3PrintOperation(Gtk.PrintOperation, GTK3PrintOperationMixin):
+    """Wrapper for version 3.0 Gtk.PrintOperation."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3PrintOperation."""
+        Gtk.PrintOperation.__init__(self)
+        GTK3PrintOperationMixin.__init__(self)
