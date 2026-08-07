@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.box import GTK3Box
+from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ShortcutsGroup(Gtk.ShortcutsGroup, GTK3Box):
-    """Wrapper for version 3.0 Gtk.ShortcutsGroup."""
+class GTK3ShortcutsGroupMixin(GTK3BoxMixin):
+    """Mixin class for GTK3ShortcutsGroup."""
 
     _GTK3_SHORTCUTSGROUP_PROPERTIES = GTK3WidgetProperties(
         accel_size_group=None,
@@ -23,11 +23,11 @@ class GTK3ShortcutsGroup(Gtk.ShortcutsGroup, GTK3Box):
         view=None,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ShortcutsGroup."""
-        Gtk.ShortcutsGroup.__init__(self)
-        GTK3Box.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ShortcutsGroup mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_SHORTCUTSGROUP_PROPERTIES)
 
     def do_set_properties(
@@ -49,3 +49,12 @@ class GTK3ShortcutsGroup(Gtk.ShortcutsGroup, GTK3Box):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3ShortcutsGroup(Gtk.ShortcutsGroup, GTK3ShortcutsGroupMixin):
+    """Wrapper for version 3.0 Gtk.ShortcutsGroup."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ShortcutsGroup."""
+        Gtk.ShortcutsGroup.__init__(self)
+        GTK3ShortcutsGroupMixin.__init__(self)
