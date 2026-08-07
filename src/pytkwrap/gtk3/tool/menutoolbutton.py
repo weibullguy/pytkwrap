@@ -10,22 +10,22 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.tool.toolbutton import GTK3ToolButton
+from pytkwrap.gtk3.tool.toolbutton import GTK3ToolButtonMixin
 
 
-class GTK3MenuToolButton(Gtk.MenuToolButton, GTK3ToolButton):
-    """Wrapper for version 3.0 Gtk.MenuToolButton."""
+class GTK3MenuToolButtonMixin(GTK3ToolButtonMixin):
+    """Mixin class for GTK3MenuToolButton."""
 
     _GTK3_MENUTOOLBUTTON_PROPERTIES = GTK3WidgetProperties(
         menu=None,
     )
     _GTK3_MENUTOOLBUTTON_SIGNALS = ["show-menu"]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3MenuToolButton."""
-        Gtk.MenuToolButton.__init__(self)
-        GTK3ToolButton.__init__(self)
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_MENUTOOLBUTTON_SIGNALS}
         )
@@ -48,3 +48,19 @@ class GTK3MenuToolButton(Gtk.MenuToolButton, GTK3ToolButton):
 
         if self.dic_properties["menu"] is not None:
             self.set_menu(self.dic_properties["menu"])
+
+
+class GTK3MenuToolButton(Gtk.MenuToolButton, GTK3MenuToolButtonMixin):
+    """Wrapper for version 3.0 Gtk.MenuToolButton."""
+
+    def __init__(
+        self,
+        icon_widget: Gtk.Widget | None = None,
+        label: str | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3MenuToolButton."""
+        Gtk.MenuToolButton.__init__(self, icon_widget=icon_widget, label=label)
+        GTK3MenuToolButtonMixin.__init__(self)
+
+        self.dic_properties["icon_widget"] = icon_widget
+        self.dic_properties["label"] = label
