@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3Bin
+from pytkwrap.gtk3.container.bin import GTK3BinMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Popover(Gtk.Popover, GTK3Bin):
-    """Wrapper for version 3.0 Gtk.Popover."""
+class GTK3PopoverMixin(GTK3BinMixin):
+    """Mixin class for GTK3Popover."""
 
     _GTK3_POPOVER_PROPERTIES = GTK3WidgetProperties(
         constrain_to=Gtk.PopoverConstraint.WINDOW,
@@ -26,11 +26,11 @@ class GTK3Popover(Gtk.Popover, GTK3Bin):
 
     _GTK3_POPOVER_SIGNALS = ["closed"]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Popover."""
-        Gtk.Popover.__init__(self)
-        GTK3Bin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Popover mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_POPOVER_SIGNALS}
         )
@@ -59,3 +59,12 @@ class GTK3Popover(Gtk.Popover, GTK3Bin):
 
         self.set_position(self.dic_properties["position"])
         self.set_relative_to(self.dic_properties["relative_to"])
+
+
+class GTK3Popover(Gtk.Popover, GTK3PopoverMixin):
+    """Wrapper for version 3.0 Gtk.Popover."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Popover."""
+        Gtk.Popover.__init__(self)
+        GTK3PopoverMixin.__init__(self)
