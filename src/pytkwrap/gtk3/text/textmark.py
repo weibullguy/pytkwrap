@@ -21,6 +21,7 @@ class GTK3TextMarkMixin(GTK3GObjectMixin):
         """Initialize an instance of the GTK3TextMark."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties = dict(self._GTK3_TEXTMARK_PROPERTIES)
 
 
