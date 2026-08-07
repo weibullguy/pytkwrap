@@ -88,3 +88,7 @@ class TestGTK3PopoverMenu(BaseGTK3GObjectTests):
         )
 
         assert dut.do_get_property("visible_submenu") == "Test Submenu"
+
+        # Should not set the visible_submenu property without the submenu being in
+        # the Gtk.Stack.
+        assert dut.get_property("visible_submenu") is None
