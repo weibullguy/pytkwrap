@@ -39,6 +39,18 @@ class TestGTK3TextBuffer(BaseGTK3GObjectTests):
     expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_TEXTBUFFER_METHODS
     expected_properties = EXPECTED_TEXTBUFFER_PROPERTIES
 
+    def make_dut(self, tag_table=None):
+        return self.widget_class(tag_table=tag_table)
+
+    @pytest.mark.unit
+    def test_init_with_tag_table(self):
+        """Should create a GTK3TextBuffer with the passed tag table."""
+        _tag_table = Gtk.TextTagTable()
+        dut = self.make_dut(tag_table=_tag_table)
+
+        assert dut.do_get_property("tag_table") == _tag_table
+        assert dut.get_property("tag_table") == _tag_table
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
