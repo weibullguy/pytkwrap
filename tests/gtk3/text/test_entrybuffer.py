@@ -41,6 +41,18 @@ class TestGTK3EntryBuffer(BaseGTK3GObjectTests):
     expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_ENTRYBUFFER_METHODS
     expected_properties = EXPECTED_ENTRYBUFFER_PROPERTIES
 
+    def make_dut(self, text=""):
+        return self.widget_class(text=text)
+
+    @pytest.mark.unit
+    def test_init_with_text(self):
+        """Should create a GTK3EntryBuffer with the passed text."""
+        dut = self.make_dut(text="Test Text")
+
+        assert dut.do_get_property("text") == "Test Text"
+        assert dut.get_property("text") == "Test Text"
+        assert dut.get_text() == "Test Text"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -65,5 +77,6 @@ class TestGTK3EntryBuffer(BaseGTK3GObjectTests):
 
         assert dut.get_property("max_length") == 10
         assert dut.get_max_length() == 10
+        assert dut.do_get_property("text") == "Test Text"
         assert dut.get_property("text") == "Test Text"
         assert dut.get_text() == "Test Text"
