@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button.togglebutton import GTK3ToggleButton
+from pytkwrap.gtk3.button.togglebutton import GTK3ToggleButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3MenuButton(Gtk.MenuButton, GTK3ToggleButton):
-    """The GTK3MenuButton class."""
+class GTK3MenuButtonMixin(GTK3ToggleButtonMixin):
+    """Mixin for GTK3MenuButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -28,10 +28,9 @@ class GTK3MenuButton(Gtk.MenuButton, GTK3ToggleButton):
         use_popover=True,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3MenuButton widget."""
-        Gtk.MenuButton.__init__(self)
-        GTK3ToggleButton.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3MenuButton mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_MENU_BUTTON_PROPERTIES)
@@ -47,6 +46,7 @@ class GTK3MenuButton(Gtk.MenuButton, GTK3ToggleButton):
         properties : GTK3WidgetProperties
             The typed dict with the property values to set for the GTK3MenuButton.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.set_align_widget(self.dic_properties["align_widget"])
@@ -55,3 +55,12 @@ class GTK3MenuButton(Gtk.MenuButton, GTK3ToggleButton):
         self.set_popover(self.dic_properties["popover"])
         self.set_popup(self.dic_properties["popup"])
         self.set_use_popover(self.dic_properties["use_popover"])
+
+
+class GTK3MenuButton(Gtk.MenuButton, GTK3MenuButtonMixin):
+    """The GTK3MenuButton class."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3MenuButton widget."""
+        Gtk.MenuButton.__init__(self)
+        GTK3MenuButtonMixin.__init__(self)
