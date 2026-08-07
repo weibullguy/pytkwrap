@@ -10,11 +10,11 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.tool.toolitem import GTK3ToolItem
+from pytkwrap.gtk3.tool.toolitem import GTK3ToolItemMixin
 
 
-class GTK3ToolButton(Gtk.ToolButton, GTK3ToolItem):
-    """Wrapper for version 3.0 Gtk.ToolButton."""
+class GTK3ToolButtonMixin(GTK3ToolItemMixin):
+    """Mixin class for GTK3ToolButton."""
 
     _GTK3_TOOLBUTTON_PROPERTIES = GTK3WidgetProperties(
         icon_name=None,
@@ -25,11 +25,11 @@ class GTK3ToolButton(Gtk.ToolButton, GTK3ToolItem):
     )
     _GTK3_TOOLBUTTON_SIGNALS = ["clicked"]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ToolButton."""
-        Gtk.ToolButton.__init__(self)
-        GTK3ToolItem.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ToolButton mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_TOOLBUTTON_SIGNALS}
         )
@@ -56,3 +56,19 @@ class GTK3ToolButton(Gtk.ToolButton, GTK3ToolItem):
         self.set_label(self.dic_properties["label"])
         self.set_label_widget(self.dic_properties["label_widget"])
         self.set_use_underline(self.dic_properties["use_underline"])
+
+
+class GTK3ToolButton(Gtk.ToolButton, GTK3ToolButtonMixin):
+    """Wrapper for version 3.0 Gtk.ToolButton."""
+
+    def __init__(
+        self,
+        icon_widget: Gtk.Widget | None = None,
+        label: str | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3ToolButton."""
+        Gtk.ToolButton.__init__(self, icon_widget=icon_widget, label=label)
+        GTK3ToolButtonMixin.__init__(self)
+
+        self.dic_properties["icon_widget"] = icon_widget
+        self.dic_properties["label"] = label
