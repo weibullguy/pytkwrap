@@ -7,12 +7,15 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
-from pytkwrap.gtk3.tool.toolitem import GTK3ToolItem as GTK3ToolItem
+from pytkwrap.gtk3.tool.toolitem import GTK3ToolItemMixin as GTK3ToolItemMixin
 
-class GTK3SeparatorToolItem(Gtk.SeparatorToolItem, GTK3ToolItem):
+class GTK3SeparatorToolItemMixin(GTK3ToolItemMixin):
     _GTK3_SEPARATORTOOLITEM_PROPERTIES: Incomplete
     _GTK3_TOOLITEM_SIGNALS: Incomplete
-    def __init__(self) -> None: ...
+    def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+
+class GTK3SeparatorToolItem(Gtk.SeparatorToolItem, GTK3SeparatorToolItemMixin):
+    def __init__(self) -> None: ...
