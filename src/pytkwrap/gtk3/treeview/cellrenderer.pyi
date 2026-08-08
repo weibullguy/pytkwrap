@@ -9,10 +9,13 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin as GTK3GObjectMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
+class GTK3CellRendererMixin(GTK3GObjectMixin):
     _GTK3_CELLRENDERER_PROPERTIES: Incomplete
     _GTK3_CELLRENDERER_SIGNALS: Incomplete
-    def __init__(self) -> None: ...
+    def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+
+class GTK3CellRenderer(Gtk.CellRenderer, GTK3CellRendererMixin):
+    def __init__(self) -> None: ...

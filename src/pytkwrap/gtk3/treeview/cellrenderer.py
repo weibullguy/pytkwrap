@@ -12,8 +12,8 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
-class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.CellRenderer."""
+class GTK3CellRendererMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3CellRenderer."""
 
     _GTK3_CELLRENDERER_PROPERTIES = GTK3WidgetProperties(
         cell_background=None,
@@ -36,11 +36,11 @@ class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
         "editing-started",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3CellRenderer."""
-        Gtk.CellRenderer.__init__(self)
-        GTK3GObjectMixin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3CellRenderer mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_CELLRENDERER_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_CELLRENDERER_SIGNALS}
@@ -77,3 +77,12 @@ class GTK3CellRenderer(Gtk.CellRenderer, GTK3GObjectMixin):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3CellRenderer(Gtk.CellRenderer, GTK3CellRendererMixin):
+    """Wrapper for version 3.0 Gtk.CellRenderer."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3CellRenderer."""
+        Gtk.CellRenderer.__init__(self)
+        GTK3CellRendererMixin.__init__(self)
