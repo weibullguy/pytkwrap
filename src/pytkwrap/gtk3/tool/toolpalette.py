@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ToolPalette(Gtk.ToolPalette, GTK3Container):
-    """Wrapper for version 3.0 Gtk.ToolPalette."""
+class GTK3ToolPaletteMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3ToolPalette."""
 
     _GTK3_TOOLPALETTE_PROPERTIES = GTK3WidgetProperties(
         icon_size=Gtk.IconSize.SMALL_TOOLBAR,
@@ -22,11 +22,11 @@ class GTK3ToolPalette(Gtk.ToolPalette, GTK3Container):
         toolbar_style=Gtk.ToolbarStyle.ICONS,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ToolPalette."""
-        Gtk.ToolPalette.__init__(self)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ToolPalette mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_TOOLPALETTE_PROPERTIES)
 
     def do_set_properties(
@@ -46,3 +46,12 @@ class GTK3ToolPalette(Gtk.ToolPalette, GTK3Container):
 
         self.set_icon_size(self.dic_properties["icon_size"])
         self.set_style(self.dic_properties["toolbar_style"])
+
+
+class GTK3ToolPalette(Gtk.ToolPalette, GTK3ToolPaletteMixin):
+    """Wrapper for version 3.0 Gtk.ToolPalette."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ToolPalette."""
+        Gtk.ToolPalette.__init__(self)
+        GTK3ToolPaletteMixin.__init__(self)
