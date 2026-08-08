@@ -10,11 +10,11 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRenderer
+from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRendererMixin
 
 
-class GTK3CellRendererText(Gtk.CellRendererText, GTK3CellRenderer):
-    """Wrapper for version 3.0 Gtk.CellRendererText."""
+class GTK3CellRendererTextMixin(GTK3CellRendererMixin):
+    """Mixin class for GTK3CellRendererText."""
 
     _GTK3_CELLRENDERERTEXT_PROPERTIES = GTK3WidgetProperties(
         align_set=False,
@@ -68,11 +68,11 @@ class GTK3CellRendererText(Gtk.CellRendererText, GTK3CellRenderer):
         "edited",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3CellRendererText."""
-        Gtk.CellRendererText.__init__(self)
-        GTK3CellRenderer.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3CellRendererText mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_CELLRENDERERTEXT_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_CELLRENDERERTEXT_SIGNALS}
@@ -91,7 +91,40 @@ class GTK3CellRendererText(Gtk.CellRendererText, GTK3CellRenderer):
             with the property values to set for the GTK3CellRendererText.
         """
         # Update the property dictionary.
-        self.dic_properties |= properties
+        super().do_set_properties(properties)
+
+        # TODO: Replace this with a FontDescription object after adding methods to
+        #  the FontDescription class to set the Pango properties and return a
+        #  Pango.FontDescription.
+        if self.dic_properties.get("family"):
+            _font_desc = Pango.FontDescription()
+            _font_desc.set_family(self.dic_properties.get("family", "Sans"))
+
+            if self.dic_properties.get("size"):
+                _font_desc.set_size(self.dic_properties.get("size") * Pango.SCALE)
+            if self.dic_properties.get("stretch"):
+                _font_desc.set_stretch(self.dic_properties.get("stretch"))
+            if self.dic_properties.get("style"):
+                _font_desc.set_style(self.dic_properties.get("style"))
+            if self.dic_properties.get("variant"):
+                _font_desc.set_variant(self.dic_properties.get("variant"))
+            if self.dic_properties.get("weight"):
+                _font_desc.set_weight(self.dic_properties.get("weight"))
+
+            self.dic_properties["font_desc"] = _font_desc
+        elif self.dic_properties.get("font"):
+            _font_desc = Pango.FontDescription.from_string(
+                self.dic_properties.get("font")
+            )
+            self.dic_properties["font_desc"] = _font_desc
+
+        if self.dic_properties.get("font_desc"):
+            self.dic_properties["family_set"] = True
+            self.dic_properties["size_set"] = True
+            self.dic_properties["stretch_set"] = True
+            self.dic_properties["style_set"] = True
+            self.dic_properties["variant_set"] = True
+            self.dic_properties["weight_set"] = True
 
         for _property in [
             "align_set",
@@ -104,9 +137,7 @@ class GTK3CellRendererText(Gtk.CellRendererText, GTK3CellRenderer):
             "editable_set",
             "ellipsize",
             "ellipsize_set",
-            "family",
             "family_set",
-            "font",
             "font_desc",
             "foreground",
             "foreground_rgba",
@@ -121,21 +152,16 @@ class GTK3CellRendererText(Gtk.CellRendererText, GTK3CellRenderer):
             "scale",
             "scale_set",
             "single_paragraph_mode",
-            "size",
             "size_points",
             "size_set",
-            "stretch",
             "stretch_set",
             "strikethrough",
             "strikethrough_set",
-            "style",
             "style_set",
             "text",
             "underline",
             "underline_set",
-            "variant",
             "variant_set",
-            "weight",
             "weight_set",
             "width_chars",
             "wrap_mode",
@@ -144,3 +170,12 @@ class GTK3CellRendererText(Gtk.CellRendererText, GTK3CellRenderer):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3CellRendererText(Gtk.CellRendererText, GTK3CellRendererTextMixin):
+    """Wrapper for version 3.0 Gtk.CellRendererText."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3CellRendererText."""
+        Gtk.CellRendererText.__init__(self)
+        GTK3CellRendererTextMixin.__init__(self)
