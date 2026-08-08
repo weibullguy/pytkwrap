@@ -100,19 +100,25 @@ class TestGTK3CellRenderer(BaseGTK3GObjectTests):
         )
 
         assert dut.do_get_property("cell_background") == "red"
-        assert dut.do_get_property("cell_background_rgba") is None
-        assert not dut.do_get_property("cell_background_set")
-        assert dut.do_get_property("height") == 10
-        assert not dut.do_get_property("is_expanded")
-        assert not dut.do_get_property("is_expander")
-        assert dut.do_get_property("mode") == Gtk.CellRendererMode.EDITABLE
-        assert not dut.do_get_property("sensitive")
-        assert not dut.do_get_property("visible")
-        assert dut.do_get_property("width") == 20
-        assert dut.do_get_property("xalign") == 0.2
-        assert dut.do_get_property("xpad") == 10
-        assert dut.do_get_property("yalign") == 0.3
-        assert dut.do_get_property("ypad") == 20
+        assert isinstance(dut.get_property("cell_background_rgba"), Gdk.RGBA)
+        assert dut.get_property("cell_background_rgba").alpha == 1.0
+        assert dut.get_property("cell_background_rgba").blue == 0.0
+        assert dut.get_property("cell_background_rgba").green == 0.0
+        assert dut.get_property("cell_background_rgba").red == 1.0
+        assert not dut.get_property("cell_background_set")
+        assert dut.get_property("height") == 10
+        assert not dut.get_property("is_expanded")
+        assert not dut.get_property("is_expander")
+        assert dut.get_property("mode") == Gtk.CellRendererMode.EDITABLE
+        assert not dut.get_property("sensitive")
+        assert not dut.get_sensitive()
+        assert not dut.get_property("visible")
+        assert not dut.get_visible()
+        assert dut.get_property("width") == 20
+        assert dut.get_property("xalign") == pytest.approx(0.2)
+        assert dut.get_property("xpad") == 10
+        assert dut.get_property("yalign") == pytest.approx(0.3)
+        assert dut.get_property("ypad") == 20
 
     @pytest.mark.unit
     def test_do_set_properties_background_rgba(self):
