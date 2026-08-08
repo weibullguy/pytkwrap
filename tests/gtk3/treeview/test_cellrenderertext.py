@@ -99,7 +99,7 @@ class TestGTK3CellRenderer(BaseGTK3GObjectTests):
         assert dut.do_get_property("wrap_width") == -1
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
+    def test_do_set_properties_build_font_desc(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
         dut.do_set_properties(
@@ -116,7 +116,7 @@ class TestGTK3CellRenderer(BaseGTK3GObjectTests):
                 ellipsize_set=True,
                 family="Arial",
                 family_set=True,
-                font="Arial 12pt",
+                font=None,
                 font_desc=None,
                 foreground="red",
                 foreground_rgba=None,
@@ -153,49 +153,113 @@ class TestGTK3CellRenderer(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("align_set")
-        assert dut.do_get_property("alignment") == Pango.Alignment.RIGHT
-        assert dut.do_get_property("attributes") is None
+        assert dut.get_property("align_set")
+        assert dut.get_property("alignment") == Pango.Alignment.RIGHT
+        assert dut.get_property("attributes") is None
         assert dut.do_get_property("background") == "pink"
-        assert dut.do_get_property("background_rgba") is None
-        assert dut.do_get_property("background_set")
-        assert dut.do_get_property("editable")
-        assert dut.do_get_property("editable_set")
-        assert dut.do_get_property("ellipsize") == Pango.EllipsizeMode.MIDDLE
-        assert dut.do_get_property("ellipsize_set")
-        assert dut.do_get_property("family") == "Arial"
-        assert dut.do_get_property("family_set")
-        assert dut.do_get_property("font") == "Arial 12pt"
-        assert dut.do_get_property("font_desc") is None
-        assert dut.do_get_property("foreground") == "red"
-        assert dut.do_get_property("foreground_rgba") is None
-        assert dut.do_get_property("foreground_set")
-        assert dut.do_get_property("language") is None
-        assert dut.do_get_property("language_set")
-        assert dut.do_get_property("markup") == "<b>Test Markup</b>"
-        assert dut.do_get_property("max_width_chars") == 100
-        assert dut.do_get_property("placeholder_text") == "Test Placeholder Text"
-        assert dut.do_get_property("rise") == 5
-        assert dut.do_get_property("rise_set")
-        assert dut.do_get_property("scale") == 1.2
-        assert dut.do_get_property("scale_set")
-        assert dut.do_get_property("single_paragraph_mode")
-        assert dut.do_get_property("size") == 10
-        assert dut.do_get_property("size_points") == 10.0
-        assert dut.do_get_property("size_set")
-        assert dut.do_get_property("stretch") == Pango.Stretch.EXPANDED
-        assert dut.do_get_property("stretch_set")
-        assert dut.do_get_property("strikethrough")
-        assert dut.do_get_property("strikethrough_set")
-        assert dut.do_get_property("style") == Pango.Style.ITALIC
-        assert dut.do_get_property("style_set")
-        assert dut.do_get_property("text") == "Test Text"
-        assert dut.do_get_property("underline") == Pango.Underline.DOUBLE
-        assert dut.do_get_property("underline_set")
-        assert dut.do_get_property("variant") == Pango.Variant.SMALL_CAPS
-        assert dut.do_get_property("variant_set")
-        assert dut.do_get_property("weight") == 600
-        assert dut.do_get_property("weight_set")
-        assert dut.do_get_property("width_chars") == 50
-        assert dut.do_get_property("wrap_mode") == Pango.WrapMode.WORD_CHAR
-        assert dut.do_get_property("wrap_width") == 25
+        assert isinstance(dut.get_property("background_rgba"), Gdk.RGBA)
+        assert dut.get_property("background_set")
+        assert dut.get_property("editable")
+        assert dut.get_property("editable_set")
+        assert dut.get_property("ellipsize") == Pango.EllipsizeMode.MIDDLE
+        assert dut.get_property("ellipsize_set")
+        assert dut.get_property("family") == "Arial"
+        assert dut.get_property("family_set")
+        assert (
+            dut.get_property("font") == "Arial Semi-Bold Italic Expanded Small-Caps 10"
+        )
+        assert isinstance(dut.get_property("font_desc"), Pango.FontDescription)
+        assert isinstance(dut.get_property("foreground_rgba"), Gdk.RGBA)
+        assert dut.get_property("foreground_set")
+        assert dut.get_property("language") is None
+        assert dut.get_property("language_set")
+        assert dut.get_property("max_width_chars") == 100
+        assert dut.get_property("placeholder_text") == "Test Placeholder Text"
+        assert dut.get_property("rise") == 5
+        assert dut.get_property("rise_set")
+        assert dut.get_property("scale") == 1.2
+        assert dut.get_property("scale_set")
+        assert dut.get_property("single_paragraph_mode")
+        assert dut.get_property("size") == 10240
+        assert dut.get_property("size_points") == 10.0
+        assert dut.get_property("size_set")
+        assert dut.get_property("stretch") == Pango.Stretch.EXPANDED
+        assert dut.get_property("stretch_set")
+        assert dut.get_property("strikethrough")
+        assert dut.get_property("strikethrough_set")
+        assert dut.get_property("style") == Pango.Style.ITALIC
+        assert dut.get_property("style_set")
+        assert dut.get_property("text") == "Test Text"
+        assert dut.get_property("underline") == Pango.Underline.DOUBLE
+        assert dut.get_property("underline_set")
+        assert dut.get_property("variant") == Pango.Variant.SMALL_CAPS
+        assert dut.get_property("variant_set")
+        assert dut.get_property("weight") == 600
+        assert dut.get_property("weight_set")
+        assert dut.get_property("width_chars") == 50
+        assert dut.get_property("wrap_mode") == Pango.WrapMode.WORD_CHAR
+        assert dut.get_property("wrap_width") == 25
+
+    @pytest.mark.unit
+    def test_do_set_properties_font_string(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                font="Arial Semi-Bold Italic Expanded Small-Caps 10",
+                text="Test Text",
+            )
+        )
+
+        assert dut.get_property("family") == "Arial"
+        assert dut.get_property("family_set")
+        assert (
+            dut.get_property("font") == "Arial Semi-Bold Italic Expanded Small-Caps 10"
+        )
+        assert isinstance(dut.get_property("font_desc"), Pango.FontDescription)
+        assert dut.get_property("size") == 10240
+        assert dut.get_property("size_points") == 10.0
+        assert dut.get_property("size_set")
+        assert dut.get_property("stretch") == Pango.Stretch.EXPANDED
+        assert dut.get_property("stretch_set")
+        assert dut.get_property("style") == Pango.Style.ITALIC
+        assert dut.get_property("style_set")
+        assert dut.get_property("text") == "Test Text"
+        assert dut.get_property("variant") == Pango.Variant.SMALL_CAPS
+        assert dut.get_property("variant_set")
+        assert dut.get_property("weight") == 600
+        assert dut.get_property("weight_set")
+
+    @pytest.mark.unit
+    def test_do_set_properties_font_desc(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
+        _font_desc = Pango.FontDescription(
+            "Arial Semi-Bold Italic Expanded Small-Caps 10"
+        )
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                font_desc=_font_desc,
+                text="Test Text",
+            )
+        )
+
+        assert dut.get_property("family") == "Arial"
+        assert dut.get_property("family_set")
+        assert (
+            dut.get_property("font") == "Arial Semi-Bold Italic Expanded Small-Caps 10"
+        )
+        assert isinstance(dut.get_property("font_desc"), Pango.FontDescription)
+        assert dut.get_property("size") == 10240
+        assert dut.get_property("size_points") == 10.0
+        assert dut.get_property("size_set")
+        assert dut.get_property("stretch") == Pango.Stretch.EXPANDED
+        assert dut.get_property("stretch_set")
+        assert dut.get_property("style") == Pango.Style.ITALIC
+        assert dut.get_property("style_set")
+        assert dut.get_property("text") == "Test Text"
+        assert dut.get_property("variant") == Pango.Variant.SMALL_CAPS
+        assert dut.get_property("variant_set")
+        assert dut.get_property("weight") == 600
+        assert dut.get_property("weight_set")
