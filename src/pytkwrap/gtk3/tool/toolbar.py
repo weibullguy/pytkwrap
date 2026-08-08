@@ -9,11 +9,11 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3Toolbar(Gtk.Toolbar, GTK3Container):
+class GTK3ToolbarMixin(GTK3ContainerMixin):
     """Wrapper for version 3.0 Gtk.Toolbar."""
 
     _GTK3_TOOLBAR_PROPERTIES = GTK3WidgetProperties(
@@ -29,11 +29,11 @@ class GTK3Toolbar(Gtk.Toolbar, GTK3Container):
         "style-changed",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Toolbar."""
-        Gtk.Toolbar.__init__(self)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Toolbar mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_TOOLBAR_SIGNALS}
         )
@@ -57,3 +57,12 @@ class GTK3Toolbar(Gtk.Toolbar, GTK3Container):
         self.set_icon_size(self.dic_properties["icon_size"])
         self.set_show_arrow(self.dic_properties["show_arrow"])
         self.set_style(self.dic_properties["toolbar_style"])
+
+
+class GTK3Toolbar(Gtk.Toolbar, GTK3ToolbarMixin):
+    """Wrapper for version 3.0 Gtk.Toolbar."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Toolbar."""
+        Gtk.Toolbar.__init__(self)
+        GTK3ToolbarMixin.__init__(self)
