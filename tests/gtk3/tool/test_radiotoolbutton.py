@@ -10,7 +10,6 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.button import GTK3RadioButton
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.tool import GTK3RadioToolButton
 from tests.gtk3.conftest import BaseGTK3GObjectTests
@@ -77,6 +76,17 @@ class TestGTK3RadioToolButton(BaseGTK3GObjectTests):
         | EXPECTED_RADIOTOOLBUTTON_PROPERTIES
     )
 
+    def make_dut(self, group=None):
+        return self.widget_class(group=group)
+
+    @pytest.mark.unit
+    def test_init_with_group(self):
+        """Should create a GTK3RadioToolButton with a group."""
+        _radiobutton = GTK3RadioToolButton()
+        dut = self.make_dut(group=[_radiobutton])
+
+        assert dut.get_group() == [_radiobutton, dut]
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -87,16 +97,10 @@ class TestGTK3RadioToolButton(BaseGTK3GObjectTests):
         assert dut.dic_properties == self.expected_properties
         assert dut.do_get_property("group") is None
 
-    @pytest.mark.skip(
-        reason=(
-            "GTK3RadioToolButton crashes at the C level when run as part of the "
-            "full test suite due to GIO volume monitor initialization conflicts. "
-            "Passes in isolation. Requires manual testing."
-        )
-    )
+    @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        _radiobutton = GTK3RadioButton()
+        _radiobutton = GTK3RadioToolButton()
 
         dut = self.make_dut()
         dut.do_set_properties(
@@ -105,4 +109,4 @@ class TestGTK3RadioToolButton(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("group") == [_radiobutton]
+        assert dut.get_group() == [_radiobutton, dut]
