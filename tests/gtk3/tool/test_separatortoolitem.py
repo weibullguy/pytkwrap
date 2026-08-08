@@ -84,4 +84,5 @@ class TestGTK3SeparatorToolItem(BaseGTK3GObjectTests):
             )
         )
 
-        assert not dut.do_get_property("draw")
+        assert not dut.get_property("draw")
+        assert not dut.get_draw()
