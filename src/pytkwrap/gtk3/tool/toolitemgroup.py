@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk, Pango
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ToolItemGroup(Gtk.ToolItemGroup, GTK3Container):
-    """Wrapper for version 3.0 Gtk.ToolItemGroup."""
+class GTK3ToolItemGroupMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3ToolItemGroup."""
 
     _GTK3_TOOLITEMGROUP_PROPERTIES = GTK3WidgetProperties(
         collapsed=False,
@@ -24,13 +24,12 @@ class GTK3ToolItemGroup(Gtk.ToolItemGroup, GTK3Container):
         label_widget=None,
     )
 
-    def __init__(self, label: str = "") -> None:
-        """Initialize an instance of the GTK3ToolItemGroup."""
-        Gtk.ToolItemGroup.__init__(self, label=label)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ToolItemGroup mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_TOOLITEMGROUP_PROPERTIES)
-        self.dic_properties["label"] = label
 
     def do_set_properties(
         self,
@@ -54,3 +53,14 @@ class GTK3ToolItemGroup(Gtk.ToolItemGroup, GTK3Container):
 
         if self.dic_properties["label_widget"] is not None:
             self.set_label_widget(self.dic_properties["label_widget"])
+
+
+class GTK3ToolItemGroup(Gtk.ToolItemGroup, GTK3ToolItemGroupMixin):
+    """Wrapper for version 3.0 Gtk.ToolItemGroup."""
+
+    def __init__(self, label: str = "") -> None:
+        """Initialize an instance of the GTK3ToolItemGroup."""
+        Gtk.ToolItemGroup.__init__(self, label=label)
+        GTK3ToolItemGroupMixin.__init__(self)
+
+        self.dic_properties["label"] = label
