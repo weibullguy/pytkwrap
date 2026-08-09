@@ -43,9 +43,10 @@ class TestGTK3Image(BaseGTK3GObjectTests):
 
     def make_dut(
         self,
+        icon_name: str | None = None,
         size: int = 4,
     ):
-        return GTK3Image(size)
+        return GTK3Image(icon_name=icon_name, size=size)
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
