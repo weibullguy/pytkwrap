@@ -10,21 +10,21 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.window.window import GTK3Window
+from pytkwrap.gtk3.window.window import GTK3WindowMixin
 
 
-class GTK3ApplicationWindow(Gtk.ApplicationWindow, GTK3Window):
-    """Wrapper for version 3.0 Gtk.ApplicationWindow."""
+class GTK3ApplicationWindowMixin(GTK3WindowMixin):
+    """Mixin class for GTK3ApplicationWindow."""
 
     _GTK3_APPLICATIONWINDOW_PROPERTIES = GTK3WidgetProperties(
         show_menubar=True,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ApplicationWindow."""
-        Gtk.ApplicationWindow.__init__(self)
-        GTK3Window.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ApplicationWindow mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_APPLICATIONWINDOW_PROPERTIES)
 
     def do_set_properties(
@@ -43,3 +43,12 @@ class GTK3ApplicationWindow(Gtk.ApplicationWindow, GTK3Window):
         super().do_set_properties(properties)
 
         self.set_show_menubar(self.dic_properties["show_menubar"])
+
+
+class GTK3ApplicationWindow(Gtk.ApplicationWindow, GTK3ApplicationWindowMixin):
+    """Wrapper for version 3.0 Gtk.ApplicationWindow."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3ApplicationWindow."""
+        Gtk.ApplicationWindow.__init__(self)
+        GTK3ApplicationWindowMixin.__init__(self)
