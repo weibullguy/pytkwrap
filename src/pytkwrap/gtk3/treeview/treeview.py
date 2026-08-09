@@ -9,12 +9,12 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.container import GTK3Container
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3TreeView(Gtk.TreeView, GTK3Container):
-    """Wrapper for version 3.0 Gtk.TreeView."""
+class GTK3TreeViewMixin(GTK3ContainerMixin):
+    """Mixin class for GTK3TreeView."""
 
     _GTK3_TREEVIEW_PROPERTIES = GTK3WidgetProperties(
         activate_on_single_click=False,
@@ -53,16 +53,15 @@ class GTK3TreeView(Gtk.TreeView, GTK3Container):
         "unselect-all",
     ]
 
-    def __init__(self, model: Gtk.TreeModel = None) -> None:
-        """Initialize an instance of the GTK3TreeView."""
-        Gtk.TreeView.__init__(self, model=model)
-        GTK3Container.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3TreeView mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_TREEVIEW_SIGNALS}
         )
         self.dic_properties.update(self._GTK3_TREEVIEW_PROPERTIES)
-        self.dic_properties["model"] = model
 
     def do_set_properties(
         self,
@@ -97,3 +96,14 @@ class GTK3TreeView(Gtk.TreeView, GTK3Container):
         self.set_search_column(self.dic_properties["search_column"])
         self.set_show_expanders(self.dic_properties["show_expanders"])
         self.set_tooltip_column(self.dic_properties["tooltip_column"])
+
+
+class GTK3TreeView(Gtk.TreeView, GTK3TreeViewMixin):
+    """Wrapper for version 3.0 Gtk.TreeView."""
+
+    def __init__(self, model: Gtk.TreeModel = None) -> None:
+        """Initialize an instance of the GTK3TreeView."""
+        Gtk.TreeView.__init__(self, model=model)
+        GTK3TreeViewMixin.__init__(self)
+
+        self.dic_properties["model"] = model
