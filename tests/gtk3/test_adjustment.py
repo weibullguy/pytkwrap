@@ -155,12 +155,18 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
             )
         )
 
-        assert dut.do_get_property("lower") == 5
-        assert dut.do_get_property("upper") == 10
-        assert dut.do_get_value() == 6.5
-        assert dut.do_get_property("step_increment") == 0.1
-        assert dut.do_get_property("page_increment") == 0.2
-        assert dut.do_get_property("page_size") == 1.0
+        assert dut.get_property("lower") == 5
+        assert dut.get_lower() == 5
+        assert dut.get_property("upper") == 10
+        assert dut.get_upper() == 10
+        assert dut.get_property("value") == 6.5
+        assert dut.get_value() == 6.5
+        assert dut.get_property("step_increment") == 0.1
+        assert dut.get_step_increment() == 0.1
+        assert dut.get_property("page_increment") == 0.2
+        assert dut.get_page_increment() == 0.2
+        assert dut.get_property("page_size") == 1.0
+        assert dut.get_page_size() == 1.0
 
     @pytest.mark.unit
     def test_do_set_value(self):
