@@ -10,11 +10,11 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRenderer
+from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRendererMixin
 
 
-class GTK3CellRendererToggle(Gtk.CellRendererToggle, GTK3CellRenderer):
-    """Wrapper for version 3.0 Gtk.CellRendererToggle."""
+class GTK3CellRendererToggleMixin(GTK3CellRendererMixin):
+    """Mixin class for GTK3CellRendererToggle."""
 
     _GTK3_CELLRENDERERTOGGLE_PROPERTIES = GTK3WidgetProperties(
         activatable=True,
@@ -26,11 +26,11 @@ class GTK3CellRendererToggle(Gtk.CellRendererToggle, GTK3CellRenderer):
         "toggled",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3CellRendererToggle."""
-        Gtk.CellRendererToggle.__init__(self)
-        GTK3CellRenderer.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3CellRendererToggle mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_CELLRENDERERTOGGLE_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_CELLRENDERERTOGGLE_SIGNALS}
@@ -49,7 +49,7 @@ class GTK3CellRendererToggle(Gtk.CellRendererToggle, GTK3CellRenderer):
             with the property values to set for the GTK3CellRendererToggle.
         """
         # Update the property dictionary.
-        self.dic_properties |= properties
+        super().do_set_properties(properties)
 
         self.set_activatable(self.dic_properties["activatable"])
         self.set_active(self.dic_properties["active"])
@@ -61,3 +61,12 @@ class GTK3CellRendererToggle(Gtk.CellRendererToggle, GTK3CellRenderer):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3CellRendererToggle(Gtk.CellRendererToggle, GTK3CellRendererToggleMixin):
+    """Wrapper for version 3.0 Gtk.CellRendererToggle."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3CellRendererToggle."""
+        Gtk.CellRendererToggle.__init__(self)
+        GTK3CellRendererToggleMixin.__init__(self)
