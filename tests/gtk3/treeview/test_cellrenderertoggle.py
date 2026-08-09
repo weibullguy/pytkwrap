@@ -70,6 +70,9 @@ class TestGTK3CellRendererToggle(BaseGTK3GObjectTests):
         )
 
         assert not dut.get_property("activatable")
+        assert not dut.get_activatable()
         assert dut.get_property("active")
+        assert dut.get_active()
         assert dut.get_property("inconsistent")
         assert dut.get_property("radio")
+        assert dut.get_radio()
