@@ -13,8 +13,8 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRenderer
 
 
-class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.TreeViewColumn."""
+class GTK3TreeViewColumnMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3TreeViewColumn."""
 
     _GTK3_TREEVIEWCOLUMN_PROPERTIES = GTK3WidgetProperties(
         alignment=0.0,
@@ -41,23 +41,15 @@ class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
         "clicked",
     ]
 
-    def __init__(
-        self,
-        title: str = "",
-        cell_renderer: GTK3CellRenderer | None = None,
-        cell_area: Gtk.CellArea | None = None,
-    ) -> None:
-        """Initialize an instance of the GTK3TreeViewColumn."""
-        Gtk.TreeViewColumn.__init__(self, title, cell_renderer)
-        GTK3GObjectMixin.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3TreeViewColumn mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_TREEVIEWCOLUMN_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_TREEVIEWCOLUMN_SIGNALS}
         )
-
-        self.dic_properties["cell_area"] = cell_area
-        self.dic_properties["title"] = title
 
     def do_set_properties(
         self,
@@ -72,7 +64,7 @@ class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
             with the property values to set for the GTK3TreeViewColumn.
         """
         # Update the property dictionary.
-        self.dic_properties |= properties
+        super().do_set_properties(properties)
 
         self.set_alignment(self.dic_properties["alignment"])
         self.set_clickable(self.dic_properties["clickable"])
@@ -90,3 +82,30 @@ class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3GObjectMixin):
         self.set_title(self.dic_properties["title"])
         self.set_visible(self.dic_properties["visible"])
         self.set_widget(self.dic_properties["widget"])
+
+
+class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3TreeViewColumnMixin):
+    """Wrapper for version 3.0 Gtk.TreeViewColumn."""
+
+    def __init__(
+        self,
+        title: str = "",
+        cell_renderer: GTK3CellRenderer | None = None,
+        cell_area: Gtk.CellArea | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3TreeViewColumn.
+
+        Parameters
+        ----------
+        title : str
+            The title to appear in the GTK3TreeViewColumn header.
+        cell_renderer : GTK3CellRenderer | None
+            The GTK3CellRenderer to use for the GTK3TreeViewColumn.
+        cell_area : Gtk.CellArea | None
+            The Gtk.CellArea used to layout cells.
+        """
+        Gtk.TreeViewColumn.__init__(self, title, cell_renderer)
+        GTK3TreeViewColumnMixin.__init__(self)
+
+        self.dic_properties["cell_area"] = cell_area
+        self.dic_properties["title"] = title
