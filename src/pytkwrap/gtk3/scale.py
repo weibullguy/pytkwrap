@@ -62,7 +62,15 @@ class GTK3Scale(Gtk.Scale, GTK3ScaleMixin):
         orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
         adjustment: Gtk.Adjustment | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3Scale."""
+        """Initialize an instance of the GTK3Scale.
+
+        Parameters
+        ----------
+        orientation : Gtk.Orientation
+            The orientation of the scale.  The default is Gtk.Orientation.HORIZONTAL.
+        adjustment : Gtk.Adjustment | None
+            The adjustment to use for the scale.  The default is None.
+        """
         Gtk.Scale.__init__(
             self,
             orientation=orientation,
