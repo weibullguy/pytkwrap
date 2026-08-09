@@ -13,8 +13,8 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetAttributes
 
 
-class GTK3ListStore(Gtk.ListStore, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.ListStore."""
+class GTK3ListStoreMixin(GTK3GObjectMixin):
+    """Mixin class for GTK3ListStore."""
 
     _GTK3_LISTSTORE_ATTRIBUTES = GTK3WidgetAttributes(
         column_types=None,
@@ -22,29 +22,12 @@ class GTK3ListStore(Gtk.ListStore, GTK3GObjectMixin):
         n_rows=0,
     )
 
-    def __init__(self, column_types: list, n_columns: int, n_rows: int) -> None:
-        """Initialize an instance of the GTK3ListStore.
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3ListStore."""
+        super().__init__(**kwargs)
 
-        Parameters
-        ----------
-        column_types : list
-            The type of data for each column in the GTK3ListStore.
-        n_columns : int
-            The number of columns in the GTK3ListStore.
-        n_rows : int
-            The initial number of rows in the GTK3ListStore.
-        """
-        Gtk.ListStore.__init__(self)
-        GTK3GObjectMixin.__init__(self)
-
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_LISTSTORE_ATTRIBUTES)
-        self.dic_attributes["column_types"] = column_types
-
-        if n_columns <= 0 and column_types is not None:
-            n_columns = len(column_types)
-
-        self.dic_attributes["n_columns"] = n_columns
-        self.dic_attributes["n_rows"] = n_rows
 
     def do_get_attribute(
         self, attribute: str
@@ -80,3 +63,29 @@ class GTK3ListStore(Gtk.ListStore, GTK3GObjectMixin):
                 _attr,
                 self.dic_attributes[_attr],
             )
+
+
+class GTK3ListStore(Gtk.ListStore, GTK3ListStoreMixin):
+    """Wrapper for version 3.0 Gtk.ListStore."""
+
+    def __init__(self, column_types: list, n_columns: int, n_rows: int) -> None:
+        """Initialize an instance of the GTK3ListStore.
+
+        Parameters
+        ----------
+        column_types : list
+            The type of data for each column in the GTK3ListStore.
+        n_columns : int
+            The number of columns in the GTK3ListStore.
+        n_rows : int
+            The initial number of rows in the GTK3ListStore.
+        """
+        Gtk.ListStore.__init__(self)
+        GTK3ListStoreMixin.__init__(self)
+
+        self.dic_attributes["column_types"] = column_types
+        if n_columns <= 0 and column_types is not None:
+            n_columns = len(column_types)
+
+        self.dic_attributes["n_columns"] = n_columns
+        self.dic_attributes["n_rows"] = n_rows
