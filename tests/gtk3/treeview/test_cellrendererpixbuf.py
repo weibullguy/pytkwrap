@@ -9,7 +9,7 @@ import pytest
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
+from pytkwrap.gtk3._libs import GdkPixbuf, Gio, Gtk, cairo
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from pytkwrap.gtk3.treeview import GTK3CellRendererPixbuf
 from tests.gtk3.conftest import BaseGTK3GObjectTests
@@ -78,28 +78,90 @@ class TestGTK3CellRendererPixbuf(BaseGTK3GObjectTests):
         assert dut.do_get_property("surface") is None
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
+    def test_do_set_properties_gicon(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        _pixbuf = GdkPixbuf.Pixbuf()
+        _gicon = Gio.Icon.new_for_string("go-next")
         _pixbuf_closed = GdkPixbuf.Pixbuf()
         _pixbuf_open = GdkPixbuf.Pixbuf()
 
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
-                icon_name="gicon the great",
-                pixbuf=_pixbuf,
+                gicon=_gicon,
                 pixbuf_expander_closed=_pixbuf_closed,
                 pixbuf_expander_open=_pixbuf_open,
                 stock_size=22,
             )
         )
 
-        assert dut.do_get_property("gicon") is None
-        assert dut.do_get_property("icon_name") == "gicon the great"
-        assert dut.do_get_property("pixbuf") == _pixbuf
-        assert dut.do_get_property("pixbuf_expander_closed") == _pixbuf_closed
-        assert dut.do_get_property("pixbuf_expander_open") == _pixbuf_open
-        assert dut.do_get_property("stock_detail") is None
-        assert dut.do_get_property("stock_size") == 22
-        assert dut.do_get_property("surface") is None
+        assert dut.get_property("gicon") == _gicon
+        assert dut.get_property("gicon").to_string() == "go-next"
+        assert dut.do_get_property("icon_name") == "go-next"
+        assert dut.get_property("pixbuf") is None
+        assert dut.get_property("pixbuf_expander_closed") == _pixbuf_closed
+        assert dut.get_property("pixbuf_expander_open") == _pixbuf_open
+        assert dut.get_property("stock_detail") is None
+        assert dut.get_property("stock_size") == 22
+        assert dut.get_property("surface") is None
+
+    @pytest.mark.unit
+    def test_do_set_properties_icon_name(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                icon_name="go-next",
+            )
+        )
+
+        assert dut.get_property("gicon") is None
+        assert dut.do_get_property("icon_name") == "go-next"
+        assert dut.get_property("pixbuf") is None
+        assert dut.get_property("pixbuf_expander_closed") is None
+        assert dut.get_property("pixbuf_expander_open") is None
+        assert dut.get_property("stock_detail") is None
+        assert dut.get_property("stock_size") == 1
+        assert dut.get_property("surface") is None
+
+    @pytest.mark.unit
+    def test_do_set_properties_pixbuf(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
+        _pixbuf = GdkPixbuf.Pixbuf()
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                pixbuf=_pixbuf,
+            )
+        )
+
+        assert dut.get_property("gicon") is None
+        assert dut.get_property("icon_name") is None
+        assert dut.get_property("pixbuf") == _pixbuf
+        assert dut.get_property("pixbuf_expander_closed") is None
+        assert dut.get_property("pixbuf_expander_open") is None
+        assert dut.get_property("stock_detail") is None
+        assert dut.get_property("stock_size") == 1
+        assert dut.get_property("surface") is None
+
+    @pytest.mark.skip
+    def test_do_set_properties_surface(self):
+        """Should set properties to the values passed in the GTK3WidgetProperties."""
+        _surface = cairo.Surface.create_for_rectangle(0.0, 0.0, 100.0, 100.0)
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                surface=_surface,
+            )
+        )
+
+        assert dut.get_property("gicon") is None
+        assert dut.get_property("icon_name") is None
+        assert dut.get_property("pixbuf") is None
+        assert dut.get_property("pixbuf_expander_closed") is None
+        assert dut.get_property("pixbuf_expander_open") is None
+        assert dut.get_property("stock_detail") is None
+        assert dut.get_property("stock_size") == 1
+        assert dut.get_property("surface") == _surface
