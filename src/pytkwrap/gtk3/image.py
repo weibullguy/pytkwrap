@@ -8,13 +8,13 @@
 from collections.abc import Mapping
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
-class GTK3Image(Gtk.Image, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.Image."""
+class GTK3ImageMixin(GTK3WidgetMixin):
+    """Mixin class for GTK3Image."""
 
     _GTK3_IMAGE_PROPERTIES = GTK3WidgetProperties(
         file=None,
@@ -31,14 +31,13 @@ class GTK3Image(Gtk.Image, GTK3Widget):
 
     def __init__(
         self,
-        size: int = 4,
+        **kwargs,
     ) -> None:
-        """Initialize an instance of the GTK3Image."""
-        Gtk.Image.__init__(self)
-        GTK3Widget.__init__(self)
+        """Initialize an instance of the GTK3Image mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_IMAGE_PROPERTIES)
-        self.size = size
 
     def do_set_properties(
         self,
@@ -76,3 +75,19 @@ class GTK3Image(Gtk.Image, GTK3Widget):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3Image(Gtk.Image, GTK3ImageMixin):
+    """Wrapper for version 3.0 Gtk.Image."""
+
+    def __init__(
+        self,
+        icon_name: str | None = None,
+        pixbuf: GdkPixbuf = None,
+        size: int = 4,
+    ) -> None:
+        """Initialize an instance of the GTK3Image."""
+        Gtk.Image.__init__(self, icon_name=icon_name, pixbuf=pixbuf)
+        GTK3ImageMixin.__init__(self)
+
+        self.size = size
