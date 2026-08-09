@@ -10,11 +10,11 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
-class GTK3CellView(Gtk.CellView, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.CellView."""
+class GTK3CellViewMixin(GTK3WidgetMixin):
+    """Mixin class for GTK3CellView."""
 
     _DEFAULT_HEIGHT = -1
     _DEFAULT_WIDTH = -1
@@ -29,16 +29,9 @@ class GTK3CellView(Gtk.CellView, GTK3Widget):
         model=None,
     )
 
-    def __init__(
-        self,
-        cell_area_context: Gtk.CellAreaContext = None,
-    ) -> None:
-        """Initialize an instance of the GTK3CellView."""
-        Gtk.CellView.__init__(
-            self,
-            cell_area_context=cell_area_context,
-        )
-        GTK3Widget.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3CellView mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_CELLVIEW_PROPERTIES)
@@ -69,3 +62,18 @@ class GTK3CellView(Gtk.CellView, GTK3Widget):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3CellView(Gtk.CellView, GTK3CellViewMixin):
+    """Wrapper for version 3.0 Gtk.CellView."""
+
+    def __init__(
+        self,
+        cell_area_context: Gtk.CellAreaContext = None,
+    ) -> None:
+        """Initialize an instance of the GTK3CellView."""
+        Gtk.CellView.__init__(
+            self,
+            cell_area_context=cell_area_context,
+        )
+        GTK3CellViewMixin.__init__(self)
