@@ -6,15 +6,16 @@
 
 # Standard Library Imports
 from collections.abc import Mapping
+from datetime import date
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRenderer
+from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRendererMixin
 
 
-class GTK3CellRendererSpinner(Gtk.CellRendererSpinner, GTK3CellRenderer):
-    """Wrapper for version 3.0 Gtk.CellRendererSpinner."""
+class GTK3CellRendererSpinnerMixin(GTK3CellRendererMixin):
+    """Mixin class for GTK3CellRendererSpinner."""
 
     _GTK3_CELLRENDERERSPINNER_PROPERTIES = GTK3WidgetProperties(
         active=False,
@@ -22,12 +23,23 @@ class GTK3CellRendererSpinner(Gtk.CellRendererSpinner, GTK3CellRenderer):
         size=Gtk.IconSize.MENU,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3CellRendererSpinner."""
-        Gtk.CellRendererSpinner.__init__(self)
-        GTK3CellRenderer.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3CellRendererSpinner mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_CELLRENDERERSPINNER_PROPERTIES)
+
+    def do_get_value(self) -> int:
+        """Get the value of the GTK3CellRendererSpinner.
+
+        Returns
+        -------
+        The value of the GTK3CellRendererSpinner.  An integer representing the number
+        of frames that are displayed.  There are a total of 12 frames in a
+        Gtk.CellRendererSpinner.
+        """
+        return self.get_property("pulse")
 
     def do_set_properties(
         self,
@@ -42,7 +54,7 @@ class GTK3CellRendererSpinner(Gtk.CellRendererSpinner, GTK3CellRenderer):
             with the property values to set for the GTK3CellRendererSpinner.
         """
         # Update the property dictionary.
-        self.dic_properties |= properties
+        super().do_set_properties(properties)
 
         for _property in [
             "active",
@@ -52,3 +64,21 @@ class GTK3CellRendererSpinner(Gtk.CellRendererSpinner, GTK3CellRenderer):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+    def do_set_value(
+        self, value: bool | date | float | int | object | str | tuple | None
+    ) -> None:
+        """Set the value of the GTK3CellRendererSpinner."""
+        if not isinstance(value, (float, int, str)):
+            super().do_set_value(value)
+        self.dic_properties["pulse"] = int(value)  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
+        self.set_property("pulse", int(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
+
+
+class GTK3CellRendererSpinner(Gtk.CellRendererSpinner, GTK3CellRendererSpinnerMixin):
+    """Wrapper for version 3.0 Gtk.CellRendererSpinner."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3CellRendererSpinner."""
+        Gtk.CellRendererSpinner.__init__(self)
+        GTK3CellRendererSpinnerMixin.__init__(self)

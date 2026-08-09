@@ -52,7 +52,7 @@ class GTK3CellRendererSpinMixin(GTK3CellRendererTextMixin):
             with the property values to set for the GTK3CellRendererSpin.
         """
         # Update the property dictionary.
-        self.dic_properties |= properties
+        super().do_set_properties(properties)
 
         for _property in [
             "adjustment",
