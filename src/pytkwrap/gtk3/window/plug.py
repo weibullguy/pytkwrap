@@ -6,19 +6,28 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.window.window import GTK3Window
+from pytkwrap.gtk3.window.window import GTK3WindowMixin
 
 
-class GTK3Plug(Gtk.Plug, GTK3Window):
-    """Wrapper for version 3.0 Gtk.Plug."""
+class GTK3PlugMixin(GTK3WindowMixin):
+    """Mixin class for GTK3Plug."""
 
     _GTK3_PLUG_SIGNALS = [
         "embedded",
     ]
 
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Plug mixin."""
+        super().__init__(**kwargs)
+
+        # Initialize public instance attributes.
+        self.dic_handler_id.update({_signal: -1 for _signal in self._GTK3_PLUG_SIGNALS})
+
+
+class GTK3Plug(Gtk.Plug, GTK3PlugMixin):
+    """Wrapper for version 3.0 Gtk.Plug."""
+
     def __init__(self) -> None:
         """Initialize an instance of the GTK3Plug."""
         Gtk.Plug.__init__(self)
-        GTK3Window.__init__(self)
-
-        self.dic_handler_id.update({_signal: -1 for _signal in self._GTK3_PLUG_SIGNALS})
+        GTK3PlugMixin.__init__(self)
