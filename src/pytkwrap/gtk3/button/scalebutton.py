@@ -98,7 +98,6 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         value : bool | date | float | int | object | str | tuple | None
             The value to set for the GTK3ScaleButton.
         """
-        # Boolean values are also of type int.  False is 0, True is 1.
         if not isinstance(value, (float, int, str)):
             super().do_set_value(value)
         self.dic_properties["value"] = float(value)  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
