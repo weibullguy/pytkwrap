@@ -6,16 +6,29 @@ from datetime import date
 from _typeshed import Incomplete
 
 # pytkwrap Package Imports
-from pytkwrap.common.mixins import PyTkWrapAttributes as PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin as GTK3GObjectMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
+class GTK3AdjustmentMixin(GTK3GObjectMixin):
     _GTK3_ADJUSTMENT_ATTRIBUTES: Incomplete
     _GTK3_ADJUSTMENT_PROPERTIES: Incomplete
     _GTK3_ADJUSTMENT_SIGNALS: Incomplete
+    def __init__(self, **kwargs) -> None: ...
+    def do_get_attribute(
+        self, attribute: str
+    ) -> bool | date | float | int | object | str | None: ...
+    def do_set_attributes(self, attributes: Mapping[str, object]) -> None: ...
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None: ...
+    def do_get_value(self) -> float: ...
+    def do_set_value(
+        self, value: bool | date | float | int | object | str | tuple | None
+    ) -> None: ...
+
+class GTK3Adjustment(Gtk.Adjustment, GTK3AdjustmentMixin):
     def __init__(
         self,
         value: float = 0.0,
@@ -24,15 +37,4 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         step_increment: float = 0.0,
         page_increment: float = 0.0,
         page_size: float = 0.0,
-    ) -> None: ...
-    def do_get_attribute(
-        self, attribute: str
-    ) -> bool | date | float | int | object | str | None: ...
-    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None: ...
-    def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
-    ) -> None: ...
-    def do_get_value(self) -> float: ...
-    def do_set_value(
-        self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...

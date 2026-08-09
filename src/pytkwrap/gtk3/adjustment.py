@@ -9,8 +9,6 @@ from collections.abc import Mapping
 from datetime import date
 
 # pytkwrap Package Imports
-from pytkwrap.common.mixins import PyTkWrapAttributes
-
 # noinspection PyUnresolvedReferences
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import (
@@ -20,8 +18,8 @@ from pytkwrap.gtk3.mixins import (
 )
 
 
-class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
-    """Wrapper for version 3.0 Gtk.Adjustment."""
+class GTK3AdjustmentMixin(GTK3GObjectMixin):
+    """Mixin for GTK3Adjustment."""
 
     _GTK3_ADJUSTMENT_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
@@ -40,52 +38,16 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         "value-changed",
     ]
 
-    def __init__(
-        self,
-        value: float = 0.0,
-        lower: float = 0.0,
-        upper: float = 0.0,
-        step_increment: float = 0.0,
-        page_increment: float = 0.0,
-        page_size: float = 0.0,
-    ) -> None:
-        """Initialize an instance of the GTK3Adjustment.
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Adjustment."""
+        super().__init__(**kwargs)
 
-        Parameters
-        ----------
-        value : float
-            The value between the lower and upper bound to set for the GTK3Adjustment.
-        lower : float
-            The smallest value the GTK3Adjustment can take.
-        upper : float
-            The largest value the GTK3Adjustment can take.
-        step_increment : float
-            The step increment for the GTK3Adjustment.
-        page_increment : float
-            The page increment for the GTK3Adjustment.
-        page_size : float
-            The page size of the GTK3Adjustment.
-        """
-        Gtk.Adjustment.__init__(self)
-        GTK3GObjectMixin.__init__(self)
-
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_ADJUSTMENT_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_ADJUSTMENT_PROPERTIES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_ADJUSTMENT_SIGNALS}
         )
-
-        self.do_set_properties(
-            GTK3WidgetProperties(
-                lower=lower,
-                upper=upper,
-                page_increment=page_increment,
-                page_size=page_size,
-                step_increment=step_increment,
-                value=value,
-            )
-        )
-        self.do_set_value(self.dic_properties["value"])
 
     def do_get_attribute(
         self, attribute: str
@@ -106,7 +68,7 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
             return self.dic_attributes.get(attribute)
         return super().do_get_attribute(attribute)
 
-    def do_set_attributes(self, attributes: PyTkWrapAttributes) -> None:
+    def do_set_attributes(self, attributes: Mapping[str, object]) -> None:
         """Set the values of the GTK3Adjustment-specific attributes.
 
         Parameters
@@ -115,6 +77,7 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
             The typed dict (preferred), or non-typed dict with the attribute values to
             set for the GTK3Adjustment.
         """
+        # Update the attribute dictionary.
         super().do_set_attributes(attributes)
 
         for _attr in self._GTK3_ADJUSTMENT_ATTRIBUTES:
@@ -169,3 +132,48 @@ class GTK3Adjustment(Gtk.Adjustment, GTK3GObjectMixin):
         if value is None or isinstance(value, (date, tuple)):
             super().do_set_value(value)
         self.set_value(float(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
+
+
+class GTK3Adjustment(Gtk.Adjustment, GTK3AdjustmentMixin):
+    """Wrapper for version 3.0 Gtk.Adjustment."""
+
+    def __init__(
+        self,
+        value: float = 0.0,
+        lower: float = 0.0,
+        upper: float = 0.0,
+        step_increment: float = 0.0,
+        page_increment: float = 0.0,
+        page_size: float = 0.0,
+    ) -> None:
+        """Initialize an instance of the GTK3Adjustment.
+
+        Parameters
+        ----------
+        value : float
+            The value between the lower and upper bound to set for the GTK3Adjustment.
+        lower : float
+            The smallest value the GTK3Adjustment can take.
+        upper : float
+            The largest value the GTK3Adjustment can take.
+        step_increment : float
+            The step increment for the GTK3Adjustment.
+        page_increment : float
+            The page increment for the GTK3Adjustment.
+        page_size : float
+            The page size of the GTK3Adjustment.
+        """
+        Gtk.Adjustment.__init__(self)
+        GTK3AdjustmentMixin.__init__(self)
+
+        self.do_set_properties(
+            GTK3WidgetProperties(
+                lower=lower,
+                upper=upper,
+                page_increment=page_increment,
+                page_size=page_size,
+                step_increment=step_increment,
+                value=value,
+            )
+        )
+        self.do_set_value(self.dic_properties["value"])
