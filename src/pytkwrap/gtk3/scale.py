@@ -10,11 +10,11 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.range import GTK3Range
+from pytkwrap.gtk3.range import GTK3RangeMixin
 
 
-class GTK3Scale(Gtk.Scale, GTK3Range):
-    """Wrapper for version 3.0 Gtk.Scale."""
+class GTK3ScaleMixin(GTK3RangeMixin):
+    """Mixin class for GTK3Scale."""
 
     _GTK3_SCALE_PROPERTIES = GTK3WidgetProperties(
         digits=1, draw_value=True, has_origin=True, value_pos=Gtk.PositionType.TOP
@@ -23,11 +23,11 @@ class GTK3Scale(Gtk.Scale, GTK3Range):
         "format-value",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Scale."""
-        Gtk.Scale.__init__(self)
-        GTK3Range.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Scale mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SCALE_SIGNALS}
         )
@@ -52,3 +52,20 @@ class GTK3Scale(Gtk.Scale, GTK3Range):
         self.set_draw_value(self.dic_properties["draw_value"])
         self.set_has_origin(self.dic_properties["has_origin"])
         self.set_value_pos(self.dic_properties["value_pos"])
+
+
+class GTK3Scale(Gtk.Scale, GTK3ScaleMixin):
+    """Wrapper for version 3.0 Gtk.Scale."""
+
+    def __init__(
+        self,
+        orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
+        adjustment: Gtk.Adjustment | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3Scale."""
+        Gtk.Scale.__init__(
+            self,
+            orientation=orientation,
+            adjustment=adjustment,
+        )
+        GTK3ScaleMixin.__init__(self)

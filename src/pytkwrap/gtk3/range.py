@@ -35,9 +35,9 @@ class GTK3RangeMixin(GTK3WidgetMixin):
         "value-changed",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3Range mixin."""
-        GTK3WidgetMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_RANGE_ATTRIBUTES)
@@ -74,6 +74,7 @@ class GTK3RangeMixin(GTK3WidgetMixin):
             The typed dict (preferred), or non-typed dict with the attribute values to
             set for the GTK3Range.
         """
+        # Update the attribute dictionary.
         super().do_set_attributes(attributes)
 
         for _attr in self._GTK3_RANGE_ATTRIBUTES:
