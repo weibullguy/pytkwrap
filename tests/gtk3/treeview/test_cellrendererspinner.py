@@ -59,6 +59,29 @@ class TestGTK3CellRenderer(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("active")
-        assert dut.do_get_property("pulse") == 10
-        assert dut.do_get_property("size") == Gtk.IconSize.BUTTON
+        assert dut.get_property("active")
+        assert dut.get_property("pulse") == 10
+        assert dut.get_property("size") == Gtk.IconSize.BUTTON
+
+    @pytest.mark.unit
+    def test_do_get_value(self):
+        """Should return the value of the GTK3CellRendererSpinner."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                active=True,
+                pulse=6,
+                size=Gtk.IconSize.BUTTON,
+            )
+        )
+
+        assert dut.do_get_value() == 6
+
+    @pytest.mark.unit
+    def test_do_set_value(self):
+        """Should set the value of the GTK3CellRendererSpinner."""
+        dut = self.make_dut()
+        dut.do_set_value(10)
+
+        assert dut.dic_properties["pulse"] == 10
+        assert dut.do_get_value() == 10
