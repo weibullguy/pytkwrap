@@ -67,6 +67,25 @@ class TestGTK3Scale(BaseGTK3GObjectTests):
         | EXPECTED_SCALE_PROPERTIES
     )
 
+    def make_dut(self, orientation=Gtk.Orientation.HORIZONTAL, adjustment=None):
+        return self.widget_class(orientation=orientation, adjustment=adjustment)
+
+    @pytest.mark.unit
+    def test_init_with_orientation(self):
+        """Should create a GTK3Scale with the passed orientation."""
+        dut = self.make_dut(orientation=Gtk.Orientation.VERTICAL)
+
+        assert dut.get_orientation() == Gtk.Orientation.VERTICAL
+
+    @pytest.mark.unit
+    def test_init_with_adjustment(self):
+        """Should create a GTK3Scale with the passed adjustment."""
+        adjustment = Gtk.Adjustment(value=0.5, lower=0.0, upper=1.0, step_increment=0.1)
+        dut = self.make_dut(adjustment=adjustment)
+
+        assert dut.get_adjustment() == adjustment
+        assert dut.get_value() == 0.5
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
