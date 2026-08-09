@@ -124,17 +124,28 @@ class TestGTK3ScrolledWindow(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("hadjustment") == _hadjustment
-        assert dut.do_get_property("hscrollbar_policy") == Gtk.PolicyType.ALWAYS
-        assert not dut.do_get_property("kinetic_scrolling")
-        assert dut.do_get_property("max_content_height") == 100
-        assert dut.do_get_property("max_content_width") == 100
-        assert dut.do_get_property("min_content_height") == 10
-        assert dut.do_get_property("min_content_width") == 10
-        assert not dut.do_get_property("overlay_scrolling")
-        assert dut.do_get_property("propagate_natural_height")
-        assert dut.do_get_property("propagate_natural_width")
-        assert dut.do_get_property("shadow_type") == Gtk.ShadowType.OUT
-        assert dut.do_get_property("vadjustment") == _vadjustment
-        assert dut.do_get_property("vscrollbar_policy") == Gtk.PolicyType.ALWAYS
-        assert dut.do_get_property("window_placement") == Gtk.CornerType.TOP_RIGHT
+        assert dut.get_property("hadjustment") == _hadjustment
+        assert dut.get_hadjustment() == _hadjustment
+        assert dut.get_property("hscrollbar_policy") == Gtk.PolicyType.ALWAYS
+        assert not dut.get_property("kinetic_scrolling")
+        assert not dut.get_kinetic_scrolling()
+        assert dut.get_property("max_content_height") == 100
+        assert dut.get_max_content_height() == 100
+        assert dut.get_property("max_content_width") == 100
+        assert dut.get_max_content_width() == 100
+        assert dut.get_property("min_content_height") == 10
+        assert dut.get_min_content_height() == 10
+        assert dut.get_property("min_content_width") == 10
+        assert dut.get_min_content_width() == 10
+        assert not dut.get_property("overlay_scrolling")
+        assert not dut.get_overlay_scrolling()
+        assert dut.get_property("propagate_natural_height")
+        assert dut.get_propagate_natural_height()
+        assert dut.get_property("propagate_natural_width")
+        assert dut.get_propagate_natural_width()
+        assert dut.get_property("shadow_type") == Gtk.ShadowType.OUT
+        assert dut.get_shadow_type() == Gtk.ShadowType.OUT
+        assert dut.get_property("vadjustment") == _vadjustment
+        assert dut.get_vadjustment() == _vadjustment
+        assert dut.get_property("vscrollbar_policy") == Gtk.PolicyType.ALWAYS
+        assert dut.get_property("window_placement") == Gtk.CornerType.TOP_RIGHT
