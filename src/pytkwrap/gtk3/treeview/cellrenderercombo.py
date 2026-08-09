@@ -48,7 +48,7 @@ class GTK3CellRendererComboMixin(GTK3CellRendererTextMixin):
             with the property values to set for the GTK3CellRendererCombo.
         """
         # Update the property dictionary.
-        self.dic_properties |= properties
+        super().do_set_properties(properties)
 
         for _property in [
             "has_entry",

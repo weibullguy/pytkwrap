@@ -59,7 +59,7 @@ class GTK3CellRendererMixin(GTK3GObjectMixin):
             with the property values to set for the GTK3CellRenderer.
         """
         # Update the property dictionary.
-        self.dic_properties |= properties
+        super().do_set_properties(properties)
 
         self.set_alignment(self.dic_properties["xalign"], self.dic_properties["yalign"])
         self.set_fixed_size(self.dic_properties["width"], self.dic_properties["height"])
