@@ -70,6 +70,40 @@ class TestGTK3CellRendererSpin(BaseGTK3GObjectTests):
             )
         )
 
-        assert isinstance(dut.do_get_property("adjustment"), Gtk.Adjustment)
-        assert dut.do_get_property("climb_rate") == 1.0
-        assert dut.do_get_property("digits") == 2
+        assert isinstance(dut.get_property("adjustment"), Gtk.Adjustment)
+        assert dut.get_property("climb_rate") == 1.0
+        assert dut.get_property("digits") == 2
+
+    @pytest.mark.unit
+    def test_do_get_value(self):
+        """Should return the value of the GTK3CellRendererSpin."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=Gtk.Adjustment(
+                    lower=0, upper=100, value=50, step_increment=1
+                ),
+                climb_rate=1.0,
+                digits=2,
+            )
+        )
+        dut.dic_properties["adjustment"].set_value(50)
+
+        assert dut.do_get_value() == 50.0
+
+    @pytest.mark.unit
+    def test_do_set_value(self):
+        """Should set the value of the GTK3CellRendererSpin."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=Gtk.Adjustment(
+                    lower=0, upper=100, value=50, step_increment=1
+                ),
+                climb_rate=1.0,
+                digits=2,
+            )
+        )
+        dut.do_set_value(12.0)
+
+        assert dut.dic_properties["adjustment"].get_value() == 12.0
