@@ -7,11 +7,11 @@
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.window.window import GTK3Window
+from pytkwrap.gtk3.window.window import GTK3WindowMixin
 
 
-class GTK3Assistant(Gtk.Assistant, GTK3Window):
-    """Wrapper for version 3.0 Gtk.Assistant."""
+class GTK3AssistantMixin(GTK3WindowMixin):
+    """Mixin class for GTK3Assistant."""
 
     _GTK3_ASSISTANT_PROPERTIES = GTK3WidgetProperties(
         use_header_bar=-1,
@@ -24,6 +24,20 @@ class GTK3Assistant(Gtk.Assistant, GTK3Window):
         "prepare",
     ]
 
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Assistant."""
+        super().__init__(**kwargs)
+
+        # Initialize public instance attributes.
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_ASSISTANT_SIGNALS}
+        )
+        self.dic_properties.update(self._GTK3_ASSISTANT_PROPERTIES)
+
+
+class GTK3Assistant(Gtk.Assistant, GTK3AssistantMixin):
+    """Wrapper for version 3.0 Gtk.Assistant."""
+
     def __init__(self, use_header_bar: bool = False) -> None:
         """Initialize an instance of the GTK3Assistant.
 
@@ -33,9 +47,4 @@ class GTK3Assistant(Gtk.Assistant, GTK3Window):
             Whether to use the header-bar for action buttons.
         """
         Gtk.Assistant.__init__(self, use_header_bar=use_header_bar)
-        GTK3Window.__init__(self)
-
-        self.dic_handler_id.update(
-            {_signal: -1 for _signal in self._GTK3_ASSISTANT_SIGNALS}
-        )
-        self.dic_properties.update(self._GTK3_ASSISTANT_PROPERTIES)
+        GTK3AssistantMixin.__init__(self)
