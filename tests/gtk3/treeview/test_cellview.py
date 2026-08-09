@@ -95,8 +95,11 @@ class TestGTK3CellView(BaseGTK3GObjectTests):
         assert isinstance(dut.get_property("cell_area"), Gtk.CellArea)
         assert isinstance(dut.get_property("cell_area_context"), Gtk.CellAreaContext)
         assert dut.get_property("draw_sensitive")
+        assert dut.get_draw_sensitive()
         assert dut.get_property("fit_model")
+        assert dut.get_fit_model()
         assert isinstance(dut.get_property("model"), Gtk.ListStore)
+        assert isinstance(dut.get_model(), Gtk.ListStore)
 
     @pytest.mark.unit
     def test_do_set_properties_background_rgba(self):
