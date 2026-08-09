@@ -90,3 +90,4 @@ class TestGTK3ApplicationWindow(BaseGTK3GObjectTests):
         )
 
         assert not dut.get_property("show_menubar")
+        assert not dut.get_show_menubar()
