@@ -10,11 +10,11 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
-class GTK3Switch(Gtk.Switch, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.Switch."""
+class GTK3SwitchMixin(GTK3WidgetMixin):
+    """Mixin class for GTK3Switch."""
 
     _GTK3_SWITCH_PROPERTIES = GTK3WidgetProperties(
         active=False,
@@ -25,10 +25,9 @@ class GTK3Switch(Gtk.Switch, GTK3Widget):
         "state-set",
     ]
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Switch."""
-        Gtk.Switch.__init__(self)
-        GTK3Widget.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Switch mixin."""
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -53,3 +52,12 @@ class GTK3Switch(Gtk.Switch, GTK3Widget):
 
         self.set_active(self.dic_properties["active"])
         self.set_state(self.dic_properties["state"])
+
+
+class GTK3Switch(Gtk.Switch, GTK3SwitchMixin):
+    """Wrapper for version 3.0 Gtk.Switch."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Switch."""
+        Gtk.Switch.__init__(self)
+        GTK3SwitchMixin.__init__(self)
