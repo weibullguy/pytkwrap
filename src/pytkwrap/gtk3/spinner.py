@@ -10,21 +10,21 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.widget import GTK3Widget
+from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
-class GTK3Spinner(Gtk.Spinner, GTK3Widget):
-    """Wrapper for version 3.0 Gtk.Spinner."""
+class GTK3SpinnerMixin(GTK3WidgetMixin):
+    """Mixin class for GTK3Spinner."""
 
     _GTK3_SPINNER_PROPERTIES = GTK3WidgetProperties(
         active=False,
     )
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Spinner."""
-        Gtk.Spinner.__init__(self)
-        GTK3Widget.__init__(self)
+    def __init__(self, **kwargs) -> None:
+        """Initialize an instance of the GTK3Spinner mixin."""
+        super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_SPINNER_PROPERTIES)
 
     def do_set_properties(
@@ -46,3 +46,12 @@ class GTK3Spinner(Gtk.Spinner, GTK3Widget):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+
+class GTK3Spinner(Gtk.Spinner, GTK3SpinnerMixin):
+    """Wrapper for version 3.0 Gtk.Spinner."""
+
+    def __init__(self) -> None:
+        """Initialize an instance of the GTK3Spinner."""
+        Gtk.Spinner.__init__(self)
+        GTK3SpinnerMixin.__init__(self)
