@@ -9,18 +9,10 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
-class GTK3ActionBarMixin(GTK3WidgetMixin):
-    """Mixin for GTK3ActionBar."""
-
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ActionBar mixin."""
-        GTK3WidgetMixin.__init__(self)
-
-
-class GTK3ActionBar(Gtk.ActionBar, GTK3ActionBarMixin):
+class GTK3ActionBar(Gtk.ActionBar, GTK3WidgetMixin):
     """Wrapper for version 3.0 Gtk.ActionBar."""
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ActionBar."""
         Gtk.ActionBar.__init__(self)
-        GTK3ActionBarMixin.__init__(self)
+        GTK3WidgetMixin.__init__(self)

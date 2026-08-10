@@ -73,7 +73,7 @@ class PyTkWrapMixin:
         y_pos=None,
     )
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize an instance of the PyTkWrapMixin."""
         self.dic_attributes = dict(self._PYTKWRAP_ATTRIBUTES)
         self.dic_error_message: dict[str, str] = {
@@ -88,7 +88,8 @@ class PyTkWrapMixin:
         self.dic_properties = {}
 
     def do_get_attribute(
-        self, attribute: str
+        self,
+        attribute: str,
     ) -> bool | date | float | int | object | str | None:
         """Get the value of the requested PyTkWrapMixin attribute.
 
@@ -122,7 +123,8 @@ class PyTkWrapMixin:
         raise UnkAttributeError(_error_msg)
 
     def do_get_property(
-        self, property_name: str
+        self,
+        property_name: str,
     ) -> bool | float | int | object | str | None:
         """Get the value of the requested property.
 
@@ -186,7 +188,8 @@ class PyTkWrapMixin:
             )
 
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties to the values in the passed dictionary.
 

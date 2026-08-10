@@ -165,7 +165,7 @@ class GTK3Widget(Gtk.Widget, GTK3WidgetMixin):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3Widget."""
-        super().__init__()
+        Gtk.Widget.__init__(self)
         GTK3WidgetMixin.__init__(self)
 
         self.show_all()
