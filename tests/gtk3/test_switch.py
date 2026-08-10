@@ -65,5 +65,7 @@ class TestGTK3Switch(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("active")
-        assert dut.do_get_property("state")
+        assert dut.get_property("active")
+        assert dut.get_active()
+        assert dut.get_property("state")
+        assert dut.get_state()
