@@ -58,4 +58,4 @@ class TestGTK3Spinner(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.do_get_property("active")
+        assert dut.get_property("active")
