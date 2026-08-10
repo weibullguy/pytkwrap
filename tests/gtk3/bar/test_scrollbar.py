@@ -54,3 +54,22 @@ class TestGTK3ScrollBar(BaseGTK3GObjectTests):
         EXPECTED_GOBJECT_METHODS + EXPECTED_WIDGET_METHODS + EXPECTED_RANGE_METHODS
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_RANGE_PROPERTIES
+
+    def make_dut(self, orientation=Gtk.Orientation.VERTICAL, adjustment=None):
+        return self.widget_class(orientation=orientation, adjustment=adjustment)
+
+    @pytest.mark.unit
+    def test_init_with_orientation(self):
+        """Should create a GTK3ScrollBar with the passed orientation."""
+        dut = self.make_dut(orientation=Gtk.Orientation.HORIZONTAL)
+
+        assert dut.get_orientation() == Gtk.Orientation.HORIZONTAL
+
+    @pytest.mark.unit
+    def test_init_with_adjustment(self):
+        """Should create a GTK3ScrollBar with the passed adjustment."""
+        adjustment = Gtk.Adjustment(value=0.5, lower=0.0, upper=1.0, step_increment=0.1)
+        dut = self.make_dut(adjustment=adjustment)
+
+        assert dut.get_adjustment() == adjustment
+        assert dut.get_value() == 0.5
