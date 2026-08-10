@@ -11,13 +11,18 @@ from pytkwrap.gtk3.container.box import GTK3BoxMixin
 
 
 class GTK3StatusbarMixin(GTK3BoxMixin):
-    """Mixin for GTK3Statusbar."""
+    """Mixin for GTK3Statusbar.
+
+    Notes
+    -----
+    The GTK3Statusbar passes a Gtk.Frame to it's callback function.
+    """
 
     _GTK3_STATUSBAR_SIGNALS = ["text-popped", "text-pushed"]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3Statusbar mixin."""
-        GTK3BoxMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(

@@ -14,7 +14,12 @@ from pytkwrap.gtk3.window.scrolledwindow import GTK3ScrolledWindowMixin
 
 
 class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
-    """Mixin for GTK3PlacesSidebar."""
+    """Mixin for GTK3PlacesSidebar.
+
+    Notes
+    -----
+    GTK3PlacesSidebar passes a Gtk.Viewport to it's callback function.
+    """
 
     _GTK3_PLACESSIDEBAR_PROPERTIES = GTK3WidgetProperties(
         local_only=False,
@@ -44,9 +49,9 @@ class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
         "unmount",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3PlacesSidebar mixin."""
-        GTK3ScrolledWindowMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(

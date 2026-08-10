@@ -31,9 +31,9 @@ class GTK3ProgressBarMixin(GTK3WidgetMixin):
         text=None,
     )
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3ProgressBar mixin."""
-        GTK3WidgetMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_PROGRESSBAR_ATTRIBUTES)

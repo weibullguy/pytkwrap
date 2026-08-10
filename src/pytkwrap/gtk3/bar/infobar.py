@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3InfoBarMixin(GTK3BoxMixin):
-    """Mixin for GTK3InfoBar."""
+    """Mixin for GTK3InfoBar.
+
+    Notes
+    -----
+    The GTK3InfoBar passes a Gtk.Revealer to it's callback function.
+    """
 
     _GTK3_INFOBAR_PROPERTIES = GTK3WidgetProperties(
         message_type=Gtk.MessageType.INFO,
@@ -23,9 +28,9 @@ class GTK3InfoBarMixin(GTK3BoxMixin):
     )
     _GTK3_INFOBAR_SIGNALS = ["close", "response"]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3InfoBar mixin."""
-        GTK3BoxMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(

@@ -14,16 +14,21 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3SearchBarMixin(GTK3BinMixin):
-    """Mixin for GTK3SearchBar."""
+    """Mixin for GTK3SearchBar.
+
+    Notes
+    -----
+    The GTK3SearchBar passes a Gtk.Revealer to it's callback function.
+    """
 
     _GTK3_SEARCHBAR_PROPERTIES = GTK3WidgetProperties(
         search_mode_enabled=False,
         show_close_button=False,
     )
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3SearchBar mixin."""
-        GTK3BinMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_SEARCHBAR_PROPERTIES)

@@ -2,12 +2,11 @@
 from collections.abc import Mapping
 
 # Third Party Imports
-from _typeshed import Incomplete
+from _typeshed import Incomplete as Incomplete
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.container import GTK3ContainerMixin as GTK3ContainerMixin
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 class GTK3HeaderBarMixin(GTK3ContainerMixin):
     _GTK3_HEADERBAR_PROPERTIES: Incomplete

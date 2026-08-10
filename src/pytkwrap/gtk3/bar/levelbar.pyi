@@ -3,15 +3,12 @@ from collections.abc import Mapping
 from datetime import date
 
 # Third Party Imports
-from _typeshed import Incomplete
+from _typeshed import Incomplete as Incomplete
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject as GObject
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
-from pytkwrap.utilities import clamp as clamp
 
 class GTK3LevelBarMixin(GTK3WidgetMixin):
     _GTK3_LEVELBAR_ATTRIBUTES: Incomplete

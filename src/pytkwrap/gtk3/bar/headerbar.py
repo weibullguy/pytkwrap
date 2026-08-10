@@ -27,9 +27,9 @@ class GTK3HeaderBarMixin(GTK3ContainerMixin):
         title=None,
     )
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3HeaderBar mixin."""
-        GTK3ContainerMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_HEADERBAR_PROPERTIES)

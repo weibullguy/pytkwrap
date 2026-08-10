@@ -2,11 +2,10 @@
 from collections.abc import Mapping
 
 # Third Party Imports
-from _typeshed import Incomplete
+from _typeshed import Incomplete as Incomplete
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.window.scrolledwindow import (
     GTK3ScrolledWindowMixin as GTK3ScrolledWindowMixin,
 )
