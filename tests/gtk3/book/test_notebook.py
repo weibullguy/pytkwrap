@@ -4,16 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+# Standard Library Imports
+import contextlib
+
 # Third Party Imports
 import pytest
+from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import PytkwrapError
+from pytkwrap.exceptions import PytkwrapError, PytkwrapWarning
 
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.book import GTK3Notebook
-from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.book.constants import (
     EXPECTED_NOTEBOOK_HANDLER_IDS,
     EXPECTED_NOTEBOOK_METHODS,
@@ -61,6 +65,35 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
         | EXPECTED_CONTAINER_PROPERTIES
         | EXPECTED_NOTEBOOK_PROPERTIES
     )
+
+    def make_dut(self, child_widgets=None, tab_labels=None):
+        return self.widget_class(child_widgets=child_widgets, tab_labels=tab_labels)
+
+    @staticmethod
+    def init_warning_handler(message):
+        """Warning handler for __init__() warnings."""
+        assert (
+            message
+            == "GTK3Notebook: The number of child widgets (1) does not match the "
+            "number of tab labels (2).  Only 1 pages will be added."
+        )
+
+    @pytest.mark.unit
+    def test_init_with_widgets_and_labels(self):
+        """Should build the notebook with the same number of pages as the child_widgets
+        list."""
+        _child_widget_1 = Gtk.Fixed()
+        _child_widget_2 = Gtk.Fixed()
+        _child_widget_3 = Gtk.Fixed()
+        _child_widgets = [_child_widget_1, _child_widget_2, _child_widget_3]
+        _tab_labels = ["Test Label {}".format(i) for i in range(3)]
+
+        dut = self.make_dut(child_widgets=_child_widgets, tab_labels=_tab_labels)
+
+        assert dut.get_n_pages() == 3
+        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0]
+        assert dut.get_tab_label_text(_child_widget_2) == _tab_labels[1]
+        assert dut.get_tab_label_text(_child_widget_3) == _tab_labels[2]
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
@@ -181,3 +214,56 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
             dut.do_remove_page(10)
 
         assert dut.get_n_pages() == 3
+
+    @pytest.mark.unit
+    def test_do_build_notebook_no_child_widgets(self):
+        """Should build the notebook with no pages when no child_widgets or tab labels
+        are passed in."""
+        dut = self.make_dut()
+        dut.do_build_notebook([], [])
+
+        assert dut.get_n_pages() == 0
+
+    @pytest.mark.unit
+    def test_do_build_notebook_more_widgets_than_labels(self):
+        """Should raise a PytkwrapWarning when the number of child widgets is greater
+        than the number of tab labels."""
+        _child_widget_1 = Gtk.Fixed()
+        _child_widget_2 = Gtk.Fixed()
+        _child_widget_3 = Gtk.Fixed()
+        _child_widgets = [_child_widget_1, _child_widget_2, _child_widget_3]
+        _tab_labels = ["Test Label 1", "Test Label 2"]
+
+        dut = self.make_dut()
+        with pytest.raises(PytkwrapWarning) as exc_info:
+            dut.do_build_notebook(child_widgets=_child_widgets, tab_labels=_tab_labels)
+
+        assert (
+            exc_info.value.args[0]
+            == "GTK3Notebook: The number of child widgets (3) does not match the number of tab labels (2).  Only 2 pages will be added."
+        )
+
+        assert dut.get_n_pages() == 2
+        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0]
+        assert dut.get_tab_label_text(_child_widget_2) == _tab_labels[1]
+
+    @pytest.mark.unit
+    def test_do_build_notebook_more_labels_than_widgets(self):
+        """Should raise a PytkwrapWarning when the number of child widgets is less than
+        the number of tab labels."""
+        _child_widget_1 = Gtk.Fixed()
+        _child_widgets = [_child_widget_1]
+        _tab_labels = ["Test Label 1", "Test Label 2"]
+
+        dut = self.make_dut()
+        with pytest.raises(PytkwrapWarning) as exc_info:
+            dut.do_build_notebook(child_widgets=_child_widgets, tab_labels=_tab_labels)
+
+        assert (
+            exc_info.value.args[0]
+            == "GTK3Notebook: The number of child widgets (1) does not match the "
+            "number of tab labels (2).  Only 1 pages will be added."
+        )
+
+        assert dut.get_n_pages() == 1
+        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0]
