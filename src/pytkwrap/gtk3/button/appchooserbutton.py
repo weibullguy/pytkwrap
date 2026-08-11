@@ -19,24 +19,24 @@ class GTK3AppChooserButtonMixin(GTK3ComboBoxMixin):
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
     _DEFAULT_WIDTH = 200
-    _GTK3_APP_CHOOSER_BUTTON_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_APPCHOOSERBUTTON_PROPERTIES = GTK3WidgetProperties(
         heading=None,
         show_default_item=False,
         show_dialog_item=False,
     )
-    _GTK3_APP_CHOOSER_BUTTON_SIGNALS = [
+    _GTK3_APPCHOOSERBUTTON_SIGNALS = [
         "custom-item-activated",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3AppChooserButton mixin."""
-        GTK3ComboBoxMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
-            {_signal: -1 for _signal in self._GTK3_APP_CHOOSER_BUTTON_SIGNALS}
+            {_signal: -1 for _signal in self._GTK3_APPCHOOSERBUTTON_SIGNALS}
         )
-        self.dic_properties.update(self._GTK3_APP_CHOOSER_BUTTON_PROPERTIES)
+        self.dic_properties.update(self._GTK3_APPCHOOSERBUTTON_PROPERTIES)
 
     def do_set_properties(
         self,
@@ -61,7 +61,15 @@ class GTK3AppChooserButtonMixin(GTK3ComboBoxMixin):
 class GTK3AppChooserButton(Gtk.AppChooserButton, GTK3AppChooserButtonMixin):
     """Wrapper for version 3.0 Gtk.AppChooserButton."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3AppChooserButton widget."""
-        Gtk.AppChooserButton.__init__(self)
+    def __init__(self, heading="Choose an application") -> None:
+        """Initialize an instance of the GTK3AppChooserButton widget.
+
+        Parameters
+        ----------
+        heading : str
+            The text to show at the top of the dialog.
+        """
+        Gtk.AppChooserButton.__init__(self, heading=heading)
         GTK3AppChooserButtonMixin.__init__(self)
+
+        self.dic_properties["heading"] = heading
