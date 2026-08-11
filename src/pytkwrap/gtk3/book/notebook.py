@@ -7,8 +7,11 @@
 # Standard Library Imports
 from collections.abc import Mapping
 
+# Third Party Imports
+from pubsub import pub
+
 # pytkwrap Package Imports
-from pytkwrap.exceptions import PytkwrapError
+from pytkwrap.exceptions import PytkwrapError, PytkwrapWarning
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.io.label import GTK3Label
@@ -40,9 +43,9 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         "switch-page",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3Notebook mixin."""
-        GTK3ContainerMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(
@@ -126,7 +129,61 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
 class GTK3Notebook(Gtk.Notebook, GTK3NotebookMixin):
     """Wrapper for version 3.0 Gtk.Notebook."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Notebook."""
+    def __init__(
+        self,
+        child_widgets: list[Gtk.Widget] | None,
+        tab_labels: list[str] | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3Notebook.
+
+        Parameters
+        ----------
+        child_widgets : list[Gtk.Widget] | None
+            List of Gtk.Widgets to use as contents of each page.
+        tab_labels : list[str] | None
+            List of tab labels to add to the notebook.
+        """
         Gtk.Notebook.__init__(self)
         GTK3NotebookMixin.__init__(self)
+
+        if child_widgets is not None and tab_labels is not None:
+            self.do_build_notebook(child_widgets, tab_labels)
+
+    def do_build_notebook(
+        self, child_widgets: list[Gtk.Widget], tab_labels: list[str]
+    ) -> None:
+        """Add pages to the GTK3Notebook.
+
+        Parameters
+        ----------
+        child_widgets : list[Gtk.Widget] | None
+            List of Gtk.Widgets to use as contents of each page.
+        tab_labels : list[str] | None
+            List of tab labels to add to the notebook.
+
+        Raises
+        ------
+        PytkwrapWarning
+            if the number of child widgets does not match the number of tab labels.
+        """
+        _n_pages = min(len(child_widgets), len(tab_labels))
+
+        try:
+            # Warn the user that the number of child widgets does not match the number
+            # of tab labels and that only the first _n_pages will be added.
+            if len(child_widgets) != len(tab_labels):
+                _warning_message = (
+                    f"GTK3Notebook: The number of child widgets ({len(child_widgets)}) "
+                    f"does not match the number of tab labels ({len(tab_labels)}).  "
+                    f"Only {_n_pages} pages will be added."
+                )
+                pub.sendMessage("do_log_warning", message=_warning_message)
+                raise PytkwrapWarning(_warning_message)
+        except PytkwrapWarning:
+            # But still add the minimum number of pages.
+            for _page in range(_n_pages):
+                self.do_add_page(child_widgets[_page], tab_labels[_page])
+            raise
+
+        for _page in range(_n_pages):
+            self.do_add_page(child_widgets[_page], tab_labels[_page])
