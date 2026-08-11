@@ -30,6 +30,20 @@ class PytkwrapError(Exception):
         return self.msg
 
 
+class PytkwrapWarning(Warning):
+    """Base warning class for pytkwrap warnings."""
+
+    def __init__(self, msg: str = "A warning occurred with pytkwrap.") -> None:
+        """Initialize the basic pytkwrap warning.
+
+        Parameters
+        ----------
+        msg : str
+            Custom warning message.
+        """
+        super().__init__(msg)
+
+
 class NoValueError(PytkwrapError):
     """Exception class raised when no value or method to retrieve value is available."""
 

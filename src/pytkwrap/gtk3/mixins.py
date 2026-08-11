@@ -612,10 +612,7 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
                     f"{type(self).__name__}.do_set_callbacks()",
                     _signal,
                 )
-                pub.sendMessage(
-                    "do_log_error",
-                    message=_error_msg,
-                )
+                pub.sendMessage("do_log_error", message=_error_msg)
                 raise UnkSignalError(_error_msg) from exc
 
     def do_update(
