@@ -24,7 +24,7 @@ EXPECTED_APPCHOOSERBUTTON_METHODS = [
     "set_show_dialog_item",
 ]
 EXPECTED_APPCHOOSERBUTTON_PROPERTIES = {
-    "heading": None,
+    "heading": "Choose an application",
     "show_default_item": False,
     "show_dialog_item": False,
 }

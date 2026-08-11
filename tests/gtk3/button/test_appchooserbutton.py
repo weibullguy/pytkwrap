@@ -74,23 +74,35 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         | EXPECTED_APPCHOOSERBUTTON_PROPERTIES
     )
 
+    def make_dut(self, heading="Choose an application"):
+        return self.widget_class(heading=heading)
+
     def test_callback(self, button, item_name):
         """Callback method for testing."""
         assert isinstance(button, GTK3AppChooserButton)
         assert item_name == "Test"
 
-    @pytest.mark.integration
+    @pytest.mark.unit
+    def test_init(self):
+        """Should create a GTK3AppChooserButton with a default heading."""
+        dut = self.make_dut()
+
+        assert dut.do_get_property("heading") == "Choose an application"
+        assert dut.get_property("heading") == "Choose an application"
+        assert dut.get_heading() == "Choose an application"
+
+    @pytest.mark.unit
     def test_do_set_attributes_default(self):
         """Should set attributes to default values when passed an empty
         GTK3WidgetAttributes."""
         dut = self.make_dut()
         dut.do_set_attributes(GTK3WidgetAttributes())
 
-        assert dut.do_get_attribute("column_types") == [GObject.TYPE_STRING]
+        assert dut.do_get_attribute("column_types") is None
         assert dut.do_get_attribute("default_value") == -1
         assert dut.do_get_attribute("edit_signal") == "changed"
 
-    @pytest.mark.integration
+    @pytest.mark.unit
     def test_do_set_attributes(self):
         """Should set attributes to the values passed in the GTK3WidgetAttributes."""
         dut = self.make_dut()
@@ -114,7 +126,7 @@ class TestGTK3AppChooserButton(BaseGTK3GObjectTests):
         dut = self.make_dut()
         dut.do_set_properties(GTK3WidgetProperties())
 
-        assert dut.do_get_property("heading") is None
+        assert dut.do_get_property("heading") == "Choose an application"
         assert not dut.do_get_property("show_default_item")
         assert not dut.do_get_property("show_dialog_item")
 
