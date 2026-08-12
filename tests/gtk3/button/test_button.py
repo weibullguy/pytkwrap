@@ -67,6 +67,15 @@ class TestButton(BaseGTK3GObjectTests):
         return self.widget_class(label)
 
     @pytest.mark.unit
+    def test_init(self):
+        """Should create a GTK3Button with a default label."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3Button)
+        assert dut.get_label() == "..."
+        assert dut.get_image() is None
+
+    @pytest.mark.unit
     def test_init_with_label(self):
         """Should create a GTK3Button with a non-default label."""
         dut = self.make_dut(label="Test Label")
@@ -184,4 +193,4 @@ class TestButton(BaseGTK3GObjectTests):
             )
         )
 
-        assert dut.get_property("label") == "..."
+        assert dut.get_property("label") == ""
