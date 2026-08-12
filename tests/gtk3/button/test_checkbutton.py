@@ -97,12 +97,20 @@ class TestGTK3CheckButton(BaseGTK3DataWidgetTests):
 
     @pytest.mark.unit
     def test_init_with_label(self):
-        """Should create a GTK3CheckButton with a label and default values for
-        attributes."""
+        """Should create a GTK3CheckButton with a label."""
         dut = self.make_dut("Test Label")
 
-        assert dut.dic_attributes == self.expected_attributes
+        assert dut.do_get_property("label") == "Test Label"
         assert dut.get_label() == "Test Label"
+        assert dut.get_image() is None
+
+    @pytest.mark.unit
+    def test_init_with_mnemonic(self):
+        """Should create a GTK3CheckButton with a mnemonic label."""
+        dut = self.make_dut("Test _Label")
+
+        assert dut.do_get_property("label") == "Test _Label"
+        assert dut.get_label() == "Test _Label"
         assert dut.get_image() is None
 
     @pytest.mark.unit
