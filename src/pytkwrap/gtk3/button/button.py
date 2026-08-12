@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ButtonMixin(GTK3BinMixin):
-    """Mixin class for GTK3Button."""
+    """Mixin class for GTK3Button.
+
+    Notes
+    -----
+    The GTK3Button passes a Gtk.Label to its callback function.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -66,8 +71,10 @@ class GTK3ButtonMixin(GTK3BinMixin):
         self.set_relief(self.dic_properties["relief"])
         self.set_use_underline(self.dic_properties["use_underline"])
 
-        if self.dic_properties["label"] is not None:
-            self.set_label(self.dic_properties["label"])
+        # Allow None to be used to clear the label.
+        if self.dic_properties["label"] is None:
+            self.dic_properties["label"] = ""
+        self.set_label(self.dic_properties["label"])
 
         if self.dic_properties["image"] is not None:
             self.set_label("")
@@ -95,10 +102,9 @@ class GTK3Button(Gtk.Button, GTK3ButtonMixin):
         ----------
         label : str | None
             The text to display on the GTK3Button.  The default value is an ellipsis
-            (...).
+            (...).  Pass an empty string or None to clear the label.
         """
         Gtk.Button.__init__(self, label=label)
         GTK3ButtonMixin.__init__(self)
 
-        if label is not None:
-            self.dic_properties["label"] = label
+        self.dic_properties["label"] = label
