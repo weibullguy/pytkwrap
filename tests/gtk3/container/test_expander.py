@@ -59,6 +59,36 @@ class TestGTK3Expander(BaseGTK3GObjectTests):
         | EXPECTED_EXPANDER_PROPERTIES
     )
 
+    def make_dut(self, label=None):
+        return self.widget_class(label=label)
+
+    @pytest.mark.unit
+    def test_init(self):
+        """Should create a GTK3Expander with no label."""
+        dut = self.make_dut()
+
+        assert dut.do_get_property("label") is None
+        assert dut.get_property("label") is None
+        assert dut.get_label() is None
+
+    @pytest.mark.unit
+    def test_init_with_label(self):
+        """Should create a GTK3Expander with the passed label."""
+        dut = self.make_dut("Test Expander")
+
+        assert dut.do_get_property("label") == "Test Expander"
+        assert dut.get_property("label") == "Test Expander"
+        assert dut.get_label() == "Test Expander"
+
+    @pytest.mark.unit
+    def test_init_with_mnemonic(self):
+        """Should create a GTK3Expander with a mnemonic label."""
+        dut = self.make_dut("Test _Expander")
+
+        assert dut.do_get_property("label") == "Test _Expander"
+        assert dut.get_property("label") == "Test _Expander"
+        assert dut.get_label() == "Test _Expander"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
