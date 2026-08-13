@@ -119,6 +119,7 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         attributes."""
         dut = self.make_dut("Test Label")
 
+        assert dut.get_property("label") == "Test Label"
         assert dut.get_children()[0].get_label() == "Test Label"
 
     @pytest.mark.unit
@@ -126,6 +127,7 @@ class TestGTK3ToggleButton(BaseGTK3DataWidgetTests):
         """Should create a GTK3ToggleButton with a non-default mnemonic label."""
         dut = self.make_dut(label="_Test Label")
 
+        assert dut.get_property("label") == "_Test Label"
         assert dut.get_children()[0].get_label() == "_Test Label"
 
     @pytest.mark.unit
