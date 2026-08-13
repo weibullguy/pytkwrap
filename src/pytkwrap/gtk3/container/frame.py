@@ -68,6 +68,7 @@ class GTK3Frame(Gtk.Frame, GTK3FrameMixin):
         label : str
             The label to display on the GTK3Frame.
         """
-        # GTK3Frame does not initialize when calling super().__init__().
         Gtk.Frame.__init__(self, label=label)
         GTK3FrameMixin.__init__(self)
+
+        self.dic_properties["label"] = label
