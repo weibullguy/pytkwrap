@@ -6,10 +6,10 @@ from _typeshed import Incomplete
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.container.bin import GTK3BinMixin as GTK3BinMixin
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin as GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3ExpanderMixin(GTK3BinMixin):
+class GTK3ExpanderMixin(GTK3ContainerMixin):
     _GTK_EXPANDER_PROPERTIES: Incomplete
     _GTK3_EXPANDER_SIGNALS: Incomplete
     def __init__(self, **kwargs) -> None: ...
@@ -18,4 +18,4 @@ class GTK3ExpanderMixin(GTK3BinMixin):
     ) -> None: ...
 
 class GTK3Expander(Gtk.Expander, GTK3ExpanderMixin):
-    def __init__(self) -> None: ...
+    def __init__(self, label: str | None = None) -> None: ...

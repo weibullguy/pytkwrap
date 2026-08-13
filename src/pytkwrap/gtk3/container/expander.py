@@ -64,8 +64,15 @@ class GTK3ExpanderMixin(GTK3ContainerMixin):
 class GTK3Expander(Gtk.Expander, GTK3ExpanderMixin):
     """Wrapper for version 3.0 Gtk.Expander."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Expander."""
-        # GTK3Expander does not initialize when calling super().__init__().
-        Gtk.Expander.__init__(self)
+    def __init__(self, label: str | None = None) -> None:
+        """Initialize an instance of the GTK3Expander.
+
+        Parameters
+        ----------
+        label : str, optional
+            The text to display in the GTK3Expander label.  The default is None.
+        """
+        Gtk.Expander.__init__(self, label=label)
         GTK3ExpanderMixin.__init__(self)
+
+        self.dic_properties["label"] = label

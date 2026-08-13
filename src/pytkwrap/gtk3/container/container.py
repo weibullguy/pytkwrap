@@ -14,7 +14,12 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
 class GTK3ContainerMixin(GTK3WidgetMixin):
-    """Mixin class for GTK3Container."""
+    """Mixin class for GTK3Container.
+
+    Notes
+    -----
+    GTK3Container passes no widgets to its callback function.
+    """
 
     _GTK3_CONTAINER_PROPERTIES = GTK3WidgetProperties(
         border_width=0,
@@ -59,6 +64,5 @@ class GTK3Container(Gtk.Container, GTK3ContainerMixin):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3Container."""
-        # GTK3Container does not initialize when calling super().__init__().
         Gtk.Container.__init__(self)
         GTK3ContainerMixin.__init__(self)
