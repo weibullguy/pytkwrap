@@ -9,10 +9,6 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 
 
-class GTK3BinMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Bin."""
-
-
 class GTK3Bin(Gtk.Bin, GTK3ContainerMixin):
     """Wrapper for version 3.0 Gtk.Bin."""
 

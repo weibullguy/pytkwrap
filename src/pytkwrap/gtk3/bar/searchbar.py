@@ -9,16 +9,16 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3BinMixin
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3SearchBarMixin(GTK3BinMixin):
+class GTK3SearchBarMixin(GTK3ContainerMixin):
     """Mixin for GTK3SearchBar.
 
     Notes
     -----
-    The GTK3SearchBar passes a Gtk.Revealer to it's callback function.
+    The GTK3SearchBar passes a Gtk.Revealer to its callback function.
     """
 
     _GTK3_SEARCHBAR_PROPERTIES = GTK3WidgetProperties(

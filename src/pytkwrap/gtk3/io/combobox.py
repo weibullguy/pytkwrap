@@ -14,11 +14,11 @@ from gi.overrides.GdkPixbuf import Pixbuf  # type: ignore[import-untyped]
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3BinMixin
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
-class GTK3ComboBoxMixin(GTK3BinMixin):
+class GTK3ComboBoxMixin(GTK3ContainerMixin):
     """Mixin for GTK3ComboBox."""
 
     # Define private class attributes.
@@ -56,9 +56,9 @@ class GTK3ComboBoxMixin(GTK3BinMixin):
         "remove-widget",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3ComboBox mixin."""
-        GTK3BinMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_COMBOBOX_ATTRIBUTES)

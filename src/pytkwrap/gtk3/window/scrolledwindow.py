@@ -10,11 +10,11 @@ from collections.abc import Mapping
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
-from pytkwrap.gtk3.container.bin import GTK3BinMixin
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ScrolledWindowMixin(GTK3BinMixin):
+class GTK3ScrolledWindowMixin(GTK3ContainerMixin):
     """Mixin for GTK3ScrolledWindow."""
 
     _GTK3_SCROLLEDWINDOW_PROPERTIES = GTK3WidgetProperties(
@@ -41,9 +41,9 @@ class GTK3ScrolledWindowMixin(GTK3BinMixin):
         "scroll-child",
     ]
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3ScrolledWindow mixin."""
-        GTK3BinMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_handler_id.update(

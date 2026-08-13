@@ -9,11 +9,11 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container.bin import GTK3BinMixin
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
-class GTK3ExpanderMixin(GTK3BinMixin):
+class GTK3ExpanderMixin(GTK3ContainerMixin):
     """Mixin class for GTK3Expander."""
 
     _GTK_EXPANDER_PROPERTIES = GTK3WidgetProperties(
