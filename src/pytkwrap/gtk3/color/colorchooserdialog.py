@@ -24,6 +24,7 @@ class GTK3ColorChooserDialogMixin(GTK3DialogMixin):
         """Initialize an instance of the GTK3ColorChooserDialog mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_COLORCHOOSERDIALOG_PROPERTIES)
 
     def do_set_properties(
@@ -50,7 +51,20 @@ class GTK3ColorChooserDialogMixin(GTK3DialogMixin):
 class GTK3ColorChooserDialog(Gtk.ColorChooserDialog, GTK3ColorChooserDialogMixin):
     """Wrapper for version 3.0 Gtk.ColorChooserDialog."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ColorChooserDialog."""
-        super().__init__()
+    def __init__(
+        self,
+        title: str | None = None,
+        transient_for: Gtk.Window | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3ColorChooserDialog.
+
+        title: str | None
+            The title of the dialog or None.
+        parent: Gtk.Window | None
+            Transient parent of the dialog or None.
+        """
+        Gtk.ColorChooserDialog.__init__(self, title=title, transient_for=transient_for)
         GTK3ColorChooserDialogMixin.__init__(self)
+
+        self.dic_properties["title"] = title
+        self.dic_properties["transient_for"] = transient_for
