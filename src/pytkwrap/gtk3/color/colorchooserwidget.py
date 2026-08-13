@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ColorChooserWidgetMixin(GTK3BoxMixin):
-    """Mixin class for GTK3ColorChooserWidget."""
+    """Mixin class for GTK3ColorChooserWidget.
+
+    Notes
+    -----
+    GTK3ColorChooserWidget passes a Gtk.Box to its callback function.
+    """
 
     _GTK3_COLORCHOOSERWIDGET_PROPERTIES = GTK3WidgetProperties(
         show_editor=False,
@@ -24,6 +29,7 @@ class GTK3ColorChooserWidgetMixin(GTK3BoxMixin):
         """Initialize an instance of the GTK3ColorChooserWidget mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_COLORCHOOSERWIDGET_PROPERTIES)
 
     def do_set_properties(
@@ -52,5 +58,5 @@ class GTK3ColorChooserWidget(Gtk.ColorChooserWidget, GTK3ColorChooserWidgetMixin
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ColorChooserWidget."""
-        super().__init__()
+        Gtk.ColorChooserWidget.__init__(self)
         GTK3ColorChooserWidgetMixin.__init__(self)
