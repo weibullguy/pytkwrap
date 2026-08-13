@@ -57,7 +57,15 @@ class GTK3Box(Gtk.Box, GTK3BoxMixin):
         orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
         spacing: int = 0,
     ) -> None:
-        """Initialize an instance of the GTK3Box."""
+        """Initialize an instance of the GTK3Box.
+
+        Parameters
+        ----------
+        orientation : Gtk.Orientation
+            The orientation of the box.  The default is Gtk.Orientation.HORIZONTAL.
+        spacing : int
+            The spacing in pixels between the widgets in the box.  The default is 0.
+        """
         Gtk.Box.__init__(self, orientation=orientation, spacing=spacing)
         GTK3BoxMixin.__init__(self)
 

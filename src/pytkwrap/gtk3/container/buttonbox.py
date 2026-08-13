@@ -25,6 +25,7 @@ class GTK3ButtonBoxMixin(GTK3BoxMixin):
         """Initialize an instance of the GTK3ButtonBox mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_BUTTONBOX_PROPERTIES)
 
     def do_set_properties(
@@ -52,8 +53,15 @@ class GTK3ButtonBox(Gtk.ButtonBox, GTK3ButtonBoxMixin):
         self,
         orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
     ) -> None:
-        """Initialize an instance of the GTK3ButtonBox."""
-        super().__init__(orientation=orientation)
+        """Initialize an instance of the GTK3ButtonBox.
+
+        Parameters
+        ----------
+        orientation : Gtk.Orientation
+            The orientation of the buttonbox.  The default is
+            Gtk.Orientation.HORIZONTAL.
+        """
+        Gtk.ButtonBox.__init__(self, orientation=orientation)
         GTK3ButtonBoxMixin.__init__(self)
 
 
