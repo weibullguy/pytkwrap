@@ -15,7 +15,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
 class GTK3ColorButtonMixin(GTK3ButtonMixin):
-    """Mixin class for GTK3ColorButton."""
+    """Mixin class for GTK3ColorButton.
+
+    Notes
+    -----
+    GTK3ColorButton passes a __gi__.GtkColorSwatch to its callback function.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -108,11 +113,14 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3ColorButtonMixin):
     """Wrapper for version 3.0 Gtk.ColorButton."""
 
     def __init__(self, rgba: Gdk.RGBA | None = None) -> None:
-        """Initialize an instance of the GTK3ColorButton."""
-        super().__init__(rgba=rgba)
+        """Initialize an instance of the GTK3ColorButton.
+
+        Parameters
+        ----------
+        rgba : Gdk.RGBA, optional
+            A Gdk.RGBA to set the current color with.  The default is None.
+        """
+        Gtk.ColorButton.__init__(self, rgba=rgba)
         GTK3ColorButtonMixin.__init__(self)
 
-        if rgba is not None:
-            self.dic_properties["rgba"] = rgba
-
-        self.show()
+        self.dic_properties["rgba"] = rgba
