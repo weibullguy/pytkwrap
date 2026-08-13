@@ -71,6 +71,38 @@ class TestGTK3ColorChooserDialog(BaseGTK3GObjectTests):
         | EXPECTED_COLORCHOOSERDIALOG_PROPERTIES
     )
 
+    def make_dut(self, title=None, transient_for=None):
+        return self.widget_class(title=title, transient_for=transient_for)
+
+    @pytest.mark.unit
+    def test_init(self):
+        """Should create an instance of the widget class."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3ColorChooserDialog)
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.dic_handler_id == self.expected_handler_id
+        assert dut.dic_properties == self.expected_properties
+
+    @pytest.mark.unit
+    def test_init_with_title(self):
+        """Should create an instance of the widget class with a title."""
+        dut = self.make_dut(title="Test Title")
+
+        assert dut.do_get_property("title") == "Test Title"
+        assert dut.get_property("title") == "Test Title"
+        assert dut.get_title() == "Test Title"
+
+    @pytest.mark.unit
+    def test_init_with_transient_for(self):
+        """Should create an instance of the widget class with a parent window."""
+        _parent = Gtk.Window()
+        dut = self.make_dut(transient_for=_parent)
+
+        assert dut.do_get_property("transient_for") == _parent
+        assert dut.get_property("transient_for") == _parent
+        assert dut.get_transient_for() == _parent
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty

@@ -25,7 +25,7 @@ EXPECTED_COLORBUTTON_PROPERTIES = {
     "use_alpha": True,
 }
 
-EXPECTED_COLORCHOOSERDIALOG_PROPERTIES = {"show_editor": False}
+EXPECTED_COLORCHOOSERDIALOG_PROPERTIES = {"show_editor": False, "title": None}
 
 EXPECTED_COLORCHOOSERWIDGET_PROPERTIES = {"show_editor": False}
 
