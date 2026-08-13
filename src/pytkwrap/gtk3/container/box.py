@@ -52,7 +52,13 @@ class GTK3BoxMixin(GTK3ContainerMixin):
 class GTK3Box(Gtk.Box, GTK3BoxMixin):
     """Wrapper for version 3.0 Gtk.Box."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
+        spacing: int = 0,
+    ) -> None:
         """Initialize an instance of the GTK3Box."""
-        super().__init__()
+        Gtk.Box.__init__(self, orientation=orientation, spacing=spacing)
         GTK3BoxMixin.__init__(self)
+
+        self.dic_properties["spacing"] = spacing
