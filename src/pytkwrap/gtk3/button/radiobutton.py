@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
-    """Mixin for GTK3RadioButton."""
+    """Mixin for GTK3RadioButton.
+
+    Notes
+    -----
+    GTK3RadioButton passes a Gtk.Label to its callback function.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 40
@@ -57,7 +62,11 @@ class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
 class GTK3RadioButton(Gtk.RadioButton, GTK3RadioButtonMixin):
     """Wrapper for version 3.0 Gtk.RadioButton."""
 
-    def __init__(self, label="...", group=None) -> None:
+    def __init__(
+        self,
+        label: str = "...",
+        group: Gtk.RadioButton | None = None,
+    ) -> None:
         """Initialize an instance of the GTK3RadioButton widget.
 
         Parameters
@@ -68,7 +77,8 @@ class GTK3RadioButton(Gtk.RadioButton, GTK3RadioButtonMixin):
         group : Gtk.RadioButton | None
             The group to which the GTK3RadioButton belongs.
         """
-        super().__init__(label=label)
+        Gtk.RadioButton.__init__(self, label=label)
         GTK3RadioButtonMixin.__init__(self)
 
+        self.dic_properties["label"] = label
         self.join_group(group)
