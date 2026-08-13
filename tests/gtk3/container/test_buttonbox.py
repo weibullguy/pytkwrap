@@ -65,6 +65,13 @@ class TestGTK3ButtonBox(BaseGTK3GObjectTests):
         return self.widget_class(orientation)
 
     @pytest.mark.unit
+    def test_init(self):
+        """Should create a GTK3ButtonBox with the default orientation."""
+        dut = self.make_dut()
+
+        assert dut.get_property("orientation") == Gtk.Orientation.HORIZONTAL
+
+    @pytest.mark.unit
     def test_init_with_orientation(self):
         """Should create a GTK3ButtonBox with the passed orientation."""
         dut = self.make_dut(orientation=Gtk.Orientation.VERTICAL)
