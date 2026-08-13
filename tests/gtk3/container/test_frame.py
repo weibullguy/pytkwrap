@@ -60,10 +60,20 @@ class TestFrame(BaseGTK3GObjectTests):
         return self.widget_class(label)
 
     @pytest.mark.unit
+    def test_init(self):
+        """Should create a GTK3Frame with no label."""
+        dut = self.make_dut()
+
+        assert dut.do_get_property("label") is None
+        assert dut.get_property("label") is None
+        assert dut.get_label() is None
+
+    @pytest.mark.unit
     def test_init_with_label(self):
         """Should create a GTK3Frame with the passed label."""
         dut = self.make_dut("Test Frame")
 
+        assert dut.do_get_property("label") == "Test Frame"
         assert dut.get_property("label") == "Test Frame"
         assert dut.get_label() == "Test Frame"
 
