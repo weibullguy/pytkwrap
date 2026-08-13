@@ -124,7 +124,7 @@ EXPECTED_SPINBUTTON_METHODS = [
 EXPECTED_SPINBUTTON_PROPERTIES = {
     "adjustment": None,
     "climb_rate": 0.0,
-    "digits": 0,
+    "digits": 1,
     "numeric": False,
     "snap_to_ticks": False,
     "update_policy": Gtk.SpinButtonUpdatePolicy.ALWAYS,

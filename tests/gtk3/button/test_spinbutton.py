@@ -90,6 +90,9 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         assert isinstance(dut, GTK3SpinButton)
         assert dut.dic_attributes == self.expected_attributes
         assert dut.dic_properties == self.expected_properties
+        assert dut.do_get_property("adjustment") is None
+        assert dut.do_get_property("climb_rate") == 0.0
+        assert dut.do_get_property("digits") == 1
         assert dut.get_digits() == 1
         assert dut.get_increments() == (0.0, 0.0)
 
@@ -99,7 +102,10 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         _adjustment = GTK3Adjustment(0, 0, 10, 1, 10, 0)
         dut = self.make_dut(_adjustment)
 
+        assert dut.do_get_property("adjustment") == _adjustment
         assert dut.get_adjustment() == _adjustment
+        assert dut.do_get_property("climb_rate") == 0.0
+        assert dut.do_get_property("digits") == 1
         assert dut.get_digits() == 1
         assert dut.get_increments() == (1.0, 10.0)
 
@@ -108,6 +114,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         """Should create a GTK3SpinButton with a climb rate."""
         dut = self.make_dut(climb_rate=0.25)
 
+        assert dut.do_get_property("climb_rate") == 0.25
         assert dut.get_property("climb-rate") == 0.25
 
     @pytest.mark.unit
@@ -115,6 +122,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         """Should create a GTK3SpinButton with digits."""
         dut = self.make_dut(digits=2)
 
+        assert dut.do_get_property("digits") == 2
         assert dut.get_digits() == 2
         assert dut.dic_attributes["format"] == "{:3.2f}"
 
@@ -158,7 +166,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
 
         assert dut.do_get_property("adjustment") is None
         assert dut.do_get_property("climb_rate") == 0.0
-        assert dut.do_get_property("digits") == 0
+        assert dut.do_get_property("digits") == 1
         assert not dut.do_get_property("numeric")
         assert not dut.do_get_property("snap_to_ticks")
         assert dut.do_get_property("update_policy") == Gtk.SpinButtonUpdatePolicy.ALWAYS
