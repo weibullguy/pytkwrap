@@ -56,6 +56,35 @@ class TestGTK3Box(BaseGTK3GObjectTests):
         | EXPECTED_BOX_PROPERTIES
     )
 
+    def make_dut(self, orientation=Gtk.Orientation.HORIZONTAL, spacing=0):
+        return self.widget_class(orientation=orientation, spacing=spacing)
+
+    @pytest.mark.unit
+    def test_init(self):
+        """Should create a GTK3Box with the default orientation and spacing."""
+        dut = self.make_dut()
+
+        assert dut.get_orientation() == Gtk.Orientation.HORIZONTAL
+        assert dut.do_get_property("spacing") == 0
+        assert dut.get_property("spacing") == 0
+        assert dut.get_spacing() == 0
+
+    @pytest.mark.unit
+    def test_init_with_orientation(self):
+        """Should create a GTK3Box with the passed orientation."""
+        dut = self.make_dut(orientation=Gtk.Orientation.VERTICAL)
+
+        assert dut.get_orientation() == Gtk.Orientation.VERTICAL
+
+    @pytest.mark.unit
+    def test_init_with_spacing(self):
+        """Should create a GTK3Box with the passed spacing."""
+        dut = self.make_dut(spacing=10)
+
+        assert dut.do_get_property("spacing") == 10
+        assert dut.get_property("spacing") == 10
+        assert dut.get_spacing() == 10
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
