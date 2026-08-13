@@ -116,8 +116,18 @@ class TestRadioButton(BaseGTK3DataWidgetTests):
         """Should create a GTK3RadioButton with a label."""
         dut = self.make_dut(label="Test Radio Button Label")
 
-        assert isinstance(dut, GTK3RadioButton)
+        assert dut.do_get_property("label") == "Test Radio Button Label"
+        assert dut.get_property("label") == "Test Radio Button Label"
         assert dut.get_label() == "Test Radio Button Label"
+
+    @pytest.mark.unit
+    def test_init_with_mnemonic(self):
+        """Should create a GTK3RadioButton with a mnemonic label."""
+        dut = self.make_dut(label="Test _Radio Button Label")
+
+        assert dut.do_get_property("label") == "Test _Radio Button Label"
+        assert dut.get_property("label") == "Test _Radio Button Label"
+        assert dut.get_label() == "Test _Radio Button Label"
 
     @pytest.mark.unit
     def test_do_set_attributes_default(self):
