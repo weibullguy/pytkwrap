@@ -17,7 +17,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ScaleButtonMixin(GTK3ButtonMixin):
-    """Mixin for GTK3ScaleButton."""
+    """Mixin for GTK3ScaleButton.
+
+    Notes
+    -----
+    GTK3ScaleButton passes a Gtk.Image to its callback function.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -115,8 +120,26 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
         step: float = 2,
         icons: list | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3ScaleButton widget."""
-        super().__init__(
+        """Initialize an instance of the GTK3ScaleButton widget.
+
+        Parameters
+        ----------
+        size : int
+            A stock icon size.
+        min_value : float
+            The minimum value of the scale.  The default is 0.0.
+        max_value : float
+            The maximum value of the scale.  The default is 100.0.
+        step : float
+            The stepping value when a scroll-wheel event, or up/down arrow event
+            occurs.  The default is 2.0.
+        icons : list | None
+            A list of icon names to be used by the scale button.  The default is None
+            which means the set_icons() method will have to be used to set the icons
+            after initialization.
+        """
+        Gtk.ScaleButton.__init__(
+            self,
             adjustment=GTK3Adjustment(min_value, min_value, max_value, step),
             icons=icons,
             size=size,
@@ -131,5 +154,3 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
         )
         self.dic_properties["icons"] = icons
         self.dic_properties["size"] = size
-
-        self.do_set_properties(self.dic_properties)
