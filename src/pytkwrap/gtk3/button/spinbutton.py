@@ -59,6 +59,7 @@ class GTK3SpinButtonMixin(GTK3EntryMixin):
         """Initialize an instance of the GTK3SpinButton mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_SPINBUTTON_ATTRIBUTES)
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SPINBUTTON_SIGNALS}
@@ -76,6 +77,7 @@ class GTK3SpinButtonMixin(GTK3EntryMixin):
         properties : GTK3WidgetProperties
             The typed dict with the property values to set for the GTK3SpinButton.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         if isinstance(self.dic_properties["adjustment"], Gtk.Adjustment):
@@ -136,8 +138,20 @@ class GTK3SpinButton(Gtk.SpinButton, GTK3SpinButtonMixin):
         climb_rate: float = 0.0,
         digits: int = 1,
     ) -> None:
-        """Initialize an instance of the GTK3SpinButton widget."""
-        # GTK3SpinButton fails to initialize if calling super().__init__().
+        """Initialize an instance of the GTK3SpinButton widget.
+
+        Parameters
+        ----------
+        adjustment : GTK3Adjustment | None
+            The adjustment to use for the spin button.  The default is None.
+        climb_rate : float
+            Specifies how much the rate of change in the value will accelerate if the
+            user continues to hold down an up/down button or arrow key.  The default
+            is 0.0.
+        digits : int
+            The number of decimal places to display.  The
+            default is 1.
+        """
         Gtk.SpinButton.__init__(
             self,
             adjustment=adjustment,
@@ -147,3 +161,7 @@ class GTK3SpinButton(Gtk.SpinButton, GTK3SpinButtonMixin):
         GTK3SpinButtonMixin.__init__(self)
 
         self.dic_attributes["format"] = f"{{:3.{digits}f}}"
+
+        self.dic_properties["adjustment"] = adjustment
+        self.dic_properties["climb_rate"] = climb_rate
+        self.dic_properties["digits"] = digits
