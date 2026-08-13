@@ -16,7 +16,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ToggleButtonMixin(GTK3ButtonMixin):
-    """Mixin for GTK3ToggleButton."""
+    """Mixin for GTK3ToggleButton.
+
+    Notes
+    -----
+    GTK3ToggleButton passes a Gtk.Label to its callback function.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -34,10 +39,9 @@ class GTK3ToggleButtonMixin(GTK3ButtonMixin):
         "toggled",
     ]
 
-    # TODO: Remove pylint disable once all mixins are refactored to take in kwargs.
-    def __init__(self, **kwargs) -> None:  # pylint: disable=unused-argument
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3ToggleButton widget."""
-        super().__init__()
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.dic_attributes.update(self._GTK3_TOGGLE_BUTTON_ATTRIBUTES)
@@ -58,6 +62,7 @@ class GTK3ToggleButtonMixin(GTK3ButtonMixin):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3ToggleButton.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.set_active(self.dic_properties["active"])
@@ -94,7 +99,7 @@ class GTK3ToggleButtonMixin(GTK3ButtonMixin):
 class GTK3ToggleButton(Gtk.ToggleButton, GTK3ToggleButtonMixin):
     """Wrapper for version 3.0 Gtk.ToggleButton."""
 
-    def __init__(self, label="...") -> None:
+    def __init__(self, label: str = "...") -> None:
         """Initialize an instance of the GTK3ToggleButton widget.
 
         Parameters
@@ -103,5 +108,7 @@ class GTK3ToggleButton(Gtk.ToggleButton, GTK3ToggleButtonMixin):
             The text to display in the GTK3ToggleButton label.  The default value is
             an ellipsis (...).
         """
-        super().__init__(label=label)
+        Gtk.ToggleButton.__init__(self, label=label)
         GTK3ToggleButtonMixin.__init__(self)
+
+        self.dic_properties["label"] = label
