@@ -13,7 +13,12 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3NativeDialogMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3NativeDialog."""
+    """Mixin class for GTK3NativeDialog.
+
+    Notes
+    -----
+    GTK3NativeDialog passes no widgets to its callback function.
+    """
 
     _GTK3_NATIVEDIALOG_PROPERTIES = GTK3WidgetProperties(
         modal=False,

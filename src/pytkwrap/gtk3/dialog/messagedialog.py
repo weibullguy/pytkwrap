@@ -30,6 +30,7 @@ class GTK3MessageDialogMixin(GTK3DialogMixin):
         """Initialize an instance of the GTK3MessageDialog mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_MESSAGEDIALOG_PROPERTIES)
 
     def do_set_properties(
@@ -44,6 +45,7 @@ class GTK3MessageDialogMixin(GTK3DialogMixin):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3MessageDialog.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         if self.dic_properties["use_markup"]:
@@ -68,7 +70,15 @@ class GTK3MessageDialog(Gtk.MessageDialog, GTK3MessageDialogMixin):
         buttons: Gtk.ButtonsType = Gtk.ButtonsType.NONE,
         message_type: Gtk.MessageType = Gtk.MessageType.INFO,
     ) -> None:
-        """Initialize an instance of the GTK3MessageDialog."""
+        """Initialize an instance of the GTK3MessageDialog.
+
+        Parameters
+        ----------
+        buttons : Gtk.ButtonsType
+            The buttons to display on the message dialog.  The default is none.
+        message_type : Gtk.MessageType
+            The type of message to display.  The default is Gtk.MessageType.INFO.
+        """
         Gtk.MessageDialog.__init__(self, buttons=buttons, message_type=message_type)
         Gtk.Widget.set_has_window(self, False)
         GTK3MessageDialogMixin.__init__(self)

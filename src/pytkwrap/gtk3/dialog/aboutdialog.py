@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3AboutDialogMixin(GTK3DialogMixin):
-    """Mixin class for GTK3AboutDialog."""
+    """Mixin class for GTK3AboutDialog.
+
+    Notes
+    -----
+    GTK3AboutDialog passes no widgets to its callback function.
+    """
 
     _GTK3_ABOUTDIALOG_PROPERTIES = GTK3WidgetProperties(
         artists=[],
@@ -41,6 +46,7 @@ class GTK3AboutDialogMixin(GTK3DialogMixin):
         """Initialize an instance of the GTK3AboutDialog mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_ABOUTDIALOG_SIGNALS}
         )
@@ -58,6 +64,7 @@ class GTK3AboutDialogMixin(GTK3DialogMixin):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3AboutDialog.
         """
+        # Update the property dictionary.
         super().do_set_properties(properties)
 
         self.set_artists(self.dic_properties["artists"])

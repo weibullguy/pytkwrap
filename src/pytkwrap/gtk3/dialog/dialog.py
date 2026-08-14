@@ -11,7 +11,12 @@ from pytkwrap.gtk3.window.window import GTK3WindowMixin
 
 
 class GTK3DialogMixin(GTK3WindowMixin):
-    """Mixin class for GTK3Dialog."""
+    """Mixin class for GTK3Dialog.
+
+    Notes
+    -----
+    GTK3Dialog passes no widgets to its callback function.
+    """
 
     _GTK3_DIALOG_PROPERTIES = GTK3WidgetProperties(
         use_header_bar=-1,
@@ -40,8 +45,8 @@ class GTK3Dialog(Gtk.Dialog, GTK3DialogMixin):
 
         Parameters
         ----------
-        use_header_bar : bool, optional
+        use_header_bar : bool
             Whether to use the header bar for action buttons.
         """
-        super().__init__(use_header_bar=use_header_bar)
+        Gtk.Dialog.__init__(self, use_header_bar=use_header_bar)
         GTK3DialogMixin.__init__(self)

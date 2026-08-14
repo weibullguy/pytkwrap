@@ -19,5 +19,8 @@ class GTK3AppChooserDialogMixin(GTK3DialogMixin):
 
 class GTK3AppChooserDialog(Gtk.AppChooserDialog, GTK3AppChooserDialogMixin):
     def __init__(
-        self, parent: Gtk.Window | None, flags: Gtk.DialogFlags, gfile: Gio.File = None
+        self,
+        transient_for: Gtk.Window | None,
+        flags: Gtk.DialogFlags,
+        gfile: Gio.File = None,
     ) -> None: ...

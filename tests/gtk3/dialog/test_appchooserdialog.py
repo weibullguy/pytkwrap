@@ -74,8 +74,12 @@ class TestGTK3AppChooserDialog(BaseGTK3GObjectTests):
         | EXPECTED_APPCHOOSERDIALOG_PROPERTIES
     )
 
-    def make_dut(self, parent=None, flags=0, gfile=None):
-        return GTK3AppChooserDialog(parent=parent, flags=flags, gfile=gfile)
+    def make_dut(self, transient_for=None, flags=0, gfile=None):
+        return GTK3AppChooserDialog(
+            transient_for=transient_for,
+            flags=flags,
+            gfile=gfile,
+        )
 
     @pytest.mark.unit
     @pytest.mark.filterwarnings("ignore:g_file_info_get_content_type")

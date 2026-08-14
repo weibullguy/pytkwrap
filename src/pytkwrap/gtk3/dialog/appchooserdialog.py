@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3AppChooserDialogMixin(GTK3DialogMixin):
-    """Mixin class for GTK3AppChooserDialog."""
+    """Mixin class for GTK3AppChooserDialog.
+
+    Notes
+    -----
+    GTK3AppChooserDialog passes no widgets to its callback function.
+    """
 
     _GTK3_APPCHOOSERDIALOG_PROPERTIES = GTK3WidgetProperties(
         gfile=None,
@@ -52,7 +57,7 @@ class GTK3AppChooserDialog(Gtk.AppChooserDialog, GTK3AppChooserDialogMixin):
 
     def __init__(
         self,
-        parent: Gtk.Window | None,
+        transient_for: Gtk.Window | None,
         flags: Gtk.DialogFlags,
         gfile: Gio.File = None,
     ) -> None:
@@ -60,7 +65,7 @@ class GTK3AppChooserDialog(Gtk.AppChooserDialog, GTK3AppChooserDialogMixin):
 
         Parameter
         ---------
-        parent : Gtk.Window | None
+        transient_for : Gtk.Window | None
             The parent window for the Gtk.AppChooserDialog.
         flags : Gtk.DialogFlags
             THe flags to use for the Gtk.AppChooserDialog.
@@ -69,7 +74,7 @@ class GTK3AppChooserDialog(Gtk.AppChooserDialog, GTK3AppChooserDialogMixin):
         """
         Gtk.AppChooserDialog.__init__(
             self,
-            transient_for=parent,
+            transient_for=transient_for,
             flags=flags,
             gfile=gfile,
         )

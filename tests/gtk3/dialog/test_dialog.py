@@ -75,6 +75,7 @@ class TestGTK3Dialog(BaseGTK3GObjectTests):
     def test_init_with_header_bar(self):
         dut = self.make_dut(use_header_bar=True)
 
+        assert dut.do_get_property("use_header_bar")
         assert dut.get_property("use_header_bar")
 
     @pytest.mark.unit
@@ -86,3 +87,11 @@ class TestGTK3Dialog(BaseGTK3GObjectTests):
 
         assert dut.dic_properties == self.expected_properties
         assert dut.do_get_property("use_header_bar") == -1
+
+    @pytest.mark.unit
+    def test_do_set_properties(self):
+        """Should set properties to values passed in a GTK3WidgetProperties."""
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties(use_header_bar=True))
+
+        assert dut.do_get_property("use_header_bar")
