@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3StackMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Stack."""
+    """Mixin class for GTK3Stack.
+
+    Notes
+    -----
+    GTK3Stack passes no widgets to its callback function.
+    """
 
     _GTK3_STACK_PROPERTIES = GTK3WidgetProperties(
         hhomogeneous=True,
@@ -31,6 +36,7 @@ class GTK3StackMixin(GTK3ContainerMixin):
         """Initialize an instance of the GTK3Stack mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_STACK_PROPERTIES)
 
     def do_set_properties(

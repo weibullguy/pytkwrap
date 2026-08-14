@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3StackSwitcherMixin(GTK3BoxMixin):
-    """Mixin class for GTK3StackSwitcher."""
+    """Mixin class for GTK3StackSwitcher.
+
+    Notes
+    -----
+    GTK3StackSwitcher passes no widgets to its callback function.
+    """
 
     _GTK3_STACKSWITCHER_PROPERTIES = GTK3WidgetProperties(
         icon_size=1,

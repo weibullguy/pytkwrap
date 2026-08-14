@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ViewportMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Viewport."""
+    """Mixin class for GTK3Viewport.
+
+    Notes
+    -----
+    GTK3Viewport passes no widgets to its callback function.
+    """
 
     _GTK3_VIEWPORT_PROPERTIES = GTK3WidgetProperties(
         shadow_type=Gtk.ShadowType.IN,
@@ -58,7 +63,9 @@ class GTK3Viewport(Gtk.Viewport, GTK3ViewportMixin):
         Arguments
         ---------
         hadjustment : Gtk.Adjustment, optional
+            The adjustment to use for the viewport's horizontal adjustment.
         vadjustment : Gtk.Adjustment, optional
+            The adjustment to use for the viewport's vertical adjustment.
         """
         Gtk.Viewport.__init__(self, hadjustment=hadjustment, vadjustment=vadjustment)
         GTK3ViewportMixin.__init__(self)

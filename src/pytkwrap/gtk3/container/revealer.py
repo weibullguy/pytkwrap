@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3RevealerMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Revealer."""
+    """Mixin class for GTK3Revealer.
+
+    Notes
+    -----
+    GTK3Revealer passes no widgets to its callback function.
+    """
 
     _GTK3_REVEALER_PROPERTIES = GTK3WidgetProperties(
         reveal_child=False,

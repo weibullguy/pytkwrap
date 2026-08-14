@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3StackSidebarMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3StackSidebar."""
+    """Mixin class for GTK3StackSidebar.
+
+    Notes
+    -----
+    GTK3StackSidebar passes a Gtk.ScrolledWindow to its callback function.
+    """
 
     _GTK3_STACKSIDEBAR_PROPERTIES = GTK3WidgetProperties(
         stack=None,

@@ -12,7 +12,12 @@ from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 
 
 class GTK3SocketMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Socket."""
+    """Mixin class for GTK3Socket.
+
+    Notes
+    -----
+    GTK3Socket passes no widgets to its callback function.
+    """
 
     _GTK3_SOCKET_SIGNALS = [
         "plug-added",
@@ -23,6 +28,7 @@ class GTK3SocketMixin(GTK3ContainerMixin):
         """Initialize an instance of the GTK3Socket mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SOCKET_SIGNALS}
         )

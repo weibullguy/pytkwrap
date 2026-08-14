@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ListBoxMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3ListBox."""
+    """Mixin class for GTK3ListBox.
+
+    Notes
+    -----
+    GTK3ListBox passes no widgets to its callback function.
+    """
 
     _GTK3_LISTBOX_PROPERTIES = GTK3WidgetProperties(
         activate_on_single_click=True,
@@ -67,6 +72,5 @@ class GTK3ListBox(Gtk.ListBox, GTK3ListBoxMixin):
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3ListBox."""
-        # GTK3ListBox does not initialize when calling super().__init__().
         Gtk.ListBox.__init__(self)
         GTK3ListBoxMixin.__init__(self)

@@ -62,7 +62,7 @@ class TestGTK3Paned(BaseGTK3GObjectTests):
         return self.widget_class(orientation=orientation)
 
     @pytest.mark.unit
-    def test_init_horizontal_paned(self):
+    def test_init(self):
         dut = self.make_dut()
 
         assert dut.orientation == Gtk.Orientation.HORIZONTAL

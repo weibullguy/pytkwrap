@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3PanedMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Paned."""
+    """Mixin class for GTK3Paned.
+
+    Notes
+    -----
+    GTK3Paned passes no widgets to its callback function.
+    """
 
     _GTK3_PANED_PROPERTIES = GTK3WidgetProperties(
         position=0,
@@ -77,9 +82,16 @@ class GTK3Paned(Gtk.Paned, GTK3PanedMixin):
         self,
         orientation: Gtk.Orientation = Gtk.Orientation.HORIZONTAL,
     ) -> None:
-        """Initialize an instance of the GTK3Paned."""
-        # GTK3Paned does not initialize when calling super().__init__().
+        """Initialize an instance of the GTK3Paned.
+
+        Parameters
+        ----------
+        orientation : Gtk.Orientation
+            The orientation of the paned widget.  The default is
+            Gtk.Orientation.HORIZONTAL.
+        """
         Gtk.Paned.__init__(self, orientation=orientation)
         GTK3PanedMixin.__init__(self)
 
+        # TODO: Consider adding this to the attributes dictionary.
         self.orientation = orientation
