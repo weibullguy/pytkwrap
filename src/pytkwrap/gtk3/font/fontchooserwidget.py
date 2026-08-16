@@ -10,7 +10,12 @@ from pytkwrap.gtk3.container.box import GTK3BoxMixin
 
 
 class GTK3FontChooserWidget(Gtk.FontChooserWidget, GTK3BoxMixin):
-    """Wrapper for version 3.0 Gtk.FontChooserWidget."""
+    """Wrapper for version 3.0 Gtk.FontChooserWidget.
+
+    Notes
+    -----
+    GTK3FontChooserWidget passes a Gtk.Stack to its callback function.
+    """
 
     def __init__(self) -> None:
         """Initialize an instance of the GTK3FontChooserWidget."""

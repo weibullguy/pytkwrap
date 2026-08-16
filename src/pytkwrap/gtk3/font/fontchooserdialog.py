@@ -17,7 +17,15 @@ class GTK3FontChooserDialog(Gtk.FontChooserDialog, GTK3DialogMixin):
         title: str | None = "Choose a Font",
         transient_for: Gtk.Window | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3FontChooserDialog."""
+        """Initialize an instance of the GTK3FontChooserDialog.
+
+        Parameters
+        ----------
+        title : str | None
+            The title of the dialog or None.
+        transient_for : Gtk.Window | None
+            Transient parent of the dialog or None.
+        """
         Gtk.FontChooserDialog.__init__(self, title=title, transient_for=transient_for)
         GTK3DialogMixin.__init__(self)
 

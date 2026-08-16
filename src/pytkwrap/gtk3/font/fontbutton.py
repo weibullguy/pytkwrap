@@ -16,7 +16,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3FontButtonMixin(GTK3ButtonMixin):
-    """Mixin class for GTK3FontButton."""
+    """Mixin class for GTK3FontButton.
+
+    Notes
+    -----
+    GTK3FontButton passes a Gtk.Box to its callback function.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
@@ -116,7 +121,14 @@ class GTK3FontButton(Gtk.FontButton, GTK3FontButtonMixin):
     """Wrapper for version 3.0 Gtk.FontButton."""
 
     def __init__(self, font_name: str = "Sans 12") -> None:
-        """Initialize an instance of the GTK3FontButton."""
+        """Initialize an instance of the GTK3FontButton.
+
+        Parameters
+        ----------
+        font_name : str
+            The name of the font to display in the font chooser dialog.  The default
+            is Sans 12.
+        """
         Gtk.FontButton.__init__(self, font_name=font_name)
         GTK3FontButtonMixin.__init__(self)
 
