@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3FileChooserButtonMixin(GTK3BoxMixin):
-    """Mixin class for GTK3FileChooserButton."""
+    """Mixin class for GTK3FileChooserButton.
+
+    Notes
+    -----
+    GTK3FileChooserButton passes no widget to its callback function.
+    """
 
     _GTK3_FILECHOOSERBUTTON_PROPERTIES = GTK3WidgetProperties(
         dialog=None,
@@ -61,7 +66,17 @@ class GTK3FileChooserButton(Gtk.FileChooserButton, GTK3FileChooserButtonMixin):
         action: Gtk.FileChooserAction = Gtk.FileChooserAction.OPEN,
         dialog: Gtk.Dialog | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3FileChooserButton."""
+        """Initialize an instance of the GTK3FileChooserButton.
+
+        Parameters
+        ----------
+        title : str
+            The title of the browse dialog.
+        action : Gtk.FileChooserAction
+            The open mode for the widget.
+        dialog : Gtk.Dialog | None
+            The widget to use as the dialog.
+        """
         Gtk.FileChooserButton.__init__(self, title=title, action=action, dialog=dialog)
         GTK3FileChooserButtonMixin.__init__(self)
 
@@ -69,4 +84,3 @@ class GTK3FileChooserButton(Gtk.FileChooserButton, GTK3FileChooserButtonMixin):
         self.dic_properties["title"] = title
 
         self.set_action(action)
-        self.do_set_properties(self.dic_properties)

@@ -14,7 +14,13 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3FileChooserWidgetMixin(GTK3BoxMixin):
-    """Mixin class for GTK3FileChooserWidget."""
+    """Mixin class for GTK3FileChooserWidget.
+
+    Notes
+    -----
+    GTK3FileChooserWidget passes a Gtk.Box and Gtk.ActionBar to its callback function
+    depending on the signal.
+    """
 
     _GTK3_FILECHOOSERWIDGET_PROPERTIES = GTK3WidgetProperties(
         search_mode=False,
@@ -72,6 +78,12 @@ class GTK3FileChooserWidget(Gtk.FileChooserWidget, GTK3FileChooserWidgetMixin):
         self,
         action: Gtk.FileChooserAction = Gtk.FileChooserAction.OPEN,
     ) -> None:
-        """Initialize an instance of the GTK3FileChooserWidget."""
+        """Initialize an instance of the GTK3FileChooserWidget.
+
+        Parameters
+        ----------
+        action : Gtk.FileChooserAction
+            The open or save mode for the widget.
+        """
         Gtk.FileChooserWidget.__init__(self, action=action)
         GTK3FileChooserWidgetMixin.__init__(self)

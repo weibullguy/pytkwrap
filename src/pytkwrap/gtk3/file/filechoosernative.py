@@ -25,6 +25,7 @@ class GTK3FileChooserNativeMixin(GTK3NativeDialogMixin):
         """Initialize an instance of the GTK3FileChooserNative mixin."""
         super().__init__(**kwargs)
 
+        # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_FILECHOOSERNATIVE_PROPERTIES)
 
     def do_set_properties(
@@ -56,7 +57,19 @@ class GTK3FileChooserNative(Gtk.FileChooserNative, GTK3FileChooserNativeMixin):
         accept_label: str | None = None,
         cancel_label: str | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3FileChooserNative."""
+        """Initialize an instance of the GTK3FileChooserNative.
+
+        Parameters
+        ----------
+        title : str | None
+            The title of the native.
+        action : Gtk.FileChooserAction
+            Open or save mode for the dialog.
+        accept_label : str | None
+            Text to go in the accept button or None for default.
+        cancel_label : str | None
+            Text to go in the cancel button or None for default.
+        """
         Gtk.FileChooserNative.__init__(
             self,
             title=title,
@@ -69,5 +82,3 @@ class GTK3FileChooserNative(Gtk.FileChooserNative, GTK3FileChooserNativeMixin):
         self.dic_properties["accept_label"] = accept_label
         self.dic_properties["cancel_label"] = cancel_label
         self.dic_properties["title"] = title
-
-        self.do_set_properties(self.dic_properties)
