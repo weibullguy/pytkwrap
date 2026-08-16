@@ -33,9 +33,9 @@ def pytest_configure(config):
 
 @pytest.fixture(scope="function")
 def image_file():
-    _parent_dir_ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    _image_ = os.path.join(_parent_dir_, "data/pytkwrap.png")
-    return _image_
+    _parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    _image = os.path.join(_parent_dir, "data/pytkwrap.png")
+    return _image
 
 
 @pytest.fixture(scope="class")

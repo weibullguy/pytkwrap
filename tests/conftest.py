@@ -1,4 +1,5 @@
 # Standard Library Imports
+import os
 import sys
 from io import StringIO
 
@@ -28,3 +29,10 @@ def suppress_stderr():
     sys.stderr = StringIO()
     yield
     sys.stderr = _stderr
+
+
+@pytest.fixture(scope="function")
+def text_file():
+    _parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    _text = os.path.join(_parent_dir, "data/pytkwrap.txt")
+    return _text
