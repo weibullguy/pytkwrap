@@ -9,12 +9,10 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-from .iconinfo import GTK3IconInfo
 from .icontheme import GTK3IconTheme
 from .iconview import GTK3IconView
 
 __all__ = [
-    "GTK3IconInfo",
     "GTK3IconTheme",
     "GTK3IconView",
 ]

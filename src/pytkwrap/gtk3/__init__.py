@@ -69,7 +69,7 @@ from .file import (
     GTK3RecentManager,
 )
 from .font import GTK3FontButton, GTK3FontChooserDialog, GTK3FontChooserWidget
-from .icon import GTK3IconInfo, GTK3IconTheme, GTK3IconView
+from .icon import GTK3IconTheme, GTK3IconView
 from .image import GTK3Image
 from .io import (
     GTK3Calendar,
@@ -242,7 +242,6 @@ __all__ = [
     "GTK3GObjectMixin",
     "GTK3Grid",
     "GTK3HeaderBar",
-    "GTK3IconInfo",
     "GTK3IconTheme",
     "GTK3IconView",
     "GTK3Image",
