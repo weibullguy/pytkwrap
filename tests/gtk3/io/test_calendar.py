@@ -204,3 +204,62 @@ class TestGTK3Calendar(BaseGTK3DataWidgetTests):
         dut.emit("day-selected")
 
         pub.unsubscribe(self.mock_handler, dut.dic_attributes["send_topic"])
+
+    @pytest.mark.unit
+    def test_get_default_display_options(self):
+        """Should return a GtkCalendarDisplayOptions value."""
+        dut = self.make_dut()
+
+        assert dut.display_options == 35
+
+    @pytest.mark.unit
+    def test_get_display_options(self):
+        """Should return a GtkCalendarDisplayOptions value."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(show_day_names=False, show_week_numbers=True)
+        )
+
+        assert dut.display_options == 41
+
+    @pytest.mark.unit
+    def test_do_mark_day(self):
+        """Should mark a day in the GTK3Calendar."""
+        dut = self.make_dut()
+        dut.do_mark_day(5)
+        dut.do_mark_day(15)
+        dut.do_mark_day(22)
+
+        assert dut.get_day_is_marked(5)
+        assert dut.get_day_is_marked(15)
+        assert dut.get_day_is_marked(22)
+
+    @pytest.mark.unit
+    def test_do_unmark_day(self):
+        """Should unmark a day in the GTK3Calendar."""
+        dut = self.make_dut()
+        dut.do_mark_day(5)
+
+        assert dut.get_day_is_marked(5)
+
+        dut.do_unmark_day(5, False)
+
+        assert not dut.get_day_is_marked(5)
+
+    @pytest.mark.unit
+    def test_do_unmark_all_days(self):
+        """Should unmark all days in the GTK3Calendar."""
+        dut = self.make_dut()
+        dut.do_mark_day(5)
+        dut.do_mark_day(15)
+        dut.do_mark_day(22)
+
+        assert dut.get_day_is_marked(5)
+        assert dut.get_day_is_marked(15)
+        assert dut.get_day_is_marked(22)
+
+        dut.do_unmark_day(None, True)
+
+        assert not dut.get_day_is_marked(5)
+        assert not dut.get_day_is_marked(15)
+        assert not dut.get_day_is_marked(22)
