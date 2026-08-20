@@ -17,7 +17,7 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
 class GTK3CalendarMixin(GTK3WidgetMixin):
-    """MIxin class for GTK3Calendar."""
+    """Mixin class for GTK3Calendar."""
 
     _GTK3_CALENDAR_ATTRIBUTES = PyTkWrapAttributes(
         default_value=date.today(),
@@ -156,6 +156,31 @@ class GTK3CalendarMixin(GTK3WidgetMixin):
         self.select_month(_date.month - 1, _date.year)
         self.select_day(_date.day)
 
+    def do_mark_day(self, day: int) -> None:
+        """Mark a day in the GTK3Calendar.
+
+        Parameters
+        ----------
+        day : int
+            The day to mark in the GTK3Calendar.
+        """
+        self.mark_day(day)
+
+    def do_unmark_day(self, day: int | None, unmark_all: bool) -> None:
+        """Unmark a day in the GTK3Calendar.
+
+        Parameters
+        ----------
+        day : int | None
+            The day to unmark in the GTK3Calendar.  Set to None when unmarking all days.
+        unmark_all : bool
+            Whether to unmark all days or just the current day.
+        """
+        if unmark_all:
+            self.clear_marks()
+        else:
+            self.unmark_day(day)
+
 
 class GTK3Calendar(Gtk.Calendar, GTK3CalendarMixin):
     """Wrapper for version 3.0 Gtk.Calendar."""
@@ -164,3 +189,8 @@ class GTK3Calendar(Gtk.Calendar, GTK3CalendarMixin):
         """Initialize an instance of the GTK3Calendar."""
         Gtk.Calendar.__init__(self)
         GTK3CalendarMixin.__init__(self)
+
+    @property
+    def display_options(self) -> Gtk.CalendarDisplayOptions:
+        """Return the display options for the GTK3Calendar."""
+        return self.get_display_options()
