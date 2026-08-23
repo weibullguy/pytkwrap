@@ -87,6 +87,29 @@ class TestGTK3ComboBoxText(BaseGTK3DataWidgetTests):
     @pytest.mark.unit
     def test_init(self):
         """Create a simple GTK3ComboBox when not passed any arguments."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3ComboBoxText)
+        assert self.expected_default_height == dut._DEFAULT_HEIGHT
+        assert self.expected_default_width == dut._DEFAULT_WIDTH
+
+        assert not dut.dic_properties["has_entry"]
+        assert dut.dic_properties["model"] is None
+        assert dut.display_index == 0
+        assert dut.n_items == 0
+
+    @pytest.mark.unit
+    def test_init_with_entry(self):
+        """Initiate a GTK3ComboBoxText with an entry."""
+        dut = self.make_dut(has_entry=True)
+
+        assert isinstance(dut, GTK3ComboBoxText)
+        assert dut.dic_properties["has_entry"]
+        assert dut.dic_properties["model"] is None
+
+    @pytest.mark.unit
+    def test_init_with_model(self):
+        """Create a simple GTK3ComboBox when not passed any arguments."""
         _model = Gtk.ListStore(GObject.TYPE_STRING)
         dut = self.make_dut(model=_model)
 
@@ -97,17 +120,9 @@ class TestGTK3ComboBoxText(BaseGTK3DataWidgetTests):
         assert not dut.dic_properties["has_entry"]
         assert dut.dic_properties["model"] == _model
         assert dut.display_index == 0
-        assert dut.n_items == 0
+        assert dut.n_items == 1
         assert dut.get_model().get_n_columns() == 1
         assert dut.get_model().get_column_type(0) == GObject.TYPE_STRING
-
-    @pytest.mark.unit
-    def test_init_with_entry(self):
-        """Initiate a GTK3ComboBoxText with an entry."""
-        dut = self.make_dut(has_entry=True)
-
-        assert isinstance(dut, GTK3ComboBoxText)
-        assert dut.dic_properties["has_entry"]
 
     @pytest.mark.unit
     def test_do_load(self):
@@ -179,7 +194,7 @@ class TestGTK3ComboBoxText(BaseGTK3DataWidgetTests):
         dut = self.make_dut()
 
         with pytest.raises(WrongTypeError):
-            dut.do_set_value("2")
+            dut.do_set_value([True, False])
 
     @pytest.mark.unit
     def test_get_value(self):
@@ -253,3 +268,103 @@ class TestGTK3ComboBoxText(BaseGTK3DataWidgetTests):
         dut.set_active(1)
 
         pub.unsubscribe(self.mock_handler, dut.dic_attributes["send_topic"])
+
+    @pytest.mark.unit
+    def test_do_clear(self):
+        """Clear the GTK3ComboBoxText at the passed index."""
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
+        dut.do_set_callbacks("changed", self.mock_callback)
+        dut.do_load_combo(SIMPLE_TEST_LIST)
+
+        dut.set_active(0)
+        assert dut.get_active_text() == ""
+        dut.set_active(1)
+        assert dut.get_active_text() == "Index 1"
+        dut.set_active(2)
+        assert dut.get_active_text() == "Index 2"
+        dut.set_active(3)
+        assert dut.get_active_text() == "Index 3"
+
+        dut.do_clear_entry(index=2)
+        dut.set_active(2)
+        assert dut.get_active_text() == "Index 3"
+
+    @pytest.mark.unit
+    @pytest.mark.filterwarnings("ignore:gtk_combo_box_text_remove")
+    def test_do_clear_all(self, filter_stderr):
+        """Clear all entries in the GTK3ComboBoxText."""
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
+        dut.do_set_callbacks("changed", self.mock_callback)
+        dut.do_load_combo(SIMPLE_TEST_LIST)
+
+        dut.set_active(0)
+        assert dut.get_active_text() == ""
+        dut.set_active(1)
+        assert dut.get_active_text() == "Index 1"
+        dut.set_active(2)
+        assert dut.get_active_text() == "Index 2"
+        dut.set_active(3)
+        assert dut.get_active_text() == "Index 3"
+
+        dut.do_clear_entry()
+        assert dut.do_get_options() == {}
+
+    @pytest.mark.unit
+    def test_do_add_entry(self):
+        """Add an entry to the GTK3ComboBoxText at position."""
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
+        dut.do_set_callbacks("changed", self.mock_callback)
+        dut.do_load_combo(SIMPLE_TEST_LIST)
+
+        dut.do_add_entry("New Entry", 2)
+        assert dut.do_get_options() == {
+            0: "",
+            1: "Index 1",
+            2: "New Entry",
+            3: "Index 2",
+            4: "Index 3",
+        }
+
+    @pytest.mark.unit
+    def test_do_add_entry_append(self):
+        """Add an entry to the GTK3ComboBoxText at the end."""
+        _model = Gtk.ListStore(GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
+        dut.do_set_callbacks("changed", self.mock_callback)
+        dut.do_load_combo(SIMPLE_TEST_LIST)
+
+        dut.do_add_entry("New Entry", -2)
+        assert dut.do_get_options() == {
+            0: "",
+            1: "Index 1",
+            2: "Index 2",
+            3: "Index 3",
+            4: "New Entry",
+        }
+
+    @pytest.mark.unit
+    @pytest.mark.filterwarnings("ignore:gtk_combo_box_set_id_column")
+    def test_do_add_entry_with_id(self, filter_stderr):
+        """Add an entry to the GTK3ComboBoxText at position with an id."""
+        _model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING)
+        dut = self.make_dut(model=_model)
+        dut.set_id_column(2)
+        dut.do_set_callbacks("changed", self.mock_callback)
+        dut.do_load_combo(SIMPLE_TEST_LIST)
+
+        dut.do_add_entry("New Entry", 3, id="new")
+        assert dut.do_get_options() == {
+            0: "",
+            1: "Index 1",
+            2: "Index 2",
+            3: "New Entry",
+            4: "Index 3",
+        }
+
+        dut.set_active(2)
+        assert _model.get_value(dut.get_active_iter(), dut.get_id_column()) is None
+        dut.set_active(3)
+        assert _model.get_value(dut.get_active_iter(), dut.get_id_column()) == "new"
