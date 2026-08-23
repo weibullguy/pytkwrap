@@ -19,7 +19,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
 class GTK3ComboBoxMixin(GTK3ContainerMixin):
-    """Mixin for GTK3ComboBox."""
+    """Mixin for GTK3ComboBox.
+
+    Notes
+    -----
+    GTK3ComboBox passes no widgets to its callback function.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT: int = 30
@@ -161,30 +166,49 @@ class GTK3ComboBoxMixin(GTK3ContainerMixin):
             lists where each internal list contains the information to be displayed,
             and there is one internal list for each ComboBox line.
         """
-        _model = self.get_model()
-        if _model is None or not isinstance(_model, Gtk.ListStore):
+        if self.dic_properties["model"] is None or not isinstance(
+            self.dic_properties["model"], Gtk.ListStore
+        ):
             return
 
-        _model.clear()
+        self.dic_properties["model"].clear()
 
         _hid = self.dic_handler_id[self.dic_attributes["edit_signal"]]
         if _hid != -1:
             with self.handler_block(_hid):
-                _model.append([""] * self.n_items)
+                self.dic_properties["model"].append([""] * self.n_items)
                 for _entry in entries:
                     if isinstance(_entry, (list, tuple)):
-                        _model.append(_entry)
+                        self.dic_properties["model"].append(_entry)
                     else:
-                        _model.append([_entry])
+                        self.dic_properties["model"].append([_entry])
 
-    def do_get_value(self) -> str:
-        """Return the value at the display column (self.index).
+    def do_get_value(self, index: int | None = None, ident: str | None = None) -> str:
+        """Return the value in the index column for the active row or in the ident row.
+
+        Parameters
+        ----------
+        index : int | None
+            The column in the GTK3ComboBox model whose value is to be retrieved.
+        ident : str | None
+            The ID of the item in the GTK3ComboBox to retrieve.
 
         Returns
         -------
         _value : str
+            The value of the item in the GTK3ComboBox.
+
+        Notes
+        -----
+        When the on_changed() method calls this method, it will return the value of
+        the active selection in the display_index column.
         """
-        return self.get_value_at_index(self.display_index)
+        if ident is not None:
+            return self.get_value_at_id(ident)
+
+        # If no index is specified, default to the display index.
+        index = self.display_index if index is None else index
+        return self.get_value_at_index(index)
 
     def do_set_value(
         self,
@@ -195,35 +219,76 @@ class GTK3ComboBoxMixin(GTK3ContainerMixin):
         Parameters
         ----------
         value : bool | date | float | int | object | str | tuple | None
-            The index of the item in the GTK3ComboBox to set active.
+            The index of the item in the GTK3ComboBox to set active if value is a
+            float or int.  The ID of the item in the GTK3ComboBox to set active if
+            value is a str.
         """
-        if isinstance(value, (bool, float, int)):
+        if isinstance(value, (float, int)):
             self.set_active(int(value))
+        elif isinstance(value, str):
+            self.set_active_id(value)
         else:
             super().do_set_value(value)
 
+    def get_value_at_id(self, ident: str) -> str:
+        """Return the value in the GTK3ComboBox model at display_index found with <id_>.
+
+        Parameters
+        ----------
+        ident : str
+            The ID of the item in the GTK3ComboBox to retrieve.
+
+        Returns
+        -------
+        _value : str
+            The value of the item in the GTK3ComboBox with the given id.
+
+        Notes
+        -----
+        This will return the value that would be displayed in the GTK3ComboBox if the
+        ident row was selected, not necessarily the currently active selection.
+        """
+        if self.dic_properties["model"] is None or not isinstance(
+            self.dic_properties["model"], Gtk.ListStore
+        ):
+            return ""
+
+        _iter = self.dic_properties["model"].get_iter_first()
+        while _iter is not None:
+            if (
+                self.dic_properties["model"].get_value(
+                    _iter, self.dic_properties["id_column"]
+                )
+                == ident
+            ):
+                return self.dic_properties["model"].get_value(_iter, self.display_index)
+            _iter = self.dic_properties["model"].iter_next(_iter)
+
+        return ""
+
     def get_value_at_index(self, display_index: int = -1) -> str:
-        """Return the value in the ComboBox model found at <index> position.
+        """Return the value in the GTk3ComboBox model found at <display_index> position.
 
         Parameters
         ----------
         display_index : int
             The column in the GTK3ComboBox model whose value is to be retrieved.
-            Defaults to zero which will always read a 'simple' GTK3ComboBox.
 
         Returns
         -------
         _value : str
-            The value displayed in the GTK3ComboBox at position <index>.
+            The value of the item in the GTK3ComboBox at the given index.
         """
         display_index = self.display_index if display_index == -1 else display_index
-        _model = self.get_model()
-        if _model is None or not isinstance(_model, Gtk.ListStore):
+
+        if self.dic_properties["model"] is None or not isinstance(
+            self.dic_properties["model"], Gtk.ListStore
+        ):
             return ""
 
         _row = self.get_active_iter()
         if isinstance(_row, Gtk.TreeIter):
-            return _model.get_value(_row, display_index)
+            return self.dic_properties["model"].get_value(_row, display_index)
 
         return ""
 
@@ -235,16 +300,28 @@ class GTK3ComboBox(Gtk.ComboBox, GTK3ComboBoxMixin):
         self,
         has_entry: bool = False,
         model: Gtk.TreeModel | None = None,
+        id_column: int | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3ComboBox."""
+        """Initialize an instance of the GTK3ComboBox.
+
+        Parameters
+        ----------
+        has_entry : bool
+            Whether to create the ComboBox with an entry.
+        model : Gtk.TreeModel | None
+            The model to use for the ComboBox.
+        id_column : int | None
+            The column in the model that will contain the string ID.
+        """
         Gtk.ComboBox.__init__(self, has_entry=has_entry, model=model)
         GTK3ComboBoxMixin.__init__(self)
 
-        # Initialize public instance attributes.
         self.dic_properties["has_entry"] = has_entry
         self.dic_properties["model"] = model
 
         if model is not None:
             self.n_items = model.get_n_columns()
 
-        self.show()
+        if id_column is not None:
+            self.dic_properties["id_column"] = id_column
+            self.set_id_column(id_column)
