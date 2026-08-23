@@ -376,16 +376,13 @@ EXPECTED_SEARCHENTRY_HANDLER_IDS = {
 }
 EXPECTED_SEARCHENTRY_METHODS = ["handle_event"]
 
-SIMPLE_TEST_LIST = [
-    "Index 1",
-    "Index 2",
-    "Index 3",
-]
+SIMPLE_TEST_LIST = ["Index 1", "Index 2", "Index 3"]
 COMPOUND_TEST_LIST = [
     ["This", "is", "a"],
     ["test", "of", "the"],
     ["ComboBox", "not", "simple"],
 ]
+ID_TEST_LIST = [("factory", "Factory"), ("home", "Home"), ("subway", "Subway")]
 
 EXPECTED_TEXTVIEW_ATTRIBUTES = {"default_value": "", "edit_signal": "changed"}
 EXPECTED_TEXTVIEW_HANDLER_IDS = {
