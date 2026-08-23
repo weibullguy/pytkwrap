@@ -14,11 +14,47 @@ from pytkwrap.gtk3.io.combobox import GTK3ComboBoxMixin
 
 
 class GTK3ComboBoxTextMixin(GTK3ComboBoxMixin):
-    """Mixin for GTK3ComboBoxText."""
+    """Mixin for GTK3ComboBoxText.
+
+    Notes
+    -----
+    GTK3ComboBoxText passes no widgets to its callback function.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT: int = 30
     _DEFAULT_WIDTH: int = 200
+
+    def do_add_entry(self, entry: str, position: int, ident: str | None = None) -> None:
+        """Add an entry to the GTK3ComboBoxText at index.
+
+        Parameters
+        ----------
+        entry : str
+            The entry to add to the GTK3ComboBoxText.
+        position : int
+            The position in the existing list to add the entry.  If the position is
+            negative, then the entry is appended to the end of the list.
+        ident : str | None
+            The ID of the new entry to place in the ID column.
+        """
+        if isinstance(ident, str):
+            self.insert(position, ident, entry)
+        else:
+            self.insert_text(position, entry)
+
+    def do_clear_entry(self, index: int = -1) -> None:
+        """Clear the GTK3ComboBoxText entry at the specified index.
+
+        Parameters
+        ----------
+        index : int
+            The index of the item to clear.  Set to -1 to clear all items,
+            the default behavior.
+        """
+        if index == -1:
+            self.remove_all()
+        self.remove(index)
 
     def do_load_combo(
         self,
@@ -50,15 +86,6 @@ class GTK3ComboBoxTextMixin(GTK3ComboBoxMixin):
                 for _entry in entries:
                     self.insert_text(-1, _entry)
 
-    def do_get_value(self) -> str:
-        """Return the value currently being displayed in the GTK3ComboBoxText.
-
-        Returns
-        -------
-        _value : str
-        """
-        return self.get_active_text()
-
 
 class GTK3ComboBoxText(Gtk.ComboBoxText, GTK3ComboBoxTextMixin):
     """Wrapper for version 3.0 Gtk.ComboBoxText."""
@@ -67,6 +94,7 @@ class GTK3ComboBoxText(Gtk.ComboBoxText, GTK3ComboBoxTextMixin):
         self,
         has_entry: bool = False,
         model: Gtk.ListStore | None = None,
+        id_column: int | None = None,
     ) -> None:
         """Initialize an instance of the GTK3ComboBoxText.
 
@@ -74,10 +102,24 @@ class GTK3ComboBoxText(Gtk.ComboBoxText, GTK3ComboBoxTextMixin):
         ----------
         has_entry : bool
             Indicates whether GTK3ComboBoxText will have an entry.
+        model : Gtk.ListStore | None
+            The model to use for the GTK3ComboBoxText.
+        id_column : int | None
+            The column in the model that will contain the string ID.
         """
-        Gtk.ComboBoxText.__init__(self, has_entry=has_entry, model=model)
+        Gtk.ComboBoxText.__init__(
+            self,
+            has_entry=has_entry,
+            model=model,
+        )
         GTK3ComboBoxTextMixin.__init__(self)
 
-        # Initialize public instance attributes.
         self.dic_properties["has_entry"] = has_entry
         self.dic_properties["model"] = model
+
+        if model is not None:
+            self.n_items = model.get_n_columns()
+
+        if id_column is not None:
+            self.dic_properties["id_column"] = id_column
+            self.set_id_column(id_column)
