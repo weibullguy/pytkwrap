@@ -9,8 +9,9 @@ from collections.abc import Mapping
 from datetime import date, datetime
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gdk, Gtk
+from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+from pytkwrap.gtk3.style import GTK3CssProvider, GTK3StyleContext
 from pytkwrap.gtk3.widget import GTK3WidgetMixin
 from pytkwrap.utilities import FontDescription
 
@@ -28,6 +29,10 @@ class GTK3EntryMixin(GTK3WidgetMixin):
         values.
     _GTK3_ENTRY_SIGNALS : list
         The list of signal names specifically associated with the GTK3Entry.
+
+    Notes
+    -----
+    GTK3Entry passes no widgets to its callback function.
     """
 
     # Define private class attributes.
@@ -127,6 +132,7 @@ class GTK3EntryMixin(GTK3WidgetMixin):
         attributes : GTK3WidgetAttributes
             The typed dict with the attribute values to set for the GTK3Entry.
         """
+        # Update the attribute dictionary.
         super().do_set_attributes(attributes)
 
         self.do_set_font_description(self.dic_attributes["font_description"])
@@ -200,7 +206,7 @@ class GTK3EntryMixin(GTK3WidgetMixin):
         """Retrieve the text displayed in the GTK3Entry.
 
         This method will return the correct datatype (float, int, str) associated with
-        the database field associated with the GTK3Entry.
+        the GTK3Entry.
 
         Returns
         -------
@@ -218,13 +224,13 @@ class GTK3EntryMixin(GTK3WidgetMixin):
 
         Parameters
         ----------
-        value : bool | date | float | int | str | None
+        value : bool | date | float | int | object | str | tuple | None
             The data to display in the GTK3Entry.
         """
         if isinstance(value, tuple) or value is None:
             super().do_set_value(value)
 
-        if isinstance(value, date):
+        if isinstance(value, datetime):
             value = datetime.strftime(value, "%Y-%m-%d")
 
         self.set_text(str(value))
@@ -243,21 +249,20 @@ class GTK3EntryMixin(GTK3WidgetMixin):
         _font = font or FontDescription()
 
         self.dic_attributes["font_description"] = _font
-
-        # TODO: Replace this with a GTK3CSSProvider during round 3.
-        _css_provider = Gtk.CssProvider()
         _name = self.get_name() or "custom_entry_font"
 
-        _css_string = f"""entry#{_name} {{{_font.to_css()}}}"""
+        _css_provider = GTK3CssProvider()
+        _css_string = f"""#{_name} {{{_font.to_css()}}}"""
+        _css_provider.load_from_data(_css_string)
 
-        _css_provider.load_from_data(_css_string.encode())
-
-        # TODO: Replace this with a GTK3SyleContext during round 3.
-        Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(),  # pylint: disable=no-value-for-parameter
+        _style_context = GTK3StyleContext()
+        _style_context.add_provider(
             _css_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
+        _style_context.add_class(_name)
+
+        self.set_name(_name)
 
 
 class GTK3Entry(Gtk.Entry, GTK3EntryMixin):
@@ -272,6 +277,8 @@ class GTK3Entry(Gtk.Entry, GTK3EntryMixin):
 
         Parameters
         ----------
+        buffer : Gtk.EntryBuffer | None
+            The buffer to use with this instance of the GTK3Entry.
         font : FontDescription | None
             The font description for the font used by the GTK3Entry.
         """
@@ -280,3 +287,5 @@ class GTK3Entry(Gtk.Entry, GTK3EntryMixin):
 
         self.dic_attributes["font_description"] = font
         self.do_set_font_description(font)
+
+        self.dic_properties["buffer"] = buffer

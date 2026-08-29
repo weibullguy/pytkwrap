@@ -8,9 +8,10 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk as Gdk
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3._libs import Pango as Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.gtk3.style import GTK3CssProvider as GTK3CssProvider
+from pytkwrap.gtk3.style import GTK3StyleContext as GTK3StyleContext
 from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
 from pytkwrap.utilities import FontDescription as FontDescription
 
