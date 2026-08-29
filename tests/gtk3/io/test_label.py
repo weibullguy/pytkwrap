@@ -73,6 +73,22 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         assert dut.get_label() == "_Test Label"
 
     @pytest.mark.unit
+    def test_init_with_float_label(self):
+        """Initiate a GTK3Label with a float label."""
+        dut = self.make_dut(label=1.234)
+
+        assert isinstance(dut, GTK3Label)
+        assert dut.get_label() == "1.234"
+
+    @pytest.mark.unit
+    def test_init_with_int_label(self):
+        """Initiate a GTK3Label with an int label."""
+        dut = self.make_dut(label=1234)
+
+        assert isinstance(dut, GTK3Label)
+        assert dut.get_label() == "1234"
+
+    @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
         GTK3WidgetProperties."""
@@ -97,6 +113,8 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         assert dut.do_get_property("width_chars") == -1
         assert not dut.do_get_property("wrap")
         assert dut.do_get_property("wrap_mode") == Pango.WrapMode.WORD
+        assert dut.do_get_property("xalign") == 0.5
+        assert dut.do_get_property("yalign") == 0.5
 
     @pytest.mark.unit
     def test_do_set_properties_wrap_ellipsize(self):
@@ -111,6 +129,8 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
                 lines=2,
                 wrap=True,
                 wrap_mode=Pango.WrapMode.CHAR,
+                xalign=0.75,
+                yalign=0.25,
             )
         )
 
@@ -146,6 +166,10 @@ class TestGTK3Label(BaseGTK3DataWidgetTests):
         assert dut.get_width_chars() == -1
         assert dut.get_property("wrap")
         assert dut.get_line_wrap()
+        assert dut.get_property("xalign") == 0.75
+        assert dut.get_xalign() == 0.75
+        assert dut.get_property("yalign") == 0.25
+        assert dut.get_yalign() == 0.25
 
     @pytest.mark.unit
     def test_do_get_value(self):

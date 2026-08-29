@@ -366,6 +366,8 @@ EXPECTED_LABEL_PROPERTIES = {
     "width_chars": -1,
     "wrap": False,
     "wrap_mode": Pango.WrapMode.WORD,
+    "xalign": 0.5,
+    "yalign": 0.5,
 }
 
 EXPECTED_SEARCHENTRY_HANDLER_IDS = {
