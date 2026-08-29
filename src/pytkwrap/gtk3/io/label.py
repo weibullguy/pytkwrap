@@ -42,6 +42,8 @@ class GTK3LabelMixin(GTK3WidgetMixin):
         width_chars=-1,
         wrap=False,
         wrap_mode=Pango.WrapMode.WORD,
+        xalign=0.5,
+        yalign=0.5,
     )
     _GTK3_LABEL_SIGNALS = [
         "activate-current-link",
@@ -81,7 +83,7 @@ class GTK3LabelMixin(GTK3WidgetMixin):
         self.set_attributes(self.dic_properties["attributes"])
         self.set_ellipsize(self.dic_properties["ellipsize"])
         self.set_justify(self.dic_properties["justify"])
-        self.set_label(self.dic_properties["label"])
+        self.set_text(self.dic_properties["label"])
         self.set_line_wrap(self.dic_properties["wrap"])
         self.set_line_wrap_mode(self.dic_properties["wrap_mode"])
         self.set_lines(self.dic_properties["lines"])
@@ -97,21 +99,21 @@ class GTK3LabelMixin(GTK3WidgetMixin):
         self.set_use_markup(self.dic_properties["use_markup"])
         self.set_use_underline(self.dic_properties["use_underline"])
         self.set_width_chars(self.dic_properties["width_chars"])
-        # self.set_xalign(self.xalign)
-        # self.set_yalign(self.yalign)
+        self.set_xalign(self.dic_properties["xalign"])
+        self.set_yalign(self.dic_properties["yalign"])
 
     def do_get_value(self) -> float | int | str | None:
         """Retrieve the text displayed in the GTK3Label.
 
-        This method will return the correct datatype (float, int, str) associated with
-        the database field associated with the GTK3Label.
+        This method will return the correct datatype (float, int, str) for the
+        information displayed in the GTK3Label.
 
         Returns
         -------
-        float | int | str | None
+        float | int | str
             The text displayed in the GTK3Label.
         """
-        _value: str | None = self.get_label()
+        _value: str = self.get_label()
 
         return self.dic_attributes["data_type"](_value)
 
@@ -128,7 +130,7 @@ class GTK3LabelMixin(GTK3WidgetMixin):
         if isinstance(value, tuple) or value is None:
             super().do_set_value(value)
 
-        if isinstance(value, date):
+        if isinstance(value, datetime):
             value = datetime.strftime(value, "%Y-%m-%d")
 
         if self.dic_properties["use_markup"]:
@@ -164,10 +166,19 @@ class GTK3LabelMixin(GTK3WidgetMixin):
 class GTK3Label(Gtk.Label, GTK3LabelMixin):
     """Wrapper for version 3.0 Gtk.Label."""
 
-    def __init__(self, label: str = "") -> None:
-        """Initialize an instance of the GTK3Label."""
-        Gtk.Label.__init__(self, label=label)
+    def __init__(self, label: float | int | str = "") -> None:
+        """Initialize an instance of the GTK3Label.
+
+        Parameters
+        ----------
+        label : float | int | str
+            The text to display in the GTK3Label.  The default is an empty string.
+        """
+        if not isinstance(label, (float, int, str)):
+            label = ""
+
+        Gtk.Label.__init__(self, label=str(label))
         GTK3LabelMixin.__init__(self)
 
-        self.dic_properties["label"] = label
+        self.dic_properties["label"] = str(label)
         self.do_set_properties(self.dic_properties)
