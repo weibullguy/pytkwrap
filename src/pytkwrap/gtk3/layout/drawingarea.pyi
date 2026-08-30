@@ -2,7 +2,5 @@
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
 
-class GTK3DrawingAreaMixin(GTK3WidgetMixin): ...
-
-class GTK3DrawingArea(Gtk.DrawingArea, GTK3DrawingAreaMixin):
+class GTK3DrawingArea(Gtk.DrawingArea, GTK3WidgetMixin):
     def __init__(self) -> None: ...
