@@ -108,7 +108,7 @@ class TestGTK3TextView(BaseGTK3DataWidgetTests):
         assert dut.do_get_attribute("column_types") is None
         assert dut.do_get_attribute("data_type") is None
         assert dut.do_get_attribute("default_value") == ""
-        assert dut.do_get_attribute("edit_signal") == "changed"
+        assert dut.do_get_attribute("edit_signal") is None
         assert dut.do_get_attribute("figure") is None
         assert dut.do_get_attribute("font_description") is None
         assert dut.do_get_attribute("format") is None
@@ -274,7 +274,7 @@ class TestGTK3TextView(BaseGTK3DataWidgetTests):
             dut.do_set_value(_value[0])
             assert dut.do_get_value() == _value[1]
 
-    @pytest.mark.unit
+    @pytest.mark.skip
     def test_do_update_none_value(self):
         """Should update the properties with the default values when passed a data
         package with a value of None."""

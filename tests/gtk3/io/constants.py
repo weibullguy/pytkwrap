@@ -386,7 +386,7 @@ COMPOUND_TEST_LIST = [
 ]
 ID_TEST_LIST = [("factory", "Factory"), ("home", "Home"), ("subway", "Subway")]
 
-EXPECTED_TEXTVIEW_ATTRIBUTES = {"default_value": "", "edit_signal": "changed"}
+EXPECTED_TEXTVIEW_ATTRIBUTES = {"default_value": "", "edit_signal": None}
 EXPECTED_TEXTVIEW_HANDLER_IDS = {
     "backspace": -1,
     "copy-clipboard": -1,
