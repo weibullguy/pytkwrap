@@ -16,6 +16,10 @@ class GTK3SearchEntryMixin(GTK3EntryMixin):
     ----------
     _GTK3_SEARCHENTRY_SIGNALS : list
         The list of signal names specifically associated with the GTK3SearchEntry.
+
+    Notes
+    -----
+    GTK3SearchEntry passes no widgets to its callback function.
     """
 
     _GTK3_SEARCHENTRY_SIGNALS: list[str] = [
@@ -34,13 +38,11 @@ class GTK3SearchEntryMixin(GTK3EntryMixin):
             {_signal: -1 for _signal in self._GTK3_SEARCHENTRY_SIGNALS}
         )
 
-        self.show()
-
 
 class GTK3SearchEntry(Gtk.SearchEntry, GTK3SearchEntryMixin):
     """The GTK3SearchEntry class."""
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self) -> None:
         """Initialize an instance of the GTK3SearchEntry widget."""
         Gtk.SearchEntry.__init__(self)
         GTK3SearchEntryMixin.__init__(self)

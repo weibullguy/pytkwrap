@@ -7,24 +7,24 @@
 # Standard Library Imports
 from collections.abc import Mapping
 from datetime import date
-from types import FunctionType
-
-# Third Party Imports
-from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+from pytkwrap.gtk3.text import GTK3TextBuffer
 
 
 class GTK3TextViewMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3TextView."""
+    """Mixin class for GTK3TextView.
+
+    Notes
+    -----
+    GTK3TextView passes no widgets to its callback function.
+    """
 
     _GTK3_TEXTVIEW_ATTRIBUTES = GTK3WidgetAttributes(
         default_value="",
-        edit_signal="changed",
     )
     _GTK3_TEXTVIEW_PROPERTIES = GTK3WidgetProperties(
         accepts_tab=True,
@@ -79,8 +79,6 @@ class GTK3TextViewMixin(GTK3ContainerMixin):
         )
         self.dic_properties.update(self._GTK3_TEXTVIEW_PROPERTIES)
 
-        self.buffer = None
-
     def do_get_attribute(
         self,
         attribute: str,
@@ -118,61 +116,6 @@ class GTK3TextViewMixin(GTK3ContainerMixin):
                 _attr,
                 self.dic_attributes[_attr],
             )
-
-    # TODO: Remove this and the edit_signal attribute once GTK3TextBuffer wrapper is
-    #  complete.  The applications should initialize the buffer before passing it to
-    #  the GTK3TextView.
-    def do_set_callbacks(
-        self,
-        signal: list[str] | str,
-        callback: FunctionType,
-        after: bool = False,
-    ) -> None:
-        """Set the callback method for the GTK3TextView.
-
-        Parameters
-        ----------
-        signal : list[str] | str
-            The name of the signal to connect the callback to.
-        callback : FunctionType
-            The callback function or method to connect to the signal.
-        after : bool
-            Indicates whether the handler is added to the signal handler list before
-            (default) or after the default class signal handler.
-
-        Raises
-        ------
-        UnkSignalError
-            If the signal name is not valid for this widget.
-        """
-        if not isinstance(signal, list):
-            signal = [signal]
-
-        for _signal in signal:
-            try:
-                super().do_set_callbacks(signal, callback, after=after)
-            except UnkSignalError:
-                try:
-                    if after and self.buffer is not None:
-                        self.dic_handler_id[_signal] = self.buffer.connect_after(
-                            _signal,
-                            callback,
-                        )
-                    elif self.buffer is not None:
-                        self.dic_handler_id[_signal] = self.buffer.connect(
-                            _signal,
-                            callback,
-                        )
-                except TypeError as exc:
-                    _error_msg = self.dic_error_message["unk_signal"].format(
-                        f"{type(self).__name__}.do_set_callbacks()",
-                        _signal,
-                    )
-                    pub.sendMessage(
-                        "do_log_error",
-                        message=_error_msg,
-                    )
-                    raise UnkSignalError(_error_msg) from exc
 
     def do_set_properties(
         self,
@@ -224,11 +167,11 @@ class GTK3TextViewMixin(GTK3ContainerMixin):
         -------
         _value : str
         """
-        if self.buffer is not None:
-            _start = self.buffer.get_start_iter()
-            _end = self.buffer.get_end_iter()
+        if self.dic_properties["buffer"] is not None:
+            _start = self.dic_properties["buffer"].get_start_iter()
+            _end = self.dic_properties["buffer"].get_end_iter()
 
-            return self.buffer.get_text(_start, _end, True)
+            return self.dic_properties["buffer"].get_text(_start, _end, True)
         return self.dic_attributes["default_value"]
 
     def do_set_value(
@@ -245,19 +188,24 @@ class GTK3TextViewMixin(GTK3ContainerMixin):
         if not isinstance(value, (float, int, str)) or isinstance(value, bool):
             super().do_set_value(value)
 
-        if self.buffer is not None:
-            self.buffer.set_text(str(value))
+        if self.dic_properties["buffer"] is not None:
+            self.dic_properties["buffer"].set_text(str(value))
 
 
 class GTK3TextView(Gtk.TextView, GTK3TextViewMixin):
     """Wrapper for version 3.0 Gtk.TextView."""
 
-    def __init__(self, buffer: Gtk.TextBuffer | None = None) -> None:
-        """Initialize an instance of the GTK3TextView."""
+    def __init__(self, buffer: GTK3TextBuffer | None = None) -> None:
+        """Initialize an instance of the GTK3TextView.
+
+        Parameters
+        ----------
+        buffer : GTK3TextBuffer, optional
+            The text buffer to use with this instance of the GTK3TextView.  The
+            default is None.
+        """
         Gtk.TextView.__init__(self, buffer=buffer)
         GTK3TextViewMixin.__init__(self)
 
         self.dic_properties["buffer"] = buffer
         self.do_set_properties(self.dic_properties)
-
-        self.buffer = buffer

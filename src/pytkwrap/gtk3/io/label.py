@@ -16,7 +16,12 @@ from pytkwrap.utilities import none_to_default
 
 
 class GTK3LabelMixin(GTK3WidgetMixin):
-    """Mixin class for GTK3Label."""
+    """Mixin class for GTK3Label.
+
+    Notes
+    -----
+    GTK3Label passes no widgets to its callback function.
+    """
 
     _DEFAULT_HEIGHT = 30
     _DEFAULT_WIDTH = 200

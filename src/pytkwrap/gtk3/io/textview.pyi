@@ -1,31 +1,27 @@
 # Standard Library Imports
 from collections.abc import Mapping
 from datetime import date
-from types import FunctionType
 
 # Third Party Imports
 from _typeshed import Incomplete
+from pubsub import pub as pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import UnkSignalError as UnkSignalError
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin as GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.gtk3.text import GTK3TextBuffer as GTK3TextBuffer
 
 class GTK3TextViewMixin(GTK3ContainerMixin):
     _GTK3_TEXTVIEW_ATTRIBUTES: Incomplete
     _GTK3_TEXTVIEW_PROPERTIES: Incomplete
     _GTK3_TEXTVIEW_SIGNALS: Incomplete
-    buffer: Incomplete
     def __init__(self, **kwargs) -> None: ...
     def do_get_attribute(
         self, attribute: str
     ) -> bool | date | float | int | object | str | None: ...
     def do_set_attributes(self, attributes: Mapping[str, object]) -> None: ...
-    def do_set_callbacks(
-        self, signal: list[str] | str, callback: FunctionType, after: bool = False
-    ) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
@@ -35,5 +31,4 @@ class GTK3TextViewMixin(GTK3ContainerMixin):
     ) -> None: ...
 
 class GTK3TextView(Gtk.TextView, GTK3TextViewMixin):
-    buffer: Incomplete
-    def __init__(self, buffer: Gtk.TextBuffer | None = None) -> None: ...
+    def __init__(self, buffer: GTK3TextBuffer | None = None) -> None: ...
