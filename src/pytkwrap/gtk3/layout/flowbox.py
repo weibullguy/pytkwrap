@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3FlowBoxMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3FlowBox."""
+    """Mixin class for GTK3FlowBox.
+
+    Notes
+    -----
+    GTK3FlowBox passes no widgets to its callback function.
+    """
 
     _GTK3_FLOWBOX_PROPERTIES = GTK3WidgetProperties(
         activate_on_single_click=True,
@@ -69,6 +74,40 @@ class GTK3FlowBoxMixin(GTK3ContainerMixin):
         self.set_min_children_per_line(self.dic_properties["min_children_per_line"])
         self.set_row_spacing(self.dic_properties["row_spacing"])
         self.set_selection_mode(self.dic_properties["selection_mode"])
+
+    def do_populate_flowbox(self, widgets: list[tuple[Gtk.Widget, int]]) -> None:
+        """Populate the GTK3FlowBox with the given widgets at the given positions.
+
+        Parameters
+        ----------
+        widgets : list[tuple[Gtk.Widget, int]]
+            A list of tuples containing the widget to add to the GTK3FlowBox and the
+            position to add each widget.  Set position to -1 to append the widget.
+        """
+        for _widget in widgets:
+            self.insert(_widget[0], _widget[1])
+
+    def do_unpopulate_flowbox(self, index: list[int]) -> None:
+        """Remove widget(s) at indices from the GTK3FlowBox.
+
+        Parameters
+        ----------
+        index : list[int]
+            A list of widget indices to remove from the GTK3FlowBox.  Indices should
+            be listed in reverse order because the indices will update as each widget is
+            removed.
+
+        Examples
+        --------
+        do_unpopulate_flowbox([3, 2, 1]) will remove the first, second, and third
+        widgets starting with index 3 in a GTK3FlowBox with four or more widgets.
+
+        do_unpopulate_flowbox([2, 2]) will remove the last two widgets in a
+        GTK3FlowBox with three or more widgets.
+        """
+        for _index in index:
+            _child = self.get_child_at_index(_index)
+            self.remove(_child)
 
 
 class GTK3FlowBox(Gtk.FlowBox, GTK3FlowBoxMixin):
