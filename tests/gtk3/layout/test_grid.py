@@ -10,6 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.io import GTK3Entry
 from pytkwrap.gtk3.layout import GTK3Grid
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
@@ -121,3 +122,136 @@ class TestGTK3Grid(BaseGTK3GObjectTests):
         assert dut.get_row_homogeneous()
         assert dut.get_property("row_spacing") == 20
         assert dut.get_row_spacing() == 20
+
+    @pytest.mark.unit
+    def test_do_build_grid(self):
+        """Should build the GTK3Grid."""
+        dut = self.make_dut()
+        dut.do_build_grid(columns=[1, 2, 3], rows=[1, 2, 3])
+
+        assert dut.do_get_attribute("n_columns") == 4
+        assert dut.do_get_attribute("n_rows") == 4
+
+    @pytest.mark.unit
+    def test_do_build_grid_with_tuples(self):
+        """Should build the GTK3Grid when passed tuples of integers instead of lists."""
+        dut = self.make_dut()
+        dut.do_build_grid(columns=(1, 2, 3), rows=(1, 2, 3))
+
+        assert dut.do_get_attribute("n_columns") == 4
+        assert dut.do_get_attribute("n_rows") == 4
+
+    @pytest.mark.unit
+    def test_do_build_grid_with_children(self):
+        """Should build the GTK3Grid with children."""
+        _entry_1 = GTK3Entry()
+
+        dut = self.make_dut()
+        dut.attach(_entry_1, 0, 0, 1, 1)
+        # Add one column and one row to the grid.
+        dut.do_build_grid(
+            siblings=[_entry_1],
+            sides=[[Gtk.PositionType.RIGHT, Gtk.PositionType.BOTTOM]],
+        )
+
+        assert dut.do_get_attribute("n_columns") == 2
+        assert dut.do_get_attribute("n_rows") == 2
+
+    @pytest.mark.unit
+    def test_do_populate_grid(self):
+        """Should populate the GTK3Grid."""
+        _entry_1 = GTK3Entry()
+        _entry_2 = GTK3Entry()
+        _entry_3 = GTK3Entry()
+        _entry_4 = GTK3Entry()
+
+        dut = self.make_dut()
+        dut.do_build_grid([1], [1])
+        dut.do_populate_grid(
+            [_entry_1, _entry_2, _entry_3, _entry_4],
+            [[0, 0], [1, 0], [0, 1], [1, 1]],
+            [],
+        )
+
+        assert dut.get_child_at(0, 0) == _entry_1
+        assert dut.get_child_at(1, 0) == _entry_2
+        assert dut.get_child_at(0, 1) == _entry_3
+        assert dut.get_child_at(1, 1) == _entry_4
+
+    @pytest.mark.unit
+    def test_do_populate_grid_span_columns(self):
+        """Should populate the GTK3Grid with widgets that span multiple columns."""
+        _entry_1 = GTK3Entry()
+        _entry_2 = GTK3Entry()
+        _entry_3 = GTK3Entry()
+        _entry_4 = GTK3Entry()
+
+        dut = self.make_dut()
+        dut.do_build_grid([1, 2, 3], [1])
+        dut.do_populate_grid(
+            [_entry_1, _entry_2, _entry_3, _entry_4],
+            [[0, 0], [2, 0], [0, 1], [2, 1]],
+            [[2, 1], [2, 1], [2, 1], [2, 1]],
+        )
+
+        assert dut.get_child_at(0, 0) == _entry_1
+        assert dut.get_child_at(0, 1) == _entry_3
+        assert dut.get_child_at(1, 0) == _entry_1
+        assert dut.get_child_at(1, 1) == _entry_3
+        assert dut.get_child_at(2, 0) == _entry_2
+        assert dut.get_child_at(2, 1) == _entry_4
+        assert dut.get_child_at(3, 0) == _entry_2
+        assert dut.get_child_at(3, 1) == _entry_4
+
+    @pytest.mark.unit
+    def test_do_populate_grid_span_rows(self):
+        """Should populate the GTK3Grid with widgets that span multiple rows."""
+        _entry_1 = GTK3Entry()
+        _entry_2 = GTK3Entry()
+        _entry_3 = GTK3Entry()
+        _entry_4 = GTK3Entry()
+
+        dut = self.make_dut()
+        dut.do_build_grid([1], [1, 2, 3])
+        dut.do_populate_grid(
+            [_entry_1, _entry_2, _entry_3, _entry_4],
+            [[0, 0], [1, 0], [0, 2], [1, 2]],
+            [[1, 2], [1, 2], [1, 2], [1, 2]],
+        )
+
+        assert dut.get_child_at(0, 0) == _entry_1
+        assert dut.get_child_at(0, 1) == _entry_1
+        assert dut.get_child_at(0, 2) == _entry_3
+        assert dut.get_child_at(0, 3) == _entry_3
+        assert dut.get_child_at(1, 0) == _entry_2
+        assert dut.get_child_at(1, 1) == _entry_2
+        assert dut.get_child_at(1, 2) == _entry_4
+        assert dut.get_child_at(1, 3) == _entry_4
+
+    @pytest.mark.unit
+    def test_do_populate_grid_with_existing_widgets(self):
+        """Should populate the GTK3Grid with widgets that span multiple rows."""
+        _entry_1 = GTK3Entry()
+        _entry_2 = GTK3Entry()
+        _entry_3 = GTK3Entry()
+        _entry_4 = GTK3Entry()
+
+        dut = self.make_dut()
+        dut.do_build_grid([1], [1])
+        dut.do_populate_grid(
+            [_entry_1, _entry_2],
+            [[0, 0], [1, 0]],
+            [],
+        )
+        dut.do_populate_grid(
+            [_entry_3, _entry_4],
+            [],
+            [],
+            [_entry_1, _entry_2],
+            [Gtk.PositionType.BOTTOM, Gtk.PositionType.BOTTOM],
+        )
+
+        assert dut.get_child_at(0, 0) == _entry_1
+        assert dut.get_child_at(0, 1) == _entry_3
+        assert dut.get_child_at(1, 0) == _entry_2
+        assert dut.get_child_at(1, 1) == _entry_4
