@@ -14,7 +14,19 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
 class GTK3GLAreaMixin(GTK3WidgetMixin):
-    """Mixin class for GTK3GLArea."""
+    """Mixin class for GTK3GLArea.
+
+    Attributes
+    ----------
+    _GTK3_GLAREA_PROPERTIES : GTK3WidgetProperties
+        Properties specific to GTK3GLArea and their default values.
+    _GTK3_GLAREA_SIGNALS : list[str]
+        Signals specific to GTK3GLArea.
+
+    Notes
+    -----
+    GTK3GLArea passes no widgets to its callback function.
+    """
 
     _GTK3_GLAREA_PROPERTIES = GTK3WidgetProperties(
         auto_render=True,
@@ -54,7 +66,6 @@ class GTK3GLAreaMixin(GTK3WidgetMixin):
         # Update the property dictionary.
         super().do_set_properties(properties)
 
-        # Set the value of each of the mixin properties.
         self.set_auto_render(self.dic_properties["auto_render"])
         self.set_has_alpha(self.dic_properties["has_alpha"])
         self.set_has_depth_buffer(self.dic_properties["has_depth_buffer"])
