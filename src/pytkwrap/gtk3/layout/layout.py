@@ -9,15 +9,26 @@ from collections.abc import Mapping
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3LayoutMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Layout."""
+    """Mixin class for GTK3Layout.
+
+    Attributes
+    ----------
+    _GTK3_LAYOUT_PROPERTIES : GTK3WidgetProperties
+        Properties specific to GTK3Layout and their default values.
+    """
 
     _GTK3_LAYOUT_PROPERTIES = GTK3WidgetProperties(
+        hadjustment=None,
         height=100,
+        hscroll_policy=Gtk.ScrollablePolicy.MINIMUM,
+        vadjustment=None,
+        vscroll_policy=Gtk.ScrollablePolicy.MINIMUM,
         width=100,
     )
 
@@ -43,13 +54,37 @@ class GTK3LayoutMixin(GTK3ContainerMixin):
         # Update the property dictionary.
         super().do_set_properties(properties)
 
+        self.set_hscroll_policy(self.dic_properties["hscroll_policy"])
         self.set_size(self.dic_properties["width"], self.dic_properties["height"])
+        self.set_vscroll_policy(self.dic_properties["vscroll_policy"])
+
+        # Gtk.Layout.set_hadjustment() and Gtk.Layout.set_vadjustment() are deprecated,
+        # so the adjustments are set through the GObject properties instead.
+        for _property in ["hadjustment", "vadjustment"]:
+            self.set_property(
+                _property.replace("_", "-"), self.dic_properties[_property]
+            )
 
 
 class GTK3Layout(Gtk.Layout, GTK3LayoutMixin):
     """Wrapper for version 3.0 Gtk.Layout."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Layout."""
-        Gtk.Layout.__init__(self)
+    def __init__(
+        self,
+        hadjustment: GTK3Adjustment | None = None,
+        vadjustment: GTK3Adjustment | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3Layout.
+
+        Parameters
+        ----------
+        hadjustment : GTK3Adjustment | None, optional
+            The horizontal adjustment to use for the layout.  The default is None.
+        vadjustment : GTK3Adjustment | None, optional
+            The vertical adjustment to use for the layout.  The default is None.
+        """
+        Gtk.Layout.__init__(self, hadjustment=hadjustment, vadjustment=vadjustment)
         GTK3LayoutMixin.__init__(self)
+
+        self.dic_properties["hadjustment"] = hadjustment
+        self.dic_properties["vadjustment"] = vadjustment
