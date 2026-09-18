@@ -14,7 +14,19 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3CheckMenuItemMixin(GTK3MenuItemMixin):
-    """Mixin class for GTK3CheckMenuItem."""
+    """Mixin class for GTK3CheckMenuItem.
+
+    Attributes
+    ----------
+    _GTK3_CHECKMENUITEM_PROPERTIES : GTK3WidgetProperties
+        Properties specific to GTK3CheckMenuItem and their default values.
+    _GTK3_CHECKMENUITEM_SIGNALS : list[str]
+        List of signals that the GTK3CheckMenuItem should emit.
+
+    Notes
+    -----
+    GTK3CheckMenuItem passes a Gtk.AccelLabel widget to callback functions.
+    """
 
     _GTK3_CHECKMENUITEM_PROPERTIES = GTK3WidgetProperties(
         active=False,
@@ -59,6 +71,14 @@ class GTK3CheckMenuItem(Gtk.CheckMenuItem, GTK3CheckMenuItemMixin):
     """Wrapper for version 3.0 Gtk.CheckMenuItem."""
 
     def __init__(self, label: str = "") -> None:
-        """Initialize an instance of the GTK3CheckMenuItem."""
+        """Initialize an instance of the GTK3CheckMenuItem.
+
+        Parameters
+        ----------
+        label : str
+            The label text for the GTK3CheckMenuItem.
+        """
         Gtk.CheckMenuItem.__init__(self, label=label)
         GTK3CheckMenuItemMixin.__init__(self)
+
+        self.dic_properties["label"] = label
