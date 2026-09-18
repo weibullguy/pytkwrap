@@ -73,6 +73,7 @@ class TestGTK3CheckMenuItem(BaseGTK3GObjectTests):
         dut = self.make_dut(label="Test Label")
 
         assert dut.get_label() == "Test Label"
+        assert dut.get_property("label") == "Test Label"
 
     @pytest.mark.unit
     def test_init_with_mnemonic(self):
@@ -102,6 +103,7 @@ class TestGTK3CheckMenuItem(BaseGTK3GObjectTests):
                 active=True,
                 draw_as_radio=True,
                 inconsistent=True,
+                label="Test Label",
             )
         )
 
@@ -111,3 +113,4 @@ class TestGTK3CheckMenuItem(BaseGTK3GObjectTests):
         assert dut.get_draw_as_radio()
         assert dut.get_property("inconsistent")
         assert dut.get_inconsistent()
+        assert dut.do_get_property("label") == "Test Label"
