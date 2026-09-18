@@ -104,4 +104,11 @@ EXPECTED_LAYOUT_METHODS = [
     "put",
     "set_size",
 ]
-EXPECTED_LAYOUT_PROPERTIES = {"height": 100, "width": 100}
+EXPECTED_LAYOUT_PROPERTIES = {
+    "hadjustment": None,
+    "height": 100,
+    "hscroll_policy": Gtk.ScrollablePolicy.MINIMUM,
+    "vadjustment": None,
+    "vscroll_policy": Gtk.ScrollablePolicy.MINIMUM,
+    "width": 100,
+}
