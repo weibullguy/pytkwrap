@@ -10,7 +10,15 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.menu import GTK3Menu
+from pytkwrap.gtk3.menu import (
+    GTK3Menu,
+    GTK3MenuItem,
+    GTK3MenuShellAttribute,
+    GTK3MenuShellItem,
+    GTK3MenuShellMenu,
+    GTK3MenuShellSection,
+    GTK3MenuShellSubmenu,
+)
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -34,6 +42,120 @@ from tests.gtk3.menu.constants import (
     EXPECTED_MENUSHELL_HANDLER_IDS,
     EXPECTED_MENUSHELL_METHODS,
     EXPECTED_MENUSHELL_PROPERTIES,
+)
+
+
+def on_open(menu_item: GTK3MenuItem) -> None:
+    print(f"Open: {menu_item.set_label('New Label')}")
+
+
+TEST_MENU_UI = GTK3MenuShellMenu(
+    id="test_menu",
+    submenus=[
+        GTK3MenuShellSubmenu(
+            attributes=GTK3MenuShellAttribute(
+                id="file",
+                label="File",
+            ),
+            sections=[
+                GTK3MenuShellSection(
+                    children=[
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.new",
+                                callback=on_open,
+                                icon="new_icon",
+                                label="New",
+                                signal="activate",
+                            )
+                        ),
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.close", label="Close"
+                            )
+                        ),
+                        GTK3MenuShellSubmenu(
+                            attributes=GTK3MenuShellAttribute(
+                                id="open",
+                                label="Open",
+                            ),
+                            sections=[
+                                GTK3MenuShellSection(
+                                    children=[
+                                        GTK3MenuShellItem(
+                                            attributes=GTK3MenuShellAttribute(
+                                                action="app.openrecent",
+                                                icon="recent_icon",
+                                                label="Recent",
+                                            )
+                                        ),
+                                        GTK3MenuShellItem(
+                                            attributes=GTK3MenuShellAttribute(
+                                                action="app.fromfile",
+                                                icon="from_file_icon",
+                                                label="From File",
+                                            )
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        GTK3MenuShellSubmenu(
+            attributes=GTK3MenuShellAttribute(
+                id="edit",
+                label="Edit",
+            ),
+            sections=[
+                GTK3MenuShellSection(
+                    children=[
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.copy", icon="copy_icon", label="Copy"
+                            )
+                        ),
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.cut", icon="cut_icon", label="Cut"
+                            )
+                        ),
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.paste", label="Paste"
+                            )
+                        ),
+                    ]
+                )
+            ],
+        ),
+        GTK3MenuShellSubmenu(
+            attributes=GTK3MenuShellAttribute(
+                id="view",
+                label="View",
+            ),
+            sections=[
+                GTK3MenuShellSection(
+                    children=[
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.zoomin", icon="zoomin_icon", label="Zoom In"
+                            )
+                        ),
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.zoomout",
+                                icon="zoomout_icon",
+                                label="Zoom Out",
+                            )
+                        ),
+                    ]
+                )
+            ],
+        ),
+    ],
 )
 
 
@@ -65,6 +187,38 @@ class TestGTK3Menu(BaseGTK3GObjectTests):
         | EXPECTED_MENUSHELL_PROPERTIES
         | EXPECTED_MENU_PROPERTIES
     )
+
+    def make_dut(self, model=None):
+        return self.widget_class(model)
+
+    @pytest.mark.unit
+    def test_init_with_model(self):
+        """Should initialize the GTK3Menu with a model."""
+        _builder = Gtk.Builder.new_from_string(
+            """
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="app-menu">
+    <section>
+        <item>
+            <attribute name="label">About</attribute>
+            <attribute name="action">app.about</attribute>
+        </item>
+        <item>
+            <attribute name="label">Quit</attribute>
+            <attribute name="action">app.quit</attribute>
+        </item>
+    </section>
+  </menu>
+</interface>
+""",
+            -1,
+        )
+        _model = _builder.get_object("app-menu")
+        dut = self.make_dut(_model)
+
+        assert dut.get_children()[0].get_label() == "About"
+        assert dut.get_children()[1].get_label() == "Quit"
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
@@ -132,3 +286,48 @@ class TestGTK3Menu(BaseGTK3GObjectTests):
         assert dut.get_property("rect_anchor_dy") == 10
         assert not dut.get_property("reserve_toggle_size")
         assert not dut.get_reserve_toggle_size()
+
+    @pytest.mark.unit
+    def test_do_build_gio_menu(self):
+        """Should build a Gio.MenuModel and bind it to dut."""
+        dut = self.make_dut()
+        dut.do_build_menu(menu=TEST_MENU_UI)
+
+        assert dut.get_children()[0].get_label() == "File"
+        assert dut.get_children()[1].get_label() == "Edit"
+        assert dut.get_children()[2].get_label() == "View"
+
+    @pytest.mark.unit
+    def test_do_build_gtk_menu(self):
+        """Should build a menu from GTK3MenuItems."""
+        dut = self.make_dut()
+        dut.do_build_menu(menu=TEST_MENU_UI, method="gtk")
+
+        assert dut.get_children()[0].get_label() == "File"
+        assert dut.get_children()[1].get_label() == "Edit"
+        assert dut.get_children()[2].get_label() == "View"
+
+    @pytest.mark.unit
+    def test_do_build_table_menu(self):
+        """Should build a menu from the passed GTK3MenuItems and associated attach
+        points."""
+        dut = self.make_dut()
+        dut.do_build_table_menu(
+            {
+                "File": ["Open", "Close"],
+                "Edit": ["Copy", "Cut", "Paste"],
+                "View": ["Zoom In", "Zoom Out"],
+                "Help": ["About"],
+            },
+            [
+                [0, 1, 0, 1],
+                [1, 2, 0, 1],
+                [0, 1, 1, 2],
+                [1, 2, 1, 2],
+            ],
+        )
+
+        assert dut.get_children()[0].get_label() == "File"
+        assert dut.get_children()[1].get_label() == "Edit"
+        assert dut.get_children()[2].get_label() == "View"
+        assert dut.get_children()[3].get_label() == "Help"
