@@ -5,6 +5,7 @@ from collections.abc import Mapping
 from _typeshed import Incomplete
 
 # pytkwrap Package Imports
+from pytkwrap.gtk3._libs import Gio as Gio
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.menu.menushell import GTK3MenuShellMixin as GTK3MenuShellMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
@@ -17,4 +18,4 @@ class GTK3MenuBarMixin(GTK3MenuShellMixin):
     ) -> None: ...
 
 class GTK3MenuBar(Gtk.MenuBar, GTK3MenuBarMixin):
-    def __init__(self) -> None: ...
+    def __init__(self, model: Gio.MenuModel | None = None) -> None: ...
