@@ -65,10 +65,11 @@ class GTK3MenuItemMixin(GTK3ContainerMixin):
 class GTK3MenuItem(Gtk.MenuItem, GTK3MenuItemMixin):
     """Wrapper for version 3.0 Gtk.MenuItem."""
 
-    def __init__(self, label: str = "") -> None:
+    def __init__(self, label: str | None = None) -> None:
         """Initialize an instance of the GTK3MenuItem."""
         Gtk.MenuItem.__init__(self, label=label)
         GTK3MenuItemMixin.__init__(self)
 
-        self.dic_properties["label"] = label
-        self.do_set_properties(self.dic_properties)
+        if label is not None:
+            self.dic_properties["label"] = label
+            self.do_set_properties(self.dic_properties)

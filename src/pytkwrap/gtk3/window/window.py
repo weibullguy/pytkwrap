@@ -129,5 +129,5 @@ class GTK3Window(Gtk.Window, GTK3WindowMixin):
         wtype : Gtk.WindowType
             The window type to construct.
         """
-        super().__init__(type=wtype)
+        Gtk.Window.__init__(self, type=wtype)
         GTK3WindowMixin.__init__(self)

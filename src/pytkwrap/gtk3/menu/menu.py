@@ -8,13 +8,26 @@
 from collections.abc import Mapping
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gdk, Gtk
+from pytkwrap.gtk3._libs import Gdk, Gio, Gtk
+from pytkwrap.gtk3.menu.menuitem import GTK3MenuItem
 from pytkwrap.gtk3.menu.menushell import GTK3MenuShellMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3MenuMixin(GTK3MenuShellMixin):
-    """Mixin class for GTK3Menu."""
+    """Mixin class for GTK3Menu.
+
+    Attributes
+    ----------
+    _GTK3_MENU_PROPERTIES : GTK3WidgetProperties
+        The GTK3Menu-specific properties and their default values.
+    _GTK3_MENU_SIGNALS : list
+        The signals that the GTK3Menu should emit.
+
+    Notes
+    -----
+    GTK3Menu passes no widgets to its callback function.
+    """
 
     _GTK3_MENU_PROPERTIES = GTK3WidgetProperties(
         accel_group=None,
@@ -86,11 +99,48 @@ class GTK3MenuMixin(GTK3MenuShellMixin):
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
 
+    def do_build_table_menu(
+        self,
+        menus: dict[str, list[str]],
+        attaches: list[list[int]],
+    ) -> None:
+        """Build a tabular GTK3Menu.
+
+        Parameters
+        ----------
+        menus: dict
+            A dict containing the labels of the GTK3MenuItems as keys and a list of.
+        attaches: list
+            A list of lists with the inner lists containing the left, right, top, and
+            bottom attachment points for the associated GTK3MenuItem.
+        """
+        if len(menus) != len(attaches):
+            return
+
+        for _idx, _menu in enumerate(menus):
+            _child = GTK3MenuItem(_menu)
+            self.attach(
+                _child,
+                attaches[_idx][0],
+                attaches[_idx][1],
+                attaches[_idx][2],
+                attaches[_idx][3],
+            )
+
 
 class GTK3Menu(Gtk.Menu, GTK3MenuMixin):
     """Wrapper for version 3.0 Gtk.Menu."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3Menu."""
+    def __init__(self, model: Gio.MenuModel | None = None) -> None:
+        """Initialize an instance of the GTK3Menu.
+
+        Parameters
+        ----------
+        model : Gio.MenuModel | None
+            The Gio.MenuModel to use for creating the GTK3Menu.
+        """
         Gtk.Menu.__init__(self)
         GTK3MenuMixin.__init__(self)
+
+        if model is not None:
+            self.bind_model(model)

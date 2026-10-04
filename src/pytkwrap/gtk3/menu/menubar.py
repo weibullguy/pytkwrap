@@ -8,7 +8,7 @@
 from collections.abc import Mapping
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gio, Gtk
 from pytkwrap.gtk3.menu.menushell import GTK3MenuShellMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
@@ -50,7 +50,10 @@ class GTK3MenuBarMixin(GTK3MenuShellMixin):
 class GTK3MenuBar(Gtk.MenuBar, GTK3MenuBarMixin):
     """Wrapper for version 3.0 Gtk.MenuBar."""
 
-    def __init__(self) -> None:
+    def __init__(self, model: Gio.MenuModel | None = None) -> None:
         """Initialize an instance of the GTK3MenuBar."""
         Gtk.MenuBar.__init__(self)
         GTK3MenuBarMixin.__init__(self)
+
+        if model is not None:
+            self.bind_model(model)

@@ -14,7 +14,16 @@ from .menu import GTK3Menu
 from .menubar import GTK3MenuBar
 from .menubutton import GTK3MenuButton
 from .menuitem import GTK3MenuItem
-from .menushell import GTK3MenuShell
+from .menushell import (
+    GTK3MenuShell,
+    GTK3MenuShellAttribute,
+    GTK3MenuShellItem,
+    GTK3MenuShellMenu,
+    GTK3MenuShellSection,
+    GTK3MenuShellSubmenu,
+    get_gio_menu_model,
+    get_gtk_menu_items,
+)
 from .popovermenu import GTK3PopoverMenu
 from .radiomenuitem import GTK3RadioMenuItem
 from .recentchoosermenu import GTK3RecentChooserMenu
@@ -27,6 +36,13 @@ __all__ = [
     "GTK3MenuButton",
     "GTK3MenuItem",
     "GTK3MenuShell",
+    "GTK3MenuShellAttribute",
+    "GTK3MenuShellItem",
+    "GTK3MenuShellMenu",
+    "GTK3MenuShellSection",
+    "GTK3MenuShellSubmenu",
+    "get_gio_menu_model",
+    "get_gtk_menu_items",
     "GTK3PopoverMenu",
     "GTK3RadioMenuItem",
     "GTK3RecentChooserMenu",
