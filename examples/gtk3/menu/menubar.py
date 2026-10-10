@@ -171,11 +171,14 @@ def show_menubar_example(method: str):
     # method.
     win.do_set_callbacks("destroy", Gtk.main_quit)
 
-    # Add a menubar to the window.
+    # Create a new GTK3MenuBar.
     menubar = GTK3MenuBar()
     menubar.do_build_menu(MENU_UI, method=method)
+
+    # Connect the menubar to a callback function.
     menubar.connect("selection-done", example_callback)
 
+    # Add the menubar to the window.
     win.add(menubar)
 
     # Show the GTK3Window and enter the main Gtk loop.
