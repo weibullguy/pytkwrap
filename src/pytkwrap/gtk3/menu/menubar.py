@@ -51,7 +51,21 @@ class GTK3MenuBar(Gtk.MenuBar, GTK3MenuBarMixin):
     """Wrapper for version 3.0 Gtk.MenuBar."""
 
     def __init__(self, model: Gio.MenuModel | None = None) -> None:
-        """Initialize an instance of the GTK3MenuBar."""
+        """Initialize an instance of the GTK3MenuBar.
+
+        Parameters
+        ----------
+        model : Gio.MenuModel | None
+            The Gio.MenuModel to associate the GTK3MenuBar with.
+
+        Notes
+        -----
+        The Gtk.MenuBar has a new_with_model(model) method, but passing model=model
+        to the Gtk.MenuBar __init__ method raises the following error:
+
+        TypeError: gobject `pytkwrap+gtk3+menu+menubar+GTK3MenuBar' doesn't support
+        property `model'
+        """
         Gtk.MenuBar.__init__(self)
         GTK3MenuBarMixin.__init__(self)
 
