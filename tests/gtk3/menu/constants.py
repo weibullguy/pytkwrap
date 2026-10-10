@@ -14,6 +14,15 @@ except ImportError:
 # Third Party Imports
 from gi.repository import Gdk, Gtk
 
+# pytkwrap Package Imports
+from pytkwrap.gtk3.menu import (  # pylint: disable=import-error
+    GTK3MenuShellAttribute,
+    GTK3MenuShellItem,
+    GTK3MenuShellMenu,
+    GTK3MenuShellSection,
+    GTK3MenuShellSubmenu,
+)
+
 EXPECTED_CHECKMENUITEM_HANDLER_IDS = {"toggled": -1}
 EXPECTED_CHECKMENUITEM_METHODS = [
     "get_active",
@@ -181,3 +190,119 @@ EXPECTED_RADIOMENUITEM_PROPERTIES = {"group": None}
 
 EXPECTED_RECENTCHOOSERMENU_METHODS = ["get_show_numbers", "set_show_numbers"]
 EXPECTED_RECENTCHOOSERMENU_PROPERTIES = {"show_numbers": False}
+
+MENU_UI = GTK3MenuShellMenu(
+    id="menubar",
+    submenus=[
+        GTK3MenuShellSubmenu(
+            attributes=GTK3MenuShellAttribute(
+                id="file",
+                label="File",
+            ),
+            sections=[
+                GTK3MenuShellSection(
+                    children=[
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.new",
+                                icon="new_icon",
+                                label="New",
+                                signal="activate",
+                            )
+                        ),
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.close",
+                                label="Close",
+                            )
+                        ),
+                        GTK3MenuShellSubmenu(
+                            attributes=GTK3MenuShellAttribute(
+                                id="open",
+                                label="Open",
+                            ),
+                            sections=[
+                                GTK3MenuShellSection(
+                                    children=[
+                                        GTK3MenuShellItem(
+                                            attributes=GTK3MenuShellAttribute(
+                                                action="app.openrecent",
+                                                icon="recent_icon",
+                                                label="Recent",
+                                            )
+                                        ),
+                                        GTK3MenuShellItem(
+                                            attributes=GTK3MenuShellAttribute(
+                                                action="app.fromfile",
+                                                icon="from_file_icon",
+                                                label="From File",
+                                            )
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        GTK3MenuShellSubmenu(
+            attributes=GTK3MenuShellAttribute(
+                id="edit",
+                label="Edit",
+            ),
+            sections=[
+                GTK3MenuShellSection(
+                    children=[
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.copy",
+                                icon="copy_icon",
+                                label="Copy",
+                            )
+                        ),
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.cut",
+                                icon="cut_icon",
+                                label="Cut",
+                            )
+                        ),
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.paste",
+                                label="Paste",
+                            )
+                        ),
+                    ]
+                )
+            ],
+        ),
+        GTK3MenuShellSubmenu(
+            attributes=GTK3MenuShellAttribute(
+                id="view",
+                label="View",
+            ),
+            sections=[
+                GTK3MenuShellSection(
+                    children=[
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.zoomin",
+                                icon="zoomin_icon",
+                                label="Zoom In",
+                            )
+                        ),
+                        GTK3MenuShellItem(
+                            attributes=GTK3MenuShellAttribute(
+                                action="app.zoomout",
+                                icon="zoomout_icon",
+                                label="Zoom Out",
+                            )
+                        ),
+                    ]
+                )
+            ],
+        ),
+    ],
+)

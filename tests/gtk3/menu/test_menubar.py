@@ -9,8 +9,8 @@ import pytest
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.menu import GTK3MenuBar
+from pytkwrap.gtk3._libs import Gio, Gtk
+from pytkwrap.gtk3.menu import GTK3MenuBar, get_gio_menu_model
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -33,6 +33,7 @@ from tests.gtk3.menu.constants import (
     EXPECTED_MENUSHELL_HANDLER_IDS,
     EXPECTED_MENUSHELL_METHODS,
     EXPECTED_MENUSHELL_PROPERTIES,
+    MENU_UI,
 )
 
 
@@ -64,6 +65,19 @@ class TestGTK3MenuBar(BaseGTK3GObjectTests):
         | EXPECTED_MENUBAR_PROPERTIES
     )
 
+    def make_dut(self, model=None):
+        return self.widget_class(model=model)
+
+    @pytest.mark.unit
+    def test_init_with_model(self):
+        _menu_id, _menu_model = get_gio_menu_model(MENU_UI)
+
+        dut = self.make_dut(model=_menu_model)
+
+        assert dut.get_children()[0].get_label() == "File"
+        assert dut.get_children()[1].get_label() == "Edit"
+        assert dut.get_children()[2].get_label() == "View"
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -90,3 +104,13 @@ class TestGTK3MenuBar(BaseGTK3GObjectTests):
         assert dut.get_child_pack_direction() == Gtk.PackDirection.RTL
         assert dut.get_property("pack_direction") == Gtk.PackDirection.TTB
         assert dut.get_pack_direction() == Gtk.PackDirection.TTB
+
+    @pytest.mark.unit
+    def test_do_build_menu(self):
+        """Should build a menu after initialization."""
+        dut = self.make_dut()
+        dut.do_build_menu(MENU_UI)
+
+        assert dut.get_children()[0].get_label() == "File"
+        assert dut.get_children()[1].get_label() == "Edit"
+        assert dut.get_children()[2].get_label() == "View"
