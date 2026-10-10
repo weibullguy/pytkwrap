@@ -48,7 +48,16 @@ class GTK3ApplicationWindowMixin(GTK3WindowMixin):
 class GTK3ApplicationWindow(Gtk.ApplicationWindow, GTK3ApplicationWindowMixin):
     """Wrapper for version 3.0 Gtk.ApplicationWindow."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3ApplicationWindow."""
-        Gtk.ApplicationWindow.__init__(self)
+    def __init__(self, application: Gtk.Application | None = None) -> None:
+        """Initialize an instance of the GTK3ApplicationWindow.
+
+        Parameters
+        ----------
+        application : Gtk.Application | None
+            The Gtk.Application instance to associate the GTK3ApplicationWindow with.
+        """
+        Gtk.ApplicationWindow.__init__(self, application=application)
         GTK3ApplicationWindowMixin.__init__(self)
+
+        if application is not None:
+            self.dic_properties["application"] = application

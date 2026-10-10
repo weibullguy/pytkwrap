@@ -127,7 +127,8 @@ class GTK3Window(Gtk.Window, GTK3WindowMixin):
         Parameters
         ----------
         wtype : Gtk.WindowType
-            The window type to construct.
+            The window type to construct.  One of Gtk.WindowType.TOPLEVEL or
+            Gtk.WindowType.POPUP.  Defaults to Gtk.WindowType.TOPLEVEL.
         """
         Gtk.Window.__init__(self, type=wtype)
         GTK3WindowMixin.__init__(self)
