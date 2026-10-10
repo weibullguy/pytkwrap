@@ -16,7 +16,7 @@ from pytkwrap.gtk3._libs import Gtk  # pylint: disable=import-error # noqa: PLC2
 
 
 def example_callback(window: GTK3Window):
-    """Print some property values when a GTK3Window is realized."""
+    """Print the property values when a GTK3Window is realized."""
     # Get the value of a GTK3Window property using the pytkwrap convenience method.
     print("List of all the GTK3Window properties:\n")
     for _property in window.dic_properties:
