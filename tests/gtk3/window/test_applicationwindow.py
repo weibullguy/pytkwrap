@@ -64,6 +64,20 @@ class TestGTK3ApplicationWindow(BaseGTK3GObjectTests):
         | EXPECTED_APPLICATIONWINDOW_PROPERTIES
     )
 
+    def make_dut(self, application: Gtk.Application | None = None):
+        """Create an instance of the GTK3ApplicationWindow for testing."""
+        return self.widget_class(application=application)
+
+    @pytest.mark.unit
+    def test_init_with_application(self):
+        """Should initialize the GTK3ApplicationWindow with an application."""
+        _application = Gtk.Application(application_id="com.example.pytkwrap")
+        _application.connect("activate", self.mock_callback)
+        _application.run()
+        dut = self.make_dut(application=_application)
+
+        assert dut.get_application() == _application
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
@@ -91,3 +105,16 @@ class TestGTK3ApplicationWindow(BaseGTK3GObjectTests):
 
         assert not dut.get_property("show_menubar")
         assert not dut.get_show_menubar()
+
+    @pytest.mark.unit
+    def test_do_set_application(self):
+        """Should set the Gtk.Application passed to the do_set_properties method."""
+        _application = Gtk.Application()
+        _application.connect("activate", self.mock_callback)
+        _application.run()
+
+        dut = self.make_dut()
+        dut.do_set_properties(GTK3WidgetProperties(application=_application))
+
+        assert dut.do_get_property("application") == _application
+        assert dut.get_application() == _application

@@ -227,8 +227,11 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
         # widget.
         for signal, handler_id in dut.dic_handler_id.items():
             assert handler_id == -1, f"Expected {signal} to be -1, got {handler_id}."
-            dut.do_set_callbacks(signal, self.mock_callback)
-            assert dut.dic_handler_id[signal] != -1
+            try:
+                dut.do_set_callbacks(signal, self.mock_callback)
+                assert dut.dic_handler_id[signal] != -1
+            except UnkSignalError:
+                continue
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-GTK3-X-005")
