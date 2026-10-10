@@ -5,7 +5,7 @@
 """
 
 # Standard Library Imports
-import sys
+import argparse
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3 import (  # pylint: disable=import-error
@@ -18,11 +18,12 @@ from pytkwrap.gtk3._libs import Gtk  # pylint: disable=import-error # noqa: PLC2
 def example_callback(window: GTK3Window):
     """Print some property values when a GTK3Window is realized."""
     # Get the value of a GTK3Window property using the pytkwrap convenience method.
-    print(f"Property default_height: {window.do_get_property('default_height')}")
-    print(f"Property title: {window.do_get_property('title')}")
+    print("List of all the GTK3Window properties:\n")
+    for _property in window.dic_properties:
+        print(f"{_property}: {window.do_get_property(_property)}")
 
 
-def show_window_example(title: str = "pytkwrap Test Window"):
+def show_window_example(title: str):
     """Show how to construct a GTK3Window."""
     # Create an instance of the GTK3Window.
     win = GTK3Window()
@@ -45,8 +46,16 @@ def show_window_example(title: str = "pytkwrap Test Window"):
 
 
 if __name__ == "__main__":
-    args = sys.argv[1:]
-    if args:
-        show_window_example(args[0])
-    else:
-        show_window_example()
+    parser = argparse.ArgumentParser(
+        description="An example program for the GTK3Window widget."
+    )
+    parser.add_argument(
+        "--title",
+        type=str,
+        default="pytkwrap Test Window",
+        help="Text to use as the window title.",
+    )
+
+    args = parser.parse_args()
+
+    show_window_example(args.title)
