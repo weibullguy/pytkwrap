@@ -1,4 +1,4 @@
-"""The pytkwrap GTK3 Menu Button module.
+"""The pytkwrap GTK3MenuButton module.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3MenuButtonMixin(GTK3ToggleButtonMixin):
-    """Mixin for GTK3MenuButton."""
+    """Mixin for GTK3MenuButton.
+
+    Notes
+    -----
+    GTK3MenuButton passes a GTK3Image widget to its callback functions.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
