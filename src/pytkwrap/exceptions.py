@@ -4,6 +4,12 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+# Standard Library Imports
+from typing import NoReturn
+
+# Third Party Imports
+from pubsub import pub
+
 
 class PytkwrapError(Exception):
     """Base exception class for pytkwrap errors."""
@@ -112,3 +118,41 @@ class WrongTypeError(PytkwrapError):
             Custom error message.
         """
         super().__init__(msg)
+
+
+class MenuError(PytkwrapError):
+    """Exception class raised when menu data cannot be loaded or built."""
+
+    def __init__(self, msg: str = "Invalid menu data or build request.") -> None:
+        """Initialize a MenuError instance.
+
+        Parameters
+        ----------
+        msg : str
+            Custom error message.
+        """
+        super().__init__(msg)
+
+
+def raise_pytkwrap_exception(
+    message: str,
+    error_type: type[PytkwrapError] = MenuError,
+    cause: Exception | None = None,
+) -> NoReturn:
+    """Log an exception message and raise it as a pytkwrap exception.
+
+    Parameters
+    ----------
+    message : str
+        Error message to log and attach to the exception.
+    error_type : type[PytkwrapError]
+        Pytkwrap exception class to raise.
+    cause : Exception or None
+        Optional exception to chain as the cause.
+    """
+    pub.sendMessage("do_log_error", message=message)
+
+    if cause is None:
+        raise error_type(message)
+
+    raise error_type(message) from cause

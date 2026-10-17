@@ -1,3 +1,6 @@
+# Standard Library Imports
+from typing import NoReturn
+
 # Third Party Imports
 from _typeshed import Incomplete
 
@@ -23,3 +26,10 @@ class UnkSignalError(PytkwrapError):
 
 class WrongTypeError(PytkwrapError):
     def __init__(self, msg: str = "Wrong data type.") -> None: ...
+
+class MenuError(PytkwrapError):
+    def __init__(self, msg: str = "Invalid menu data or build request.") -> None: ...
+
+def raise_pytkwrap_exception(
+    message: str, error_type: type[PytkwrapError] = ..., cause: Exception | None = None
+) -> NoReturn: ...
