@@ -1,74 +1,37 @@
 # Standard Library Imports
-from collections.abc import Callable, Mapping
-from dataclasses import dataclass, field
+from collections.abc import Mapping
 
 # Third Party Imports
 from _typeshed import Incomplete
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gio as Gio
-from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.container.container import GTK3ContainerMixin as GTK3ContainerMixin
-from pytkwrap.gtk3.menu.menuitem import GTK3MenuItem as GTK3MenuItem
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
+from pytkwrap.gtk3._libs import Gio, Gtk
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin
+from pytkwrap.gtk3.menu.menubuilder import get_gio_menu_model as get_gio_menu_model
+from pytkwrap.gtk3.menu.menubuilder import get_gtk_menu_items as get_gtk_menu_items
+from pytkwrap.gtk3.menu.menuloader import (
+    do_build_menu_from_file as do_build_menu_from_file,
+)
+from pytkwrap.gtk3.menu.models import GTK3MenuShellAttribute as GTK3MenuShellAttribute
+from pytkwrap.gtk3.menu.models import GTK3MenuShellItem as GTK3MenuShellItem
+from pytkwrap.gtk3.menu.models import GTK3MenuShellMenu as GTK3MenuShellMenu
+from pytkwrap.gtk3.menu.models import GTK3MenuShellSection as GTK3MenuShellSection
+from pytkwrap.gtk3.menu.models import GTK3MenuShellSubmenu as GTK3MenuShellSubmenu
+from pytkwrap.gtk3.menu.models import Node as Node
 
-ATTRIBUTE_ACTION: str
-ATTRIBUTE_ACTION_NAMESPACE: str
-ATTRIBUTE_CUSTOM: str
-ATTRIBUTE_DISPLAY_HINT: str
-ATTRIBUTE_HIDDEN_WHEN: str
-ATTRIBUTE_ICON: str
-ATTRIBUTE_LABEL: str
-ATTRIBUTE_SUBMENU_ACTION: str
-ATTRIBUTE_TARGET: str
-ATTRIBUTE_TEXT_DIRECTION: str
-ATTRIBUTE_USE_MARKUP: str
-
-@dataclass
-class GTK3MenuShellAttribute:
-    action: str | None = ...
-    action_namespace: str | None = ...
-    callback: Callable | None = ...
-    custom: str | None = ...
-    display_hint: str | None = ...
-    hidden_when: str | None = ...
-    icon: str | None = ...
-    id: str | None = ...
-    label: str | None = ...
-    signal: str | None = ...
-    submenu_action: str | None = ...
-    target: str | None = ...
-    text_direction: str | None = ...
-    translatable: str = ...
-    use_markup: bool = ...
-
-@dataclass
-class GTK3MenuShellItem:
-    attributes: GTK3MenuShellAttribute
-
-@dataclass
-class GTK3MenuShellSection:
-    children: list = field(default_factory=list)
-    attributes: GTK3MenuShellAttribute | None = ...
-
-@dataclass
-class GTK3MenuShellSubmenu:
-    attributes: GTK3MenuShellAttribute
-    sections: list[GTK3MenuShellSection] = field(default_factory=list)
-
-@dataclass
-class GTK3MenuShellMenu:
-    submenus: list[GTK3MenuShellSubmenu]
-    id: str | None = ...
-
-Node = GTK3MenuShellItem | GTK3MenuShellSubmenu
-
-def get_gio_menu_model(menu: GTK3MenuShellMenu) -> tuple[str, Gio.MenuModel]: ...
-def _do_add_attributes(attributes: GTK3MenuShellAttribute, menu_ui: str) -> str: ...
-def _do_add_node(node: Node, menu_ui: str) -> str: ...
-def _do_add_section(section: GTK3MenuShellSection, menu_ui: str) -> str: ...
-def _do_add_submenu(submenu: GTK3MenuShellSubmenu, menu_ui: str) -> str: ...
-def get_gtk_menu_items(menu: GTK3MenuShellMenu) -> list[GTK3MenuItem]: ...
+__all__ = [
+    "do_build_menu_from_file",
+    "get_gio_menu_model",
+    "get_gtk_menu_items",
+    "GTK3MenuShellAttribute",
+    "GTK3MenuShellItem",
+    "GTK3MenuShellMenu",
+    "GTK3MenuShellSection",
+    "GTK3MenuShellSubmenu",
+    "Node",
+    "GTK3MenuShellMixin",
+    "GTK3MenuShell",
+]
 
 class GTK3MenuShellMixin(GTK3ContainerMixin):
     _GTK3_MENUSHELL_PROPERTIES: Incomplete
@@ -79,7 +42,18 @@ class GTK3MenuShellMixin(GTK3ContainerMixin):
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
-    def do_build_menu(self, menu: GTK3MenuShellMenu, method: str = "gio"): ...
+    def do_build_menu(
+        self,
+        menu: GTK3MenuShellMenu | None = None,
+        menu_file: str = "",
+        method: str = "gio",
+    ): ...
+    @staticmethod
+    def _resolve_menu(
+        menu: GTK3MenuShellMenu | None, menu_file: str, method: str
+    ) -> GTK3MenuShellMenu: ...
+    def _build_gio_menu(self, menu: GTK3MenuShellMenu) -> None: ...
+    def _build_gtk_menu(self, menu: GTK3MenuShellMenu) -> None: ...
 
 class GTK3MenuShell(Gtk.MenuShell, GTK3MenuShellMixin):
     def __init__(self) -> None: ...
