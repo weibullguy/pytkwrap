@@ -18,7 +18,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3MenuShellMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3MenuShell."""
+    """Mixin class for GTK3MenuShell.
+
+    Notes
+    -----
+    GTK3MenuShell passes no widgets to its callback functions.
+    """
 
     _GTK3_MENUSHELL_PROPERTIES = GTK3WidgetProperties(
         take_focus=True,
