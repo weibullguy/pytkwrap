@@ -36,3 +36,18 @@ def text_file():
     _parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     _text = os.path.join(_parent_dir, "data/pytkwrap.txt")
     return _text
+
+
+@pytest.fixture
+def logged_errors():
+    """Collect messages published on the do_log_error topic."""
+    _messages = []
+
+    def _listener(message: str) -> None:
+        _messages.append(message)
+
+    pub.subscribe(_listener, "do_log_error")
+    try:
+        yield _messages
+    finally:
+        pub.unsubscribe(_listener, "do_log_error")
