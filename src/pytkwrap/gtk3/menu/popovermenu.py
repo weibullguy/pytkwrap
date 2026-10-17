@@ -14,7 +14,12 @@ from pytkwrap.gtk3.popover import GTK3PopoverMixin
 
 
 class GTK3PopoverMenuMixin(GTK3PopoverMixin):
-    """Mixin class for GTK3PopoverMenu."""
+    """Mixin class for GTK3PopoverMenu.
+
+    Notes
+    -----
+    GTK3PopoverMenu passes no widgets to its callback functions.
+    """
 
     _GTK3_POPOVERMENU_PROPERTIES = GTK3WidgetProperties(
         visible_submenu=None,
