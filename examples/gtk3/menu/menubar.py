@@ -1,4 +1,4 @@
-"""An example program for the GTK3Menu widget.
+"""An example program for the GTK3MenuBar widget.
 
 .. author:: Doyle Rowland
 .. copyright:: Since 2007, all rights reserved.
@@ -24,7 +24,7 @@ from pytkwrap.gtk3.menu import (  # pylint: disable=import-error
 )
 
 
-def example_callback(menubar: GTK3MenuBar):
+def on_selection_done(menubar: GTK3MenuBar) -> None:
     """Print the property values when a GTK3MenuBar item is selected."""
     # Get the value of a GTK3MenuBar property using the pytkwrap convenience method.
     print("List of all the GTK3MenuBar properties:\n")
@@ -155,14 +155,14 @@ MENU_UI = GTK3MenuShellMenu(
 )
 
 
-def show_menubar_example(method: str):
-    """Show how to construct a GTK3Menu."""
+def do_show_menubar_example(method: str, menu_file: str | None = None) -> None:
+    """Show how to construct a GTK3MenuBar."""
     # Create an instance of the GTK3Window.
     win = GTK3Window()
 
     # Set GTK3Window properties using the GTK3WidgetProperties TypedDict and the
     # pytkwrap property setting convenience method.
-    win.do_set_properties(GTK3WidgetProperties(title="pytkwrap GTK3Menu Example"))
+    win.do_set_properties(GTK3WidgetProperties(title="pytkwrap GTK3MenuBar Example"))
 
     # Call a Gtk.Window method directly.
     win.maximize()
@@ -173,10 +173,13 @@ def show_menubar_example(method: str):
 
     # Create a new GTK3MenuBar.
     menubar = GTK3MenuBar()
-    menubar.do_build_menu(MENU_UI, method=method)
+    if menu_file is None:
+        menubar.do_build_menu(MENU_UI, method=method)
+    else:
+        menubar.do_build_menu(menu_file=menu_file, method=method)
 
     # Connect the menubar to a callback function.
-    menubar.connect("selection-done", example_callback)
+    menubar.connect("selection-done", on_selection_done)
 
     # Add the menubar to the window.
     win.add(menubar)
@@ -192,11 +195,22 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--method",
-        type=str,
+        choices=("gio", "gtk", "file"),
         default="gio",
-        help="Which method to use to create the menubar.  Options are 'gio' and 'gtk'.",
+        help=(
+            "Build with Gio, native GTK widgets, or load a file and build a Gio model."
+        ),
+    )
+    parser.add_argument(
+        "--menu-file",
+        help=(
+            "Load the menu structure from this TOML file instead of the Python "
+            "menu model."
+        ),
     )
 
     args = parser.parse_args()
+    if args.method == "file" and args.menu_file is None:
+        parser.error("--menu-file is required when --method=file.")
 
-    show_menubar_example(args.method)
+    do_show_menubar_example(args.method, args.menu_file)

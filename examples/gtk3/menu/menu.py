@@ -6,7 +6,8 @@
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3 import (  # pylint: disable=import-error
-    GTK3MenuBar,
+    GTK3Menu,
+    GTK3MenuButton,
     GTK3WidgetProperties,
     GTK3Window,
 )
@@ -144,7 +145,7 @@ MENU_UI = GTK3MenuShellMenu(
 )
 
 
-def show_menu_example():
+def do_show_menu_example() -> None:
     """Show how to construct a GTK3Menu."""
     # Create an instance of the GTK3Window.
     win = GTK3Window()
@@ -160,11 +161,15 @@ def show_menu_example():
     # method.
     win.do_set_callbacks("destroy", Gtk.main_quit)
 
-    # Add a menubar to the window.
-    menubar = GTK3MenuBar()
-    menubar.do_build_menu(MENU_UI, method="gtk")
+    # Build a native GTK menu and display it from a menu button.
+    menu = GTK3Menu()
+    menu.do_build_menu(MENU_UI, method="gtk")
 
-    win.add(menubar)
+    menu_button = GTK3MenuButton()
+    menu_button.set_label("Menu")
+    menu_button.set_popup(menu)
+
+    win.add(menu_button)
 
     # Show the GTK3Window and enter the main Gtk loop.
     win.show_all()
@@ -172,4 +177,4 @@ def show_menu_example():
 
 
 if __name__ == "__main__":
-    show_menu_example()
+    do_show_menu_example()

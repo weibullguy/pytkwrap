@@ -1,0 +1,36 @@
+[menu]
+id = "menubar"
+
+[[menu.submenus]]
+attributes = { id = "file", label = "File" }
+
+[[menu.submenus.sections]]
+children = [
+  { attributes = { action = "app.new", callback = "on_open", icon = "new_icon", label = "New", signal = "activate" } },
+  { attributes = { action = "app.close", label = "Close" } },
+  { attributes = { id = "open", label = "Open" }, sections = [
+    { children = [
+      { attributes = { action = "app.openrecent", icon = "recent_icon", label = "Recent" } },
+      { attributes = { action = "app.fromfile", icon = "from_file_icon", label = "From File" } },
+    ] },
+  ] },
+]
+
+[[menu.submenus]]
+attributes = { id = "edit", label = "Edit" }
+
+[[menu.submenus.sections]]
+children = [
+  { attributes = { action = "app.copy", icon = "copy_icon", label = "Copy" } },
+  { attributes = { action = "app.cut", icon = "cut_icon", label = "Cut" } },
+  { attributes = { action = "app.paste", label = "Paste" } },
+]
+
+[[menu.submenus]]
+attributes = { id = "view", label = "View" }
+
+[[menu.submenus.sections]]
+children = [
+  { attributes = { action = "app.zoomin", icon = "zoomin_icon", label = "Zoom In" } },
+  { attributes = { action = "app.zoomout", icon = "zoomout_icon", label = "Zoom Out" } },
+]
