@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3RadioMenuItemMixin(GTK3CheckMenuItemMixin):
-    """Mixin class for GTK3RadioMenuItem."""
+    """Mixin class for GTK3RadioMenuItem.
+
+    Notes
+    -----
+    GTK3RadioMenuItem passes a Gtk.AccelLabel widget to its callback functions.
+    """
 
     _GTK3_RADIOMENUITEM_PROPERTIES = GTK3WidgetProperties(
         group=None,
