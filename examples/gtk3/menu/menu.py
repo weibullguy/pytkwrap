@@ -165,9 +165,10 @@ def do_show_menu_example() -> None:
     menu = GTK3Menu()
     menu.do_build_menu(MENU_UI, method="gtk")
 
+    # Create a GTK3MenuButton and set its properties using the pytkwrap convenience
+    # method.
     menu_button = GTK3MenuButton()
-    menu_button.set_label("Menu")
-    menu_button.set_popup(menu)
+    menu_button.do_set_properties(GTK3WidgetProperties(label="Menu", popup=menu))
 
     win.add(menu_button)
 

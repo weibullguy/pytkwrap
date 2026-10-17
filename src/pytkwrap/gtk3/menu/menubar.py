@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3MenuBarMixin(GTK3MenuShellMixin):
-    """Mixin class for GTK3MenuBar."""
+    """Mixin class for GTK3MenuBar.
+
+    Notes
+    -----
+    GTK3MenuBar passes no widgets to its callback functions.
+    """
 
     _GTK3_MENUBAR_PROPERTIES = GTK3WidgetProperties(
         child_pack_direction=Gtk.PackDirection.LTR,
