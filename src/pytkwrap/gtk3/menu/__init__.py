@@ -12,17 +12,17 @@ and never through this __init__.py to avoid circular imports.
 from .checkmenuitem import GTK3CheckMenuItem
 from .menu import GTK3Menu
 from .menubar import GTK3MenuBar
+from .menubuilder import get_gio_menu_model, get_gtk_menu_items
 from .menubutton import GTK3MenuButton
 from .menuitem import GTK3MenuItem
-from .menushell import (
-    GTK3MenuShell,
+from .menuloader import do_build_menu_from_file
+from .menushell import GTK3MenuShell
+from .models import (
     GTK3MenuShellAttribute,
     GTK3MenuShellItem,
     GTK3MenuShellMenu,
     GTK3MenuShellSection,
     GTK3MenuShellSubmenu,
-    get_gio_menu_model,
-    get_gtk_menu_items,
 )
 from .popovermenu import GTK3PopoverMenu
 from .radiomenuitem import GTK3RadioMenuItem
@@ -41,10 +41,11 @@ __all__ = [
     "GTK3MenuShellMenu",
     "GTK3MenuShellSection",
     "GTK3MenuShellSubmenu",
-    "get_gio_menu_model",
-    "get_gtk_menu_items",
     "GTK3PopoverMenu",
     "GTK3RadioMenuItem",
     "GTK3RecentChooserMenu",
     "GTK3SeparatorMenuItem",
+    "do_build_menu_from_file",
+    "get_gio_menu_model",
+    "get_gtk_menu_items",
 ]
