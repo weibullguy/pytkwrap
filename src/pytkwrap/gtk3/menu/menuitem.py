@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3MenuItemMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3MenuItem."""
+    """Mixin class for GTK3MenuItem.
+
+    Notes
+    -----
+    GTK3MenuItem passes a Gtk.AccelLabel widget to its callback functions.
+    """
 
     _GTK3_MENUITEM_PROPERTIES = GTK3WidgetProperties(
         accel_path=None,
@@ -66,7 +71,13 @@ class GTK3MenuItem(Gtk.MenuItem, GTK3MenuItemMixin):
     """Wrapper for version 3.0 Gtk.MenuItem."""
 
     def __init__(self, label: str | None = None) -> None:
-        """Initialize an instance of the GTK3MenuItem."""
+        """Initialize an instance of the GTK3MenuItem.
+
+        Parameters
+        ----------
+        label : str | None
+            The label for the menu item. If None, the menu item will have no label.
+        """
         Gtk.MenuItem.__init__(self, label=label)
         GTK3MenuItemMixin.__init__(self)
 
