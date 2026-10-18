@@ -11,10 +11,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 class GTK3RecentChooserMenuMixin(GTK3MenuMixin):
     _GTK3_RECENTCHOOSERMENU_PROPERTIES: Incomplete
+    recent_manager: Gtk.RecentManager | None
     def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
 
 class GTK3RecentChooserMenu(Gtk.RecentChooserMenu, GTK3RecentChooserMenuMixin):
-    def __init__(self) -> None: ...
+    recent_manager: Incomplete
+    def __init__(self, manager: Gtk.RecentManager | None = None) -> None: ...

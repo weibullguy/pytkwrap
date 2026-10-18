@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3RecentChooserMenuMixin(GTK3MenuMixin):
-    """Mixin class for GTK3RecentChooserMenu."""
+    """Mixin class for GTK3RecentChooserMenu.
+
+    Notes
+    -----
+    GTK3RecentChooserMenu passes a GTK3MenuItem widget to its callback functions.
+    """
 
     _GTK3_RECENTCHOOSERMENU_PROPERTIES = GTK3WidgetProperties(
         show_numbers=False,
@@ -26,6 +31,8 @@ class GTK3RecentChooserMenuMixin(GTK3MenuMixin):
 
         # Initialize public instance attributes.
         self.dic_properties.update(self._GTK3_RECENTCHOOSERMENU_PROPERTIES)
+
+        self.recent_manager: Gtk.RecentManager | None = None
 
     def do_set_properties(
         self,
@@ -48,7 +55,18 @@ class GTK3RecentChooserMenuMixin(GTK3MenuMixin):
 class GTK3RecentChooserMenu(Gtk.RecentChooserMenu, GTK3RecentChooserMenuMixin):
     """Wrapper for version 3.0 Gtk.RecentChooserMenu."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3RecentChooserMenu."""
-        Gtk.RecentChooserMenu.__init__(self)
+    def __init__(self, manager: Gtk.RecentManager | None = None) -> None:
+        """Initialize an instance of the GTK3RecentChooserMenu.
+
+        Parameters
+        ----------
+        manager : Gtk.RecentManager | None, optional
+            The Gtk.RecentManager to use for the recent chooser menu.
+        """
+        Gtk.RecentChooserMenu.__init__(self, recent_manager=manager)
         GTK3RecentChooserMenuMixin.__init__(self)
+
+        if manager is None:
+            self.recent_manager = Gtk.RecentManager().get_default()
+        else:
+            self.recent_manager = manager
