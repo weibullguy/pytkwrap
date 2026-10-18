@@ -17,9 +17,9 @@ class GTK3PrintSettingsMixin(GTK3GObjectMixin):
     GTK3PrintSettings passes no widgets to its callback functions.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3PrintSettingsMixin."""
-        GTK3GObjectMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.file_name: str | None = None

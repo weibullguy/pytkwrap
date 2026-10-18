@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ShortcutLabelMixin(GTK3BoxMixin):
-    """Mixin class for GTK3ShortcutLabel."""
+    """Mixin class for GTK3ShortcutLabel.
+
+    Notes
+    -----
+    GTK3ShortCutLabel passes no widgets to its callback functions.
+    """
 
     _GTK3_SHORTCUTLABEL_PROPERTIES = GTK3WidgetProperties(
         accelerator=None,
@@ -54,6 +59,12 @@ class GTK3ShortcutLabel(Gtk.ShortcutLabel, GTK3ShortcutLabelMixin):
     """Wrapper for version 3.0 Gtk.ShortcutLabel."""
 
     def __init__(self, accelerator: str | None = None) -> None:
-        """Initialize an instance of the GTK3ShortcutLabel."""
+        """Initialize an instance of the GTK3ShortcutLabel.
+
+        Parameters
+        ----------
+        accelerator : str | None
+            The name of the initial accelerator.
+        """
         Gtk.ShortcutLabel.__init__(self, accelerator=accelerator)
         GTK3ShortcutLabelMixin.__init__(self)

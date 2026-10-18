@@ -19,7 +19,7 @@ class GTK3PageSetupMixin(GTK3GObjectMixin):
 
     def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3PageSetupMixin."""
-        GTK3GObjectMixin.__init__(self)
+        super().__init__(**kwargs)
 
         # Initialize public instance attributes.
         self.file_name: str | None = None
