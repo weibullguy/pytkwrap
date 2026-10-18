@@ -14,7 +14,13 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ShortcutsSectionMixin(GTK3BoxMixin):
-    """Mixin class for GTK3ShortcutsSection."""
+    """Mixin class for GTK3ShortcutsSection.
+
+    Notes
+    -----
+    GTK3ShortcutsSection passes a GTK3Stack or GTK3Box widget to its callback
+    functions.
+    """
 
     _GTK3_SHORTCUTSSECTION_PROPERTIES = GTK3WidgetProperties(
         max_height=15,
