@@ -14,7 +14,12 @@ from pytkwrap.gtk3.window.window import GTK3WindowMixin
 
 
 class GTK3ShortcutsWindowMixin(GTK3WindowMixin):
-    """Mixin class for GTK3ShortcutsWindow."""
+    """Mixin class for GTK3ShortcutsWindow.
+
+    Notes
+    -----
+    GTK3ShortcutsWindow passes no widgets to its callback functions.
+    """
 
     _GTK3_SHORTCUTSWINDOW_PROPERTIES = GTK3WidgetProperties(
         section_name="internal-search",
