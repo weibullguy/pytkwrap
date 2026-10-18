@@ -70,6 +70,42 @@ class TestGTK3RecentChooserMenu(BaseGTK3GObjectTests):
         | EXPECTED_RECENTCHOOSERMENU_PROPERTIES
     )
 
+    def make_dut(
+        self, manager: Gtk.RecentManager | None = None
+    ) -> GTK3RecentChooserMenu:
+        """Make a new instance of the GTK3RecentChooserMenu class.
+
+        Parameters
+        ----------
+        manager : Gtk.RecentManager | None
+            The Gtk.RecentManager to use for the GTK3RecentChooserMenu. If None, a new
+            Gtk.RecentManager will be created.
+
+        Returns
+        -------
+        GTK3RecentChooserMenu
+            A new instance of the GTK3RecentChooserMenu class.
+        """
+        return self.widget_class(manager=manager)
+
+    @pytest.mark.unit
+    def test_init(self):
+        """Should initialize the GTK3RecentChooserMenu with a default
+        Gtk.RecentManager."""
+        dut = self.make_dut()
+
+        assert isinstance(dut, GTK3RecentChooserMenu)
+        assert isinstance(dut.recent_manager, Gtk.RecentManager)
+
+    @pytest.mark.unit
+    def test_init_with_manager(self):
+        """Should initialize the GTK3RecentChooserMenu with a Gtk.RecentManager."""
+        manager = Gtk.RecentManager.get_default()
+        dut = self.make_dut(manager=manager)
+
+        assert isinstance(dut, GTK3RecentChooserMenu)
+        assert dut.recent_manager == manager
+
     @pytest.mark.unit
     def test_do_set_properties_default(self):
         """Should set properties to default values when passed an empty
