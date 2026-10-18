@@ -14,7 +14,12 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ShortcutsGroupMixin(GTK3BoxMixin):
-    """Mixin class for GTK3ShortcutsGroup."""
+    """Mixin class for GTK3ShortcutsGroup.
+
+    Notes
+    -----
+    GTK3ShortcutsGroup passes a GTK3Label to its callback functions.
+    """
 
     _GTK3_SHORTCUTSGROUP_PROPERTIES = GTK3WidgetProperties(
         accel_size_group=None,
