@@ -13,7 +13,12 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3PrintOperationMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3PrintOperation."""
+    """Mixin class for GTK3PrintOperation.
+
+    Notes
+    -----
+    GTK3PrintOperation passes no widgets to its callback functions.
+    """
 
     _GTK3_PRINTOPERATION_PROPERTIES = GTK3WidgetProperties(
         allow_async=False,
