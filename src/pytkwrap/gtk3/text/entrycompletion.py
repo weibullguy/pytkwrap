@@ -13,7 +13,19 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3EntryCompletionMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3EntryCompletion."""
+    """Mixin class for GTK3EntryCompletion.
+
+    Parameters
+    ----------
+    _GTK3_ENTRYCOMPLETION_PROPERTIES : GTK3WidgetProperties
+        Widget properties unique to a GTK3EntryCompletion.
+    _GTK3_ENTRYCOMPLETION_SIGNALS : list[str]
+        Signal names unique to a GTK3EntryCompletion
+
+    Notes
+    -----
+    GTK3EntryCompletion passes no widgets to its callback functions.
+    """
 
     _GTK3_ENTRYCOMPLETION_PROPERTIES = GTK3WidgetProperties(
         cell_area=None,
