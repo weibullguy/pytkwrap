@@ -59,4 +59,12 @@ EXPECTED_STYLECONTEXT_METHODS = [
     "state_is_running",
     "to_string",
 ]
-EXPECTED_STYLECONTEXT_PROPERTIES = {"paint_clock": None, "parent": None, "screen": None}
+EXPECTED_STYLECONTEXT_PROPERTIES = {
+    "frame_clock": None,
+    "parent": None,
+    "path": None,
+    "scale": 1,
+    "screen": None,
+    "sides": None,
+    "state": None,
+}
