@@ -13,7 +13,12 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3EntryBufferMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3EntryBuffer."""
+    """Mixin class for GTK3EntryBuffer.
+
+    Notes
+    -----
+    GTK3EntryBuffer passes no widgets to its callback functions.
+    """
 
     _GTK3_ENTRYBUFFER_PROPERTIES = GTK3WidgetProperties(
         max_length=0,
@@ -59,7 +64,13 @@ class GTK3EntryBuffer(Gtk.EntryBuffer, GTK3EntryBufferMixin):
     """Wrapper for version 3.0 Gtk.EntryBuffer."""
 
     def __init__(self, text: str = "") -> None:
-        """Initialize an instance of the GTK3EntryBuffer."""
+        """Initialize an instance of the GTK3EntryBuffer.
+
+        Parameters
+        ----------
+        text : str
+            The text to initialize the buffer with.
+        """
         Gtk.EntryBuffer.__init__(self, text=text)
         GTK3EntryBufferMixin.__init__(self)
 

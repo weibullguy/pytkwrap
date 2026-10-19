@@ -16,11 +16,17 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 from pytkwrap.utilities import FontDescription
 
 
+# TODO: During round 4, add methods to insert/delete text from the GTK3Buffer in
+#  dic_properties.
 class GTK3EntryMixin(GTK3WidgetMixin):
     """Mixin for GTK3Entry.
 
     Attributes
     ----------
+    _DEFAULT_HEIGHT : int
+        The default height of a GTK3Entry widget.
+    _DEFAULT_WIDTH : int
+        The default width of a GTK3Entry widget.
     _GTK3_ENTRY_ATTRIBUTES : GTK3DataWidgetAttributes
         The typed dict containing GTK3Entry specific attributes and their default
         values.
