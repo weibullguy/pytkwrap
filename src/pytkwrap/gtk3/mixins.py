@@ -162,6 +162,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     foreground_rgba: Gdk.RGBA | None
     foreground_set: bool
     fraction: float
+    frame_clock: Gdk.FrameClock | None
     gfile: Gio.File | None
     gicon: Gio.Icon | None
     gravity: Gdk.Gravity
@@ -302,8 +303,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     page: int
     page_increment: float
     page_size: float
-    paint_clock: Gdk.FrameClock | None
     parent: Gtk.Container | Gtk.StyleContext | None
+    path: Gtk.WidgetPath | None
     pattern: str | None
     pixbuf: GdkPixbuf.Pixbuf | None
     pixbuf_animation: GdkPixbuf.PixbufAnimation | None
@@ -369,7 +370,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     row_spacing: int
     row_span_column: int
     rubber_banding: bool
-    scale: float
+    scale: float | int
     scale_factor: int
     scale_set: bool
     screen: Gdk.Screen | None
@@ -423,6 +424,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     show_text: bool
     show_trash: bool
     show_week_numbers: bool
+    sides: Gtk.JunctionSides | None
     single_line_mode: bool
     single_paragraph_mode: bool
     size: Gtk.IconSize | int | None
@@ -439,7 +441,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     spacing: int
     stack: Gtk.Stack | None
     startup_id: str | None
-    state: bool
+    state: bool | Gtk.StateFlags | None
     step_increment: float
     stock_detail: str | None
     stock_size: int
