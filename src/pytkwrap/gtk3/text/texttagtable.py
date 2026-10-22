@@ -4,15 +4,19 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
-# Standard Library Imports
-
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin
 
 
 class GTK3TextTagTableMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3TextTagTable."""
+    """Mixin class for GTK3TextTagTable.
+
+    Attributes
+    ----------
+    _GTK3_TEXTTAGTABLE_SIGNALS : list[str]
+        Signals unique to the GTK3TextTagTable.
+    """
 
     _GTK3_TEXTTAGTABLE_SIGNALS = [
         "tag-added",
