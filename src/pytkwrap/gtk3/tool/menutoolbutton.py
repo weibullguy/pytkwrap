@@ -14,7 +14,15 @@ from pytkwrap.gtk3.tool.toolbutton import GTK3ToolButtonMixin
 
 
 class GTK3MenuToolButtonMixin(GTK3ToolButtonMixin):
-    """Mixin class for GTK3MenuToolButton."""
+    """Mixin class for GTK3MenuToolButton.
+
+    Attributes
+    ----------
+    _GTK3_MENUTOOLBUTTON_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3MenuToolButton.
+    _GTK3_MENUTOOLBUTTON_SIGNALS : list[str]
+        Signals unique to the GTK3MenuToolButton.
+    """
 
     _GTK3_MENUTOOLBUTTON_PROPERTIES = GTK3WidgetProperties(
         menu=None,
