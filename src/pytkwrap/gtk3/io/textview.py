@@ -18,9 +18,14 @@ from pytkwrap.gtk3.text import GTK3TextBuffer
 class GTK3TextViewMixin(GTK3ContainerMixin):
     """Mixin class for GTK3TextView.
 
-    Notes
-    -----
-    GTK3TextView passes no widgets to its callback function.
+    Attributes
+    ----------
+    _GTK3_TEXTVIEW_ATTRIBUTES : GTK3WidgetAttributes
+        Attributes unique to the GTK3TextView.
+    _GTK3_TEXTVIEW_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3TextView.
+    _GTK3_TEXTVIEW_SIGNALS : list[str]
+        Signals unique to the GTK3TextView.
     """
 
     _GTK3_TEXTVIEW_ATTRIBUTES = GTK3WidgetAttributes(

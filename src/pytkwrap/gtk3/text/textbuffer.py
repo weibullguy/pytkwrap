@@ -13,7 +13,15 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3TextBufferMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3TextBuffer."""
+    """Mixin class for GTK3TextBuffer.
+
+    Attributes
+    ----------
+    _GTK3_TEXTBUFFER_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3TextBuffer.
+    _GTK3_TEXTBUFFER_SIGNALS : list[str]
+        Signals unique to the GTK3TextBuffer.
+    """
 
     _GTK3_TEXTBUFFER_PROPERTIES = GTK3WidgetProperties(
         tag_table=None,
