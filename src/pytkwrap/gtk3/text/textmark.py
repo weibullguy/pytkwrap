@@ -10,7 +10,13 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3TextMarkMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3TextMark."""
+    """Mixin class for GTK3TextMark.
+
+    Attributes
+    ----------
+    _GTK3_TEXTMARK_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3TextMark.
+    """
 
     _GTK3_TEXTMARK_PROPERTIES = GTK3WidgetProperties(
         left_gravity=False,
