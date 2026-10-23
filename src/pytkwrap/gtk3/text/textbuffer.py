@@ -70,6 +70,26 @@ class GTK3TextBufferMixin(GTK3GObjectMixin):
 
         self.set_text(self.dic_properties["text"])
 
+    @property
+    def modified(self) -> bool:
+        """Return whether the GTK3TextBuffer has been modified."""
+        return self.get_modified()
+
+    @property
+    def n_chars(self) -> int:
+        """Get the number of characters in the GTK3TextBuffer."""
+        return self.get_char_count()
+
+    @property
+    def n_lines(self) -> int:
+        """Get the number of lines in the GTK3TextBuffer."""
+        return self.get_line_count()
+
+    @property
+    def text_selected(self) -> bool:
+        """Return whether text is selected in the GTK3TextBuffer."""
+        return self.get_has_selection()
+
 
 class GTK3TextBuffer(Gtk.TextBuffer, GTK3TextBufferMixin):
     """Wrapper for version 3.0 Gtk.TextBuffer."""
