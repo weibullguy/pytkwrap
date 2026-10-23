@@ -33,6 +33,11 @@ class GTK3TextTagTableMixin(GTK3GObjectMixin):
             {_signal: -1 for _signal in self._GTK3_TEXTTAGTABLE_SIGNALS}
         )
 
+    @property
+    def size(self) -> int:
+        """Return the number of tags in the tag table."""
+        return self.get_size()
+
 
 class GTK3TextTagTable(Gtk.TextTagTable, GTK3TextTagTableMixin):
     """Wrapper for version 3.0 Gtk.TextTagTable."""
