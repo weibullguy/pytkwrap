@@ -59,6 +59,16 @@ class GTK3EntryBufferMixin(GTK3GObjectMixin):
         if self.dic_properties["text"] is not None:
             self.set_text(self.dic_properties["text"], len(self.dic_properties["text"]))
 
+    @property
+    def bytes(self) -> int:
+        """Return the number of bytes in the buffer."""
+        return self.get_bytes()
+
+    @property
+    def length(self) -> int:
+        """Return the number of characters in the buffer."""
+        return self.get_length()
+
 
 class GTK3EntryBuffer(Gtk.EntryBuffer, GTK3EntryBufferMixin):
     """Wrapper for version 3.0 Gtk.EntryBuffer."""
