@@ -57,6 +57,9 @@ class GTK3MenuToolButtonMixin(GTK3ToolButtonMixin):
         if self.dic_properties["menu"] is not None:
             self.set_menu(self.dic_properties["menu"])
 
+        self.set_arrow_tooltip_markup(self.dic_properties["tooltip_markup"])
+        self.set_arrow_tooltip_text(self.dic_properties["tooltip_text"])
+
 
 class GTK3MenuToolButton(Gtk.MenuToolButton, GTK3MenuToolButtonMixin):
     """Wrapper for version 3.0 Gtk.MenuToolButton."""
