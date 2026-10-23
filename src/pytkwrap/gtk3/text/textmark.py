@@ -7,6 +7,7 @@
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
+from pytkwrap.gtk3.text import GTK3TextBuffer
 
 
 class GTK3TextMarkMixin(GTK3GObjectMixin):
@@ -29,6 +30,21 @@ class GTK3TextMarkMixin(GTK3GObjectMixin):
 
         # Initialize public instance attributes.
         self.dic_properties = dict(self._GTK3_TEXTMARK_PROPERTIES)
+
+    @property
+    def buffer(self) -> GTK3TextBuffer:
+        """Return the GTK3TextBuffer the text mark is in."""
+        return self.get_buffer()
+
+    @property
+    def deleted(self) -> bool:
+        """Return whether the text mark is deleted."""
+        return self.get_deleted()
+
+    @property
+    def visible(self) -> bool:
+        """Return whether the text mark is visible."""
+        return self.get_visible()
 
 
 class GTK3TextMark(Gtk.TextMark, GTK3TextMarkMixin):
