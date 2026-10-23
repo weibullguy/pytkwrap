@@ -10,11 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.mixins import (
-    GTK3WidgetAttributes,
-    GTK3WidgetProperties,
-    set_widget_sensitivity,
-)
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.text import GTK3TextBuffer
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -76,3 +72,49 @@ class TestGTK3TextBuffer(BaseGTK3GObjectTests):
 
         assert dut.get_property("text") == "Test Text"
         assert dut.get_text(_start, _end, True) == "Test Text"
+
+    @pytest.mark.unit
+    def test_modified(self):
+        """Should return whether the GTK3TextBuffer has been modified."""
+        dut = self.make_dut()
+
+        assert dut.modified is False
+
+        dut.insert(dut.get_start_iter(), "Test\nText", -1)
+
+        assert dut.modified
+
+    @pytest.mark.unit
+    def test_n_chars(self):
+        """Should return the number of characters in the GTK3TextBuffer."""
+        dut = self.make_dut()
+
+        assert dut.n_chars == 0
+
+        dut.insert(dut.get_start_iter(), "Test\nText", -1)
+
+        assert dut.n_chars == 9
+
+    @pytest.mark.unit
+    def test_n_lines(self):
+        """Should return the number of lines in the GTK3TextBuffer."""
+        dut = self.make_dut()
+
+        assert dut.n_lines == 1
+
+        dut.insert(dut.get_start_iter(), "Test\nText", -1)
+
+        assert dut.n_lines == 2
+
+    @pytest.mark.unit
+    def test_text_selected(self):
+        """Should return the text selected in the GTK3TextBuffer."""
+        dut = self.make_dut()
+
+        assert not dut.text_selected
+
+        dut.insert(dut.get_start_iter(), "Test\nText", -1)
+
+        dut.select_range(dut.get_start_iter(), dut.get_end_iter())
+
+        assert dut.text_selected
