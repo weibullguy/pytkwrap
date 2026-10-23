@@ -123,8 +123,18 @@ class TestGTK3MenuToolButton(BaseGTK3GObjectTests):
         dut.do_set_properties(
             GTK3WidgetProperties(
                 menu=_menu,
+                tooltip_markup="Tooltip markup for the GTK3MenuToolButton",
+                tooltip_text="Tooltip text for the GTK3MenuToolButton",
             )
         )
 
         assert dut.get_property("menu") == _menu
         assert dut.get_menu() == _menu
+        assert (
+            dut.do_get_property("tooltip_markup")
+            == "Tooltip markup for the GTK3MenuToolButton"
+        )
+        assert (
+            dut.do_get_property("tooltip_text")
+            == "Tooltip text for the GTK3MenuToolButton"
+        )
