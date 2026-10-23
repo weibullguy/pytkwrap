@@ -10,6 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
+from pytkwrap.gtk3.io import GTK3Entry
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.text import GTK3EntryCompletion
 from tests.gtk3.conftest import BaseGTK3GObjectTests
@@ -92,3 +93,34 @@ class TestGTK3EntryCompletion(BaseGTK3GObjectTests):
         assert not dut.get_popup_single_match()
         assert dut.get_property("text_column") == 1
         assert dut.get_text_column() == 1
+
+    @pytest.mark.unit
+    def test_prefix(self):
+        """Return the completion prefix of the entry."""
+        _entry = GTK3Entry()
+        _model = Gtk.ListStore(str)
+        _model.append(["Completion text"])
+        _model.append(["Complementary text"])
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                inline_completion=True,
+                minimum_key_length=5,
+                model=_model,
+                text_column=0,
+            )
+        )
+        _entry.set_completion(dut)
+
+        assert dut.prefix is None
+
+    @pytest.mark.unit
+    def test_entry(self):
+        """Return the entry associated with the GTK3EntryCompletion."""
+        _entry = GTK3Entry()
+
+        dut = self.make_dut()
+        _entry.set_completion(dut)
+
+        assert dut.entry == _entry
