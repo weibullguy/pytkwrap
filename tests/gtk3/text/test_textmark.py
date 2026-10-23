@@ -10,7 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.text import GTK3TextMark
+from pytkwrap.gtk3.text import GTK3TextBuffer, GTK3TextMark
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
@@ -58,3 +58,40 @@ class TestGTK3TextMark(BaseGTK3GObjectTests):
 
         assert dut.get_left_gravity()
         assert dut.get_name() == "Test Name #2"
+
+    @pytest.mark.unit
+    def test_buffer(self):
+        """Should return the GTK3TextBuffer associated with the GTK3TextMark."""
+        _buffer = GTK3TextBuffer()
+        dut = self.make_dut()
+
+        _buffer.add_mark(dut, _buffer.get_start_iter())
+
+        assert isinstance(dut.buffer, GTK3TextBuffer)
+        assert dut.buffer == _buffer
+
+    @pytest.mark.unit
+    def test_deleted(self):
+        """Should return True if the GTK3TextMark has been deleted."""
+        _buffer = GTK3TextBuffer()
+        dut = self.make_dut()
+
+        _buffer.add_mark(dut, _buffer.get_start_iter())
+
+        assert not dut.deleted
+
+        _buffer.delete_mark(dut)
+
+        assert dut.deleted
+
+    @pytest.mark.unit
+    def test_visible(self):
+        """Should return True if the GTK3TextMark is visible."""
+        dut = self.make_dut()
+        dut.set_visible(True)
+
+        assert dut.visible
+
+        dut.set_visible(False)
+
+        assert not dut.visible
