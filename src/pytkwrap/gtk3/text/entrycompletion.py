@@ -82,6 +82,16 @@ class GTK3EntryCompletionMixin(GTK3GObjectMixin):
         if self.dic_properties["text_column"] >= 0:
             self.set_text_column(self.dic_properties["text_column"])
 
+    @property
+    def prefix(self) -> str:
+        """Return the completion prefix of the entry."""
+        return self.get_completion_prefix()
+
+    @property
+    def entry(self) -> Gtk.Entry:
+        """Return the entry associated with the GTK3EntryCompletion."""
+        return self.get_entry()
+
 
 class GTK3EntryCompletion(Gtk.EntryCompletion, GTK3EntryCompletionMixin):
     """Wrapper for version 3.0 Gtk.EntryCompletion."""
