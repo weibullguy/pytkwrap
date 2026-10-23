@@ -10,11 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.mixins import (
-    GTK3WidgetAttributes,
-    GTK3WidgetProperties,
-    set_widget_sensitivity,
-)
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.text import GTK3EntryBuffer
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -80,3 +76,21 @@ class TestGTK3EntryBuffer(BaseGTK3GObjectTests):
         assert dut.do_get_property("text") == "Test Text"
         assert dut.get_property("text") == "Test Text"
         assert dut.get_text() == "Test Text"
+
+    @pytest.mark.unit
+    def test_bytes(self):
+        """Return the number of bytes in the buffer."""
+        dut = self.make_dut()
+        assert dut.bytes == 0
+
+        dut.set_text("Test Text", len("Test Text"))
+        assert dut.bytes == len("Test Text")
+
+    @pytest.mark.unit
+    def test_length(self):
+        """Return the number of characters in the buffer."""
+        dut = self.make_dut()
+        assert dut.length == 0
+
+        dut.set_text("Test Text", len("Test Text"))
+        assert dut.length == len("Test Text")
