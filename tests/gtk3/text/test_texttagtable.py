@@ -33,3 +33,19 @@ class TestGTK3TextTagTable(BaseGTK3GObjectTests):
         EXPECTED_GOBJECT_HANDLER_IDS | EXPECTED_TEXTTAGTABLE_HANDLER_IDS
     )
     expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_TEXTTAGTABLE_METHODS
+
+    @pytest.mark.unit
+    def test_size(self):
+        """Should return the number of tags in the table."""
+        _tag1 = Gtk.TextTag()
+        _tag2 = Gtk.TextTag()
+
+        dut = self.make_dut()
+        dut.add(_tag1)
+        dut.add(_tag2)
+
+        assert dut.size == 2
+
+        dut.remove(_tag1)
+
+        assert dut.size == 1
