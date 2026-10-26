@@ -57,11 +57,6 @@ class GTK3SeparatorToolItemMixin(GTK3ToolItemMixin):
         # Set the value of each of the mixin properties.
         self.set_draw(self.dic_properties["draw"])
 
-    @property
-    def drawn(self) -> bool:
-        """Return the value of the 'draw' property."""
-        return self.get_draw()
-
 
 class GTK3SeparatorToolItem(Gtk.SeparatorToolItem, GTK3SeparatorToolItemMixin):
     """Wrapper for version 3.0 Gtk.SeparatorToolItem."""

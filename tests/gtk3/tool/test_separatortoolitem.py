@@ -86,18 +86,3 @@ class TestGTK3SeparatorToolItem(BaseGTK3GObjectTests):
 
         assert not dut.get_property("draw")
         assert not dut.get_draw()
-
-    @pytest.mark.unit
-    def test_drawn(self):
-        """Should return the value of the 'draw' property."""
-        dut = self.make_dut()
-
-        assert dut.drawn
-
-        dut.do_set_properties(
-            GTK3WidgetProperties(
-                draw=False,
-            )
-        )
-
-        assert not dut.drawn
