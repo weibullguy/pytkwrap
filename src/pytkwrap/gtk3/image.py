@@ -8,7 +8,7 @@
 from collections.abc import Mapping
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
+from pytkwrap.gtk3._libs import GdkPixbuf, Gio, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
@@ -82,12 +82,42 @@ class GTK3Image(Gtk.Image, GTK3ImageMixin):
 
     def __init__(
         self,
+        animation: GdkPixbuf.PixbufAnimation | None = None,
+        file: str | None = None,
+        gicon: Gio.Icon | None = None,
         icon_name: str | None = None,
-        pixbuf: GdkPixbuf = None,
+        pixbuf: GdkPixbuf.Pixbuf | None = None,
         size: int = 4,
     ) -> None:
-        """Initialize an instance of the GTK3Image."""
-        Gtk.Image.__init__(self, icon_name=icon_name, pixbuf=pixbuf)
+        """Initialize an instance of the GTK3Image.
+
+        Parameters
+        ----------
+        animation : GdkPixbuf.PixbufAnimation | None
+            The animation to use for this GTK3Image.
+        file : str | None
+            The full path to the icon file to use for this GTK3Image.
+        gicon : Gio.Icon | None
+            The Gio.Icon to use for this GTK3Image.
+        icon_name : str | None
+            The name of the icon in the icon theme to use for this GTK3Image.
+        pixbuf : GdkPixbuf.Pixbuf | None
+            The pixbuf to use for this GTK3Image.
+        size : int
+            The size of the icon to use for this GTK3Image.
+        """
+        Gtk.Image.__init__(self, pixbuf=pixbuf)
         GTK3ImageMixin.__init__(self)
 
         self.size = size
+
+        if animation is not None:
+            self.set_from_animation(animation)
+        elif file is not None:
+            self.set_from_file(file)
+        elif gicon is not None:
+            self.set_from_gicon(gicon, size)
+        elif icon_name is not None:
+            self.set_from_icon_name(icon_name, size)
+        elif pixbuf is not None:
+            self.set_from_pixbuf(pixbuf)
