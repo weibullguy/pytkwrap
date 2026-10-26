@@ -11,11 +11,13 @@ from pytkwrap.gtk3.tool.toolitem import GTK3ToolItemMixin as GTK3ToolItemMixin
 
 class GTK3SeparatorToolItemMixin(GTK3ToolItemMixin):
     _GTK3_SEPARATORTOOLITEM_PROPERTIES: Incomplete
-    _GTK3_TOOLITEM_SIGNALS: Incomplete
+    _GTK3_SEPARATORTOOLITEM_SIGNALS: Incomplete
     def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+    @property
+    def drawn(self) -> bool: ...
 
 class GTK3SeparatorToolItem(Gtk.SeparatorToolItem, GTK3SeparatorToolItemMixin):
     def __init__(self) -> None: ...

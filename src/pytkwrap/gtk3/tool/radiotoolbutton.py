@@ -46,7 +46,15 @@ from pytkwrap.gtk3.tool.toggletoolbutton import GTK3ToggleToolButtonMixin
 
 
 class GTK3RadioToolButtonMixin(GTK3ToggleToolButtonMixin):
-    """Mixin class for GTK3RadioToolButton."""
+    """Mixin class for GTK3RadioToolButton.
+
+    Attributes
+    ----------
+    _GTK3_RADIOTOOLBUTTON_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3RadioToolButton.
+    _GTK3_RADIOTOOLBUTTON_SIGNALS : list[str]
+        List of signal names unique to the GTK3RadioToolButton.
+    """
 
     _GTK3_RADIOTOOLBUTTON_PROPERTIES = GTK3WidgetProperties(
         group=[],

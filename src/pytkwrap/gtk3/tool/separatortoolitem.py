@@ -14,18 +14,29 @@ from pytkwrap.gtk3.tool.toolitem import GTK3ToolItemMixin
 
 
 class GTK3SeparatorToolItemMixin(GTK3ToolItemMixin):
-    """Mixin class for GTK3SeparatorToolItem."""
+    """Mixin class for GTK3SeparatorToolItem.
+
+    Attributes
+    ----------
+    _GTK3_SEPARATORTOOLITEM_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3SeparatorToolItem
+    _GTK3_SEPARATORTOOLITEM_SIGNALS : list[str]
+        Signals unique to the GTK3SeparatorToolItem
+    """
 
     _GTK3_SEPARATORTOOLITEM_PROPERTIES = GTK3WidgetProperties(
         draw=True,
     )
-    _GTK3_TOOLITEM_SIGNALS = ["create-menu-proxy", "toolbar-reconfigured"]
+    _GTK3_SEPARATORTOOLITEM_SIGNALS = ["create-menu-proxy", "toolbar-reconfigured"]
 
     def __init__(self, **kwargs) -> None:
         """Initialize an instance of the GTK3SeparatorToolItem mixin."""
         super().__init__(**kwargs)
 
         # Initialize public instance attributes.
+        self.dic_handler_id.update(
+            {_signal: -1 for _signal in self._GTK3_SEPARATORTOOLITEM_SIGNALS}
+        )
         self.dic_properties.update(self._GTK3_SEPARATORTOOLITEM_PROPERTIES)
 
     def do_set_properties(
@@ -45,6 +56,11 @@ class GTK3SeparatorToolItemMixin(GTK3ToolItemMixin):
 
         # Set the value of each of the mixin properties.
         self.set_draw(self.dic_properties["draw"])
+
+    @property
+    def drawn(self) -> bool:
+        """Return the value of the 'draw' property."""
+        return self.get_draw()
 
 
 class GTK3SeparatorToolItem(Gtk.SeparatorToolItem, GTK3SeparatorToolItemMixin):
