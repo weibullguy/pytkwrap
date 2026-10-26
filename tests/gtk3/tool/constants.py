@@ -23,8 +23,16 @@ EXPECTED_MENUTOOLBUTTON_METHODS = [
 ]
 EXPECTED_MENUTOOLBUTTON_PROPERTIES = {"menu": None}
 
+EXPECTED_RADIOTOOLBUTTON_HANDLER_IDS = {"clicked": -1, "toggled": -1}
 EXPECTED_RADIOTOOLBUTTON_METHODS = ["get_group", "set_group"]
-EXPECTED_RADIOTOOLBUTTON_PROPERTIES = {"group": None}
+EXPECTED_RADIOTOOLBUTTON_PROPERTIES = {
+    "group": [],
+    "icon_name": None,
+    "icon_widget": None,
+    "label": "",
+    "label_widget": None,
+    "use_underline": False,
+}
 
 EXPECTED_SEPARATORTOOLITEM_METHODS = ["get_draw", "set_draw"]
 EXPECTED_SEPARATORTOOLITEM_PROPERTIES = {"draw": True}
