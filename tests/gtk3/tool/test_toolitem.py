@@ -9,7 +9,7 @@ import pytest
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.tool import GTK3ToolItem
 from tests.gtk3.conftest import BaseGTK3GObjectTests
@@ -90,3 +90,59 @@ class TestGTK3ToolItem(BaseGTK3GObjectTests):
         assert not dut.get_visible_horizontal()
         assert not dut.get_property("visible_vertical")
         assert not dut.get_visible_vertical()
+
+    @pytest.mark.unit
+    def test_ellipsize_mode(self):
+        """Get the ellipsize mode property of the GTK3ToolItem."""
+        dut = self.make_dut()
+
+        assert dut.ellipsize_mode == Pango.EllipsizeMode.NONE
+
+    @pytest.mark.unit
+    def test_icon_size(self):
+        """Get the icon size property of the GTK3ToolItem."""
+        dut = self.make_dut()
+
+        assert dut.icon_size == 3
+
+    @pytest.mark.unit
+    def test_orientation(self):
+        """Get the orientation property of the GTK3ToolItem."""
+        dut = self.make_dut()
+
+        assert dut.orientation == Gtk.Orientation.HORIZONTAL
+
+    @pytest.mark.unit
+    def test_relief_style(self):
+        """Get the relief style property of the GTK3ToolItem."""
+        dut = self.make_dut()
+
+        assert dut.relief_style == Gtk.ReliefStyle.NONE
+
+    @pytest.mark.unit
+    def test_text_alignment(self):
+        """Get the text alignment property of the GTK3ToolItem."""
+        dut = self.make_dut()
+
+        assert dut.text_alignment == 0.5
+
+    @pytest.mark.unit
+    def test_text_orientation(self):
+        """Get the text orientation property of the GTK3ToolItem."""
+        dut = self.make_dut()
+
+        assert dut.text_orientation == Gtk.Orientation.HORIZONTAL
+
+    @pytest.mark.unit
+    def test_text_size_group(self):
+        """Get the text size group property of the GTK3ToolItem."""
+        dut = self.make_dut()
+
+        assert dut.text_size_group is None
+
+    @pytest.mark.unit
+    def test_toolbar_style(self):
+        """Get the toolbar style property of the GTK3ToolItem."""
+        dut = self.make_dut()
+
+        assert dut.toolbar_style == Gtk.ToolbarStyle.ICONS
