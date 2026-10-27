@@ -14,7 +14,13 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ToolItemGroupMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3ToolItemGroup."""
+    """Mixin class for GTK3ToolItemGroup.
+
+    Attributes
+    ----------
+    _GTK3_TOOLITEM_GROUP_PROPERTIES : GTK3WidgetProperties
+        The GTK3ToolItemGroup-specific properties.
+    """
 
     _GTK3_TOOLITEMGROUP_PROPERTIES = GTK3WidgetProperties(
         collapsed=False,
@@ -54,12 +60,29 @@ class GTK3ToolItemGroupMixin(GTK3ContainerMixin):
         if self.dic_properties["label_widget"] is not None:
             self.set_label_widget(self.dic_properties["label_widget"])
 
+    @property
+    def n_items(self) -> int:
+        """Return the number of items in the GTK3ToolItemGroup.
+
+        Returns
+        -------
+        int
+            The number of items in the GTK3ToolItemGroup.
+        """
+        return self.get_n_items()
+
 
 class GTK3ToolItemGroup(Gtk.ToolItemGroup, GTK3ToolItemGroupMixin):
     """Wrapper for version 3.0 Gtk.ToolItemGroup."""
 
     def __init__(self, label: str = "") -> None:
-        """Initialize an instance of the GTK3ToolItemGroup."""
+        """Initialize an instance of the GTK3ToolItemGroup.
+
+        Parameters
+        ----------
+        label : str
+            The label text for the GTK3ToolItemGroup.
+        """
         Gtk.ToolItemGroup.__init__(self, label=label)
         GTK3ToolItemGroupMixin.__init__(self)
 
