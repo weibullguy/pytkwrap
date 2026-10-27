@@ -11,6 +11,8 @@ from collections.abc import Mapping
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3.tool.toolbutton import GTK3ToolButton
+from pytkwrap.gtk3.tool.toolitem import GTK3ToolItem
 
 
 class GTK3ToolbarMixin(GTK3ContainerMixin):
@@ -57,6 +59,41 @@ class GTK3ToolbarMixin(GTK3ContainerMixin):
         self.set_icon_size(self.dic_properties["icon_size"])
         self.set_show_arrow(self.dic_properties["show_arrow"])
         self.set_style(self.dic_properties["toolbar_style"])
+
+    def do_build_toolbar(
+        self,
+        children: (
+            list[list[GTK3ToolButton | GTK3ToolItem | int]]
+            | list[tuple[GTK3ToolButton | GTK3ToolItem, int]]
+            | tuple[list[GTK3ToolButton | GTK3ToolItem | int]]
+            | tuple[tuple[GTK3ToolButton | GTK3ToolItem, int]]
+        ),
+    ):
+        """Build the toolbar.
+
+        Parameters
+        ----------
+        children : list[list[GTK3ToolButton | GTK3ToolItem | int]] |
+                   list[tuple[GTK3ToolButton | GTK3ToolItem | int]] |
+                   tuple[list[GTK3ToolButton | GTK3ToolItem | int]] |
+                   tuple[tuple[GTK3ToolButton | GTK3ToolItem | int]]
+            The list of lists, list of tuples, tuple of lists, or tuple of tuples
+            containing the children to add to the toolbar.  Each inner list or tuple
+            contains the GTK3ToolButton or GTK3ToolItem to add to the toolbar at
+            index 0 and the position to add it at index 1.
+        """
+        for _child in children:
+            self.insert(_child[0], _child[1])
+
+    @property
+    def n_items(self) -> int:
+        """Return the number of items in the toolbar."""
+        return self.get_n_items()
+
+    @property
+    def relief_style(self) -> Gtk.ReliefStyle:
+        """Return the value of the 'relief_style' property."""
+        return self.get_relief_style()
 
 
 class GTK3Toolbar(Gtk.Toolbar, GTK3ToolbarMixin):
