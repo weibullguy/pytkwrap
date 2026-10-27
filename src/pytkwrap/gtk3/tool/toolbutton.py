@@ -14,7 +14,15 @@ from pytkwrap.gtk3.tool.toolitem import GTK3ToolItemMixin
 
 
 class GTK3ToolButtonMixin(GTK3ToolItemMixin):
-    """Mixin class for GTK3ToolButton."""
+    """Mixin class for GTK3ToolButton.
+
+    Attributes
+    ----------
+    _GTK3_TOOLBUTTON_PROPERTIES : GTK3WidgetProperties
+        The GTK3ToolButton-specific properties.
+    _GTK3_TOOLBUTTON_SIGNALS : list[str]
+        The GTK3ToolButton-specific signals.
+    """
 
     _GTK3_TOOLBUTTON_PROPERTIES = GTK3WidgetProperties(
         icon_name=None,
@@ -66,7 +74,15 @@ class GTK3ToolButton(Gtk.ToolButton, GTK3ToolButtonMixin):
         icon_widget: Gtk.Widget | None = None,
         label: str | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3ToolButton."""
+        """Initialize an instance of the GTK3ToolButton.
+
+        Parameters
+        ----------
+        icon_widget : Gtk.Widget | None
+            The icon widget to use for the tool button.
+        label : str | None
+            The label to use for the tool button.
+        """
         Gtk.ToolButton.__init__(self, icon_widget=icon_widget, label=label)
         GTK3ToolButtonMixin.__init__(self)
 
