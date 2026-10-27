@@ -11,7 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.tool import GTK3Toolbar
+from pytkwrap.gtk3.tool import GTK3Toolbar, GTK3ToolItem
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
@@ -93,3 +93,77 @@ class TestGTK3Toolbar(BaseGTK3GObjectTests):
         assert not dut.get_show_arrow()
         assert dut.get_property("toolbar_style") == Gtk.ToolbarStyle.BOTH
         assert dut.get_style() == Gtk.ToolbarStyle.BOTH
+
+    @pytest.mark.unit
+    def test_do_build_toolbar_with_list_of_lists(self):
+        """Should build a toolbar with the children passed in."""
+        _toolitem1 = GTK3ToolItem()
+        _toolitem2 = GTK3ToolItem()
+
+        dut = self.make_dut()
+        dut.do_build_toolbar([[_toolitem1, 0], [_toolitem2, 1]])
+
+        assert dut.n_items == 2
+        assert dut.get_nth_item(0) == _toolitem1
+        assert dut.get_nth_item(1) == _toolitem2
+
+    @pytest.mark.unit
+    def test_do_build_toolbar_with_list_of_tuples(self):
+        """Should build a toolbar with the children passed in."""
+        _toolitem1 = GTK3ToolItem()
+        _toolitem2 = GTK3ToolItem()
+
+        dut = self.make_dut()
+        dut.do_build_toolbar([(_toolitem1, 0), (_toolitem2, 1)])
+
+        assert dut.n_items == 2
+        assert dut.get_nth_item(0) == _toolitem1
+        assert dut.get_nth_item(1) == _toolitem2
+
+    @pytest.mark.unit
+    def test_do_build_toolbar_with_tuple_of_lists(self):
+        """Should build a toolbar with the children passed in."""
+        _toolitem1 = GTK3ToolItem()
+        _toolitem2 = GTK3ToolItem()
+
+        dut = self.make_dut()
+        dut.do_build_toolbar(([_toolitem1, 0], [_toolitem2, 1]))
+
+        assert dut.n_items == 2
+        assert dut.get_nth_item(0) == _toolitem1
+        assert dut.get_nth_item(1) == _toolitem2
+
+    @pytest.mark.unit
+    def test_do_build_toolbar_with_tuple_of_tuples(self):
+        """Should build a toolbar with the children passed in."""
+        _toolitem1 = GTK3ToolItem()
+        _toolitem2 = GTK3ToolItem()
+
+        dut = self.make_dut()
+        dut.do_build_toolbar(((_toolitem1, 0), (_toolitem2, 1)))
+
+        assert dut.n_items == 2
+        assert dut.get_nth_item(0) == _toolitem1
+        assert dut.get_nth_item(1) == _toolitem2
+
+    @pytest.mark.unit
+    def test_n_items(self):
+        """Should return the number of items in the toolbar."""
+        _toolitem1 = GTK3ToolItem()
+        _toolitem2 = GTK3ToolItem()
+
+        dut = self.make_dut()
+        assert dut.n_items == 0
+
+        dut.insert(_toolitem1, 0)
+        assert dut.n_items == 1
+
+        dut.insert(_toolitem2, 1)
+        assert dut.n_items == 2
+
+    @pytest.mark.unit
+    def test_relief_style(self):
+        """Should return the relief style of the toolbar."""
+        dut = self.make_dut()
+
+        assert dut.relief_style == Gtk.ReliefStyle.NONE
