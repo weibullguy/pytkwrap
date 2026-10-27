@@ -11,7 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.tool import GTK3ToolItemGroup
+from pytkwrap.gtk3.tool import GTK3ToolItem, GTK3ToolItemGroup
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
@@ -121,3 +121,18 @@ class TestGTK3ToolItemGroup(BaseGTK3GObjectTests):
         assert dut.get_label() == "Test Label Widget"
         assert dut.get_property("label_widget").get_text() == "Test Label Widget"
         assert dut.get_label_widget().get_text() == "Test Label Widget"
+
+    @pytest.mark.unit
+    def test_n_items(self):
+        """Should return the number of items in the GTK3ToolItemGroup."""
+        _toolitem1 = GTK3ToolItem()
+        _toolitem2 = GTK3ToolItem()
+
+        dut = self.make_dut()
+
+        assert dut.n_items == 0
+
+        dut.add(_toolitem1)
+        dut.add(_toolitem2)
+
+        assert dut.n_items == 2
