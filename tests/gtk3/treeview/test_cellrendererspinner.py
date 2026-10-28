@@ -23,7 +23,7 @@ from tests.gtk3.treeview.constants import (
 
 
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3CellRenderer(BaseGTK3GObjectTests):
+class TestGTK3CellRendererSpinner(BaseGTK3GObjectTests):
     """Test class for the GTK3CellRendererSpinner class."""
 
     widget_class = GTK3CellRendererSpinner

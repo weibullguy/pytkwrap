@@ -25,7 +25,7 @@ from tests.gtk3.treeview.constants import (
 
 
 @pytest.mark.usefixtures("suppress_stderr")
-class TestGTK3CellRenderer(BaseGTK3GObjectTests):
+class TestGTK3CellRendererText(BaseGTK3GObjectTests):
     """Test class for the GTK3CellRendererText class."""
 
     widget_class = GTK3CellRendererText
