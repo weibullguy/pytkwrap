@@ -15,7 +15,13 @@ from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRendererMixin
 
 
 class GTK3CellRendererProgressMixin(GTK3CellRendererMixin):
-    """Mixin class for GTK3CellRendererProgress."""
+    """Mixin class for GTK3CellRendererProgress.
+
+    Attributes
+    ----------
+    _GTK3_CELLRENDERERPROGRESS_PROPERTIES : GTK3WidgetProperties
+        Properties unique to GTK3CellRendererProgress.
+    """
 
     _GTK3_CELLRENDERERPROGRESS_PROPERTIES = GTK3WidgetProperties(
         inverted=False,
