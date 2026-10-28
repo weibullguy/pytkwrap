@@ -145,10 +145,10 @@ class TestGTK3CellRendererPixbuf(BaseGTK3GObjectTests):
         assert dut.get_property("stock_size") == 1
         assert dut.get_property("surface") is None
 
-    @pytest.mark.skip
+    @pytest.mark.unit
     def test_do_set_properties_surface(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        _surface = cairo.Surface.create_for_rectangle(0.0, 0.0, 100.0, 100.0)
+        _surface = cairo.SVGSurface(None, 72.0, 72.0)
 
         dut = self.make_dut()
         dut.do_set_properties(
