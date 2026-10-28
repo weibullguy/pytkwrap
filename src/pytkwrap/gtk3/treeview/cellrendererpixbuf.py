@@ -14,7 +14,13 @@ from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRendererMixin
 
 
 class GTK3CellRendererPixbufMixin(GTK3CellRendererMixin):
-    """Mixin class for GTK3CellRendererPixbuf."""
+    """Mixin class for GTK3CellRendererPixbuf.
+
+    Attributes
+    ----------
+    _GTK3_CELLRENDEREREPIXBUF_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3CellRendererPixbuf.
+    """
 
     _GTK3_CELLRENDERERPIXBUF_PROPERTIES = GTK3WidgetProperties(
         gicon=None,
