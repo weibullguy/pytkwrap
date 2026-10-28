@@ -14,7 +14,15 @@ from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRendererMixin
 
 
 class GTK3CellRendererToggleMixin(GTK3CellRendererMixin):
-    """Mixin class for GTK3CellRendererToggle."""
+    """Mixin class for GTK3CellRendererToggle.
+
+    Attributes
+    ----------
+    _GTK3_CELLRENDERERTOGGLE_PROPERTIES : GTK3WidgetProperties
+        Properties unique to GTK3CellRendererToggle.
+    _GTK3_CELLRENDERERTOGGLE_SIGNALS : list[str]
+        Signals unique to GTK3CellRendererToggle.
+    """
 
     _GTK3_CELLRENDERERTOGGLE_PROPERTIES = GTK3WidgetProperties(
         activatable=True,
