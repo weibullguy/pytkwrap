@@ -14,7 +14,13 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ToolPaletteMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3ToolPalette."""
+    """Mixin class for GTK3ToolPalette.
+
+    Attributes
+    ----------
+    _GTK3_TOOLPALETTE_PROPERTIES : GTK3WidgetProperties
+        The GTK3ToolPalette-specific properties.
+    """
 
     _GTK3_TOOLPALETTE_PROPERTIES = GTK3WidgetProperties(
         icon_size=Gtk.IconSize.SMALL_TOOLBAR,
