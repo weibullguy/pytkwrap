@@ -147,3 +147,10 @@ class TestGTK3CellRenderer(BaseGTK3GObjectTests):
         assert dut.do_get_property("xpad") == 0
         assert dut.do_get_property("yalign") == 0.5
         assert dut.do_get_property("ypad") == 0
+
+    @pytest.mark.unit
+    def test_request_mode(self):
+        """Should return the request mode of a GTK3CellRenderer."""
+        dut = self.make_dut()
+
+        assert dut.request_mode == Gtk.SizeRequestMode.HEIGHT_FOR_WIDTH
