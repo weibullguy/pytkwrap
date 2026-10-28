@@ -14,10 +14,14 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
 class GTK3CellViewMixin(GTK3WidgetMixin):
-    """Mixin class for GTK3CellView."""
+    """Mixin class for GTK3CellView.
 
-    _DEFAULT_HEIGHT = -1
-    _DEFAULT_WIDTH = -1
+    Attributes
+    ----------
+    _GTK3_CELLVIEW_PROPERTIES : GTK3WidgetProperties
+        Properties unique to GTK3CellView.
+    """
+
     _GTK3_CELLVIEW_PROPERTIES = GTK3WidgetProperties(
         background=None,
         background_rgba=None,
@@ -58,10 +62,15 @@ class GTK3CellViewMixin(GTK3WidgetMixin):
         self.set_fit_model(self.dic_properties["fit_model"])
         self.set_model(self.dic_properties["model"])
 
-        for _property in ["background", "background_set"]:
+        for _property in ["background"]:
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+    @property
+    def displayed_row(self) -> Gtk.TreePath | None:
+        """Return the displayed row of the cell view."""
+        return self.get_displayed_row()
 
 
 class GTK3CellView(Gtk.CellView, GTK3CellViewMixin):
@@ -69,9 +78,15 @@ class GTK3CellView(Gtk.CellView, GTK3CellViewMixin):
 
     def __init__(
         self,
-        cell_area_context: Gtk.CellAreaContext = None,
+        cell_area_context: Gtk.CellAreaContext | None = None,
     ) -> None:
-        """Initialize an instance of the GTK3CellView."""
+        """Initialize an instance of the GTK3CellView.
+
+        Parameters
+        ----------
+        cell_area_context : Gtk.CellAreaContext | None, optional
+            The cell area context to use for the cell view, by default None.
+        """
         Gtk.CellView.__init__(
             self,
             cell_area_context=cell_area_context,
