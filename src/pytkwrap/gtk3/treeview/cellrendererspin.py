@@ -15,7 +15,13 @@ from pytkwrap.gtk3.treeview.cellrenderertext import GTK3CellRendererTextMixin
 
 
 class GTK3CellRendererSpinMixin(GTK3CellRendererTextMixin):
-    """Mixin class for GTK3CellRendererSpin."""
+    """Mixin class for GTK3CellRendererSpin.
+
+    Attributes
+    ----------
+    _GTK3_CELLRENDERERSPIN_PROPERTIES : GTK3WidgetProperties
+        Properties unique to GTK3CellRendererSpin.
+    """
 
     _GTK3_CELLRENDERERSPIN_PROPERTIES = GTK3WidgetProperties(
         adjustment=None,
