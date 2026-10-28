@@ -13,7 +13,15 @@ from pytkwrap.gtk3.mixins import GTK3GObjectMixin, GTK3WidgetProperties
 
 
 class GTK3CellRendererMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3CellRenderer."""
+    """Mixin class for GTK3CellRenderer.
+
+    Attributes
+    ----------
+    _GTK3_CELLRENDERER_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3CellRenderer.
+    _GTK3_CELLRENDERER_SIGNALS : list[str]
+        Signals unique to the GTK3CellRenderer.
+    """
 
     _GTK3_CELLRENDERER_PROPERTIES = GTK3WidgetProperties(
         cell_background=None,
@@ -77,6 +85,11 @@ class GTK3CellRendererMixin(GTK3GObjectMixin):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+    @property
+    def request_mode(self) -> Gtk.SizeRequestMode:
+        """Get the request mode of the GTK3CellRenderer."""
+        return self.get_request_mode()
 
 
 class GTK3CellRenderer(Gtk.CellRenderer, GTK3CellRendererMixin):
