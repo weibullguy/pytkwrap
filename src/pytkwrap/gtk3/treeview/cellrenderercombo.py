@@ -14,7 +14,15 @@ from pytkwrap.gtk3.treeview.cellrenderertext import GTK3CellRendererTextMixin
 
 
 class GTK3CellRendererComboMixin(GTK3CellRendererTextMixin):
-    """Mixin class for GTK3CellRendererCombo."""
+    """Mixin class for GTK3CellRendererCombo.
+
+    Attributes
+    ----------
+    _GTK3_CELLRENDERERCOMBO_PROPERTIES : GTK3WidgetProperties
+        The GTK3CellRendererCombo-specific properties.
+    _GTK3_CELLRENDERERCOMBO_SIGNALS : list[str]
+        The GTK3CellRendererCombo-specific signals.
+    """
 
     _GTK3_CELLRENDERERCOMBO_PROPERTIES = GTK3WidgetProperties(
         has_entry=True,
