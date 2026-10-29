@@ -9,6 +9,18 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 class GTK3TreeModelSortMixin(GTK3GObjectMixin):
     _GTK3_TREEMODELSORT_PROPERTIES: Incomplete
     def __init__(self, **kwargs) -> None: ...
+    def do_convert_iter(
+        self,
+        child_iter: Gtk.TreeIter | None = None,
+        sorted_iter: Gtk.TreeIter | None = None,
+        child_to_sorted: bool = True,
+    ) -> tuple[bool, Gtk.TreeIter] | Gtk.TreeIter: ...
+    def do_convert_path(
+        self,
+        child_path: Gtk.TreePath | None = None,
+        sorted_path: Gtk.TreePath | None = None,
+        child_to_sorted: bool = True,
+    ) -> Gtk.TreePath | None: ...
 
 class GTK3TreeModelSort(Gtk.TreeModelSort, GTK3TreeModelSortMixin):
     def __init__(self, model: Gtk.TreeModel | None) -> None: ...
