@@ -19,8 +19,9 @@ from tests.gtk3.constants import (
     EXPECTED_GOBJECT_METHODS,
 )
 from tests.gtk3.treeview.constants import (
-    EXPECTED_LISTSTORE_ATTRIBUTES,
     EXPECTED_LISTSTORE_METHODS,
+    EXPECTED_TREEMODEL_ATTRIBUTES,
+    EXPECTED_TREEMODEL_METHODS,
 )
 
 
@@ -29,9 +30,13 @@ class TestGTK3ListStore(BaseGTK3GObjectTests):
     """Test class for the GTK3ListStore class."""
 
     widget_class = GTK3ListStore
-    expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_LISTSTORE_ATTRIBUTES
+    expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_TREEMODEL_ATTRIBUTES
     expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS
-    expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_LISTSTORE_METHODS
+    expected_methods = (
+        EXPECTED_GOBJECT_METHODS
+        + EXPECTED_TREEMODEL_METHODS
+        + EXPECTED_LISTSTORE_METHODS
+    )
 
     def make_dut(self, column_types=None, n_columns=0, n_rows=0):
         """Create a device under test for the GTK3ListStore."""
@@ -94,6 +99,9 @@ class TestGTK3ListStore(BaseGTK3GObjectTests):
         )
 
         assert dut.do_get_attribute("column_types") == [str, int, float]
+        assert dut.get_column_type(0) == GObject.TYPE_STRING
+        assert dut.get_column_type(1) == GObject.TYPE_INT
+        assert dut.get_column_type(2) == GObject.TYPE_DOUBLE
         assert dut.do_get_attribute("n_columns") == 3
         assert dut.get_n_columns() == 3
         assert dut.do_get_attribute("n_rows") == 10

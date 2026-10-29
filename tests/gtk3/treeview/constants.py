@@ -186,7 +186,6 @@ EXPECTED_CELLVIEW_PROPERTIES = {
     "model": None,
 }
 
-EXPECTED_LISTSTORE_ATTRIBUTES = {"column_types": None, "n_columns": 0, "n_rows": 0}
 EXPECTED_LISTSTORE_METHODS = [
     "append",
     "clear",
@@ -205,6 +204,38 @@ EXPECTED_LISTSTORE_METHODS = [
     "set_column_types",
     "set_value",
     "swap",
+]
+
+EXPECTED_TREEMODEL_ATTRIBUTES = {"column_types": None, "n_columns": 0, "n_rows": 0}
+EXPECTED_TREEMODEL_METHODS = [
+    "filter_new",
+    "foreach",
+    "get",
+    "get_column_type",
+    "get_flags",
+    "get_iter",
+    "get_iter_first",
+    "get_iter_from_string",
+    "get_n_columns",
+    "get_path",
+    "get_string_from_iter",
+    "get_value",
+    "iter_children",
+    "iter_has_child",
+    "iter_n_children",
+    "iter_next",
+    "iter_nth_child",
+    "iter_parent",
+    "iter_previous",
+    "ref_node",
+    "row_changed",
+    "row_deleted",
+    "row_has_child_toggled",
+    "row_inserted",
+    "rows_reordered",
+    "set_row",
+    "sort_new_with_model",
+    "unref_node",
 ]
 
 EXPECTED_TREEMODELSORT_METHODS = [
