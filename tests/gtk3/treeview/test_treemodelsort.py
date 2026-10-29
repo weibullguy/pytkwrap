@@ -11,7 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
-from pytkwrap.gtk3.treeview import GTK3TreeModelSort
+from pytkwrap.gtk3.treeview import GTK3ListStore, GTK3TreeModelSort
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
@@ -54,3 +54,87 @@ class TestGTK3TreeModelSort(BaseGTK3GObjectTests):
 
         assert dut.dic_properties == self.expected_properties
         assert dut.do_get_property("model") is None
+
+    @pytest.mark.unit
+    def test_do_convert_rows_child_to_sorted(self):
+        """Should convert a child iter to a sorted iter."""
+        _child_model = GTK3ListStore(
+            column_types=[str, str, float],
+            n_columns=3,
+            n_rows=0,
+        )
+        _child_model.do_insert_row(["Test", "Text0", 3.2], 0, [0, 1, 2])
+        _child_model.do_insert_row(["Test", "Text1", 5.0], 1, [0, 1, 2])
+        _child_model.do_insert_row(["Test", "Text2", 8.71], 2, [0, 1, 2])
+        _child_iter = _child_model[1].iter
+
+        dut = self.make_dut(model=_child_model)
+        _was_set, _sort_iter = dut.do_convert_iter(child_iter=_child_iter)
+
+        assert _was_set
+        assert isinstance(_sort_iter, Gtk.TreeIter)
+        assert dut.get_value(_sort_iter, 0) == _child_model.get_value(_child_iter, 0)
+        assert dut.get_value(_sort_iter, 1) == _child_model.get_value(_child_iter, 1)
+        assert dut.get_value(_sort_iter, 2) == _child_model.get_value(_child_iter, 2)
+
+    @pytest.mark.unit
+    def test_do_convert_rows_sorted_to_child(self):
+        """Should convert a sorted iter to a child iter."""
+        _child_model = GTK3ListStore(
+            column_types=[str, str, float],
+            n_columns=3,
+            n_rows=0,
+        )
+        _child_model.do_insert_row(["Test", "Text0", 3.2], 0, [0, 1, 2])
+        _child_model.do_insert_row(["Test", "Text1", 5.0], 1, [0, 1, 2])
+        _child_model.do_insert_row(["Test", "Text2", 8.71], 2, [0, 1, 2])
+
+        dut = self.make_dut(model=_child_model)
+        _sorted_iter = dut.do_convert_iter(
+            sorted_iter=dut[1].iter,
+            child_to_sorted=False,
+        )
+
+        assert isinstance(_sorted_iter, Gtk.TreeIter)
+        assert _child_model.get_value(_sorted_iter, 0) == dut.get_value(dut[1].iter, 0)
+        assert _child_model.get_value(_sorted_iter, 1) == dut.get_value(dut[1].iter, 1)
+        assert _child_model.get_value(_sorted_iter, 2) == dut.get_value(dut[1].iter, 2)
+
+    @pytest.mark.unit
+    def test_do_convert_path_child_to_sorted(self):
+        """Should convert a child path to a sorted path."""
+        _child_model = GTK3ListStore(
+            column_types=[str, str, float],
+            n_columns=3,
+            n_rows=0,
+        )
+        _child_model.do_insert_row(["Test", "Text0", 3.2], 0, [0, 1, 2])
+        _child_model.do_insert_row(["Test", "Text1", 5.0], 1, [0, 1, 2])
+        _child_model.do_insert_row(["Test", "Text2", 8.71], 2, [0, 1, 2])
+        _child_path = _child_model.get_path(_child_model[1].iter)
+
+        dut = self.make_dut(model=_child_model)
+        _sort_path = dut.do_convert_path(child_path=_child_path)
+
+        assert isinstance(_sort_path, Gtk.TreePath)
+        assert _sort_path == dut.get_path(dut[1].iter)
+
+    @pytest.mark.unit
+    def test_do_convert_path_sorted_to_child(self):
+        """Should convert a sorted path to a child path."""
+        _child_model = GTK3ListStore(
+            column_types=[str, str, float],
+            n_columns=3,
+            n_rows=0,
+        )
+        _child_model.do_insert_row(["Test", "Text0", 3.2], 0, [0, 1, 2])
+        _child_model.do_insert_row(["Test", "Text1", 5.0], 1, [0, 1, 2])
+        _child_model.do_insert_row(["Test", "Text2", 8.71], 2, [0, 1, 2])
+        _child_path = _child_model.get_path(_child_model[1].iter)
+
+        dut = self.make_dut(model=_child_model)
+        _sort_path = dut.get_path(dut[1].iter)
+        _child_path = dut.do_convert_path(sorted_path=_sort_path, child_to_sorted=False)
+
+        assert isinstance(_child_path, Gtk.TreePath)
+        assert _child_path == _child_model.get_path(_child_model[1].iter)
