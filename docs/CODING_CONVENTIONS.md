@@ -4,6 +4,15 @@ This document records project conventions as they are established. Add to it
 when new conventions are agreed upon, and update it when an existing convention
 changes.
 
+## Imports and formatting
+
+- Group imports in this order: standard library, third-party packages, then
+  pytkwrap package or local imports. Separate groups with the headings
+  configured in `pyproject.toml` and let isort order imports within each group.
+- Format Python files with the configured formatters and linters. Keep lines
+  within the configured 88-character limit except where a targeted tool
+  suppression is necessary.
+
 ## Function and method names
 
 - Use the `do_` prefix for functions and methods that perform an action, such as
@@ -35,6 +44,8 @@ changes.
   message on `do_log_error` and raises the requested pytkwrap exception.
 - When wrapping an underlying exception, pass it as `cause` so the original
   error remains available through exception chaining.
+- Existing common and GTK3 mixin methods that publish directly are legacy
+  behavior; use the helper for new error paths rather than copying that pattern.
 
 ## Shared utilities
 
@@ -57,7 +68,7 @@ changes.
   `hatch run test:unit <path to test file>`.
 - Add `--isolated` when the test class uses
   `@pytest.mark.usefixtures("skip_if_not_isolated")`.
-- Run type checks with `hatch run type:all <path to file>` and lint checks with
+- Run type checks with `hatch run types:all <path to file>` and lint checks with
   `hatch run lint:all <path to file>`.
 - Treat passing `lint:all` as a requirement for implementation and stub files.
 - Run `lint:all` on test files when practical, but treat it as a recommendation
