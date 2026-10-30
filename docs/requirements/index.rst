@@ -18,6 +18,8 @@ follows throughout the pytkwrap requirements:
   contains an open issue or conflict that must be resolved before the
   requirement can be baselined. A requirement containing **TBR** is
   under review and cannot be verified until resolved.
+- **Planned** indicates an in-scope requirement for a future feature
+  that is not part of the current implementation baseline.
 
 .. toctree::
    :maxdepth: 2

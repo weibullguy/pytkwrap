@@ -36,7 +36,7 @@ PTW-COM-U-001
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_boolean_to_integer_true``
               ``tests/test_utilities.py::test_boolean_to_integer_false``
 
@@ -58,7 +58,7 @@ PTW-COM-U-002
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_integer_to_boolean_positive``
               ``tests/test_utilities.py::test_integer_to_boolean_zero``
               ``tests/test_utilities.py::test_integer_to_boolean_negative``
@@ -84,7 +84,7 @@ PTW-COM-U-003
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_string_to_boolean_true_strings``
               ``tests/test_utilities.py::test_string_to_boolean_false_strings``
               ``tests/test_utilities.py::test_string_to_boolean_boolean_input``
@@ -108,7 +108,7 @@ PTW-COM-U-004
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_none_to_default_none_value``
               ``tests/test_utilities.py::test_none_to_default_non_none_value``
 
@@ -130,7 +130,7 @@ PTW-COM-U-005
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_none_to_string_none``
               ``tests/test_utilities.py::test_none_to_string_none_string``
               ``tests/test_utilities.py::test_none_to_string_valid_string``
@@ -157,7 +157,7 @@ PTW-COM-U-006
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_date_to_ordinal_valid``
               ``tests/test_utilities.py::test_date_to_ordinal_invalid``
 
@@ -180,7 +180,7 @@ PTW-COM-U-007
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_ordinal_to_date_valid``
               ``tests/test_utilities.py::test_ordinal_to_date_invalid``
 
@@ -203,7 +203,7 @@ PTW-COM-U-008
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_string_to_date_valid``
               ``tests/test_utilities.py::test_string_to_date_invalid``
 
@@ -228,7 +228,7 @@ PTW-COM-U-009
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_split_string_default_delimiter``
               ``tests/test_utilities.py::test_split_string_custom_delimiter``
 
@@ -256,7 +256,7 @@ PTW-COM-U-010
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_sort_dict_by_value``
               ``tests/test_utilities.py::test_sort_dict_by_key``
               ``tests/test_utilities.py::test_sort_dict_reverse``
@@ -283,7 +283,7 @@ PTW-COM-U-011
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_clamp_within_range``
               ``tests/test_utilities.py::test_clamp_below_minimum``
               ``tests/test_utilities.py::test_clamp_above_maximum``
@@ -309,7 +309,7 @@ PTW-COM-U-012
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_file_exists_true``
               ``tests/test_utilities.py::test_file_exists_false``
 
@@ -330,7 +330,7 @@ PTW-COM-U-013
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_dir_exists_true``
               ``tests/test_utilities.py::test_dir_exists_false``
 
@@ -352,7 +352,7 @@ PTW-COM-U-014
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_get_home_directory``
 
 ----
@@ -372,7 +372,7 @@ PTW-COM-U-015
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_get_install_prefix``
 
 ----
@@ -398,6 +398,6 @@ PTW-COM-U-016
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/test_utilities.py::test_deprecated_emits_warning``
               ``tests/test_utilities.py::test_deprecated_calls_original_function``

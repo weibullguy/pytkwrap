@@ -24,16 +24,18 @@ Architecture
 PTW-SR-A-001
 ------------
 
-:Description: pytkwrap **SHALL** be organized into a common layer and
-              one or more toolkit-specific layers.
-:Rationale:   Separating toolkit-agnostic code from toolkit-specific
-              code enables the same API to be provided across multiple
-              toolkits without duplication of shared logic.
+:Description: pytkwrap **SHALL** separate shared convenience behavior
+              from toolkit-specific wrapper behavior. The current
+              implementation **SHALL** provide a common package and a
+              GTK3 package.
+:Rationale:   Separating shared behavior from GTK3-specific code
+              organizes the current implementation and leaves room for
+              future toolkit support without asserting API parity today.
 :Traces to:   :ref:`PTW-SN-004`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -43,17 +45,19 @@ PTW-SR-A-001
 PTW-SR-A-002
 ------------
 
-:Description: The common layer **SHALL** contain no toolkit-specific
-              imports or dependencies.
-:Rationale:   Toolkit-specific imports in the common layer would
-              create coupling between toolkits and prevent the common
-              layer from being used independently of any specific
-              toolkit.
+:Description: The common layer **SHALL NOT** import a GUI toolkit
+              implementation. Dependencies on toolkit-independent
+              libraries, including PyPubSub and Matplotlib, are
+              permitted.
+:Rationale:   Keeping GUI toolkit imports out of the common package
+              prevents direct coupling to a particular GUI toolkit;
+              this requirement does not prohibit shared third-party
+              libraries.
 :Traces to:   :ref:`PTW-SN-004`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -63,16 +67,19 @@ PTW-SR-A-002
 PTW-SR-A-003
 ------------
 
-:Description: Each toolkit-specific layer **SHALL** inherit from the
-              common layer.
-:Rationale:   Inheritance from the common layer ensures that all
-              toolkit implementations share the same base API and
-              attribute infrastructure.
+:Description: GTK3 wrapper mixins and classes **SHALL** use
+              ``PyTkWrapMixin`` where shared wrapper configuration and
+              error-reporting behavior is required. Native GTK classes
+              **SHALL** remain part of the concrete wrapper inheritance
+              hierarchy.
+:Rationale:   The current implementation composes GTK3 mixins with
+              native GTK classes; it does not require every toolkit
+              class to inherit from a universal common base class.
 :Traces to:   :ref:`PTW-SN-004`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -90,7 +97,7 @@ PTW-SR-A-004
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -108,9 +115,9 @@ PTW-SR-A-005
               only the addition of a new toolkit-specific layer.
 :Traces to:   :ref:`PTW-SN-006`
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A
 
 ----
@@ -132,7 +139,7 @@ PTW-SR-W-001
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -151,7 +158,7 @@ PTW-SR-W-002
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       test_PTW_SR_W_002 in all widget test suites.
 
 ----
@@ -172,7 +179,7 @@ PTW-SR-W-003
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -182,19 +189,20 @@ PTW-SR-W-003
 PTW-SR-W-004
 ------------
 
-:Description: Widget properties **SHALL** be configurable via a
-              single typed dictionary without requiring the developer
-              to call individual toolkit setter methods.
-:Rationale:   Individual toolkit setter methods are numerous,
-              inconsistently named across toolkits, and require
-              knowledge of valid parameter types. A typed dictionary
-              interface reduces cognitive load and configuration
-              errors.
+:Description: GTK3 wrapper properties **SHALL** be configurable through
+              ``do_set_properties()`` using a mapping or iterable of
+              key/value pairs. Common wrapper attributes **SHALL** be
+              configurable separately through ``do_set_attributes()``
+              using a mapping.
+:Rationale:   Separate property and attribute mappings preserve the
+              distinction between native toolkit properties and
+              pytkwrap configuration. Typed dictionaries provide static
+              type information but do not validate values at runtime.
 :Traces to:   :ref:`PTW-SN-003`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -204,17 +212,18 @@ PTW-SR-W-004
 PTW-SR-W-005
 ------------
 
-:Description: Widget attributes **SHALL** be configurable via a
-              single typed dictionary without requiring the developer
-              to set individual instance attributes directly.
-:Rationale:   Direct attribute access bypasses validation and
-              synchronization logic. A typed dictionary interface
-              provides a consistent, validated configuration mechanism.
+:Description: Common wrapper attributes **SHALL** be configurable
+              through ``do_set_attributes()`` using partial mappings;
+              omitted keys **SHALL** retain their current values.
+:Rationale:   A shared mapping interface supports incremental
+              configuration without requiring direct assignment to
+              individual instance attributes. Type annotations aid
+              static checking but do not perform runtime validation.
 :Traces to:   :ref:`PTW-SN-003`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -224,18 +233,20 @@ PTW-SR-W-005
 PTW-SR-W-006
 ------------
 
-:Description: Each data widget **SHALL** provide a ``do_get_value()``
-              method that returns the widget's current displayed value
-              in an appropriate Python type.
-:Rationale:   A consistent value retrieval interface allows
-              application code to interact with any data widget
-              without toolkit-specific knowledge of how to read
-              the widget's value.
+:Description: A value-bearing wrapper **SHALL** provide a
+              ``do_get_value()`` method that returns its current value
+              in the Python type defined by that wrapper. The base
+              ``PyTkWrapMixin`` implementation **SHALL** report an
+              unsupported value operation by logging and raising
+              ``NoValueError``.
+:Rationale:   Concrete wrappers expose their own value types through a
+              consistent method name, while non-value wrappers need
+              not implement an artificial value interface.
 :Traces to:   :ref:`PTW-SN-001`, :ref:`PTW-SN-004`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -245,19 +256,19 @@ PTW-SR-W-006
 PTW-SR-W-007
 ------------
 
-:Description: Each data widget **SHALL** provide a ``do_set_value()``
-              method that accepts a value and updates the widget's
-              displayed value without triggering the widget's edit
-              signal callback.
-:Rationale:   Setting a widget's value programmatically **SHALL** not
-              trigger the same callback as a user-initiated edit, as
-              this would cause unintended feedback loops in
-              publish-subscribe messaging architectures.
+:Description: A value-bearing wrapper **SHALL** provide a
+              ``do_set_value()`` method that updates its displayed
+              value. GTK3 ``do_update()`` operations **SHALL** block
+              the configured edit-signal handler while applying a
+              programmatic value.
+:Rationale:   Separating value access from GTK3 signal suppression
+              preserves a common method name while preventing a
+              message-driven update from being treated as a user edit.
 :Traces to:   :ref:`PTW-SN-001`, :ref:`PTW-SN-004`, :ref:`PTW-SN-010`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -279,9 +290,9 @@ PTW-SR-C-001
               requiring this pattern.
 :Traces to:   :ref:`PTW-SN-007`, :ref:`PTW-SN-008`
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -299,9 +310,9 @@ PTW-SR-C-002
               scientific applications.
 :Traces to:   :ref:`PTW-SN-008`
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -319,9 +330,9 @@ PTW-SR-C-003
               that pytkwrap **SHALL** encapsulate.
 :Traces to:   :ref:`PTW-SN-007`, :ref:`PTW-SN-009`
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -337,9 +348,9 @@ PTW-SR-C-004
               engineering and scientific data visualization.
 :Traces to:   :ref:`PTW-SN-009`
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -352,16 +363,18 @@ Messaging
 PTW-SR-M-001
 ------------
 
-:Description: pytkwrap **SHALL** implement a publish-subscribe
-              messaging system for all data widgets.
-:Rationale:   A publish-subscribe messaging layer decouples the GUI
-              from the application domain logic, making applications
-              more maintainable and testable.
+:Description: The GTK3 wrapper layer **SHALL** use PyPubSub for
+              publish-subscribe messaging and the common utilities
+              **SHALL** provide helpers for bulk topic subscription
+              and unsubscription.
+:Rationale:   PyPubSub decouples GTK3 signal handling from application
+              message handlers, while utility helpers reduce repeated
+              subscription setup and teardown code.
 :Traces to:   :ref:`PTW-SN-010`, :ref:`PTW-SN-011`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -371,16 +384,18 @@ PTW-SR-M-001
 PTW-SR-M-002
 ------------
 
-:Description: Each data widget **SHALL** publish a message containing
-              its current value when the user changes the widget's
-              value.
-:Rationale:   Application code **SHALL** be notified of widget value
-              changes without polling or direct widget inspection.
+:Description: When the GTK3 ``on_changed()`` callback is connected and
+              invoked, the wrapper **SHALL** publish its current value
+              on ``send_topic`` in a ``package`` mapping keyed by the
+              configured wrapper ``index``.
+:Rationale:   The indexed message package identifies the source value
+              and allows application handlers to receive changes
+              without polling.
 :Traces to:   :ref:`PTW-SN-010`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -390,18 +405,20 @@ PTW-SR-M-002
 PTW-SR-M-003
 ------------
 
-:Description: Each data widget **SHALL** provide a ``do_update()``
-              method that updates the widget's displayed value in
-              response to a message without triggering the widget's
-              own publish message.
-:Rationale:   Updating a widget's value in response to an external
-              message **SHALL** not cause the widget to republish,
-              as this would create an infinite messaging loop.
+:Description: The GTK3 ``do_update()`` method **SHALL** apply an
+              incoming value only when its package index matches the
+              wrapper's configured ``index``. It **SHALL** substitute
+              ``default_value`` for an incoming ``None`` and suppress
+              the configured edit-signal handler while setting the
+              value.
+:Rationale:   Index filtering routes updates to the intended wrapper;
+              signal suppression prevents message-driven value changes
+              from being republished as user edits.
 :Traces to:   :ref:`PTW-SN-010`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -411,17 +428,20 @@ PTW-SR-M-003
 PTW-SR-M-004
 ------------
 
-:Description: The publish topic and subscribe topic for each data
-              widget **SHALL** be independently configurable.
-:Rationale:   Different widgets in the same application may need to
-              publish to different topics or subscribe to different
-              topics depending on their role in the application's
-              messaging architecture.
+:Description: GTK3 wrappers **SHALL** provide independently
+              configurable ``send_topic`` and ``listen_topic``
+              attributes. Application code **SHALL** connect
+              ``listen_topic`` to ``do_update()`` through its PyPubSub
+              subscription wiring; wrapper construction alone does not
+              automatically subscribe the wrapper.
+:Rationale:   Separate topic configuration supports application wiring
+              while keeping subscription lifecycle decisions outside
+              wrapper construction.
 :Traces to:   :ref:`PTW-SN-010`
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -443,7 +463,7 @@ PTW-SR-Q-001
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -462,7 +482,7 @@ PTW-SR-Q-002
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -481,7 +501,7 @@ PTW-SR-Q-003
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -501,7 +521,7 @@ PTW-SR-Q-004
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD
 
 ----
@@ -523,5 +543,5 @@ PTW-SR-Q-005
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD

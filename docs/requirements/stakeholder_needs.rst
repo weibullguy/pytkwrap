@@ -36,7 +36,7 @@ PTW-SN-001
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -57,7 +57,7 @@ PTW-SN-002
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -67,18 +67,18 @@ PTW-SN-002
 PTW-SN-003
 ----------
 
-:Description: A developer **SHALL** be able to configure widget
-              properties and attributes using a single typed dictionary
-              rather than calling individual setter methods.
+:Description: A developer **SHALL** be able to configure pytkwrap
+              attributes and GTK3 properties using mappings rather than
+              calling individual setter methods for each value.
 :Rationale:   GUI toolkit setter methods are numerous, inconsistently
               named, and require knowledge of valid parameter types.
-              A typed dictionary interface reduces cognitive load and
-              the likelihood of configuration errors.
+              Mapping-based configuration reduces cognitive load and
+              groups related values in one operation.
 :Traces to:   N/A
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -91,17 +91,18 @@ Portability
 PTW-SN-004
 ----------
 
-:Description: A developer **SHALL** be able to use the same pytkwrap
-              API regardless of the underlying GUI toolkit in use.
+:Description: pytkwrap **SHOULD** provide a consistent common API across
+              supported GUI toolkits while allowing toolkit-specific
+              APIs and behavior where needed.
 :Rationale:   Applications that may need to support multiple platforms
-              or migrate between toolkits **SHALL** not require
+              or migrate between toolkits **SHOULD** not require
               significant rewriting of GUI code when the underlying
               toolkit changes.
 :Traces to:   N/A
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -120,7 +121,7 @@ PTW-SN-005
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -136,9 +137,9 @@ PTW-SN-006
               useful to a wider developer audience.
 :Traces to:   N/A
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -161,9 +162,9 @@ PTW-SN-007
               applications.
 :Traces to:   N/A
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -182,9 +183,9 @@ PTW-SN-008
               effort for applications requiring tabular data entry.
 :Traces to:   N/A
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -202,9 +203,9 @@ PTW-SN-009
               **SHALL** be encapsulated by pytkwrap.
 :Traces to:   N/A
 :Issues:      None
-:Status:      Active
+:Status:      Planned
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -227,7 +228,7 @@ PTW-SN-010
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -245,7 +246,7 @@ PTW-SN-011
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -269,7 +270,7 @@ PTW-SN-012
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -288,7 +289,7 @@ PTW-SN-013
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -307,7 +308,7 @@ PTW-SN-014
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
 
 ----
@@ -330,5 +331,5 @@ PTW-SN-015
 :Issues:      None
 :Status:      Active
 :Version:     0.1.0
-:History:     0.1.0 (2026-04-22) — Initial baseline.
+:History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       N/A — verified by system and software requirements.
