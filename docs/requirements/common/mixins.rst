@@ -71,7 +71,12 @@ PTW-COM-X-002
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_init``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_dic_attributes_not_shared``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_class_attributes_not_mutated``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_dic_attributes_is_sole_store``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_dic_properties_not_shared``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_dic_properties_is_sole_store``
 
 ----
 
@@ -92,7 +97,8 @@ PTW-COM-X-003
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_get_attribute``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_get_attribute_unknown``
 
 ----
 
@@ -113,7 +119,7 @@ PTW-COM-X-004
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_get_property_unknown``
 
 ----
 
@@ -135,7 +141,8 @@ PTW-COM-X-005
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_attributes_default``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_attributes_partial``
 
 ----
 
@@ -158,7 +165,11 @@ PTW-COM-X-006
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_properties``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_properties_list_list``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_properties_list_tuple``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_properties_type_error``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_properties_value_error``
 
 ----
 
@@ -178,7 +189,7 @@ PTW-COM-X-007
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_get_value_missing``
 
 ----
 
@@ -198,7 +209,7 @@ PTW-COM-X-008
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_value_wrong_type``
 
 ----
 
@@ -223,7 +234,8 @@ PTW-COM-X-009
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::test_create_widget_config``
+              ``tests/common/test_pytkwrap_mixin.py::test_create_widget_config_with_attributes``
 
 ----
 
@@ -244,7 +256,8 @@ PTW-COM-X-010
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::test_create_widget_config``
+              ``tests/common/test_pytkwrap_mixin.py::test_create_widget_config_with_attributes``
 
 ----
 
@@ -286,7 +299,8 @@ PTW-COM-X-012
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_attributes_default``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_attributes_partial``
 
 ----
 
@@ -308,7 +322,8 @@ PTW-COM-X-013
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_get_value_missing``
+              ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_value_wrong_type``
 
 ----
 
@@ -331,7 +346,8 @@ PTW-COM-X-025
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/test_font_description.py::TestFontDescription::test_init``
+              ``tests/test_font_description.py::TestFontDescription::test_no_toolkit_imports``
 
 ----
 
@@ -373,4 +389,7 @@ PTW-COM-X-027
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/test_font_description.py::TestFontDescription::test_to_string``
+              ``tests/test_font_description.py::TestFontDescription::test_to_markup``
+              ``tests/test_font_description.py::TestFontDescription::test_to_markup_omits_optional_attrs``
+              ``tests/test_font_description.py::TestFontDescription::test_to_string_custom_values``

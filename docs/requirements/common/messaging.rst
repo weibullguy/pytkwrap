@@ -37,7 +37,7 @@ PTW-COM-M-001
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       TBD — to be reconciled in the test review pass.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_init``
 
 ----
 
