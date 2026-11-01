@@ -14,7 +14,15 @@ from pytkwrap.gtk3.treeview.cellrenderer import GTK3CellRenderer
 
 
 class GTK3TreeViewColumnMixin(GTK3GObjectMixin):
-    """Mixin class for GTK3TreeViewColumn."""
+    """Mixin class for GTK3TreeViewColumn.
+
+    Attributes
+    ----------
+    _GTK3_TREEVIEWCOLUMN_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3TreeViewColumn.
+    _GTK3_TREEVIEWCOLUMN_SIGNALS : list[str]
+        Signals unique to the GTK3TreeViewColumn.
+    """
 
     _GTK3_TREEVIEWCOLUMN_PROPERTIES = GTK3WidgetProperties(
         alignment=0.0,
@@ -82,6 +90,52 @@ class GTK3TreeViewColumnMixin(GTK3GObjectMixin):
         self.set_title(self.dic_properties["title"])
         self.set_visible(self.dic_properties["visible"])
         self.set_widget(self.dic_properties["widget"])
+
+    @property
+    def button(self) -> Gtk.Button | None:
+        """Get the button associated with the GTK3TreeViewColumn.
+
+        Returns
+        -------
+        Gtk.Button | None
+            The button associated with the GTK3TreeViewColumn, or None if no button is
+            associated.
+        """
+        return self.get_button()
+
+    @property
+    def treeview(self) -> Gtk.TreeView | None:
+        """Get the treeview associated with the GTK3TreeViewColumn.
+
+        Returns
+        -------
+        Gtk.TreeView | None
+            The treeview associated with the GTK3TreeViewColumn, or None if no treeview
+            is associated.
+        """
+        return self.get_tree_view()
+
+    @property
+    def width(self) -> int:
+        """Get the width of the GTK3TreeViewColumn.
+
+        Returns
+        -------
+        int
+            The width of the GTK3TreeViewColumn.
+        """
+        return self.get_width()
+
+    @property
+    def x_offset(self) -> int:
+        """Get the x offset of the GTK3TreeViewColumn.
+
+        Returns
+        -------
+        int
+            The x offset of the GTK3TreeViewColumn.
+        """
+        return self.get_x_offset()
 
 
 class GTK3TreeViewColumn(Gtk.TreeViewColumn, GTK3TreeViewColumnMixin):
