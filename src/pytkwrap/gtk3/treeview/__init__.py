@@ -21,7 +21,7 @@ from .cellview import GTK3CellView
 from .liststore import GTK3ListStore
 from .treemodelsort import GTK3TreeModelSort
 from .treestore import GTK3TreeStore
-from .treeview import GTK3TreeView
+from .treeview import GTK3TreeView, do_construct_treeview
 from .treeviewcolumn import GTK3TreeViewColumn
 
 __all__ = [
@@ -39,4 +39,5 @@ __all__ = [
     "GTK3TreeStore",
     "GTK3TreeView",
     "GTK3TreeViewColumn",
+    "do_construct_treeview",
 ]

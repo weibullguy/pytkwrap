@@ -168,6 +168,7 @@ from .treeview import (
     GTK3TreeStore,
     GTK3TreeView,
     GTK3TreeViewColumn,
+    do_construct_treeview,
 )
 
 # from .view import (
@@ -334,4 +335,5 @@ __all__ = [
     #    "do_make_label_group",
     "set_widget_sensitivity",
     "GTK3WidgetMixin",
+    "do_construct_treeview",
 ]
