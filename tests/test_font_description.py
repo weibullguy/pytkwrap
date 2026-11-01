@@ -78,7 +78,7 @@ class TestFontDescription:
         )
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-026")
+    @pytest.mark.requirement("PTW-COM-X-027")
     def test_to_string(self):
         """Should return a string representation of the font description."""
         dut = FontDescription()
@@ -129,7 +129,7 @@ class TestFontDescription:
         )
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-026")
+    @pytest.mark.requirement("PTW-COM-X-027")
     def test_to_string_custom_values(self):
         """to_string() should reflect custom font attributes."""
         dut = FontDescription(

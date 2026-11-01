@@ -72,11 +72,8 @@ class TestPyTkWrapMixin:
     """Test class for the PyTkWrapMixin class."""
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-001")
+    @pytest.mark.requirement("PTW-COM-M-001")
     @pytest.mark.requirement("PTW-COM-X-002")
-    @pytest.mark.requirement("PTW-COM-X-003")
-    @pytest.mark.requirement("PTW-COM-X-004")
-    @pytest.mark.requirement("PTW-COM-X-006")
     def test_init(self):
         """Should create an instance of the PyTkWrapMixin class with attributes set to
         default values."""
@@ -117,7 +114,7 @@ class TestPyTkWrapMixin:
         assert dut.dic_properties == {}
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-013")
+    @pytest.mark.requirement("PTW-COM-X-002")
     def test_dic_attributes_not_shared(self):
         """Should not share dic_attributes between instances."""
         dut1 = PyTkWrapMixin()
@@ -126,7 +123,7 @@ class TestPyTkWrapMixin:
         assert not dut1.dic_attributes is dut2.dic_attributes
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-014")
+    @pytest.mark.requirement("PTW-COM-X-003")
     def test_do_get_attribute(self):
         """Should return the value of the passed attribute name."""
         dut = PyTkWrapMixin()
@@ -136,7 +133,7 @@ class TestPyTkWrapMixin:
         assert dut.do_get_attribute("y_pos") is None
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-014")
+    @pytest.mark.requirement("PTW-COM-X-003")
     def test_do_get_attribute_unknown(self):
         """Should raise a UnkAttributeError when passed an unknown attribute name."""
         dut = PyTkWrapMixin()
@@ -146,6 +143,8 @@ class TestPyTkWrapMixin:
             dut.do_get_attribute("unk_attribute")
 
     @pytest.mark.unit
+    @pytest.mark.requirement("PTW-COM-X-005")
+    @pytest.mark.requirement("PTW-COM-X-012")
     def test_do_set_attributes_default(self):
         """Should set properties to default values when passed an empty
         PyTkWrapAttributes."""
@@ -169,7 +168,8 @@ class TestPyTkWrapMixin:
         assert dut.dic_attributes["y_pos"] is None
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-015")
+    @pytest.mark.requirement("PTW-COM-X-005")
+    @pytest.mark.requirement("PTW-COM-X-012")
     def test_do_set_attributes_partial(self):
         """Should preserve any attribute values not present in the PyTkWrapAttributes
         passed in."""
@@ -181,7 +181,7 @@ class TestPyTkWrapMixin:
         assert dut.dic_attributes["y_pos"] == 15
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-023")
+    @pytest.mark.requirement("PTW-COM-X-002")
     def test_class_attributes_not_mutated(self):
         """_WIDGET_ATTRIBUTES should not be mutated by do_set_attributes()."""
         _original = dict(PyTkWrapMixin._PYTKWRAP_ATTRIBUTES)
@@ -192,7 +192,7 @@ class TestPyTkWrapMixin:
         assert PyTkWrapMixin._PYTKWRAP_ATTRIBUTES == _original
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-025")
+    @pytest.mark.requirement("PTW-COM-X-002")
     def test_dic_attributes_is_sole_store(self):
         """PyTkWrapMixin should not store attribute values outside dic_attributes."""
         dut = PyTkWrapMixin()
@@ -217,7 +217,6 @@ class TestPyTkWrapMixin:
         assert not dut1.dic_properties is dut2.dic_properties
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-005")
     def test_no_toolkit_imports(self):
         """Should not import any toolkit-specific modules."""
         # Standard Library Imports
@@ -246,7 +245,7 @@ class TestPyTkWrapMixin:
         )
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-008")
+    @pytest.mark.requirement("PTW-COM-X-004")
     def test_do_get_property_unknown(self):
         """Should raise an UnkPropertyError."""
         dut = PyTkWrapMixin()
@@ -256,7 +255,7 @@ class TestPyTkWrapMixin:
             dut.do_get_property("unk_property")
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-009")
+    @pytest.mark.requirement("PTW-COM-X-006")
     def test_do_set_properties(self):
         """Should set dic_properties to new values when passed a dict."""
         dut = PyTkWrapMixin()
@@ -265,7 +264,7 @@ class TestPyTkWrapMixin:
         assert dut.dic_properties["new_prop"] == 14
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-009")
+    @pytest.mark.requirement("PTW-COM-X-006")
     def test_do_set_properties_list_list(self):
         """Should set dic_properties to new values when passed a list of lists."""
         dut = PyTkWrapMixin()
@@ -275,7 +274,7 @@ class TestPyTkWrapMixin:
         assert dut.dic_properties["new_prop_2"] == "Twenty-two"
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-009")
+    @pytest.mark.requirement("PTW-COM-X-006")
     def test_do_set_properties_list_tuple(self):
         """Should set dic_properties to new values when passed a list of tuples."""
         dut = PyTkWrapMixin()
@@ -285,7 +284,7 @@ class TestPyTkWrapMixin:
         assert dut.dic_properties["new_prop_2"] == "Twenty-two"
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-010")
+    @pytest.mark.requirement("PTW-COM-X-006")
     def test_do_set_properties_type_error(self):
         """Should raise a PytkwrapError and send a do_log_error message when passed
         None."""
@@ -297,7 +296,7 @@ class TestPyTkWrapMixin:
             dut.do_set_properties(None)
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-010")
+    @pytest.mark.requirement("PTW-COM-X-006")
     def test_do_set_properties_value_error(self):
         """Should raise a PytkwrapError and send a do_log_error message when passed non-
         iterable properties."""
@@ -309,7 +308,7 @@ class TestPyTkWrapMixin:
             dut.do_set_properties("Non-iterable property")
 
     @pytest.mark.unit
-    @pytest.mark.requirement("PTW-COM-X-024")
+    @pytest.mark.requirement("PTW-COM-X-002")
     def test_dic_properties_is_sole_store(self):
         """PyTkWrapMixin should not store property values outside dic_properties."""
         dut = PyTkWrapMixin()
@@ -325,6 +324,8 @@ class TestPyTkWrapMixin:
         assert _instance_attrs == _expected
 
     @pytest.mark.unit
+    @pytest.mark.requirement("PTW-COM-X-007")
+    @pytest.mark.requirement("PTW-COM-X-013")
     def test_do_get_value_missing(self):
         """Should raise a NoValueError and send a do_log_error message when called."""
         dut = PyTkWrapMixin()
@@ -334,6 +335,8 @@ class TestPyTkWrapMixin:
             dut.do_get_value()
 
     @pytest.mark.unit
+    @pytest.mark.requirement("PTW-COM-X-008")
+    @pytest.mark.requirement("PTW-COM-X-013")
     def test_do_set_value_wrong_type(self):
         """Should raise a WrongTypeError and send a do_log_error message when called."""
         dut = PyTkWrapMixin()
@@ -345,6 +348,8 @@ class TestPyTkWrapMixin:
 
 @pytest.mark.unit
 @pytest.mark.order(1)
+@pytest.mark.requirement("PTW-COM-X-009")
+@pytest.mark.requirement("PTW-COM-X-010")
 def test_create_widget_config():
     """Should create a PyTkWrapConfig."""
     dut = make_pytkwrap_config(PyTkWrapMixin(), PyTkWrapAttributes(), {})
@@ -356,6 +361,8 @@ def test_create_widget_config():
 
 @pytest.mark.unit
 @pytest.mark.order(1)
+@pytest.mark.requirement("PTW-COM-X-009")
+@pytest.mark.requirement("PTW-COM-X-010")
 def test_create_widget_config_with_attributes():
     """Should create a PyTkWrapConfig with attributes amd properties."""
     dut = make_pytkwrap_config(
