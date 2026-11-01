@@ -11,7 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
-from pytkwrap.gtk3.treeview import GTK3CellRenderer, GTK3TreeViewColumn
+from pytkwrap.gtk3.treeview import GTK3CellRenderer, GTK3TreeView, GTK3TreeViewColumn
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import EXPECTED_GOBJECT_HANDLER_IDS, EXPECTED_GOBJECT_METHODS
 from tests.gtk3.treeview.constants import (
@@ -165,3 +165,34 @@ class TestGTK3TreeViewColumn(BaseGTK3GObjectTests):
         assert dut.do_get_property("widget") is None
         assert dut.do_get_property("width") == 20
         assert dut.do_get_property("x_offset") == 4
+
+    @pytest.mark.unit
+    def test_button(self):
+        """Should return the button that is used in column header."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.button, Gtk.Button)
+
+    @pytest.mark.unit
+    def test_treeview(self):
+        """Should return the treeview that the column is attached to."""
+        _treeview = GTK3TreeView()
+
+        dut = self.make_dut()
+        _treeview.do_add_column(column=dut)
+
+        assert dut.treeview is _treeview
+
+    @pytest.mark.unit
+    def test_width(self):
+        """Should return the width of the GTK3TreeViewColumn."""
+        dut = self.make_dut()
+
+        assert dut.width == 0
+
+    @pytest.mark.unit
+    def test_x_offset(self):
+        """Should return the x_offset of the GTK3TreeViewColumn."""
+        dut = self.make_dut()
+
+        assert dut.x_offset == 0
