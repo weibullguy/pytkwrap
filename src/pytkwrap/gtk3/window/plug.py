@@ -10,7 +10,13 @@ from pytkwrap.gtk3.window.window import GTK3WindowMixin
 
 
 class GTK3PlugMixin(GTK3WindowMixin):
-    """Mixin class for GTK3Plug."""
+    """Mixin class for GTK3Plug.
+
+    Attributes
+    ----------
+    _GTK3_PLUG_SIGNALS : list
+        Signals unique to the GTK3Plug.
+    """
 
     _GTK3_PLUG_SIGNALS = [
         "embedded",
