@@ -184,6 +184,7 @@ from .window import (
     GTK3ScrolledWindow,
     GTK3Window,
     GTK3WindowGroup,
+    do_construct_assistant,
 )
 
 __all__ = [
@@ -335,5 +336,6 @@ __all__ = [
     #    "do_make_label_group",
     "set_widget_sensitivity",
     "GTK3WidgetMixin",
+    "do_construct_assistant",
     "do_construct_treeview",
 ]

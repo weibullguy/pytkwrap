@@ -10,7 +10,7 @@ and never through this __init__.py to avoid circular imports.
 
 # pytkwrap Local Imports
 from .applicationwindow import GTK3ApplicationWindow
-from .assistant import GTK3Assistant
+from .assistant import GTK3Assistant, do_construct_assistant
 from .plug import GTK3Plug
 from .scrolledwindow import GTK3ScrolledWindow
 from .window import GTK3Window
@@ -23,4 +23,5 @@ __all__ = [
     "GTK3ScrolledWindow",
     "GTK3Window",
     "GTK3WindowGroup",
+    "do_construct_assistant",
 ]
