@@ -149,3 +149,17 @@ class TestGTK3ScrolledWindow(BaseGTK3GObjectTests):
         assert dut.get_vadjustment() == _vadjustment
         assert dut.get_property("vscrollbar_policy") == Gtk.PolicyType.ALWAYS
         assert dut.get_property("window_placement") == Gtk.CornerType.TOP_RIGHT
+
+    @pytest.mark.unit
+    def test_hscrollbar(self):
+        """Should return the horizontal scrollbar of the GTK3ScrolledWindow."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.hscrollbar, Gtk.Scrollbar)
+
+    @pytest.mark.unit
+    def test_vscrollbar(self):
+        """Should return the vertical scrollbar of the GTK3ScrolledWindow."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.vscrollbar, Gtk.Scrollbar)
