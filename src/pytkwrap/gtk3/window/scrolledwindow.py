@@ -15,7 +15,15 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3ScrolledWindowMixin(GTK3ContainerMixin):
-    """Mixin for GTK3ScrolledWindow."""
+    """Mixin for GTK3ScrolledWindow.
+
+    Attributes
+    ----------
+    _GTK3_SCROLLEDWINDOW_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3ScrolledWindow.
+    _GTK3_SCROLLEDWINDOW_SIGNALS : list[str]
+        Signals unique to the GTK3ScrolledWindow.
+    """
 
     _GTK3_SCROLLEDWINDOW_PROPERTIES = GTK3WidgetProperties(
         border_width=0,
@@ -83,6 +91,30 @@ class GTK3ScrolledWindowMixin(GTK3ContainerMixin):
         self.set_propagate_natural_width(self.dic_properties["propagate_natural_width"])
         self.set_shadow_type(self.dic_properties["shadow_type"])
         self.set_vadjustment(self.dic_properties["vadjustment"])
+
+    @property
+    def hscrollbar(self) -> Gtk.Scrollbar | None:
+        """Get the horizontal scrollbar of the GTK3ScrolledWindow.
+
+        Returns
+        -------
+        Gtk.Scrollbar | None
+            The horizontal scrollbar of the GTK3ScrolledWindow, or None if it does
+            not exist.
+        """
+        return self.get_hscrollbar()
+
+    @property
+    def vscrollbar(self) -> Gtk.Scrollbar | None:
+        """Get the vertical scrollbar of the GTK3ScrolledWindow.
+
+        Returns
+        -------
+        Gtk.Scrollbar | None
+            The vertical scrollbar of the GTK3ScrolledWindow, or None if it does not
+            exist.
+        """
+        return self.get_vscrollbar()
 
 
 class GTK3ScrolledWindow(Gtk.ScrolledWindow, GTK3ScrolledWindowMixin):
