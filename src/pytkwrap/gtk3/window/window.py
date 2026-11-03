@@ -14,7 +14,15 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3WindowMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Window."""
+    """Mixin class for GTK3Window.
+
+    Attributes
+    ----------
+    _GTK3_WINDOW_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3Window class.
+    _GTK3_WINDOW_SIGNALS : list[str]
+        Signals unique to the GTK3Window class.
+    """
 
     _GTK3_WINDOW_PROPERTIES = GTK3WidgetProperties(
         accept_focus=True,
@@ -94,6 +102,7 @@ class GTK3WindowMixin(GTK3ContainerMixin):
         self.set_icon_name(self.dic_properties["icon_name"])
         self.set_mnemonics_visible(self.dic_properties["mnemonics_visible"])
         self.set_modal(self.dic_properties["modal"])
+        self.set_position(self.dic_properties["window_position"])
         self.set_resizable(self.dic_properties["resizable"])
 
         if self.dic_properties["role"] is not None:
@@ -110,12 +119,44 @@ class GTK3WindowMixin(GTK3ContainerMixin):
         self.set_transient_for(self.dic_properties["transient_for"])
         self.set_type_hint(self.dic_properties["type_hint"])
         self.set_urgency_hint(self.dic_properties["urgency_hint"])
-        self.set_position(self.dic_properties["window_position"])
 
         for _property in ["default_height", "default_width"]:
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+    @property
+    def group(self) -> Gtk.WindowGroup:
+        """Return the window group for the GTK3Window.
+
+        Returns
+        -------
+        Gtk.WindowGroup
+            The window group for the GTK3Window.
+        """
+        return self.get_group()
+
+    @property
+    def size(self) -> tuple[int, int]:
+        """Return the size of the GTK3Window.
+
+        Returns
+        -------
+        tuple[int, int]
+            The size of the GTK3Window as a tuple of (width, height).
+        """
+        return self.get_size()
+
+    @property
+    def window_type(self) -> Gtk.WindowType:
+        """Return the window type for the GTK3Window.
+
+        Returns
+        -------
+        Gtk.WindowType
+            The window type for the GTK3Window.
+        """
+        return self.get_window_type()
 
 
 class GTK3Window(Gtk.Window, GTK3WindowMixin):

@@ -57,7 +57,7 @@ python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 extra-dependencies = [
     "coveralls",
     "coverage[toml]",
-    "pytest",
+    "pytest>=8.4.0,<9.2.0",
     "pytest-cov",
     "pytest-icdiff",
     "pytest-order",
