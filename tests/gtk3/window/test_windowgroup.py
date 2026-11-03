@@ -28,3 +28,18 @@ class TestGTK3WindowGroup(BaseGTK3GObjectTests):
     expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES
     expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS
     expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_WINDOWGROUP_METHODS
+
+    @pytest.mark.unit
+    def test_current_grab(self):
+        """Test the current_grab property of the GTK3WindowGroup class."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.current_grab, Gtk.Widget) or dut.current_grab is None
+
+    @pytest.mark.unit
+    def test_windows(self):
+        """Test the windows property of the GTK3WindowGroup class."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.windows, list)
+        assert all(isinstance(_window, Gtk.Window) for _window in dut.windows)
