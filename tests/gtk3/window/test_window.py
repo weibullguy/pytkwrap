@@ -196,3 +196,27 @@ class TestGTK3Window(BaseGTK3GObjectTests):
         assert dut.get_property("urgency_hint")
         assert dut.get_urgency_hint()
         assert dut.get_property("window_position") == Gtk.WindowPosition.CENTER
+
+    @pytest.mark.unit
+    def test_group(self):
+        """Should return the window group for the GTK3Window."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.group, Gtk.WindowGroup)
+
+    @pytest.mark.unit
+    def test_size(self):
+        """Should return the size of the GTK3Window as a tuple of (width, height)."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.size, tuple)
+        assert len(dut.size) == 2
+        assert dut.size[0] == 200
+        assert dut.size[1] == 200
+
+    @pytest.mark.unit
+    def test_window_type(self):
+        """Should set the window type to the value passed in the constructor."""
+        dut = self.make_dut(Gtk.WindowType.POPUP)
+
+        assert dut.window_type == Gtk.WindowType.POPUP
