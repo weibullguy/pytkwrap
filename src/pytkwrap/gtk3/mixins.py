@@ -548,7 +548,15 @@ class GTK3WidgetProperties(TypedDict, total=False):
 
 
 class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
-    """Adds GObject-specific attributes."""
+    """Adds GObject-specific attributes.
+
+    Attributes
+    ----------
+    _GTK3_GOBJECT_ATTRIBUTES : GTK3WidgetAttributes
+        Attributes unique to the GTK3GObjectMixin class.
+    _GTK3_GOBJECT_SIGNALS : list[str]
+        Signals unique to the GTK3GObjectMixin class.
+    """
 
     _GTK3_GOBJECT_ATTRIBUTES = GTK3WidgetAttributes(
         column_types=None,
