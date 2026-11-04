@@ -8,7 +8,7 @@
 from collections.abc import Mapping
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gdk, Gtk
+from pytkwrap.gtk3._libs import Gdk, Gtk, Pango
 from pytkwrap.gtk3.mixins import (
     GTK3GObjectMixin,
     GTK3WidgetAttributes,
@@ -17,7 +17,21 @@ from pytkwrap.gtk3.mixins import (
 
 
 class GTK3WidgetMixin(GTK3GObjectMixin):
-    """Mixin for GTK3Widget."""
+    """Mixin for GTK3Widget.
+
+    Attributes
+    ----------
+    _DEFAULT_HEIGHT : int
+        The default height for the GTK3Widget.
+    _DEFAULT_WIDTH : int
+        The default width for the GTK3Widget.
+    _GTK3_WIDGET_ATTRIBUTES : GTK3WidgetAttributes
+        Attributes unique to the GTK3Widget.
+    _GTK3_WIDGET_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3Widget.
+    _GTK3_WIDGET_SIGNALS : list[str]
+        Signals unique to the GTK3Widget.
+    """
 
     _DEFAULT_HEIGHT = -1
     _DEFAULT_WIDTH = -1
@@ -158,6 +172,205 @@ class GTK3WidgetMixin(GTK3GObjectMixin):
 
         if self.dic_properties["parent"] is not None:
             self.set_property("parent", self.dic_properties["parent"])
+
+    @property
+    def accessible(self) -> object:
+        """Get the accessible object for the widget.
+
+        Returns
+        -------
+        object
+            The accessible object for the widget.
+        """
+        return self.get_accessible()
+
+    @property
+    def allocated_baseline(self) -> int:
+        """Get the allocated baseline of the widget.
+
+        Returns
+        -------
+        int
+            The allocated baseline of the widget.
+        """
+        return self.get_allocated_baseline()
+
+    @property
+    def allocated_height(self) -> int:
+        """Get the allocated height of the widget.
+
+        Returns
+        -------
+        int
+            The allocated height of the widget.
+        """
+        return self.get_allocated_height()
+
+    @property
+    def allocated_width(self) -> int:
+        """Get the allocated width of the widget.
+
+        Returns
+        -------
+        int
+            The allocated width of the widget.
+        """
+        return self.get_allocated_width()
+
+    @property
+    def display(self) -> Gdk.Display:
+        """Get the display for the widget.
+
+        Returns
+        -------
+        Gdk.Display
+            The display for the widget.
+        """
+        return self.get_display()
+
+    @property
+    def frame_clock(self) -> Gdk.FrameClock | None:
+        """Get the frame clock for the widget.
+
+        Returns
+        -------
+        Gdk.FrameClock | None
+            The frame clock for the widget or None if the widget is unrealized.
+        """
+        return self.get_frame_clock()
+
+    @property
+    def pango_context(self) -> Pango.Context:
+        """Get the Pango context for the widget.
+
+        Returns
+        -------
+        Pango.Context
+            The Pango context for the widget.
+        """
+        return self.get_pango_context()
+
+    @property
+    def parent_window(self) -> Gdk.Window | None:
+        """Get the parent window for the widget.
+
+        Returns
+        -------
+        Gdk.Window | None
+            The parent window for the widget or None if the widget has no parent window.
+        """
+        return self.get_parent_window()
+
+    @property
+    def preferred_height(self) -> tuple[int, int]:
+        """Get the preferred height of the widget.
+
+        Returns
+        -------
+        tuple[int, int]
+            The minimum and natural height of the widget.
+        """
+        return self.get_preferred_height()
+
+    @property
+    def preferred_size(self) -> tuple[Gtk.Requisition, Gtk.Requisition]:
+        """Get the preferred size of the widget.
+
+        Returns
+        -------
+        tuple[Gtk.Requisition, Gtk.Requisition]
+            The minimum size and natural size of the widget.
+        """
+        return self.get_preferred_size()
+
+    @property
+    def preferred_width(self) -> tuple[int, int]:
+        """Get the preferred width of the widget.
+
+        Returns
+        -------
+        tuple[int, int]
+            The minimum and natural width of the widget.
+        """
+        return self.get_preferred_width()
+
+    @property
+    def request_mode(self) -> Gtk.SizeRequestMode:
+        """Get the request mode of the widget.
+
+        Returns
+        -------
+        Gtk.SizeRequestMode
+            The request mode of the widget.
+        """
+        return self.get_request_mode()
+
+    @property
+    def scale_factor(self) -> int:
+        """Get the internal scale factor for the widget.
+
+        Returns
+        -------
+        int
+            The scale factor for the widget.
+        """
+        return self.get_scale_factor()
+
+    @property
+    def screen(self) -> Gdk.Screen:
+        """Get the Gdk.Screen for the toplevel for the widget.
+
+        Returns
+        -------
+        Gdk.Screen
+            The Gdk.Screen for the toplevel of the widget.
+        """
+        return self.get_screen()
+
+    @property
+    def settings(self) -> Gtk.Settings:
+        """Get the Gtk.Settings holding the settings for the widget.
+
+        Returns
+        -------
+        Gtk.Settings
+            The settings for the widget.
+        """
+        return self.get_settings()
+
+    @property
+    def style_context(self) -> Gtk.StyleContext:
+        """Get the style context associated with the widget.
+
+        Returns
+        -------
+        Gtk.StyleContext
+            The style context for the widget.
+        """
+        return self.get_style_context()
+
+    @property
+    def toplevel(self) -> Gtk.Widget:
+        """Get the topmost ancestor of the widget or the widget itself.
+
+        Returns
+        -------
+        Gtk.Widget
+            The topmost ancestor of the widget or the widget itself when there is no
+            ancestor.
+        """
+        return self.get_toplevel()
+
+    @property
+    def valign_with_baseline(self) -> Gtk.Align:
+        """Get the vertical alignment of the widget.
+
+        Returns
+        -------
+        Gtk.Align
+            The value of the align property including Gtk.Align.BASELINE.
+        """
+        return self.get_valign_with_baseline()
 
 
 class GTK3Widget(Gtk.Widget, GTK3WidgetMixin):
