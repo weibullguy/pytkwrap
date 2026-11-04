@@ -11,11 +11,6 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.clipboard import GTK3Clipboard
-from pytkwrap.gtk3.mixins import (
-    GTK3WidgetAttributes,
-    GTK3WidgetProperties,
-    set_widget_sensitivity,
-)
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_CLIPBOARD_HANDLER_IDS,
@@ -34,3 +29,24 @@ class TestGTK3Clipboard(BaseGTK3GObjectTests):
     expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES
     expected_handler_id = EXPECTED_GOBJECT_HANDLER_IDS | EXPECTED_CLIPBOARD_HANDLER_IDS
     expected_methods = EXPECTED_GOBJECT_METHODS + EXPECTED_CLIPBOARD_METHODS
+
+    @pytest.mark.unit
+    def test_display(self):
+        """Test the display property of the GTK3Clipboard class."""
+        dut = self.make_dut()
+
+        assert dut.display is None
+
+    @pytest.mark.unit
+    def test_owner(self):
+        """Test the owner property of the GTK3Clipboard class."""
+        dut = self.make_dut()
+
+        assert dut.owner is None
+
+    @pytest.mark.unit
+    def test_selection(self):
+        """Test the selection property of the GTK3Clipboard class."""
+        dut = self.make_dut()
+
+        assert dut.selection is None
