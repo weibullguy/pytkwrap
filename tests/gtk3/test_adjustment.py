@@ -224,3 +224,10 @@ class TestGTK3Adjustment(BaseGTK3DataWidgetTests):
         dut.set_value(1.8)
 
         pub.unsubscribe(self.mock_handler, dut.dic_attributes["send_topic"])
+
+    @pytest.mark.unit
+    def test_minimum_increment(self):
+        """Should return the minimum increment of the GTK3Adjustment."""
+        dut = self.make_dut(0.0, 0, 10, 0.1, 0.2, 1.0)
+
+        assert dut.minimum_increment == 0.1
