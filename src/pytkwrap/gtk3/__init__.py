@@ -152,7 +152,7 @@ from .tool import (
     GTK3ToolItemGroup,
     GTK3ToolPalette,
 )
-from .tooltip import GTK3Tooltip
+from .tooltip import GTK3Tooltip, do_construct_tooltip
 from .treeview import (
     GTK3CellRenderer,
     GTK3CellRendererCombo,
@@ -332,10 +332,11 @@ __all__ = [
     "GTK3WidgetProperties",
     "GTK3Window",
     "GTK3WindowGroup",
-    "do_make_buttonbox",
-    #    "do_make_label_group",
     "set_widget_sensitivity",
     "GTK3WidgetMixin",
     "do_construct_assistant",
+    "do_make_buttonbox",
+    #    "do_construct_label_group",
+    "do_construct_tooltip",
     "do_construct_treeview",
 ]
