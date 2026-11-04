@@ -347,7 +347,7 @@ class TestGTK3ComboBoxText(BaseGTK3DataWidgetTests):
 
     @pytest.mark.unit
     @pytest.mark.filterwarnings("ignore:gtk_combo_box_set_id_column")
-    def test_do_add_entry_with_id(self, filter_stderr):
+    def test_do_add_entry_with_ident(self, filter_stderr):
         """Add an entry to the GTK3ComboBoxText at position with an id."""
         _model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING)
         dut = self.make_dut(model=_model)
@@ -355,7 +355,7 @@ class TestGTK3ComboBoxText(BaseGTK3DataWidgetTests):
         dut.do_set_callbacks("changed", self.mock_callback)
         dut.do_load_combo(SIMPLE_TEST_LIST)
 
-        dut.do_add_entry("New Entry", 3, id="new")
+        dut.do_add_entry("New Entry", 3, ident="new")
         assert dut.do_get_options() == {
             0: "",
             1: "Index 1",
