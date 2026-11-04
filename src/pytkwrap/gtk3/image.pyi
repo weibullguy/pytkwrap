@@ -6,6 +6,7 @@ from _typeshed import Incomplete
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf as GdkPixbuf
+from pytkwrap.gtk3._libs import Gio as Gio
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
@@ -16,9 +17,17 @@ class GTK3ImageMixin(GTK3WidgetMixin):
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+    @property
+    def storage_type(self) -> Gtk.ImageType: ...
 
 class GTK3Image(Gtk.Image, GTK3ImageMixin):
     size: Incomplete
     def __init__(
-        self, icon_name: str | None = None, pixbuf: GdkPixbuf = None, size: int = 4
+        self,
+        animation: GdkPixbuf.PixbufAnimation | None = None,
+        file: str | None = None,
+        gicon: Gio.Icon | None = None,
+        icon_name: str | None = None,
+        pixbuf: GdkPixbuf.Pixbuf | None = None,
+        size: int = 4,
     ) -> None: ...

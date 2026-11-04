@@ -76,6 +76,17 @@ class GTK3ImageMixin(GTK3WidgetMixin):
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
 
+    @property
+    def storage_type(self) -> Gtk.ImageType:
+        """Return the storage type of the GTK3Image.
+
+        Returns
+        -------
+        Gtk.ImageType
+            The storage type of the GTK3Image.
+        """
+        return self.get_storage_type()
+
 
 class GTK3Image(Gtk.Image, GTK3ImageMixin):
     """Wrapper for version 3.0 Gtk.Image."""
