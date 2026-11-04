@@ -15,7 +15,17 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
 class GTK3RangeMixin(GTK3WidgetMixin):
-    """Mixin for GTK3Range."""
+    """Mixin for GTK3Range.
+
+    Attributes
+    ----------
+    _GTK3_RANGE_ATTRIBUTES : GTK3WidgetAttributes
+        Attributes unique to the GTK3Range class.
+    _GTK3_RANGE_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3Range class.
+    _GTK3_RANGE_SIGNALS : list[str]
+        Signals unique to the GTK3Range class.
+    """
 
     _GTK3_RANGE_ATTRIBUTES = GTK3WidgetAttributes(
         edit_signal="value-changed",
