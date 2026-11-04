@@ -257,3 +257,19 @@ class TestGTK3Image(BaseGTK3GObjectTests):
         assert dut.get_property("resource") is None
         assert dut.get_property("surface") is None
         assert dut.get_property("use_fallback")
+
+    @pytest.mark.unit
+    def test_storage_type(self):
+        """Should return the storage type of the GTK3Image."""
+        cwd = os.getcwd()
+
+        _file = f"{cwd}/tests/data/pytkwrap.png"
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                file=_file,
+            )
+        )
+
+        assert dut.storage_type == Gtk.ImageType.PIXBUF
