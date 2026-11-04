@@ -19,7 +19,17 @@ from pytkwrap.gtk3.mixins import (
 
 
 class GTK3AdjustmentMixin(GTK3GObjectMixin):
-    """Mixin for GTK3Adjustment."""
+    """Mixin for GTK3Adjustment.
+
+    Attributes
+    ----------
+    _GTK3_ADJUSTMENT_ATTRIBUTES : GTK3WidgetAttributes
+        The GTK3Adjustment-specific attributes.
+    _GTK3_ADJUSTMENT_PROPERTIES : GTK3WidgetProperties
+        The GTK3Adjustment-specific properties.
+    _GTK3_ADJUSTMENT_SIGNALS : list[str]
+        The GTK3Adjustment-specific signals.
+    """
 
     _GTK3_ADJUSTMENT_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
@@ -132,6 +142,17 @@ class GTK3AdjustmentMixin(GTK3GObjectMixin):
         if value is None or isinstance(value, (date, tuple)):
             super().do_set_value(value)
         self.set_value(float(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
+
+    @property
+    def minimum_increment(self) -> float:
+        """Return the minimum increment of the GTK3Adjustment.
+
+        Returns
+        -------
+        float
+            The minimum increment of the GTK3Adjustment.
+        """
+        return self.get_minimum_increment()
 
 
 class GTK3Adjustment(Gtk.Adjustment, GTK3AdjustmentMixin):

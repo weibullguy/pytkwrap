@@ -27,6 +27,8 @@ class GTK3AdjustmentMixin(GTK3GObjectMixin):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
+    @property
+    def minimum_increment(self) -> float: ...
 
 class GTK3Adjustment(Gtk.Adjustment, GTK3AdjustmentMixin):
     def __init__(
