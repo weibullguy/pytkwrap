@@ -9,7 +9,7 @@ import pytest
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gdk, Gtk
+from pytkwrap.gtk3._libs import Gdk, Gtk, Pango
 from pytkwrap.gtk3.mixins import (
     GTK3WidgetAttributes,
     GTK3WidgetProperties,
@@ -250,6 +250,142 @@ class TestGTK3Widget(BaseGTK3GObjectTests):
         dut.do_set_properties(GTK3WidgetProperties(tooltip_markup="New tooltip."))
 
         assert dut.do_get_property("tooltip_text") == "New tooltip."
+
+    @pytest.mark.unit
+    def test_accessible(self):
+        """Should return the accessible object for the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.accessible, Gtk.WidgetAccessible)
+
+    @pytest.mark.unit
+    def test_allocated_baseline(self):
+        """Should return the baseline of the widget's allocation."""
+        dut = self.make_dut()
+
+        assert dut.allocated_baseline == 0
+
+    @pytest.mark.unit
+    def test_allocated_height(self):
+        """Should return the height of the widget's allocation."""
+        dut = self.make_dut()
+
+        assert dut.allocated_height == 1
+
+    @pytest.mark.unit
+    def test_allocated_width(self):
+        """Should return the width of the widget's allocation."""
+        dut = self.make_dut()
+
+        assert dut.allocated_width == 1
+
+    @pytest.mark.unit
+    def test_display(self):
+        """Should return the display for the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.display, Gdk.Display)
+        assert dut.display == Gdk.Display.get_default()
+
+    @pytest.mark.unit
+    def test_frame_clock(self):
+        """Should return the frame clock for the widget."""
+        dut = self.make_dut()
+
+        assert dut.frame_clock is None
+
+    @pytest.mark.unit
+    def test_pango_context(self):
+        """Should return the Pango context for the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.pango_context, Pango.Context)
+
+    @pytest.mark.unit
+    def test_parent_window(self):
+        """Should return the parent window for the widget."""
+        dut = self.make_dut()
+
+        assert dut.parent_window is None
+
+    @pytest.mark.unit
+    def test_preferred_height(self):
+        """Should return the preferred height of the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.preferred_height, tuple)
+        assert dut.preferred_height[0] == 0
+        assert dut.preferred_height[1] == 0
+
+    @pytest.mark.unit
+    def test_preferred_size(self):
+        """Should return the preferred size of the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.preferred_size, tuple)
+        assert dut.preferred_size[0].height == 0
+        assert dut.preferred_size[0].width == 0
+        assert dut.preferred_size[1].height == 0
+        assert dut.preferred_size[1].width == 0
+
+    @pytest.mark.unit
+    def test_preferred_width(self):
+        """Should return the preferred width of the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.preferred_width, tuple)
+        assert dut.preferred_width[0] == 0
+        assert dut.preferred_width[1] == 0
+
+    @pytest.mark.unit
+    def test_request_mode(self):
+        """Should return the request mode of the widget."""
+        dut = self.make_dut()
+
+        assert dut.request_mode == Gtk.SizeRequestMode.CONSTANT_SIZE
+
+    @pytest.mark.unit
+    def test_scale_factor(self):
+        """Should return the internal scale factor of the widget."""
+        dut = self.make_dut()
+
+        assert dut.scale_factor == 1
+
+    @pytest.mark.unit
+    def test_screen(self):
+        """Should return the Gdk.Screen that is the toplevel for the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.screen, Gdk.Screen)
+        assert dut.screen == Gdk.Screen.get_default()
+
+    @pytest.mark.unit
+    def test_settings(self):
+        """Should return the Gtk.Settings for the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.settings, Gtk.Settings)
+
+    @pytest.mark.unit
+    def test_style_context(self):
+        """Should return the Gtk.StyleContext for the widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.style_context, Gtk.StyleContext)
+
+    @pytest.mark.unit
+    def test_toplevel(self):
+        """Should return the topmost widget of the widget."""
+        dut = self.make_dut()
+
+        assert dut.toplevel == dut
+
+    @pytest.mark.unit
+    def test_valign_with_baseline(self):
+        """Should return the vertical alignment of the widget."""
+        dut = self.make_dut()
+
+        assert dut.valign_with_baseline == Gtk.Align.FILL
 
 
 @pytest.mark.integration
