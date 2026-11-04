@@ -14,7 +14,15 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
 class GTK3SwitchMixin(GTK3WidgetMixin):
-    """Mixin class for GTK3Switch."""
+    """Mixin class for GTK3Switch.
+
+    Attributes
+    ----------
+    _GTK3_SWITCH_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3Switch.
+    _GTK3_SWITCH_SIGNALS : list[str]
+        Signals unique to the GTK3Switch.
+    """
 
     _GTK3_SWITCH_PROPERTIES = GTK3WidgetProperties(
         active=False,
