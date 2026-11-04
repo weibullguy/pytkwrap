@@ -14,7 +14,13 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
 class GTK3SpinnerMixin(GTK3WidgetMixin):
-    """Mixin class for GTK3Spinner."""
+    """Mixin class for GTK3Spinner.
+
+    Attributes
+    ----------
+    _GTK3_SPINNER_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3Spinner.
+    """
 
     _GTK3_SPINNER_PROPERTIES = GTK3WidgetProperties(
         active=False,
