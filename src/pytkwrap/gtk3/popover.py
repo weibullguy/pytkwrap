@@ -14,7 +14,15 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3PopoverMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Popover."""
+    """Mixin class for GTK3Popover.
+
+    Attributes
+    ----------
+    _GTK3_POPOVER_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3Popover class.
+    _GTK3_POPOVER_SIGNALS : list[str]
+        Signals unique to the GTK3Popover class.
+    """
 
     _GTK3_POPOVER_PROPERTIES = GTK3WidgetProperties(
         constrain_to=Gtk.PopoverConstraint.WINDOW,
