@@ -6,6 +6,7 @@ from _typeshed import Incomplete
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk as Gtk
+from pytkwrap.gtk3._libs import Pango as Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.range import GTK3RangeMixin as GTK3RangeMixin
 
@@ -16,6 +17,10 @@ class GTK3ScaleMixin(GTK3RangeMixin):
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+    @property
+    def layout(self) -> Pango.Layout | None: ...
+    @property
+    def layout_offset(self) -> tuple[int, int] | None: ...
 
 class GTK3Scale(Gtk.Scale, GTK3ScaleMixin):
     def __init__(

@@ -8,16 +8,27 @@
 from collections.abc import Mapping
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.range import GTK3RangeMixin
 
 
 class GTK3ScaleMixin(GTK3RangeMixin):
-    """Mixin class for GTK3Scale."""
+    """Mixin class for GTK3Scale.
+
+    Attributes
+    ----------
+    _GTK3_SCALE_PROPERTIES : GTK3WidgetProperties
+        Properties unique to the GTK3Scale class.
+    _GTK3_SCALE_SIGNALS : list[str]
+        Signals unique to the GTK3Scale class.
+    """
 
     _GTK3_SCALE_PROPERTIES = GTK3WidgetProperties(
-        digits=1, draw_value=True, has_origin=True, value_pos=Gtk.PositionType.TOP
+        digits=1,
+        draw_value=True,
+        has_origin=True,
+        value_pos=Gtk.PositionType.TOP,
     )
     _GTK3_SCALE_SIGNALS = [
         "format-value",
@@ -52,6 +63,28 @@ class GTK3ScaleMixin(GTK3RangeMixin):
         self.set_draw_value(self.dic_properties["draw_value"])
         self.set_has_origin(self.dic_properties["has_origin"])
         self.set_value_pos(self.dic_properties["value_pos"])
+
+    @property
+    def layout(self) -> Pango.Layout | None:
+        """Get the layout of the scale.
+
+        Returns
+        -------
+        Pango.Layout | None
+            The layout of the scale.
+        """
+        return self.get_layout()
+
+    @property
+    def layout_offset(self) -> tuple[int, int] | None:
+        """Get the coordinates where the scale will draw the text in the scale.
+
+        Returns
+        -------
+        tuple[int, int] | None
+            The layout offset of the scale.
+        """
+        return self.get_layout_offsets()
 
 
 class GTK3Scale(Gtk.Scale, GTK3ScaleMixin):
