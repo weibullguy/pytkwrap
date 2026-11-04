@@ -110,8 +110,6 @@ class BaseGTK3GObjectTests(TestPyTkWrapMixin):
     def mock_callback(self, widget, unk=None) -> None:
         """Callback method for testing."""
         assert isinstance(widget, self.widget_class)
-        if unk is not None:
-            print(f"{self.widget_class.__name__} passes {unk} to its callback.")
 
     def mock_handler(self, package):
         """Mock handler for on_changed() calls."""

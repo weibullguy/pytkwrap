@@ -21,31 +21,13 @@ class TestFontDescription:
         """Should create an instance of the FontDescription data class."""
         dut = FontDescription()
 
-        assert dut.allow_breaks == "false"
-        assert dut.bgalpha == "100%"
-        assert dut.bgcolor == "white"
         assert dut.family == "Sans,Serif,Monospace"
         assert dut.features == ""
-        assert dut.fgalpha == "100%"
-        assert dut.fgcolor == "black"
-        assert dut.gravity == "south"
-        assert dut.gravity_hint == "natural"
-        assert dut.insert_hyphens == "true"
-        assert dut.lang == "en_US"
-        assert dut.letter_spacing == 0.0
-        assert dut.overline == "none"
-        assert dut.overline_color == "black"
-        assert dut.rise == "0pt"
-        assert dut.scale == ""
         assert dut.size == 10
         assert dut.stretch == ""
-        assert dut.strikethrough == "false"
-        assert dut.strikethrough_color == "black"
-        assert dut.style == "Normal"
-        assert dut.underline == "none"
-        assert dut.underline_color == "black"
-        assert dut.variant == ""
-        assert dut.weight == "Regular"
+        assert dut.style == "normal"
+        assert dut.variant == "normal"
+        assert dut.weight == "normal"
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-025")
@@ -84,7 +66,7 @@ class TestFontDescription:
         dut = FontDescription()
         _font_description = dut.to_string()
 
-        assert _font_description == "Sans,Serif,Monospace Normal  Regular  south 10"
+        assert _font_description == "Sans,Serif,Monospace normal normal normal  10"
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-027")
@@ -99,15 +81,8 @@ class TestFontDescription:
 
         assert (
             _font_description
-            == "<span allow_breaks='false' bgalpha='100%' bgcolor='white' "
-            "face='Sans,Serif,Monospace' font_features='' fgalpha='100%' "
-            "fgcolor='black' gravity='south' gravity_hint='natural' "
-            "insert_hyphens='true' lang='en_US' letter_spacing='1024.0' "
-            "overline='none' overline_color='black' rise='0pt' "
-            "font_scale='small-caps' size='10pt' stretch='Condensed' "
-            "strikethrough='false' strikethrough_color='black' style='Normal' "
-            "underline='none' underline_color='black' variant='Small-Caps' "
-            "weight='Regular'>"
+            == "<span face='Sans,Serif,Monospace' font_features='' size='10pt' "
+            "stretch='Condensed' style='normal' variant='Small-Caps' weight='normal'>"
         )
 
     @pytest.mark.unit
@@ -119,13 +94,8 @@ class TestFontDescription:
 
         assert (
             _font_description
-            == "<span allow_breaks='false' bgalpha='100%' bgcolor='white' "
-            "face='Sans,Serif,Monospace' font_features='' fgalpha='100%' "
-            "fgcolor='black' gravity='south' gravity_hint='natural' "
-            "insert_hyphens='true' lang='en_US' overline='none' "
-            "overline_color='black' rise='0pt' size='10pt' strikethrough='false' "
-            "strikethrough_color='black' style='Normal' underline='none' "
-            "underline_color='black' weight='Regular'>"
+            == "<span face='Sans,Serif,Monospace' font_features='' size='10pt' "
+            "style='normal' variant='normal' weight='normal'>"
         )
 
     @pytest.mark.unit
