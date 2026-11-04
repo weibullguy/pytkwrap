@@ -5,18 +5,15 @@
 """
 
 # Standard Library Imports
-from datetime import date
 
 # Third Party Imports
 import pytest
 from pubsub import pub
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import WrongTypeError
-
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gdk, Gtk
-from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+from pytkwrap.gtk3._libs import Gdk, Gtk, Pango
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.scale import GTK3Scale
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -120,3 +117,21 @@ class TestGTK3Scale(BaseGTK3GObjectTests):
         assert not dut.get_has_origin()
         assert dut.get_property("value_pos") == Gtk.PositionType.BOTTOM
         assert dut.get_value_pos() == Gtk.PositionType.BOTTOM
+
+    @pytest.mark.unit
+    def test_layout(self):
+        """Should return the layout of the scale."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.layout, Pango.Layout)
+
+    @pytest.mark.unit
+    def test_layout_offset(self):
+        """Should return the layout offset of the scale."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.layout_offset, tuple)
+        assert len(dut.layout_offset) == 2
+        assert all(isinstance(i, int) for i in dut.layout_offset)
+        assert dut.layout_offset[0] == 0
+        assert dut.layout_offset[1] == 0
