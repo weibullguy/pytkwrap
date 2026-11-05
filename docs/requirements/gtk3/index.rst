@@ -21,6 +21,7 @@ GTK3 Widget Requirements
    bar
    bin
    button
+   color
    combo
    entry
    frame
