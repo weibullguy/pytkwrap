@@ -11,10 +11,17 @@ from collections.abc import Mapping
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3.widget import GTK3Widget
 
 
 class GTK3HeaderBarMixin(GTK3ContainerMixin):
-    """Mixin for GTK3HeaderBar."""
+    """Mixin for GTK3HeaderBar.
+
+    Attributes
+    ----------
+    _GTK3_HEADERBAR_PROPERTIES : GTK3WidgetProperties
+        GTK3HeaderBar-specific properties.
+    """
 
     _GTK3_HEADERBAR_PROPERTIES = GTK3WidgetProperties(
         custom_title=None,
@@ -60,6 +67,21 @@ class GTK3HeaderBarMixin(GTK3ContainerMixin):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+    def do_add_child(self, child: GTK3Widget, start: bool = True) -> None:
+        """Add a child widget to the GTK3HeaderBar.
+
+        Parameters
+        ----------
+        child : GTK3Widget
+            The GTK3Widget to add as a child to the GTK3HeaderBar.
+        start : bool
+            Whether to add the child widget at the start (default) or end of the
+            GTK3HeaderBar.
+        """
+        if start:
+            return self.pack_start(child)
+        return self.pack_end(child)
 
 
 class GTK3HeaderBar(Gtk.HeaderBar, GTK3HeaderBarMixin):
