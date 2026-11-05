@@ -78,6 +78,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     cell_background_rgba: Gdk.RGBA | None
     cell_background_set: bool
     cell_foreground_rgba: Gdk.RGBA | None
+    center_widget: Gtk.Widget | None
     child: Gtk.Widget | None
     child_pack_direction: Gtk.PackDirection
     clickable: bool
