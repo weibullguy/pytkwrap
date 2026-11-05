@@ -17,7 +17,7 @@ EXPECTED_ACTIONBAR_METHODS = [
     "pack_start",
     "set_center_widget",
 ]
-
+EXPECTED_ACTIONBAR_PROPERTIES = {"center_widget": None}
 EXPECTED_HEADERBAR_METHODS = [
     "get_custom_title",
     "get_decoration_layout",
