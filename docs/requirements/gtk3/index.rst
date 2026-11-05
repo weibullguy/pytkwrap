@@ -22,6 +22,7 @@ GTK3 Widget Requirements
    button
    color
    dialog
+   file
    combo
    entry
    label
