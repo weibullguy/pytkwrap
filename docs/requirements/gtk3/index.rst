@@ -21,6 +21,7 @@ GTK3 Widget Requirements
    bar
    button
    color
+   dialog
    combo
    entry
    label
