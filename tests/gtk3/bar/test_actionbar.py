@@ -80,7 +80,7 @@ class TestGTK3ActionBar(BaseGTK3GObjectTests):
         _child = GTK3Label("Pack End")
 
         dut = self.make_dut()
-        dut.do_add_child(_child)
+        dut.do_add_child(_child, False)
 
         assert dut.get_children()[0] == _child
         assert dut.get_children()[0].get_label() == "Pack End"

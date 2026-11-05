@@ -11,6 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.bar import GTK3HeaderBar
+from pytkwrap.gtk3.io import GTK3Label
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.bar.constants import (
     EXPECTED_HEADERBAR_METHODS,
@@ -79,7 +80,7 @@ class TestGTK3HeaderBar(BaseGTK3GObjectTests):
     @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
-        _custom_title = Gtk.Label(label="Test Custom Title")
+        _custom_title = GTK3Label(label="Test Custom Title")
 
         dut = self.make_dut()
         dut.do_set_properties(
@@ -111,3 +112,26 @@ class TestGTK3HeaderBar(BaseGTK3GObjectTests):
         assert dut.get_subtitle() == "Test Subtitle"
         assert dut.get_property("title") == "Test Title"
         assert dut.get_title() == "Test Title"
+
+    @pytest.mark.unit
+    def test_do_add_child_start(self):
+        """Should add a child widget with reference to the start of the
+        GTK3HeaderBar."""
+        _child = GTK3Label("Pack Start")
+
+        dut = self.make_dut()
+        dut.do_add_child(_child)
+
+        assert dut.get_children()[0] == _child
+        assert dut.get_children()[0].get_label() == "Pack Start"
+
+    @pytest.mark.unit
+    def test_do_add_child_end(self):
+        """Should add a child widget with reference to the end of the GTK3HeaderBar."""
+        _child = GTK3Label("Pack End")
+
+        dut = self.make_dut()
+        dut.do_add_child(_child, False)
+
+        assert dut.get_children()[0] == _child
+        assert dut.get_children()[0].get_label() == "Pack End"
