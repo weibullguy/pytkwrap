@@ -23,6 +23,7 @@ GTK3 Widget Requirements
    color
    dialog
    file
+   font
    combo
    entry
    label
