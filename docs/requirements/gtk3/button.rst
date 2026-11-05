@@ -254,56 +254,6 @@ PTW-GTK3-B-006
 
 ----
 
-do_make_buttonbox
-=================
-
-.. _PTW-GTK3-B-007:
-
-PTW-GTK3-B-007
---------------
-
-:Description: The ``do_make_buttonbox()`` function **SHALL** accept
-              a list of icon file paths, a list of tooltip strings,
-              a list of callback functions, and optional keyword
-              arguments for ``height``, ``width``, ``layout``, and
-              ``orientation``, and **SHALL** return a populated
-              ``Gtk.HButtonBox`` or ``Gtk.VButtonBox``.
-:Rationale:   A factory function for button boxes reduces the
-              boilerplate required to create a row or column of
-              icon buttons, which is a common UI pattern in
-              application toolbars.
-:Traces to:   :ref:`PTW-SR-W-001`
-:Status:      Active
-:Version:     0.1.0
-:History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       ``tests/gtk3/test_buttons/test_base_button.py::test_do_make_buttonbox_vertical``
-              ``tests/gtk3/test_buttons/test_base_button.py::test_do_make_buttonbox_horizontal``
-
-----
-
-.. _PTW-GTK3-B-008:
-
-PTW-GTK3-B-008
---------------
-
-:Description: The ``do_make_buttonbox()`` function **SHALL** set a
-              button insensitive if no callback is provided for that
-              button's index, and **SHALL** set an empty tooltip if
-              no tooltip is provided for that button's index.
-:Rationale:   Graceful handling of mismatched list lengths prevents
-              ``IndexError`` exceptions when the number of callbacks
-              or tooltips does not match the number of icons, allowing
-              partial configuration of button boxes without raising
-              exceptions.
-:Traces to:   :ref:`PTW-SR-W-001`
-:Status:      Active
-:Version:     0.1.0
-:History:     0.1.0 (2026-10-29) - Initial baseline.
-:Tests:       ``tests/gtk3/test_buttons/test_base_button.py::test_do_make_buttonbox_missing_callback``
-              ``tests/gtk3/test_buttons/test_base_button.py::test_do_make_buttonbox_missing_tooltip``
-
-----
-
 GTK3ToggleButton
 ================
 

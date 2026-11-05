@@ -19,12 +19,10 @@ GTK3 Widget Requirements
 
    container
    bar
-   bin
    button
    color
    combo
    entry
-   frame
    label
    menu
    matrixview
