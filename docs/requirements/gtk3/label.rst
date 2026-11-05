@@ -39,7 +39,6 @@ PTW-GTK3-L-001
               signal reflects this read-only nature and prevents
               spurious signal blocking.
 :Traces to:   :ref:`PTW-GTK3-M-005`, :ref:`PTW-GTK3-W-019`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -61,7 +60,6 @@ PTW-GTK3-L-002
               immediately usable without requiring post-construction
               configuration calls.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -81,7 +79,6 @@ PTW-GTK3-L-003
               informative than an empty string for a display-only
               widget.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-COM-M-010`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -105,7 +102,6 @@ PTW-GTK3-L-004
               consistent return value regardless of whether the label
               is using markup or plain text mode.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -142,7 +138,6 @@ PTW-GTK3-L-005
               to simply pass a value without knowing which GTK3
               setter to call.
 :Traces to:   :ref:`PTW-SR-W-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -172,7 +167,6 @@ PTW-GTK3-L-006
               values prevents the label from displaying these
               uninformative strings when data is unavailable.
 :Traces to:   :ref:`PTW-SR-M-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -202,7 +196,6 @@ PTW-GTK3-L-007
               method provides a consistent interface.
 :Traces to:   :ref:`PTW-SR-W-001`, :ref:`PTW-COM-X-012`,
               :ref:`PTW-COM-X-013`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -236,7 +229,6 @@ PTW-GTK3-L-008
               as required by :ref:`PTW-COM-X-011`.
 :Traces to:   :ref:`PTW-COM-X-011`, :ref:`PTW-COM-X-012`,
               :ref:`PTW-COM-X-013`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -260,7 +252,6 @@ PTW-GTK3-L-009
               ``GTK3Entry.do_set_font_description()`` as defined
               in :ref:`PTW-GTK3-E-008`.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -293,7 +284,6 @@ PTW-GTK3-L-010
               ensures consistent visual alignment without requiring
               the caller to set both properties.
 :Traces to:   :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -322,7 +312,6 @@ PTW-GTK3-L-011
               position the data entry widgets at the correct
               horizontal offset.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -346,7 +335,6 @@ PTW-GTK3-L-012
               regardless of their text content, which is required
               for consistent vertical alignment of data entry widgets.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

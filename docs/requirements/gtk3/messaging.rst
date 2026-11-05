@@ -35,7 +35,6 @@ PTW-GTK3-M-001
               the common ``PyTkWrapMixin`` defaults for these keys are
               ``None``.
 :Traces to:   :ref:`PTW-COM-M-001`, :ref:`PTW-GTK3-X-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -56,7 +55,6 @@ PTW-GTK3-M-002
               an edit; the configuration is wrapper-specific rather
               than a class-level default shared by all data widgets.
 :Traces to:   :ref:`PTW-COM-M-001`, :ref:`PTW-GTK3-X-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -81,7 +79,6 @@ PTW-GTK3-M-003
 :Rationale:   The connection method and returned ID provide the GTK3
               callback behavior used by update-time signal suppression.
 :Traces to:   :ref:`PTW-GTK3-X-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -101,7 +98,6 @@ PTW-GTK3-M-004
 :Rationale:   Some GTK signals belong to child objects; blocking the
               handler must act on the object that owns its handler ID.
 :Traces to:   :ref:`PTW-GTK3-W-016`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -125,7 +121,6 @@ PTW-GTK3-M-005
 :Rationale:   Index matching routes a package to the corresponding
               wrapper in a collection of indexed widgets.
 :Traces to:   :ref:`PTW-SR-M-003`, :ref:`PTW-GTK3-W-009`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -147,7 +142,6 @@ PTW-GTK3-M-006
               common wrapper attributes.
 :Traces to:   :ref:`PTW-SR-M-003`, :ref:`PTW-COM-M-002`,
               :ref:`PTW-GTK3-W-010`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -172,7 +166,6 @@ PTW-GTK3-M-007
               key indicates invalid configuration.
 :Traces to:   :ref:`PTW-SR-M-003`, :ref:`PTW-GTK3-W-011`,
               :ref:`PTW-GTK3-W-013`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -195,7 +188,6 @@ PTW-GTK3-M-008
 :Rationale:   This payload combines a wrapper's configured index with
               the value visible when its GTK signal callback runs.
 :Traces to:   :ref:`PTW-SR-M-002`, :ref:`PTW-GTK3-W-012`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -216,7 +208,6 @@ PTW-GTK3-M-009
               ``on_changed()``; that callback reads and publishes the
               value without performing a second handler-blocking step.
 :Traces to:   :ref:`PTW-SR-M-002`, :ref:`PTW-GTK3-W-015`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -240,7 +231,6 @@ PTW-GTK3-M-010
 :Rationale:   Subscription lifecycle and handler routing are controlled
               by the application rather than implicit wrapper setup.
 :Traces to:   :ref:`PTW-SR-M-004`, :ref:`PTW-COM-M-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -262,7 +252,6 @@ PTW-GTK3-M-011
               the GObject connection API; it does not dispatch
               connections based on GTK properties.
 :Traces to:   :ref:`PTW-GTK3-M-003`, :ref:`PTW-GTK3-M-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

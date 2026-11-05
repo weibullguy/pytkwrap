@@ -33,7 +33,6 @@ PTW-SN-001
               consistent interface for the most common widget
               configuration tasks.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -54,7 +53,6 @@ PTW-SN-002
               toolkit-specific functionality simply because pytkwrap
               does not wrap it.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -75,7 +73,6 @@ PTW-SN-003
               Mapping-based configuration reduces cognitive load and
               groups related values in one operation.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -99,7 +96,6 @@ PTW-SN-004
               significant rewriting of GUI code when the underlying
               toolkit changes.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Planned
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -118,7 +114,6 @@ PTW-SN-005
               application driving pytkwrap's initial development.
               GTK3 support is the minimum viable implementation.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -136,7 +131,6 @@ PTW-SN-006
 :Rationale:   Supporting GTK4, Qt, and wxWidgets would make pytkwrap
               useful to a wider developer audience.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Planned
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -161,7 +155,6 @@ PTW-SN-007
               as compound widgets reduces duplication across
               applications.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Planned
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -182,7 +175,6 @@ PTW-SN-008
               A reusable MatrixView component reduces development
               effort for applications requiring tabular data entry.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Planned
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -202,7 +194,6 @@ PTW-SN-009
               applications requires non-trivial integration code that
               **SHALL** be encapsulated by pytkwrap.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Planned
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -225,7 +216,6 @@ PTW-SN-010
               decouples the GUI from the application domain logic,
               making applications more maintainable and testable.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -243,7 +233,6 @@ PTW-SN-011
 :Rationale:   PyPubSub is a mature, well-documented Python
               publish-subscribe library that is toolkit-agnostic.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -267,7 +256,6 @@ PTW-SN-012
               particularly important for a library used in safety
               analysis applications.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -286,7 +274,6 @@ PTW-SN-013
               defensible software quality argument. Every requirement
               that cannot be traced to a test is an unverified claim.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -305,7 +292,6 @@ PTW-SN-014
               developers. Undocumented APIs create a barrier to use
               and increase the likelihood of misuse.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -328,7 +314,6 @@ PTW-SN-015
               contributors. pytkwrap **SHALL** demonstrate that FOSS
               and rigorous requirements engineering are compatible.
 :Traces to:   N/A
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

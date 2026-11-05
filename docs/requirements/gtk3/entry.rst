@@ -37,7 +37,6 @@ PTW-GTK3-E-001
               content changes. This is the correct signal to use as
               the edit signal for publish-subscribe messaging.
 :Traces to:   :ref:`PTW-GTK3-M-005`, :ref:`PTW-GTK3-W-019`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -60,7 +59,6 @@ PTW-GTK3-E-002
               step without requiring a separate
               ``do_set_font_description()`` call after construction.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -81,7 +79,6 @@ PTW-GTK3-E-003
               input without displaying ``None`` or any other
               placeholder that might be misinterpreted as user input.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-COM-M-010`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -115,7 +112,6 @@ PTW-GTK3-E-004
               passed through the messaging system to application
               code that expects a specific type.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -148,7 +144,6 @@ PTW-GTK3-E-005
               a meaningful value and eliminates the need for type
               conversion in application code.
 :Traces to:   :ref:`PTW-SR-W-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -180,7 +175,6 @@ PTW-GTK3-E-006
               consistent interface that hides the GTK3-specific
               ``override_font()`` call.
 :Traces to:   :ref:`PTW-SR-W-001`, :ref:`PTW-COM-X-012`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -208,7 +202,6 @@ PTW-GTK3-E-007
               the ``FontDescription`` dataclass toolkit-agnostic
               as required by :ref:`PTW-COM-X-011`.
 :Traces to:   :ref:`PTW-COM-X-011`, :ref:`PTW-COM-X-012`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -230,7 +223,6 @@ PTW-GTK3-E-008
               applied and eliminates the need for ``None`` checks
               in calling code.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -253,7 +245,6 @@ PTW-GTK3-E-009
               without requiring a separate call to
               ``do_set_font_description()``.
 :Traces to:   :ref:`PTW-SR-W-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

@@ -32,7 +32,6 @@ PTW-GTK3-B-001
 :Rationale:   The native GTK class provides the GTK button API, and
               the mixin provides pytkwrap configuration behavior.
 :Traces to:   :ref:`PTW-SR-W-001`, :ref:`PTW-GTK3-W-010`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -53,7 +52,6 @@ PTW-GTK3-B-002
               GUI applications without requiring explicit size
               configuration.
 :Traces to:   :ref:`PTW-GTK3-W-019`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -75,7 +73,6 @@ PTW-GTK3-B-003
               GTK3 widget is fully constructed before pytkwrap
               attempts to configure it.
 :Traces to:   :ref:`PTW-GTK3-W-018`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -111,7 +108,6 @@ PTW-GTK3-B-004
               the standard pytkwrap callback pattern and must be
               connected manually via ``self.connect()`` if needed.
 :Traces to:   :ref:`PTW-GTK3-W-003`, :ref:`PTW-GTK3-W-018`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -141,7 +137,6 @@ PTW-GTK3-B-005
               wrapper to allow full button configuration via the
               typed dictionary interface.
 :Traces to:   :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -165,7 +160,6 @@ PTW-GTK3-B-006
               configured via the same typed dictionary interface as
               all other widget properties.
 :Traces to:   :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -192,7 +186,6 @@ PTW-GTK3-B-007
               icon buttons, which is a common UI pattern in
               application toolbars.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -216,7 +209,6 @@ PTW-GTK3-B-008
               partial configuration of button boxes without raising
               exceptions.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -242,7 +234,6 @@ PTW-GTK3-B-009
               This is the correct signal to use as the edit signal
               for publish-subscribe messaging.
 :Traces to:   :ref:`PTW-GTK3-M-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -262,7 +253,6 @@ PTW-GTK3-B-010
               button from the application's perspective — whether
               the box is checked or unchecked.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -285,7 +275,6 @@ PTW-GTK3-B-011
               ``GTK3MatrixView.set_cell_value()`` with any value type
               without raising a ``TypeError``.
 :Traces to:   :ref:`PTW-SR-W-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -311,7 +300,6 @@ PTW-GTK3-B-012
               to use as the edit signal for publish-subscribe
               messaging.
 :Traces to:   :ref:`PTW-GTK3-M-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -330,7 +318,6 @@ PTW-GTK3-B-013
 :Rationale:   The ``Gdk.RGBA`` color is the meaningful value of a
               color button from the application's perspective.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -352,7 +339,6 @@ PTW-GTK3-B-014
               visible, predictable default color that clearly
               indicates no color has been selected.
 :Traces to:   :ref:`PTW-SR-W-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -378,7 +364,6 @@ PTW-GTK3-B-015
               to use as the edit signal for publish-subscribe
               messaging.
 :Traces to:   :ref:`PTW-GTK3-M-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -421,7 +406,6 @@ PTW-GTK3-B-016
               provides a consistent mechanism for configuring the
               return type without requiring subclassing.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -449,7 +433,6 @@ PTW-GTK3-B-017
               consistent path validation behavior.
 :Traces to:   :ref:`PTW-SR-W-007`, :ref:`PTW-COM-U-012`,
               :ref:`PTW-COM-U-013`, :ref:`PTW-COM-U-014`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -474,7 +457,6 @@ PTW-GTK3-B-021
               common behavior without imposing button-specific
               signals on the spin button.
 :Traces to:   :ref:`PTW-GTK3-M-005`, :ref:`PTW-GTK3-W-017`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -495,7 +477,6 @@ PTW-GTK3-B-022
               button. Returning a ``float`` covers both integer and
               floating-point spin button configurations.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -519,7 +500,6 @@ PTW-GTK3-B-023
               values from causing GTK3 warnings or unexpected
               behavior.
 :Traces to:   :ref:`PTW-SR-W-007`, :ref:`PTW-COM-U-011`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

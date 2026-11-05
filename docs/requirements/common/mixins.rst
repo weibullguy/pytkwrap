@@ -42,7 +42,6 @@ PTW-COM-X-001
               for common configuration while allowing callers to
               specify only values they wish to override.
 :Traces to:   :ref:`PTW-SR-W-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -67,7 +66,6 @@ PTW-COM-X-002
 :Rationale:   Instance-local state prevents one wrapper's configuration
               from being shared with another instance.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-SR-W-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -93,7 +91,6 @@ PTW-COM-X-003
 :Rationale:   A consistent lookup method reports invalid attribute
               names explicitly rather than silently returning a default.
 :Traces to:   :ref:`PTW-SR-W-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -115,7 +112,6 @@ PTW-COM-X-004
 :Rationale:   Property lookup follows the same explicit error-reporting
               convention as attribute lookup.
 :Traces to:   :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -137,7 +133,6 @@ PTW-COM-X-005
               typed dictionary is a static typing aid, not runtime
               validation.
 :Traces to:   :ref:`PTW-SR-W-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -161,7 +156,6 @@ PTW-COM-X-006
               configuration interface, while malformed configuration
               is surfaced explicitly.
 :Traces to:   :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -185,7 +179,6 @@ PTW-COM-X-007
 :Rationale:   Explicitly reporting the absence of a value implementation
               identifies unsupported use of the base convenience API.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -205,11 +198,32 @@ PTW-COM-X-008
 :Rationale:   The base mixin does not assume a universal widget value
               type; unsupported setting is reported explicitly.
 :Traces to:   :ref:`PTW-SR-W-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_do_set_value_wrong_type``
+
+----
+
+.. _PTW-COM-X-028:
+
+PTW-COM-X-028
+-------------
+
+:Description: ``PyTkWrapMixin`` **SHALL** define the class-level
+              defaults ``_DEFAULT_HEIGHT`` and ``_DEFAULT_WIDTH``, each
+              equal to ``-1``, and ``_DEFAULT_TOOLTIP``, equal to the
+              ``gettext``-translatable string ``"Missing tooltip,
+              please file an issue to have one added."``.
+:Rationale:   Toolkit layers share one definition of natural sizing and
+              one placeholder tooltip. Making the placeholder
+              translatable lets localized applications show it in the
+              user's language.
+:Traces to:   :ref:`PTW-SR-W-003`
+:Status:      Active
+:Version:     0.1.0
+:History:     0.1.0 (2026-11-04) - Initial baseline.
+:Tests:       ``tests/common/test_pytkwrap_mixin.py::TestPyTkWrapMixin::test_init``
 
 ----
 
@@ -230,7 +244,6 @@ PTW-COM-X-009
               wrapper and its common attributes and toolkit properties
               together.
 :Traces to:   :ref:`PTW-SR-W-004`, :ref:`PTW-SR-W-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -252,7 +265,6 @@ PTW-COM-X-010
 :Rationale:   The factory centralizes creation of the documented
               wrapper-configuration shape.
 :Traces to:   :ref:`PTW-COM-X-009`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -275,7 +287,6 @@ PTW-COM-X-011
               callers and type checkers; they do not imply runtime
               coercion or validation.
 :Traces to:   :ref:`PTW-COM-X-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -295,7 +306,6 @@ PTW-COM-X-012
 :Rationale:   Partial updates allow callers to configure only the
               common attributes relevant to a wrapper.
 :Traces to:   :ref:`PTW-COM-X-001`, :ref:`PTW-SR-W-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -318,7 +328,6 @@ PTW-COM-X-013
 :Rationale:   The common mixin cannot assume a value type or display
               mechanism shared by every wrapper.
 :Traces to:   :ref:`PTW-SR-W-006`, :ref:`PTW-SR-W-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -342,7 +351,6 @@ PTW-COM-X-025
               construct toolkit-specific font types for common
               configuration.
 :Traces to:   :ref:`PTW-SR-A-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -363,7 +371,6 @@ PTW-COM-X-026
 :Rationale:   The CSS representation supports toolkit style providers
               without introducing toolkit imports into the dataclass.
 :Traces to:   :ref:`PTW-SR-A-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -385,7 +392,6 @@ PTW-COM-X-027
               markup-capable widgets while leaving text insertion to
               the caller.
 :Traces to:   :ref:`PTW-SR-A-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

@@ -37,7 +37,6 @@ PTW-GTK3-CB-001
               selection changes. This is the correct signal to use
               as the edit signal for publish-subscribe messaging.
 :Traces to:   :ref:`PTW-GTK3-M-005`, :ref:`PTW-GTK3-W-019`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -69,7 +68,6 @@ PTW-GTK3-CB-002
               and complex multi-column ComboBoxes to be created
               without requiring post-construction configuration.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -91,7 +89,6 @@ PTW-GTK3-CB-003
               the need to specify column types for the most common
               use case.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -115,7 +112,6 @@ PTW-GTK3-CB-004
               model separately. Only the display column receives a
               text attribute to avoid displaying all columns.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -143,7 +139,6 @@ PTW-GTK3-CB-005
               explicitly passing ``column_types`` would corrupt the
               model structure.
 :Traces to:   :ref:`PTW-COM-W-008`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -171,7 +166,6 @@ PTW-GTK3-CB-006
               prevents ``None`` propagation through the messaging
               system.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -197,7 +191,6 @@ PTW-GTK3-CB-007
               ``GTK3MatrixView.set_cell_value()`` without raising a
               ``TypeError``.
 :Traces to:   :ref:`PTW-SR-W-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -226,7 +219,6 @@ PTW-GTK3-CB-008
               Blocking the signal handler prevents spurious
               ``"changed"`` signals from firing during the load.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -255,7 +247,6 @@ PTW-GTK3-CB-009
               data. The ``simple`` flag controls how entries are
               interpreted and stored in the model.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -281,7 +272,6 @@ PTW-GTK3-CB-010
               provides a convenient mapping for programmatic access
               to all options.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -311,7 +301,6 @@ PTW-GTK3-CB-011
               which must maintain a consistent no-argument signature
               across all data widgets.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -339,7 +328,6 @@ PTW-GTK3-CB-012
               errors when the messaging system delivers a value of
               an unexpected type.
 :Traces to:   :ref:`PTW-SR-M-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

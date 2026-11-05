@@ -35,7 +35,6 @@ PTW-GTK3-W-001
               complete GTK API without imposing a separate base-widget
               class hierarchy.
 :Traces to:   :ref:`PTW-GTK3-X-006`, :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -58,7 +57,6 @@ PTW-GTK3-W-002
               IDs.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-SR-W-004`,
               :ref:`PTW-GTK3-X-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -78,7 +76,6 @@ PTW-GTK3-W-003
 :Rationale:   The sentinel represents an unconnected handler without
               requiring class-shared mutable state.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-GTK3-X-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -96,7 +93,6 @@ PTW-GTK3-W-004
 :Rationale:   GTK's natural sizing remains available unless a wrapper
               or caller explicitly requests a size.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -118,7 +114,6 @@ PTW-GTK3-W-005
               typed dictionaries assist static checking but are not
               runtime validators.
 :Traces to:   :ref:`PTW-SR-W-004`, :ref:`PTW-GTK3-X-008`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -140,7 +135,6 @@ PTW-GTK3-W-006
 :Rationale:   These rules preserve GTK natural sizing for zero requests
               and keep the two representations of a tooltip in sync.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-GTK3-X-009`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -161,7 +155,6 @@ PTW-GTK3-W-007
               connections and preserves the GTK before/after handler
               choice.
 :Traces to:   :ref:`PTW-GTK3-X-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -181,7 +174,6 @@ PTW-GTK3-W-008
 :Rationale:   An invalid connection is reported both through the
               application logging channel and a typed exception.
 :Traces to:   :ref:`PTW-GTK3-X-005`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -205,7 +197,6 @@ PTW-GTK3-W-009
 :Rationale:   The index routes a package to the matching wrapper in a
               collection of widgets.
 :Traces to:   :ref:`PTW-SR-M-003`, :ref:`PTW-SR-M-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -226,7 +217,6 @@ PTW-GTK3-W-010
               API; no ``default`` attribute is defined for this
               purpose.
 :Traces to:   :ref:`PTW-SR-M-003`, :ref:`PTW-COM-M-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -246,7 +236,6 @@ PTW-GTK3-W-011
 :Rationale:   Blocking the edit handler prevents programmatic updates
               from being mistaken for user edits.
 :Traces to:   :ref:`PTW-SR-W-007`, :ref:`PTW-SR-M-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -267,7 +256,6 @@ PTW-GTK3-W-012
 :Rationale:   The indexed package routes a changed value to its intended
               consumer without requiring polling.
 :Traces to:   :ref:`PTW-SR-M-002`, :ref:`PTW-COM-M-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -287,7 +275,6 @@ PTW-GTK3-W-013
 :Rationale:   A missing handler mapping indicates an invalid signal
               configuration and must not be silently ignored.
 :Traces to:   :ref:`PTW-SR-M-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -306,7 +293,6 @@ PTW-GTK3-W-014
 :Rationale:   The publish topic remains independently configurable for
               each wrapper through ``dic_attributes``.
 :Traces to:   :ref:`PTW-SR-M-002`, :ref:`PTW-COM-M-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -326,7 +312,6 @@ PTW-GTK3-W-015
               ``on_changed()``; that method reads the value and
               publishes it directly.
 :Traces to:   :ref:`PTW-SR-M-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -347,7 +332,6 @@ PTW-GTK3-W-016
               for programmatic value updates to suppress the correct
               signal.
 :Traces to:   :ref:`PTW-SR-M-003`, :ref:`PTW-GTK3-M-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -371,7 +355,6 @@ PTW-GTK3-W-017
 :Rationale:   This contract reflects the implemented composition model
               and preserves native GTK inheritance and APIs.
 :Traces to:   :ref:`PTW-SR-A-004`, :ref:`PTW-GTK3-X-013`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -391,7 +374,6 @@ PTW-GTK3-W-018
 :Rationale:   Extending instance configuration preserves defaults and
               signal bookkeeping established by parent mixins.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-GTK3-X-010`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -412,7 +394,6 @@ PTW-GTK3-W-019
               there is no universal requirement for widget-specific
               dimensions.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-GTK3-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -434,8 +415,270 @@ PTW-GTK3-W-020
 :Rationale:   The helper applies one sensitivity setting to multiple
               GTK widgets without repeated caller code.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
 :Tests:       TBD — to be reconciled in the test review pass.
+
+----
+
+GTK3WidgetMixin Defaults
+========================
+
+.. _PTW-GTK3-W-021:
+
+PTW-GTK3-W-021
+--------------
+
+:Description: ``GTK3WidgetMixin.__init__()`` **SHALL** add the
+              attributes ``x_pos`` and ``y_pos``, each with a default
+              value of ``0``, to ``dic_attributes``.
+:Rationale:   The position attributes record where a wrapper is placed
+              in a positional layout container such as ``Gtk.Fixed``.
+:Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-SR-W-005`,
+              :ref:`PTW-COM-X-001`
+:Status:      Active
+:Version:     0.1.0
+:History:     0.1.0 (2026-11-04) - Initial baseline.
+:Tests:       ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_attributes_default``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_attributes``
+
+----
+
+.. _PTW-GTK3-W-022:
+
+PTW-GTK3-W-022
+--------------
+
+:Description: ``GTK3WidgetMixin.__init__()`` **SHALL** pre-register the
+              following ``Gtk.Widget`` signals in ``dic_handler_id``
+              with a value of ``-1``:
+
+              - ``"destroy"``
+              - ``"direction-changed"``
+              - ``"hide"``
+              - ``"keynav-failed"``
+              - ``"map"``
+              - ``"mnemonic-activate"``
+              - ``"move-focus"``
+              - ``"query-tooltip"``
+              - ``"realize"``
+              - ``"show"``
+              - ``"state-flags-changed"``
+              - ``"unmap"``
+              - ``"unrealize"``
+
+:Rationale:   Pre-registering the common widget signals makes them
+              available for connection via ``do_set_callbacks()`` on
+              every GTK3 widget wrapper.
+:Traces to:   :ref:`PTW-GTK3-W-002`, :ref:`PTW-GTK3-W-003`
+:Status:      Active
+:Version:     0.1.0
+:History:     0.1.0 (2026-11-04) - Initial baseline.
+:Tests:       ``tests/gtk3/test_widget.py::TestGTK3Widget``
+
+----
+
+.. _PTW-GTK3-W-023:
+
+PTW-GTK3-W-023
+--------------
+
+:Description: ``GTK3WidgetMixin.__init__()`` **SHALL** initialize
+              ``dic_properties`` with the following defaults:
+
+              - ``app_paintable``: ``False``
+              - ``can_default``: ``False``
+              - ``can_focus``: ``False``
+              - ``composite_child``: ``False``
+              - ``events``: ``Gdk.EventMask.ALL_EVENTS_MASK``
+              - ``expand``: ``False``
+              - ``focus_on_click``: ``True``
+              - ``halign``: ``Gtk.Align.FILL``
+              - ``has_default``: ``False``
+              - ``has_focus``: ``False``
+              - ``has_tooltip``: ``False``
+              - ``height_request``: ``-1``
+              - ``hexpand``: ``False``
+              - ``hexpand_set``: ``False``
+              - ``is_focus``: ``False``
+              - ``margin``, ``margin_bottom``, ``margin_end``,
+                ``margin_start``, ``margin_top``: ``0``
+              - ``name``: ``"pytkwrap GTK3 widget"``
+              - ``no_show_all``: ``False``
+              - ``opacity``: ``1.0``
+              - ``parent``: ``None``
+              - ``receives_default``: ``False``
+              - ``scale_factor``: ``1``
+              - ``sensitive``: ``True``
+              - ``style``: ``None``
+              - ``tooltip_markup``: ``_DEFAULT_TOOLTIP``
+              - ``tooltip_text``: ``_DEFAULT_TOOLTIP``
+              - ``valign``: ``Gtk.Align.FILL``
+              - ``vexpand``: ``False``
+              - ``vexpand_set``: ``False``
+              - ``visible``: ``False``
+              - ``width_request``: ``-1``
+              - ``window``: ``None``
+
+:Rationale:   Every GTK3 widget wrapper starts from a known, complete
+              property configuration. The tooltip defaults use the
+              translatable ``_DEFAULT_TOOLTIP`` so that a widget
+              missing a tooltip is visible to the user and reportable.
+:Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-GTK3-W-002`,
+              :ref:`PTW-COM-X-028`
+:Status:      Active
+:Version:     0.1.0
+:History:     0.1.0 (2026-11-04) - Initial baseline.
+:Tests:       ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_properties_default``
+
+----
+
+GTK3WidgetMixin do_set_properties
+=================================
+
+.. _PTW-GTK3-W-024:
+
+PTW-GTK3-W-024
+--------------
+
+:Description: ``GTK3WidgetMixin.do_set_properties()`` **SHALL** apply
+              the following properties through the corresponding
+              ``Gtk.Widget`` ``set_<name>()`` method:
+
+              ``can_default``, ``can_focus``, ``halign``,
+              ``has_tooltip``, ``hexpand``, ``hexpand_set``,
+              ``margin_bottom``, ``margin_end``, ``margin_start``,
+              ``margin_top``, ``name``, ``opacity``,
+              ``receives_default``, ``sensitive``, ``tooltip_markup``,
+              ``tooltip_text``, ``valign``, ``vexpand``,
+              ``vexpand_set``, and ``visible``.
+
+              These setters **SHALL** be called after the size and
+              tooltip normalization described by
+              :ref:`PTW-GTK3-W-006`.
+:Rationale:   Normalizing first ensures GTK receives the final,
+              consistent size and tooltip values.
+:Traces to:   :ref:`PTW-SR-W-004`, :ref:`PTW-GTK3-W-005`
+:Status:      Active
+:Version:     0.1.0
+:History:     0.1.0 (2026-11-04) - Initial baseline.
+:Tests:       ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_properties``
+
+----
+
+.. _PTW-GTK3-W-025:
+
+PTW-GTK3-W-025
+--------------
+
+:Description: ``GTK3WidgetMixin.do_set_properties()`` **SHALL**:
+
+              - call ``set_size_request()`` with ``width_request`` and
+                ``height_request`` only when the wrapper is an instance
+                of ``Gtk.Widget``;
+              - apply ``focus_on_click`` through
+                ``set_property("focus-on-click", ...)``;
+              - apply ``parent`` through ``set_property("parent",
+                ...)`` only when ``parent`` is not ``None``.
+
+:Rationale:   The ``isinstance`` guard prevents a size request on a
+              composition that does not include ``Gtk.Widget``. A
+              ``None`` parent is not passed to GTK, so an unparented
+              widget is not reparented.
+:Traces to:   :ref:`PTW-SR-W-004`, :ref:`PTW-GTK3-W-005`
+:Status:      Active
+:Version:     0.1.0
+:History:     0.1.0 (2026-11-04) - Initial baseline.
+:Tests:       ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_properties``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_properties_zero_height``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_properties_zero_width``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_properties_default_tooltip_markup``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_do_set_properties_default_tooltip_text``
+
+----
+
+Managed Attributes
+==================
+
+.. _PTW-GTK3-W-026:
+
+PTW-GTK3-W-026
+--------------
+
+:Description: ``GTK3WidgetMixin`` **SHALL** provide the following
+              read-only Python properties, each returning the result
+              of the corresponding ``Gtk.Widget`` getter:
+
+              ============================  =================================
+              Property                      Getter
+              ============================  =================================
+              ``accessible``                ``get_accessible()``
+              ``allocated_baseline``        ``get_allocated_baseline()``
+              ``allocated_height``          ``get_allocated_height()``
+              ``allocated_width``           ``get_allocated_width()``
+              ``display``                   ``get_display()``
+              ``frame_clock``               ``get_frame_clock()``
+              ``pango_context``             ``get_pango_context()``
+              ``parent_window``             ``get_parent_window()``
+              ``preferred_height``          ``get_preferred_height()``
+              ``preferred_size``            ``get_preferred_size()``
+              ``preferred_width``           ``get_preferred_width()``
+              ``request_mode``              ``get_request_mode()``
+              ``scale_factor``              ``get_scale_factor()``
+              ``screen``                    ``get_screen()``
+              ``settings``                  ``get_settings()``
+              ``style_context``             ``get_style_context()``
+              ``toplevel``                  ``get_toplevel()``
+              ``valign_with_baseline``      ``get_valign_with_baseline()``
+              ============================  =================================
+
+              None of these properties **SHALL** define a setter.
+:Rationale:   These values are computed or owned by GTK at runtime
+              and cannot be set directly. Exposing them as properties
+              gives Pythonic attribute access without duplicating state
+              in ``dic_properties``.
+:Traces to:   :ref:`PTW-SR-W-002`
+:Status:      Active
+:Version:     0.1.0
+:History:     0.1.0 (2026-11-04) - Initial baseline.
+:Tests:       ``tests/gtk3/test_widget.py::TestGTK3Widget::test_accessible``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_allocated_baseline``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_allocated_height``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_allocated_width``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_display``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_frame_clock``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_pango_context``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_parent_window``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_preferred_height``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_preferred_size``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_preferred_width``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_request_mode``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_scale_factor``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_screen``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_settings``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_style_context``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_toplevel``
+              ``tests/gtk3/test_widget.py::TestGTK3Widget::test_valign_with_baseline``
+
+----
+
+GTK3Widget
+==========
+
+.. _PTW-GTK3-W-027:
+
+PTW-GTK3-W-027
+--------------
+
+:Description: The ``GTK3Widget`` class **SHALL** combine ``Gtk.Widget``
+              with ``GTK3WidgetMixin``. Its ``__init__()`` method
+              **SHALL** call ``Gtk.Widget.__init__()``, then
+              ``GTK3WidgetMixin.__init__()``, and then ``show_all()``.
+:Rationale:   ``GTK3Widget`` is the concrete wrapper for the base GTK3
+              widget and is shown immediately after construction.
+:Traces to:   :ref:`PTW-GTK3-W-001`, :ref:`PTW-GTK3-W-017`
+:Status:      Active
+:Version:     0.1.0
+:History:     0.1.0 (2026-11-04) - Initial baseline.
+:Tests:       ``tests/gtk3/test_widget.py::TestGTK3Widget``

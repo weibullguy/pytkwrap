@@ -49,7 +49,6 @@ PTW-GTK3-X-001
               toolkit-independent configuration and error handling.
 :Traces to:   :ref:`PTW-SR-A-003`, :ref:`PTW-SR-A-004`,
               :ref:`PTW-COM-X-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -72,7 +71,6 @@ PTW-GTK3-X-002
               property type describes the GTK3-native property surface.
 :Traces to:   :ref:`PTW-SR-W-004`, :ref:`PTW-SR-W-005`,
               :ref:`PTW-COM-X-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -93,7 +91,6 @@ PTW-GTK3-X-003
 :Rationale:   Instance-level handler IDs allow signal connection state
               to be tracked independently for each wrapper.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -115,7 +112,6 @@ PTW-GTK3-X-004
 :Rationale:   A shared callback setup interface supports both ordinary
               and after-default GTK signal handlers.
 :Traces to:   :ref:`PTW-SR-W-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -136,7 +132,6 @@ PTW-GTK3-X-005
               both the application's logging channel and a typed
               exception.
 :Traces to:   :ref:`PTW-GTK3-X-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -162,7 +157,6 @@ PTW-GTK3-X-006
               inheritance tree.
 :Traces to:   :ref:`PTW-SR-A-003`, :ref:`PTW-SR-A-004`,
               :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -183,7 +177,6 @@ PTW-GTK3-X-007
               handler state, while specialized mixins can extend those
               mappings.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -205,7 +198,6 @@ PTW-GTK3-X-008
               the GTK3 property state inspectable and permits
               specialized mixins to extend property handling.
 :Traces to:   :ref:`PTW-SR-W-004`, :ref:`PTW-COM-X-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -226,7 +218,6 @@ PTW-GTK3-X-009
 :Rationale:   GTK3 uses ``-1`` for natural sizing, and paired tooltip
               properties should reflect a single configured tooltip.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-GTK3-X-008`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -249,7 +240,6 @@ PTW-GTK3-X-010
 :Rationale:   Incremental mixin composition preserves configuration
               defaults and handler bookkeeping from parent mixins.
 :Traces to:   :ref:`PTW-SR-A-003`, :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -268,7 +258,6 @@ PTW-GTK3-X-011
 :Rationale:   A single partial typed dictionary can carry both common
               and GTK3-specific attribute configuration.
 :Traces to:   :ref:`PTW-SR-W-005`, :ref:`PTW-GTK3-X-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -288,7 +277,6 @@ PTW-GTK3-X-012
               assistance when configuring GTK3-native properties; it
               does not perform runtime validation.
 :Traces to:   :ref:`PTW-SR-W-004`, :ref:`PTW-GTK3-X-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -307,7 +295,6 @@ PTW-GTK3-X-013
 :Rationale:   The mixin composition retains the native GTK class API
               and matches the current wrapper inheritance model.
 :Traces to:   :ref:`PTW-SR-A-004`, :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

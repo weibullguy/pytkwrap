@@ -33,7 +33,6 @@ PTW-COM-U-001
               when storing widget state in databases or passing values
               through messaging systems that expect integer values.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -55,7 +54,6 @@ PTW-COM-U-002
               values through messaging systems that use integer
               representations of boolean values.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -81,7 +79,6 @@ PTW-COM-U-003
               databases, or messaging systems that represent boolean
               values as strings.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -105,7 +102,6 @@ PTW-COM-U-004
               avoids duplicating the ``None`` check in every widget's
               ``do_update()`` method.
 :Traces to:   :ref:`PTW-SR-M-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -127,7 +123,6 @@ PTW-COM-U-005
               operation when populating text-based widgets that cannot
               display ``None`` values.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -154,7 +149,6 @@ PTW-COM-U-006
               integer format suitable for database storage and
               arithmetic operations on dates.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -177,7 +171,6 @@ PTW-COM-U-007
               necessary for displaying date values in text-based
               widgets and for human-readable output.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -200,7 +193,6 @@ PTW-COM-U-008
               objects is necessary for processing date values received
               from text-based widgets or messaging systems.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -225,7 +217,6 @@ PTW-COM-U-009
               parsing configuration values or topic names in
               publish-subscribe messaging systems.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -253,7 +244,6 @@ PTW-COM-U-010
 :Rationale:   Sorted dictionaries are commonly needed when populating
               ComboBox or TreeView widgets with ordered data.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -280,7 +270,6 @@ PTW-COM-U-011
               for range-constrained widgets, preventing out-of-range
               values from being passed to setter methods.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -306,7 +295,6 @@ PTW-COM-U-012
               ``GTK3FileChooserButton.do_set_value()`` to determine
               the appropriate GTK3 setter method to call.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -327,7 +315,6 @@ PTW-COM-U-013
               ``GTK3FileChooserButton.do_set_value()`` when the
               action is ``SELECT_FOLDER`` or ``CREATE_FOLDER``.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -349,7 +336,6 @@ PTW-COM-U-014
               available, providing a sensible default that always
               exists.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -369,7 +355,6 @@ PTW-COM-U-015
               resources such as icons and data files regardless of
               the platform or installation method.
 :Traces to:   :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -395,7 +380,6 @@ PTW-COM-U-016
               code and test suites, providing a clear migration path
               for users when APIs change.
 :Traces to:   :ref:`PTW-SR-Q-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

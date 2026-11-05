@@ -34,7 +34,6 @@ PTW-GTK3-TV-001
 :Rationale:   The wrapper retains the GTK text-view API and supplies
               pytkwrap behavior through its mixin.
 :Traces to:   :ref:`PTW-GTK3-M-005`, :ref:`PTW-GTK3-W-019`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -57,7 +56,6 @@ PTW-GTK3-TV-002
               time allows the caller to provide a buffer or use the
               native GTK default when ``None`` is supplied.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -76,7 +74,6 @@ PTW-GTK3-TV-003
 :Rationale:   The wrapper does not own application layout or scrolling
               policy.
 :Traces to:   :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -95,7 +92,6 @@ PTW-GTK3-TV-004
               for a multi-line text entry widget, consistent with
               the default for ``GTK3Entry``.
 :Traces to:   :ref:`PTW-SR-W-003`, :ref:`PTW-COM-M-010`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -118,7 +114,6 @@ PTW-GTK3-TV-005
 :Rationale:   TextView-specific signal ownership is not implemented
               in the current wrapper.
 :Traces to:   :ref:`PTW-GTK3-M-004`, :ref:`PTW-GTK3-W-016`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -138,7 +133,6 @@ PTW-GTK3-TV-006
 :Rationale:   Buffer-specific callback wiring is not implemented by
               the current TextView wrapper.
 :Traces to:   :ref:`PTW-GTK3-M-010`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -165,7 +159,6 @@ PTW-GTK3-TV-007
               ensures the full content is always returned regardless
               of any formatting applied.
 :Traces to:   :ref:`PTW-SR-W-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -191,7 +184,6 @@ PTW-GTK3-TV-008
               and eliminates the need for type conversion in
               application code.
 :Traces to:   :ref:`PTW-SR-W-007`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -217,7 +209,6 @@ PTW-GTK3-TV-009
 :Rationale:   The TextView wrapper does not override the generic
               update or signal-owner methods.
 :Traces to:   :ref:`PTW-GTK3-M-001`, :ref:`PTW-GTK3-M-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -239,7 +230,6 @@ PTW-GTK3-TV-010
 :Rationale:   The generic update method treats an unknown configured
               signal as a wrapper configuration error.
 :Traces to:   :ref:`PTW-GTK3-W-013`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -263,7 +253,6 @@ PTW-GTK3-TV-011
 :Rationale:   The TextView wrapper does not override
               ``on_changed()`` with buffer-specific behavior.
 :Traces to:   :ref:`PTW-GTK3-M-002`, :ref:`PTW-GTK3-M-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

@@ -37,7 +37,6 @@ PTW-GTK3-BB-001
               ``Gtk.Container``. The wrapper retains the native
               ``Gtk.Bin`` class and reuses the container mixin.
 :Traces to:   :ref:`PTW-GTK3-W-017`, :ref:`PTW-GTK3-BC-008`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -58,7 +57,6 @@ PTW-GTK3-BB-002
               the existence of ``GTK3Bin`` does not impose a
               pytkwrap inheritance hierarchy on other wrappers.
 :Traces to:   :ref:`PTW-GTK3-W-017`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -80,7 +78,6 @@ PTW-GTK3-BB-003
               and the pytkwrap container configuration dictionaries.
 :Traces to:   :ref:`PTW-COM-X-003`, :ref:`PTW-GTK3-BC-004`,
               :ref:`PTW-GTK3-BC-006`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -102,7 +99,6 @@ PTW-GTK3-BB-004
               the number of child widgets to one. ``GTK3Bin`` adds no
               separate pytkwrap properties or signals.
 :Traces to:   :ref:`PTW-GTK3-W-017`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -124,7 +120,6 @@ PTW-GTK3-BB-005
 :Rationale:   ``Gtk.Bin`` adds no pytkwrap configuration properties
               beyond those provided by ``Gtk.Container``.
 :Traces to:   :ref:`PTW-GTK3-X-013`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -149,7 +144,6 @@ PTW-GTK3-BB-006
               container behavior without requiring inheritance from
               the ``GTK3Bin`` wrapper.
 :Traces to:   :ref:`PTW-GTK3-W-017`, :ref:`PTW-GTK3-BC-008`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -183,7 +177,6 @@ PTW-GTK3-BB-007
 :Rationale:   Their detailed behavior and composition have not yet
               been reconciled with the current API baseline.
 :Traces to:   :ref:`PTW-GTK3-W-017`, :ref:`PTW-GTK3-BC-008`
-:Issues:      None
 :Status:      Planned
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -202,7 +195,6 @@ PTW-GTK3-BB-008
 :Rationale:   No such intermediate class is part of the current
               implementation baseline.
 :Traces to:   :ref:`PTW-GTK3-W-017`
-:Issues:      None
 :Status:      Planned
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -222,7 +214,6 @@ PTW-GTK3-BB-009
 :Rationale:   The current implementation does not define a
               ``GTK3BaseBox`` intermediary.
 :Traces to:   :ref:`PTW-GTK3-W-017`, :ref:`PTW-GTK3-BC-008`
-:Issues:      None
 :Status:      Planned
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

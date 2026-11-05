@@ -33,7 +33,6 @@ PTW-COM-M-001
               GTK3 message implementation without imposing toolkit
               behavior on the common layer.
 :Traces to:   :ref:`PTW-SR-M-001`, :ref:`PTW-SR-M-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -53,7 +52,6 @@ PTW-COM-M-002
               configured ``default_value`` when an incoming package
               contains ``None``.
 :Traces to:   :ref:`PTW-SR-M-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -75,7 +73,6 @@ PTW-COM-M-007
 :Rationale:   Bulk subscription reduces repeated setup code for
               applications wiring wrapper messages to handlers.
 :Traces to:   :ref:`PTW-SR-M-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -94,7 +91,6 @@ PTW-COM-M-008
 :Rationale:   Bulk unsubscription provides a consistent teardown
               operation for applications and tests.
 :Traces to:   :ref:`PTW-SR-M-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -113,7 +109,6 @@ PTW-COM-M-009
               implementation behavior.
 :Rationale:   Tolerant cleanup supports idempotent application teardown.
 :Traces to:   :ref:`PTW-COM-M-008`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

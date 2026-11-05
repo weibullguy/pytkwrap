@@ -37,7 +37,6 @@ PTW-GTK3-F-001
               pytkwrap configuration behavior while the native class
               remains in the inheritance hierarchy.
 :Traces to:   :ref:`PTW-GTK3-W-001`, :ref:`PTW-GTK3-W-017`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -59,7 +58,6 @@ PTW-GTK3-F-002
               GTK3 widget is fully constructed before pytkwrap
               attempts to configure it.
 :Traces to:   :ref:`PTW-GTK3-W-018`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -88,7 +86,6 @@ PTW-GTK3-F-003
               if the application requires callbacks for container
               events.
 :Traces to:   :ref:`PTW-GTK3-W-003`, :ref:`PTW-GTK3-W-018`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -124,7 +121,6 @@ PTW-GTK3-F-004
               wrapper to allow full frame configuration via the
               typed dictionary interface.
 :Traces to:   :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -147,7 +143,6 @@ PTW-GTK3-F-005
               label, consistent with GTK3's behavior where a label
               widget replaces the text label entirely.
 :Traces to:   :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -169,7 +164,6 @@ PTW-GTK3-F-006
               the correct property application order across the
               inheritance hierarchy.
 :Traces to:   :ref:`PTW-GTK3-X-013`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

@@ -40,7 +40,6 @@ PTW-GTK3-BC-001
               wrappers to compose it with their native GTK class without
               requiring an intermediate wrapper base class.
 :Traces to:   :ref:`PTW-GTK3-W-017`, :ref:`PTW-SR-A-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -59,7 +58,6 @@ PTW-GTK3-BC-002
 :Rationale:   The mixin supplies pytkwrap behavior and does not replace
               the native GTK class.
 :Traces to:   :ref:`PTW-GTK3-W-017`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -89,7 +87,6 @@ PTW-GTK3-BC-003
               ensures it is available to container widget
               wrappers without being duplicated in each subclass.
 :Traces to:   :ref:`PTW-GTK3-W-018`, :ref:`PTW-SR-W-003`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -109,7 +106,6 @@ PTW-GTK3-BC-004
               preserves the properties initialized by the parent mixin
               and extends them with container-specific properties.
 :Traces to:   :ref:`PTW-GTK3-X-011`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -142,7 +138,6 @@ PTW-GTK3-BC-005
               prevents them from appearing on non-container widgets
               such as ``GTK3Entry`` or ``GTK3Label``.
 :Traces to:   :ref:`PTW-GTK3-W-003`, :ref:`PTW-GTK3-W-018`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -165,7 +160,6 @@ PTW-GTK3-BC-006
               ``do_set_callbacks()`` without requiring each concrete
               container class to register them individually.
 :Traces to:   :ref:`PTW-GTK3-X-012`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -192,7 +186,6 @@ PTW-GTK3-BC-007
               container wrappers support this property without
               duplicating the setter call in each concrete mixin.
 :Traces to:   :ref:`PTW-GTK3-X-013`, :ref:`PTW-SR-W-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -216,7 +209,6 @@ PTW-GTK3-BC-008
               signals while preserving the native GTK class in the
               wrapper's inheritance hierarchy.
 :Traces to:   :ref:`PTW-GTK3-W-017`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.

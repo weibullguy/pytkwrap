@@ -42,7 +42,6 @@ PTW-GTK3-MU-001
               allowing the same menu definition to be rendered using
               either supported GTK3 menu API.
 :Traces to:   :ref:`PTW-SR-W-001`, :ref:`PTW-GTK3-X-013`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -68,7 +67,6 @@ PTW-GTK3-MU-002
 :Rationale:   A TOML menu file provides an external, editable
               representation of the structured menu data.
 :Traces to:   :ref:`PTW-SR-W-001`, :ref:`PTW-GTK3-MU-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -91,7 +89,6 @@ PTW-GTK3-MU-003
 :Rationale:   Validating external menu data before rendering identifies
               malformed configuration at its source.
 :Traces to:   :ref:`PTW-GTK3-MU-002`, :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -117,7 +114,6 @@ PTW-GTK3-MU-004
               configuration without executing arbitrary expressions
               from the menu file.
 :Traces to:   :ref:`PTW-GTK3-MU-002`, :ref:`PTW-SR-W-001`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -145,7 +141,6 @@ PTW-GTK3-MU-005
               representation while reusing the same menu tree.
 :Traces to:   :ref:`PTW-SR-W-001`, :ref:`PTW-GTK3-MU-001`,
               :ref:`PTW-GTK3-MU-002`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
@@ -171,7 +166,6 @@ PTW-GTK3-MU-006
               metadata and make callback wiring failures explicit.
 :Traces to:   :ref:`PTW-GTK3-MU-001`, :ref:`PTW-GTK3-MU-005`,
               :ref:`PTW-GTK3-X-004`
-:Issues:      None
 :Status:      Active
 :Version:     0.1.0
 :History:     0.1.0 (2026-10-29) - Initial baseline.
