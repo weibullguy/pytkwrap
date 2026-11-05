@@ -94,3 +94,17 @@ class TestGTK3InfoBar(BaseGTK3GObjectTests):
         assert not dut.get_revealed()
         assert dut.get_property("show_close_button")
         assert dut.get_show_close_button()
+
+    @pytest.mark.unit
+    def test_action_area(self):
+        """Should return the action area Gtk.Box of the GTK3InfoBar."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.action_area, Gtk.Box)
+
+    @pytest.mark.unit
+    def test_content_area(self):
+        """Should return the content area Gtk.Box of the GTK3InfoBar."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.content_area, Gtk.Box)

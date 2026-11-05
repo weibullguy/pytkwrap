@@ -62,6 +62,7 @@ EXPECTED_INFOBAR_METHODS = [
     "set_show_close_button",
 ]
 EXPECTED_INFOBAR_PROPERTIES = {
+    "default_response": -1,
     "message_type": Gtk.MessageType.INFO,
     "revealed": True,
     "show_close_button": False,
