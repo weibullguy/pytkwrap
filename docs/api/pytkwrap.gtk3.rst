@@ -7,10 +7,27 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   pytkwrap.gtk3.buttons
-   pytkwrap.gtk3.dialogs
-   pytkwrap.gtk3.panels
-   pytkwrap.gtk3.treeviews
+   pytkwrap.gtk3.bar
+   pytkwrap.gtk3.book
+   pytkwrap.gtk3.button
+   pytkwrap.gtk3.color
+   pytkwrap.gtk3.container
+   pytkwrap.gtk3.dialog
+   pytkwrap.gtk3.file
+   pytkwrap.gtk3.font
+   pytkwrap.gtk3.icon
+   pytkwrap.gtk3.io
+   pytkwrap.gtk3.layout
+   pytkwrap.gtk3.menu
+   pytkwrap.gtk3.panel
+   pytkwrap.gtk3.print
+   pytkwrap.gtk3.shortcut
+   pytkwrap.gtk3.style
+   pytkwrap.gtk3.text
+   pytkwrap.gtk3.tool
+   pytkwrap.gtk3.treeview
+   pytkwrap.gtk3.view
+   pytkwrap.gtk3.window
 
 Submodules
 ----------
@@ -23,66 +40,18 @@ pytkwrap.gtk3.adjustment module
    :show-inheritance:
    :undoc-members:
 
-pytkwrap.gtk3.basebook module
------------------------------
+pytkwrap.gtk3.clipboard module
+------------------------------
 
-.. automodule:: pytkwrap.gtk3.basebook
+.. automodule:: pytkwrap.gtk3.clipboard
    :members:
    :show-inheritance:
    :undoc-members:
 
-pytkwrap.gtk3.baseview module
------------------------------
-
-.. automodule:: pytkwrap.gtk3.baseview
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-pytkwrap.gtk3.cellrenderer module
----------------------------------
-
-.. automodule:: pytkwrap.gtk3.cellrenderer
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-pytkwrap.gtk3.combo module
+pytkwrap.gtk3.image module
 --------------------------
 
-.. automodule:: pytkwrap.gtk3.combo
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-pytkwrap.gtk3.entry module
---------------------------
-
-.. automodule:: pytkwrap.gtk3.entry
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-pytkwrap.gtk3.frame module
---------------------------
-
-.. automodule:: pytkwrap.gtk3.frame
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-pytkwrap.gtk3.label module
---------------------------
-
-.. automodule:: pytkwrap.gtk3.label
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-pytkwrap.gtk3.matrixview module
--------------------------------
-
-.. automodule:: pytkwrap.gtk3.matrixview
+.. automodule:: pytkwrap.gtk3.image
    :members:
    :show-inheritance:
    :undoc-members:
@@ -95,34 +64,58 @@ pytkwrap.gtk3.mixins module
    :show-inheritance:
    :undoc-members:
 
-pytkwrap.gtk3.plotview module
------------------------------
+pytkwrap.gtk3.popover module
+----------------------------
 
-.. automodule:: pytkwrap.gtk3.plotview
+.. automodule:: pytkwrap.gtk3.popover
    :members:
    :show-inheritance:
    :undoc-members:
 
-pytkwrap.gtk3.scrolledwindow module
------------------------------------
+pytkwrap.gtk3.range module
+--------------------------
 
-.. automodule:: pytkwrap.gtk3.scrolledwindow
+.. automodule:: pytkwrap.gtk3.range
    :members:
    :show-inheritance:
    :undoc-members:
 
-pytkwrap.gtk3.textview module
------------------------------
+pytkwrap.gtk3.scale module
+--------------------------
 
-.. automodule:: pytkwrap.gtk3.textview
+.. automodule:: pytkwrap.gtk3.scale
    :members:
    :show-inheritance:
    :undoc-members:
 
-pytkwrap.gtk3.treeviewcolumn module
------------------------------------
+pytkwrap.gtk3.separator module
+------------------------------
 
-.. automodule:: pytkwrap.gtk3.treeviewcolumn
+.. automodule:: pytkwrap.gtk3.separator
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+pytkwrap.gtk3.spinner module
+----------------------------
+
+.. automodule:: pytkwrap.gtk3.spinner
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+pytkwrap.gtk3.switch module
+---------------------------
+
+.. automodule:: pytkwrap.gtk3.switch
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+pytkwrap.gtk3.tooltip module
+----------------------------
+
+.. automodule:: pytkwrap.gtk3.tooltip
    :members:
    :show-inheritance:
    :undoc-members:
