@@ -16,7 +16,28 @@ from pytkwrap.utilities import clamp
 
 
 class GTK3LevelBarMixin(GTK3WidgetMixin):
-    """Mixin for GTK3LevelBar."""
+    """Mixin for GTK3LevelBar.
+
+    Attributes
+    ----------
+    _GTK3_LEVELBAR_ATTRIBUTES : GTK3WidgetAttributes
+        GTK3LevelBar-specific attributes.
+    _GTK3_LEVELBAR_PROPERTIES : GTK3WidgetProperties
+        GTK3LevelBar-specific properties.
+    _GTK3_LEVELBAR_SIGNALS : list[str]
+        List of GTK3LevelBar-specific signals.
+
+    Notes
+    -----
+    The following Gtk.InfoBar methods are not wrapped in a convenience layer,
+    but may be called directly:
+
+        * add_offset_value(name, value)
+        * remove_offset_value(name)
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/LevelBar.html for
+    details on these methods.
+    """
 
     _GTK3_LEVELBAR_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
@@ -103,9 +124,28 @@ class GTK3LevelBarMixin(GTK3WidgetMixin):
 class GTK3LevelBar(Gtk.LevelBar, GTK3LevelBarMixin):
     """Wrapper for version 3.0 Gtk.LevelBar."""
 
-    def __init__(self) -> None:
-        """Initialize an instance of the GTK3LevelBar."""
-        Gtk.LevelBar.__init__(self)
+    def __init__(
+        self,
+        min_value: float | int | None,
+        max_value: float | int | None,
+    ) -> None:
+        """Initialize an instance of the GTK3LevelBar.
+
+        Parameters
+        ----------
+        min_value : float | int | None
+            A positive value for the lawer end of the interval.
+        max_value : float | int | None
+            A positive value for the upper end of the interval.
+        """
+        if isinstance(min_value, (float, int)) and isinstance(max_value, (float, int)):
+            Gtk.LevelBar.__init__(
+                self,
+                min_value=float(min_value),
+                max_value=float(max_value),
+            )
+        else:
+            Gtk.LevelBar.__init__(self)
         GTK3LevelBarMixin.__init__(self)
 
     @GObject.Signal
