@@ -107,6 +107,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     decoration_layout_set: bool
     default_height: int
     default_page_setup: Gtk.PageSetup | None
+    default_response: int
     default_width: int
     deletable: bool
     destroy_with_parent: bool

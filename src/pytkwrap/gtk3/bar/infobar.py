@@ -16,12 +16,16 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 class GTK3InfoBarMixin(GTK3BoxMixin):
     """Mixin for GTK3InfoBar.
 
-    Notes
-    -----
-    The GTK3InfoBar passes a Gtk.Revealer to it's callback function.
+    Attributes
+    ----------
+    _GTK3_INFOBAR_PROPERTIES : GTK3WidgetProperties
+        GTK3InfoBar-specific properties.
+    _GTK3_INFOBAR_SIGNALS : list[str]
+        List of GTK3InfoBar-specific signals.
     """
 
     _GTK3_INFOBAR_PROPERTIES = GTK3WidgetProperties(
+        default_response=-1,
         message_type=Gtk.MessageType.INFO,
         revealed=True,
         show_close_button=False,
@@ -53,9 +57,32 @@ class GTK3InfoBarMixin(GTK3BoxMixin):
         # Update the property dictionary.
         super().do_set_properties(properties)
 
+        self.set_default_response(self.dic_properties["default_response"])
         self.set_message_type(self.dic_properties["message_type"])
         self.set_revealed(self.dic_properties["revealed"])
         self.set_show_close_button(self.dic_properties["show_close_button"])
+
+    @property
+    def action_area(self) -> Gtk.Box:
+        """Get the action area of the GTK3InfoBar.
+
+        Returns
+        -------
+        Gtk.Box
+            The action area of the GTK3InfoBar.
+        """
+        return self.get_action_area()
+
+    @property
+    def content_area(self) -> Gtk.Box:
+        """Get the content area of the GTK3InfoBar.
+
+        Returns
+        -------
+        Gtk.Box
+            The content area of the GTK3InfoBar.
+        """
+        return self.get_content_area()
 
 
 class GTK3InfoBar(Gtk.InfoBar, GTK3InfoBarMixin):
