@@ -18,6 +18,7 @@ GTK3 Widget Requirements
    :maxdepth: 2
 
    container
+   bar
    bin
    button
    combo
