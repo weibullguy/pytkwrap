@@ -51,6 +51,35 @@ class TestGTK3LevelBar(BaseGTK3DataWidgetTests):
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_LEVELBAR_PROPERTIES
 
+    def make_dut(self, min_value=None, max_value=None):
+        return self.widget_class(min_value, max_value)
+
+    @pytest.mark.unit
+    def test_init_with_interval(self):
+        """Should create GTK3LevelBar with the interval passed."""
+        dut = self.make_dut(min_value=0.0, max_value=5.0)
+
+        assert dut.get_min_value() == 0.0
+        assert dut.get_max_value() == 5.0
+
+    @pytest.mark.unit
+    def test_init_with_interval_min_missing(self):
+        """Should create a GTK3LevelBar with default interval when the min_value is
+        missing."""
+        dut = self.make_dut(max_value=10.0)
+
+        assert dut.get_min_value() == 0.0
+        assert dut.get_max_value() == 1.0
+
+    @pytest.mark.unit
+    def test_init_with_interval_max_missing(self):
+        """Should create a GTK3LevelBar with default interval when the max_value is
+        missing."""
+        dut = self.make_dut(min_value=3.0)
+
+        assert dut.get_min_value() == 0.0
+        assert dut.get_max_value() == 1.0
+
     @pytest.mark.unit
     def test_do_set_default_attributes(self):
         """Should set the default attributes of the GTK3LevelBar."""
