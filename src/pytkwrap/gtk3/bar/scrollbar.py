@@ -30,3 +30,5 @@ class GTK3ScrollBar(Gtk.Scrollbar, GTK3RangeMixin):
         """
         Gtk.Scrollbar.__init__(self, orientation=orientation, adjustment=adjustment)
         GTK3RangeMixin.__init__(self)
+
+        self.dic_properties["adjustment"] = adjustment
