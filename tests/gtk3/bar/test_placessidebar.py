@@ -142,3 +142,24 @@ class TestGTK3PlacesSidebar(BaseGTK3GObjectTests):
         assert dut.get_show_starred_location()
         assert not dut.get_property("show_trash")
         assert not dut.get_show_trash()
+
+    @pytest.mark.unit
+    def test_shortcuts(self):
+        """Should return a list of locations added as shortcuts."""
+        # Standard Library Imports
+        import tempfile
+
+        _location = f"{tempfile.gettempdir()}/tests/data"
+        os.makedirs(_location, exist_ok=True)
+        if not os.path.isdir(_location):
+            pytest.fail(f"Test directory does not exist: {_location}")
+
+        _gfile = Gio.File.new_for_path(f"{_location}")
+
+        dut = self.make_dut()
+
+        assert dut.shortcuts == []
+
+        dut.add_shortcut(_gfile)
+
+        assert dut.shortcuts == [_gfile]
