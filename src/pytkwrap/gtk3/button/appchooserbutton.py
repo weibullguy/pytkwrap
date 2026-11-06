@@ -14,7 +14,31 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3AppChooserButtonMixin(GTK3ComboBoxMixin):
-    """Mixin for GTK3AppChooserButton."""
+    """Mixin for GTK3AppChooserButton.
+
+    Attributes
+    ----------
+    _DEFAULT_HEIGHT : int
+        The default height of the GTK3AppChooderButton.
+    _DEFAULT_WIDTH : int
+        The default width of the GTK3AppChooserButton.
+    _GTK3_APPCHOOSERBUTTON_PROPERTIES : GTK3WidgetProperties
+        GTK3AppChooserButton-specific properties.
+    _GTK3_APPCHOOSERBUTTON_SIGNALS : list[str]
+        List of GTK3AppChooserButton-specific signals.
+
+    Notes
+    -----
+    The following Gtk.AppChooserButton methods are not wrapped in a convenience layer,
+    but may be called directly:
+
+        * append_custom_item(name, label, icon)
+        * append_separator()
+        * set_active_custom_item(name)
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/AppChooserButton.html for
+    details on these methods.
+    """
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
