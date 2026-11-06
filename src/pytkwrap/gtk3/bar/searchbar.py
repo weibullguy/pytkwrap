@@ -16,9 +16,21 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 class GTK3SearchBarMixin(GTK3ContainerMixin):
     """Mixin for GTK3SearchBar.
 
+    Attributes
+    ----------
+    _GTK3_SEARCHBAR_PROPERTIES : GTK3WidgetProperties
+        GTK3SearchBar-specific properties.
+
     Notes
     -----
-    The GTK3SearchBar passes a Gtk.Revealer to its callback function.
+    The following Gtk.SearchBar methods are not wrapped in a convenience layer,
+    but may be called directly:
+
+        * connect_entry(entry)
+        * handle_event(event)
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/SearchBar.html for
+    details on these methods.
     """
 
     _GTK3_SEARCHBAR_PROPERTIES = GTK3WidgetProperties(
