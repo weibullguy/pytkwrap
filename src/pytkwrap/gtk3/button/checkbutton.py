@@ -12,9 +12,12 @@ from pytkwrap.gtk3.button.togglebutton import GTK3ToggleButtonMixin
 class GTK3CheckButtonMixin(GTK3ToggleButtonMixin):
     """Mixin for GTK3CheckButton.
 
-    Notes
-    -----
-    GTK3CheckButton passes a Gtk.Label to its callback function.
+    Attributes
+    ----------
+    _DEFAULT_HEIGHT : int
+        The default height of the GTK3CheckButton.
+    _DEFAULT_WIDTH : int
+        The default width of the GTK3CheckButton.
     """
 
     # Define private class attributes.
