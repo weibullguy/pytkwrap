@@ -20,6 +20,8 @@ class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+    @property
+    def group(self) -> list[Gtk.RadioButton]: ...
 
 class GTK3RadioButton(Gtk.RadioButton, GTK3RadioButtonMixin):
     def __init__(

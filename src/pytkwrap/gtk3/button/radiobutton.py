@@ -16,9 +16,26 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
     """Mixin for GTK3RadioButton.
 
+    Attributes
+    ----------
+    _DEFAULT_HEIGHT : int
+        The default height of the GTK3RadioButton.
+    _DEFAULT_WIDTH : int
+        The default width of the GTK3RadioButton.
+    _GTK3_RADIOBUTTON_PROPERTIES : GTK3WidgetProperties
+        GTK3RadioButton-specific properties.
+    _GTK3_RADIOBUTTON_SIGNALS : list[str]
+        List of GTK3RadioButton-specific signals.
+
     Notes
     -----
-    GTK3RadioButton passes a Gtk.Label to its callback function.
+    The following Gtk.RadioButton methods are not wrapped in a convenience layer,
+    but may be called directly:
+
+        * set_group(group)
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/RadioButton.html for
+    details on these methods.
     """
 
     # Define private class attributes.
@@ -57,6 +74,17 @@ class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
         super().do_set_properties(properties)
 
         self.join_group(self.dic_properties["group"])
+
+    @property
+    def group(self) -> list[Gtk.RadioButton]:
+        """Get the list of GTK3RadioButtons in the same group as self.
+
+        Returns
+        -------
+        list[Gtk.RadioButton]
+            The list of GTK3RadioButtons belonging to the same group as self.
+        """
+        return self.get_group()
 
 
 class GTK3RadioButton(Gtk.RadioButton, GTK3RadioButtonMixin):
