@@ -14,12 +14,50 @@ from pubsub import pub
 from pytkwrap.exceptions import PytkwrapError, PytkwrapWarning
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
-from pytkwrap.gtk3.io.label import GTK3Label
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
 
 class GTK3NotebookMixin(GTK3ContainerMixin):
-    """Mixin for GTK3Notebook."""
+    """Mixin for GTK3Notebook.
+
+    Attributes
+    ----------
+    _GTK3_NOTEBOOK_PROPERTIES : GTK3WidgetProperties
+        GTK3Notebook-specific properties.
+    _GTK3_NOTEBOOK_SIGNALS : list[str]
+        List of GTK3Notebook-specific signals.
+
+    Notes
+    -----
+    The following Gtk.Notebook methods are not wrapped in a convenience layer,
+    but may be called directly:
+
+        * detach_tab(child)
+        * get_action_widget(pack_type)
+        * get_menu_label(child)
+        * get_menu_label_text(child)
+        * get_nth_page(page_num)
+        * get_tab_detachable(child)
+        * get_tab_label(child)
+        * get_tab_label_text(child)
+        * get_tab_reorderable(child)
+        * next_page()
+        * page_num(child)
+        * popup_disable()
+        * popup_enable()
+        * prev_page()
+        * reorder_child(child, position)
+        * set_action_widget(widget, pack_type)
+        * set_menu_label(child, menu_label)
+        * set_menu_label_text(child, menu_text)
+        * set_tab_detachable(child, detachable)
+        * set_tab_label(child, tab_label)
+        * set_tab_label_text(child, tab_text)
+        * set_tab_reaorderable(child, reorderable)
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/Notebook.html for
+    details on these methods.
+    """
 
     _GTK3_NOTEBOOK_PROPERTIES = GTK3WidgetProperties(
         enable_popup=False,
@@ -68,8 +106,8 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         # Update the property dictionary.
         super().do_set_properties(properties)
 
-        self.set_group_name(self.dic_properties["group_name"])
         self.set_current_page(self.dic_properties["page"])
+        self.set_group_name(self.dic_properties["group_name"])
         self.set_scrollable(self.dic_properties["scrollable"])
         self.set_show_border(self.dic_properties["show_border"])
         self.set_show_tabs(self.dic_properties["show_tabs"])
@@ -83,7 +121,8 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
     def do_add_page(
         self,
         child: Gtk.Widget,
-        tab_label: str | None = None,
+        tab_label: Gtk.Widget | None = None,
+        menu_label: Gtk.Widget | None = None,
         position: int = -1,
     ) -> None:
         """Add a page to the notebook.
@@ -92,18 +131,27 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         ----------
         child : Gtk.Widget
             The Gtk.Widget to use as the contents of the page.
-        tab_label : str
-            The label to display for the page.
+        tab_label : Gtk.Widget | None
+            The widget to use as the label for the page.
+        menu_label : Gtk.Widget | None
+            The widget to use as the label for the page-switch menu.
         position : int, optional
             The position at which to add the page.  Defaults to the end (-1).  To
             prepend a page, pass 0.
         """
-        _tab_label = None
-        if tab_label is not None:
-            _tab_label = GTK3Label()
-            _tab_label.do_set_value(tab_label)
-
-        self.insert_page(child, _tab_label, position)
+        if menu_label is None:
+            if position == -1:
+                self.append_page(child, tab_label)
+            elif position == 0:
+                self.prepend_page(child, tab_label)
+            else:
+                self.insert_page(child, tab_label, position)
+        elif position == -1:
+            self.append_page_menu(child, tab_label, menu_label)
+        elif position == 0:
+            self.prepend_page_menu(child, tab_label, menu_label)
+        else:
+            self.insert_page_menu(child, tab_label, menu_label, position)
 
     def do_remove_page(self, position: int) -> None:
         """Remove a page from the notebook.
@@ -124,6 +172,17 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
                 f"{self.get_n_pages()} pages."
             )
         self.remove_page(position)
+
+    @property
+    def n_pages(self) -> int:
+        """Get the total number of pages in the GTK3Notebook.
+
+        Returns
+        -------
+        int
+            The total number of pages in the GTK3Notebook.
+        """
+        return self.get_n_pages()
 
 
 class GTK3Notebook(Gtk.Notebook, GTK3NotebookMixin):

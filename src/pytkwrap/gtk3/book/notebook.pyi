@@ -9,7 +9,6 @@ from pytkwrap.exceptions import PytkwrapError as PytkwrapError
 from pytkwrap.exceptions import PytkwrapWarning as PytkwrapWarning
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin as GTK3ContainerMixin
-from pytkwrap.gtk3.io.label import GTK3Label as GTK3Label
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 class GTK3NotebookMixin(GTK3ContainerMixin):
@@ -20,9 +19,15 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
     def do_add_page(
-        self, child: Gtk.Widget, tab_label: str | None = None, position: int = -1
+        self,
+        child: Gtk.Widget,
+        tab_label: Gtk.Widget | None = None,
+        menu_label: Gtk.Widget | None = None,
+        position: int = -1,
     ) -> None: ...
     def do_remove_page(self, position: int) -> None: ...
+    @property
+    def n_pages(self) -> int: ...
 
 class GTK3Notebook(Gtk.Notebook, GTK3NotebookMixin):
     def __init__(
