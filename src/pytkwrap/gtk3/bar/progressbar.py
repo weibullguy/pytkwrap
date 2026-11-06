@@ -15,7 +15,25 @@ from pytkwrap.gtk3.widget import GTK3WidgetMixin
 
 
 class GTK3ProgressBarMixin(GTK3WidgetMixin):
-    """Mixin for GTK3ProgressBar."""
+    """Mixin for GTK3ProgressBar.
+
+    Attributes
+    ----------
+    _GTK3_PROGRESSBAR_ATTRIBUTES : GTK3WidgetAttributes
+        GTK3ProgressBar-specific attributes.
+    _GTK3_PROGRESSBAR_PROPERTIES : GTK3WidgetProperties
+        GTK3ProgressBar-specific properties.
+
+    Notes
+    -----
+    The following Gtk.ProgressBar methods are not wrapped in a convenience layer,
+    but may be called directly:
+
+        * pulse()
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/ProgressBar.html for
+    details on these methods.
+    """
 
     _GTK3_PROGRESSBAR_ATTRIBUTES = GTK3WidgetAttributes(
         default_value=0.0,
