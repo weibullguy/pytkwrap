@@ -5,7 +5,6 @@
 """
 
 # Standard Library Imports
-import contextlib
 
 # Third Party Imports
 import pytest
@@ -17,6 +16,8 @@ from pytkwrap.exceptions import PytkwrapError, PytkwrapWarning
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.book import GTK3Notebook
+from pytkwrap.gtk3.io import GTK3Label
+from pytkwrap.gtk3.layout import GTK3Fixed
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.book.constants import (
     EXPECTED_NOTEBOOK_HANDLER_IDS,
@@ -82,18 +83,23 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
     def test_init_with_widgets_and_labels(self):
         """Should build the notebook with the same number of pages as the child_widgets
         list."""
-        _child_widget_1 = Gtk.Fixed()
-        _child_widget_2 = Gtk.Fixed()
-        _child_widget_3 = Gtk.Fixed()
+        _child_widget_1 = GTK3Fixed()
+        _child_widget_2 = GTK3Fixed()
+        _child_widget_3 = GTK3Fixed()
         _child_widgets = [_child_widget_1, _child_widget_2, _child_widget_3]
-        _tab_labels = ["Test Label {}".format(i) for i in range(3)]
+        _tab_labels = [
+            GTK3Label("Test Label 1"),
+            GTK3Label("Test Label2"),
+            GTK3Label("Test Label 3"),
+        ]
 
         dut = self.make_dut(child_widgets=_child_widgets, tab_labels=_tab_labels)
 
+        assert dut.n_pages == 3
         assert dut.get_n_pages() == 3
-        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0]
-        assert dut.get_tab_label_text(_child_widget_2) == _tab_labels[1]
-        assert dut.get_tab_label_text(_child_widget_3) == _tab_labels[2]
+        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0].get_text()
+        assert dut.get_tab_label_text(_child_widget_2) == _tab_labels[1].get_text()
+        assert dut.get_tab_label_text(_child_widget_3) == _tab_labels[2].get_text()
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
@@ -116,8 +122,8 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
         dut = self.make_dut()
 
-        dut.append_page(Gtk.Fixed(), Gtk.Label())
-        dut.append_page(Gtk.Fixed(), Gtk.Label())
+        dut.append_page(GTK3Fixed(), GTK3Label())
+        dut.append_page(GTK3Fixed(), GTK3Label())
         dut.set_current_page(1)
 
         dut.do_set_properties(
@@ -144,60 +150,129 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
         assert dut.get_tab_pos() == Gtk.PositionType.BOTTOM
 
     @pytest.mark.unit
-    def test_do_add_page(self):
-        """Should add a page to the GTK3Notebook."""
-        _fixed = Gtk.Fixed()
+    def test_do_add_page_append(self):
+        """Should append a page to the GTK3Notebook."""
+        _fixed = GTK3Fixed()
+        _label = GTK3Label("Test Label")
 
         dut = self.make_dut()
-        dut.do_add_page(_fixed, "Test Label")
+        dut.do_add_page(_fixed, _label)
 
+        assert dut.n_pages == 1
         assert dut.get_n_pages() == 1
         assert dut.get_tab_label_text(_fixed) == "Test Label"
 
     @pytest.mark.unit
-    def test_do_prepend_page(self):
-        """Should prepend a page to the GTK3Notebook."""
-        _fixed1 = Gtk.Fixed()
-        _fixed2 = Gtk.Fixed()
+    def test_do_add_page_append_with_menu(self):
+        """Should append a page with a menu to the GTK3Notebook."""
+        _fixed = GTK3Fixed()
+        _label = GTK3Label("Test Label")
+        _menu = GTK3Label("Test Menu Label")
 
         dut = self.make_dut()
-        dut.do_add_page(_fixed1, "Test Label")
-        dut.do_add_page(_fixed2, "Prepended Page", position=0)
+        dut.do_add_page(_fixed, _label, _menu)
 
+        assert dut.n_pages == 1
+        assert dut.get_n_pages() == 1
+        assert dut.get_tab_label_text(_fixed) == "Test Label"
+        assert dut.get_menu_label_text(_fixed) == "Test Menu Label"
+
+    @pytest.mark.unit
+    def test_do_prepend_page(self):
+        """Should prepend a page to the GTK3Notebook."""
+        _fixed1 = GTK3Fixed()
+        _fixed2 = GTK3Fixed()
+        _label1 = GTK3Label("Test Label")
+        _label2 = GTK3Label("Prepended Page")
+
+        dut = self.make_dut()
+        dut.do_add_page(_fixed1, _label1)
+        dut.do_add_page(_fixed2, _label2, position=0)
+
+        assert dut.n_pages == 2
         assert dut.get_n_pages() == 2
         assert dut.get_tab_label_text(dut.get_nth_page(0)) == "Prepended Page"
 
     @pytest.mark.unit
-    def test_do_insert_page(self):
-        """Should insert a page into the GTK3Notebook."""
-        _fixed1 = Gtk.Fixed()
-        _fixed2 = Gtk.Fixed()
-        _fixed3 = Gtk.Fixed()
+    def test_do_prepend_page_with_menu(self):
+        """Should prepend a page with a menu to the GTK3Notebook."""
+        _fixed1 = GTK3Fixed()
+        _fixed2 = GTK3Fixed()
+        _label1 = GTK3Label("Test Label")
+        _label2 = GTK3Label("Prepended Page")
+        _menu = GTK3Label("Test Menu Label")
 
         dut = self.make_dut()
-        dut.do_add_page(_fixed1, "Test Label")
-        dut.do_add_page(_fixed2, "Inserted Page 1")
-        dut.do_add_page(_fixed3, "Inserted Page 2", position=1)
+        dut.do_add_page(_fixed1, _label1)
+        dut.do_add_page(_fixed2, _label2, _menu, position=0)
 
+        assert dut.n_pages == 2
+        assert dut.get_n_pages() == 2
+        assert dut.get_tab_label_text(dut.get_nth_page(0)) == "Prepended Page"
+        assert dut.get_menu_label_text(dut.get_nth_page(0)) == "Test Menu Label"
+
+    @pytest.mark.unit
+    def test_do_insert_page(self):
+        """Should insert a page into the GTK3Notebook."""
+        _fixed1 = GTK3Fixed()
+        _fixed2 = GTK3Fixed()
+        _fixed3 = GTK3Fixed()
+        _label1 = GTK3Label("Test Label")
+        _label2 = GTK3Label("Inserted Page 1")
+        _label3 = GTK3Label("Inserted Page 2")
+
+        dut = self.make_dut()
+        dut.do_add_page(_fixed1, _label1)
+        dut.do_add_page(_fixed2, _label2)
+        dut.do_add_page(_fixed3, _label3, position=1)
+
+        assert dut.n_pages == 3
         assert dut.get_n_pages() == 3
         assert dut.get_tab_label_text(dut.get_nth_page(1)) == "Inserted Page 2"
 
     @pytest.mark.unit
-    def test_do_remove_page(self):
-        """Should remove a page from the GTK3Notebook."""
-        _fixed1 = Gtk.Fixed()
-        _fixed2 = Gtk.Fixed()
-        _fixed3 = Gtk.Fixed()
+    def test_do_insert_page(self):
+        """Should insert a page with a into the GTK3Notebook."""
+        _fixed1 = GTK3Fixed()
+        _fixed2 = GTK3Fixed()
+        _fixed3 = GTK3Fixed()
+        _label1 = GTK3Label("Test Label")
+        _label2 = GTK3Label("Inserted Page 1")
+        _label3 = GTK3Label("Inserted Page 2")
+        _menu1 = GTK3Label("Inserted Menu 1")
+        _menu2 = GTK3Label("Inserted Menu 2")
 
         dut = self.make_dut()
-        dut.do_add_page(_fixed1, "Test Label")
-        dut.do_add_page(_fixed2, "Test Label 2")
-        dut.do_add_page(_fixed3, "Test Label 3")
+        dut.do_add_page(_fixed1, _label1)
+        dut.do_add_page(_fixed2, _label2, _menu1)
+        dut.do_add_page(_fixed3, _label3, _menu2, position=1)
 
+        assert dut.n_pages == 3
+        assert dut.get_n_pages() == 3
+        assert dut.get_tab_label_text(dut.get_nth_page(1)) == "Inserted Page 2"
+        assert dut.get_menu_label_text(dut.get_nth_page(1)) == "Inserted Menu 2"
+
+    @pytest.mark.unit
+    def test_do_remove_page(self):
+        """Should remove a page from the GTK3Notebook."""
+        _fixed1 = GTK3Fixed()
+        _fixed2 = GTK3Fixed()
+        _fixed3 = GTK3Fixed()
+        _label1 = GTK3Label("Test Label")
+        _label2 = GTK3Label("Test Label 2")
+        _label3 = GTK3Label("Test Label 3")
+
+        dut = self.make_dut()
+        dut.do_add_page(_fixed1, _label1)
+        dut.do_add_page(_fixed2, _label2)
+        dut.do_add_page(_fixed3, _label3)
+
+        assert dut.n_pages == 3
         assert dut.get_n_pages() == 3
 
         dut.do_remove_page(1)
 
+        assert dut.n_pages == 2
         assert dut.get_n_pages() == 2
         assert dut.get_tab_label_text(dut.get_nth_page(1)) == "Test Label 3"
 
@@ -206,13 +281,14 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
         """Should not raise an exception when trying to remove a page that does not
         exist."""
         dut = self.make_dut()
-        dut.do_add_page(Gtk.Fixed(), "Test Label 1")
-        dut.do_add_page(Gtk.Fixed(), "Test Label 2")
-        dut.do_add_page(Gtk.Fixed(), "Test Label 3")
+        dut.do_add_page(GTK3Fixed(), GTK3Label("Test Label 1"))
+        dut.do_add_page(GTK3Fixed(), GTK3Label("Test Label 2"))
+        dut.do_add_page(GTK3Fixed(), GTK3Label("Test Label 3"))
 
         with pytest.raises(PytkwrapError):
             dut.do_remove_page(10)
 
+        assert dut.n_pages == 3
         assert dut.get_n_pages() == 3
 
     @pytest.mark.unit
@@ -222,17 +298,18 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
         dut = self.make_dut()
         dut.do_build_notebook([], [])
 
+        assert dut.n_pages == 0
         assert dut.get_n_pages() == 0
 
     @pytest.mark.unit
     def test_do_build_notebook_more_widgets_than_labels(self):
         """Should raise a PytkwrapWarning when the number of child widgets is greater
         than the number of tab labels."""
-        _child_widget_1 = Gtk.Fixed()
-        _child_widget_2 = Gtk.Fixed()
-        _child_widget_3 = Gtk.Fixed()
+        _child_widget_1 = GTK3Fixed()
+        _child_widget_2 = GTK3Fixed()
+        _child_widget_3 = GTK3Fixed()
         _child_widgets = [_child_widget_1, _child_widget_2, _child_widget_3]
-        _tab_labels = ["Test Label 1", "Test Label 2"]
+        _tab_labels = [GTK3Label("Test Label 1"), GTK3Label("Test Label 2")]
 
         dut = self.make_dut()
         with pytest.raises(PytkwrapWarning) as exc_info:
@@ -243,17 +320,18 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
             == "GTK3Notebook: The number of child widgets (3) does not match the number of tab labels (2).  Only 2 pages will be added."
         )
 
+        assert dut.n_pages == 2
         assert dut.get_n_pages() == 2
-        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0]
-        assert dut.get_tab_label_text(_child_widget_2) == _tab_labels[1]
+        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0].get_text()
+        assert dut.get_tab_label_text(_child_widget_2) == _tab_labels[1].get_text()
 
     @pytest.mark.unit
     def test_do_build_notebook_more_labels_than_widgets(self):
         """Should raise a PytkwrapWarning when the number of child widgets is less than
         the number of tab labels."""
-        _child_widget_1 = Gtk.Fixed()
+        _child_widget_1 = GTK3Fixed()
         _child_widgets = [_child_widget_1]
-        _tab_labels = ["Test Label 1", "Test Label 2"]
+        _tab_labels = [GTK3Label("Test Label 1"), GTK3Label("Test Label 2")]
 
         dut = self.make_dut()
         with pytest.raises(PytkwrapWarning) as exc_info:
@@ -265,5 +343,6 @@ class TestGTK3Notebook(BaseGTK3GObjectTests):
             "number of tab labels (2).  Only 1 pages will be added."
         )
 
+        assert dut.n_pages == 1
         assert dut.get_n_pages() == 1
-        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0]
+        assert dut.get_tab_label_text(_child_widget_1) == _tab_labels[0].get_text()
