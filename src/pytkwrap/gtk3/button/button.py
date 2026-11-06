@@ -16,9 +16,33 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 class GTK3ButtonMixin(GTK3ContainerMixin):
     """Mixin class for GTK3Button.
 
+    Attributes
+    ----------
+    _DEFAULT_HEIGHT : int
+        The default height of the GTK3Button.
+    _DEFAULT_WIDTH : int
+        The default width of the GTK3Button.
+    _GTK3_BUTTON_PROPERTIES : GTK3WidgetProperties
+        GTK3Button-specific properties.
+    _GTK3_BUTTON_SIGNALS : list[str]
+        List of GTK3Button-specific signals.
+
     Notes
     -----
-    The GTK3Button passes a Gtk.Label to its callback function.
+    The following Gtk.Button methods are not wrapped in a convenience layer,
+    but may be called directly:
+
+        * clicked()
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/Button.html for
+    details on these methods.
+
+    Container signals inherited from Gtk.Container require two arguments
+    (container, widget) rather than the standard single-argument form.  Register these
+    manually via self.connect() if needed:
+        * add
+        * remove
+        * set-focus-child
     """
 
     # Define private class attributes.
@@ -36,10 +60,6 @@ class GTK3ButtonMixin(GTK3ContainerMixin):
         "activate",
         "check-resize",
         "clicked",
-        # Container signals inherited from Gtk.Bin - callbacks require two arguments
-        # (container, widget) rather than the standard single-argument form.  Register
-        # these manually via self.connect() if needed:
-        # "add", "remove", "set-focus-child"
     ]
 
     def __init__(self, **kwargs) -> None:
