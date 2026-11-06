@@ -29,7 +29,7 @@ class GTK3LevelBarMixin(GTK3WidgetMixin):
 
     Notes
     -----
-    The following Gtk.InfoBar methods are not wrapped in a convenience layer,
+    The following Gtk.LevelBar methods are not wrapped in a convenience layer,
     but may be called directly:
 
         * add_offset_value(name, value)

@@ -8,7 +8,7 @@
 from collections.abc import Mapping
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gio, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.window.scrolledwindow import GTK3ScrolledWindowMixin
 
@@ -16,9 +16,25 @@ from pytkwrap.gtk3.window.scrolledwindow import GTK3ScrolledWindowMixin
 class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
     """Mixin for GTK3PlacesSidebar.
 
+    Attributes
+    ----------
+    _GTK3_PLACESSIDEBAR_PROPERTIES : GTK3WidgetProperties
+        GTK3PlacesSidebar-specific properties.
+    _GTK3_PLACESSIDEBAR_SIGNALS : list[str]
+        List of GTK3PlacesSidebar-specific signals.
+
     Notes
     -----
-    GTK3PlacesSidebar passes a Gtk.Viewport to it's callback function.
+    The following Gtk.PlacesSidebar methods are not wrapped in a convenience layer,
+    but may be called directly:
+
+        * add_shortcut(location)
+        * get_nth_bookmark(n)
+        * remove_shortcut(name)
+        * set_drop_targets_visible(visible, context)
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/PlacesSidebar.html for
+    details on these methods.
     """
 
     _GTK3_PLACESSIDEBAR_PROPERTIES = GTK3WidgetProperties(
@@ -91,6 +107,18 @@ class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
             self.set_property(
                 _property.replace("_", "-"), self.dic_properties[_property]
             )
+
+    @property
+    def shortcuts(self) -> list[Gio.File]:
+        """Get a list of shortcuts in the GTK3PlacesSidebar.
+
+        Returns
+        -------
+        list[Gio.File]
+            A list of Gio.File locations that have been added as application-specific
+            shortcuts with GTK3PlacesSidebar.add_shortcut().
+        """
+        return self.list_shortcuts()
 
 
 class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3PlacesSidebarMixin):

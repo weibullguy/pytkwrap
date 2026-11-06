@@ -2,10 +2,12 @@
 from collections.abc import Mapping
 
 # Third Party Imports
-from _typeshed import Incomplete as Incomplete
+from _typeshed import Incomplete
 
 # pytkwrap Package Imports
+from pytkwrap.gtk3._libs import Gio as Gio
 from pytkwrap.gtk3._libs import Gtk as Gtk
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.window.scrolledwindow import (
     GTK3ScrolledWindowMixin as GTK3ScrolledWindowMixin,
 )
@@ -13,10 +15,12 @@ from pytkwrap.gtk3.window.scrolledwindow import (
 class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
     _GTK3_PLACESSIDEBAR_PROPERTIES: Incomplete
     _GTK3_PLACESSIDEBAR_SIGNALS: Incomplete
-    def __init__(self) -> None: ...
+    def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
+    @property
+    def shortcuts(self) -> list[Gio.File]: ...
 
 class GTK3PlacesSidebar(Gtk.PlacesSidebar, GTK3PlacesSidebarMixin):
     def __init__(self) -> None: ...
