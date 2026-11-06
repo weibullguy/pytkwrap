@@ -109,6 +109,7 @@ class TestRadioButton(BaseGTK3DataWidgetTests):
 
         assert isinstance(dut, GTK3RadioButton)
         assert not dut.get_active()
+        assert dut.group == [dut, btnRadioButton]
         assert dut.get_group() == [dut, btnRadioButton]
 
     @pytest.mark.unit
@@ -182,6 +183,7 @@ class TestRadioButton(BaseGTK3DataWidgetTests):
         )
 
         assert not dut.get_active()
+        assert dut.group == [dut, btnRadioButton]
         assert dut.get_group() == [dut, btnRadioButton]
         assert dut.get_inconsistent()
         assert dut.get_label() == "Test Option Button Label"
