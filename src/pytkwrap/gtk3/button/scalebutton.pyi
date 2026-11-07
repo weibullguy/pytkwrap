@@ -15,9 +15,9 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 class GTK3ScaleButtonMixin(GTK3ButtonMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
-    _GTK3_SCALE_BUTTON_ATTRIBUTES: PyTkWrapAttributes
-    _GTK3_SCALE_BUTTON_PROPERTIES: Incomplete
-    _GTK3_SCALE_BUTTON_SIGNALS: Incomplete
+    _GTK3_SCALEBUTTON_ATTRIBUTES: PyTkWrapAttributes
+    _GTK3_SCALEBUTTON_PROPERTIES: Incomplete
+    _GTK3_SCALEBUTTON_SIGNALS: Incomplete
     def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
@@ -26,6 +26,31 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
     ) -> None: ...
+    def do_configure(
+        self,
+        value: float,
+        lower: float,
+        upper: float,
+        step_increment: float,
+        page_increment: float,
+        page_size: float,
+    ) -> None: ...
+    @property
+    def lower(self) -> float: ...
+    @property
+    def minus_button(self) -> Gtk.Button: ...
+    @property
+    def page_increment(self) -> float: ...
+    @property
+    def page_size(self) -> float: ...
+    @property
+    def plus_button(self) -> Gtk.Button: ...
+    @property
+    def popup(self) -> Gtk.Widget: ...
+    @property
+    def step_increment(self) -> float: ...
+    @property
+    def upper(self) -> float: ...
 
 class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
     def __init__(
