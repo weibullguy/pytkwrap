@@ -401,7 +401,7 @@ allowed-unresolved-imports = [
 respect-type-ignore-comments = true
 
 [tool.ty.environment]
-python-version = "3.12"
+python-version = "3.14"
 root = [
     "./src"
 ]
