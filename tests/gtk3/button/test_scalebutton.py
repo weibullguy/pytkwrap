@@ -178,6 +178,11 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
         assert dut.get_property("size") == 2
         assert dut.get_property("value") == 0.68
         assert dut.get_value() == 0.68
+        assert dut.get_adjustment().get_lower() == 0.0
+        assert dut.get_adjustment().get_upper() == 1.0
+        assert dut.get_adjustment().get_step_increment() == 0.1
+        assert dut.get_adjustment().get_page_increment() == 0.1
+        assert dut.get_adjustment().get_page_size() == 0.1
 
     @pytest.mark.unit
     def test_do_update(self):
@@ -203,3 +208,136 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
         dut.set_value(5.8)
 
         pub.unsubscribe(self.mock_handler, dut.dic_attributes["send_topic"])
+
+    @pytest.mark.unit
+    def test_do_configure(self):
+        """Should (re)configure the embedded GTK3Adjustment.."""
+        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=_adjustment,
+                value=0.68,
+            )
+        )
+
+        assert dut.do_get_property("adjustment") == _adjustment
+        assert dut.do_get_property("value") == 0.68
+        assert dut.do_get_property("adjustment").get_lower() == 0.0
+        assert dut.get_adjustment().get_lower() == 0.0
+        assert dut.do_get_property("adjustment").get_upper() == 1.0
+        assert dut.get_adjustment().get_upper() == 1.0
+        assert dut.do_get_property("adjustment").get_step_increment() == 0.1
+        assert dut.get_adjustment().get_step_increment() == 0.1
+        assert dut.do_get_property("adjustment").get_page_increment() == 0.1
+        assert dut.get_adjustment().get_page_increment() == 0.1
+        assert dut.do_get_property("adjustment").get_page_size() == 0.1
+        assert dut.get_adjustment().get_page_size() == 0.1
+
+        dut.do_configure(0.38, 0.25, 0.75, 0.05, 0.1, 0.1)
+        dut.do_set_properties(GTK3WidgetProperties())
+
+        assert dut.do_get_property("adjustment") == _adjustment
+        assert dut.do_get_property("value") == 0.38
+        assert dut.do_get_property("adjustment").get_lower() == 0.25
+        assert dut.get_adjustment().get_lower() == 0.25
+        assert dut.do_get_property("adjustment").get_upper() == 0.75
+        assert dut.get_adjustment().get_upper() == 0.75
+        assert dut.do_get_property("adjustment").get_step_increment() == 0.05
+        assert dut.get_adjustment().get_step_increment() == 0.05
+        assert dut.do_get_property("adjustment").get_page_increment() == 0.1
+        assert dut.get_adjustment().get_page_increment() == 0.1
+        assert dut.do_get_property("adjustment").get_page_size() == 0.1
+        assert dut.get_adjustment().get_page_size() == 0.1
+
+    @pytest.mark.unit
+    def test_lower(self):
+        """Should return the minimum value of the embedded GTK3Adjustment."""
+        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=_adjustment,
+            )
+        )
+
+        assert dut.lower == 0.0
+
+    @pytest.mark.unit
+    def test_minus_button(self):
+        """Should return the minus button."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.minus_button, Gtk.Button)
+
+    @pytest.mark.unit
+    def test_page_increment(self):
+        """Should return the page increment of the embedded GTK3Adjustment."""
+        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=_adjustment,
+            )
+        )
+
+        assert dut.page_increment == 0.1
+
+    @pytest.mark.unit
+    def test_page_size(self):
+        """Should return the page size of the embedded GTK3Adjustment."""
+        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=_adjustment,
+            )
+        )
+
+        assert dut.page_size == 0.1
+
+    @pytest.mark.unit
+    def test_plus_button(self):
+        """Should return the plus button."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.plus_button, Gtk.Button)
+
+    @pytest.mark.unit
+    def test_popup(self):
+        """Should return the popup widget."""
+        dut = self.make_dut()
+
+        assert isinstance(dut.popup, Gtk.Popover)
+
+    @pytest.mark.unit
+    def test_step_increment(self):
+        """Should return the step_increment of the embedded GTK3Adjustment."""
+        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=_adjustment,
+            )
+        )
+
+        assert dut.step_increment == 0.1
+
+    @pytest.mark.unit
+    def test_upper(self):
+        """Should return the maximum value of the embedded GTK3Adjustment."""
+        _adjustment = GTK3Adjustment(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
+
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=_adjustment,
+            )
+        )
+
+        assert dut.upper == 1.0
