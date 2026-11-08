@@ -174,7 +174,7 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         assert not dut.do_get_property("wrap")
 
     @pytest.mark.unit
-    def test_do_set_properties(self):
+    def test_do_set_properties_with_adjustment(self):
         """Should set the properties of a GTK3SpinButton."""
         _adjustment = Gtk.Adjustment(
             value=10,
@@ -214,6 +214,31 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         assert dut.get_value() == 2.5
         assert dut.get_property("wrap")
         assert dut.get_wrap()
+
+        assert dut.do_get_property("lower") == 0.0
+        assert dut.do_get_property("page_increment") == 10.0
+        assert dut.do_get_property("page_size") == 0.0
+        assert dut.do_get_property("step_increment") == 1.0
+        assert dut.do_get_property("upper") == 100.0
+
+    @pytest.mark.unit
+    def test_do_set_properties_adjustment_is_none(self):
+        """Should set the properties of a GTK3SpinButton."""
+        dut = self.make_dut()
+        dut.do_set_properties(
+            GTK3WidgetProperties(
+                adjustment=None,
+                lower=0.25,
+                page_increment=0.05,
+                step_increment=0.01,
+                upper=0.75,
+            )
+        )
+
+        assert dut.get_increments()[0] == 0.01
+        assert dut.get_increments()[1] == 0.05
+        assert dut.get_range()[0] == 0.25
+        assert dut.get_range()[1] == 0.75
 
     @pytest.mark.unit
     def test_do_update(self):
@@ -299,3 +324,57 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         dut.set_value(2.0)
 
         assert dut.do_get_value() == "2.0"
+
+    @pytest.mark.unit
+    def test_do_configure(self):
+        """Should rreconfigure the GTK3Adjustment, climb rate, and digits."""
+        _adjustment = GTK3Adjustment(0, 0, 10, 1, 10, 0)
+
+        dut = self.make_dut()
+
+        assert dut.do_get_attribute("format") == "{:3.1f}"
+        assert dut.do_get_property("climb_rate") == 0.0
+        assert dut.do_get_property("digits") == 1
+
+        dut.do_configure(_adjustment, 0.1, 3)
+
+        assert dut.do_get_attribute("format") == "{:3.3f}"
+        assert dut.do_get_property("adjustment") == _adjustment
+        assert dut.do_get_property("climb_rate") == 0.1
+        assert dut.do_get_property("digits") == 3
+
+    @pytest.mark.unit
+    def test_do_configure_same_adjustment(self):
+        """Should reconfigure the climb rate and digits and leave the adjustment
+        untouched."""
+        dut = self.make_dut()
+        _adjustment = dut.do_get_property("adjustment")
+
+        assert dut.do_get_attribute("format") == "{:3.1f}"
+        assert dut.do_get_property("climb_rate") == 0.0
+        assert dut.do_get_property("digits") == 1
+
+        dut.do_configure(None, 0.05, 5)
+
+        assert dut.do_get_attribute("format") == "{:3.5f}"
+        assert dut.do_get_property("adjustment") == _adjustment
+        assert dut.do_get_property("climb_rate") == 0.05
+        assert dut.do_get_property("digits") == 5
+
+    @pytest.mark.unit
+    def test_increments(self):
+        """Should return the step and page increment."""
+        _adjustment = GTK3Adjustment(0, 0, 10, 1, 10, 0)
+        dut = self.make_dut(_adjustment)
+
+        assert dut.increments[0] == 1.0
+        assert dut.increments[1] == 10.0
+
+    @pytest.mark.unit
+    def test_range(self):
+        """Should return the minimum and maximum values."""
+        _adjustment = GTK3Adjustment(0, 0, 10, 1, 10, 0)
+        dut = self.make_dut(_adjustment)
+
+        assert dut.range[0] == 0.0
+        assert dut.range[1] == 10.0
