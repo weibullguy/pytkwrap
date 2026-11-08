@@ -88,7 +88,7 @@ class TestPyTkWrapMixin:
         assert dut.dic_attributes == {
             "axis": None,
             "canvas": None,
-            "data_type": None,
+            "data_type": str,
             "default_value": None,
             "edit_signal": None,
             "figure": None,
@@ -153,7 +153,7 @@ class TestPyTkWrapMixin:
 
         assert dut.dic_attributes["axis"] is None
         assert dut.dic_attributes["canvas"] is None
-        assert dut.dic_attributes["data_type"] is None
+        assert dut.dic_attributes["data_type"] == str
         assert dut.dic_attributes["default_value"] is None
         assert dut.dic_attributes["edit_signal"] is None
         assert dut.dic_attributes["figure"] is None
