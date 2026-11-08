@@ -12,6 +12,9 @@ from pytkwrap.gtk3.io.entry import GTK3EntryMixin as GTK3EntryMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
+# pytkwrap Local Imports
+from ._protocols import _SpinButtonHost as _SpinButtonHost
+
 class GTK3SpinButtonMixin(GTK3EntryMixin):
     _GTK3_SPINBUTTON_ATTRIBUTES: Incomplete
     _GTK3_SPINBUTTON_PROPERTIES: Incomplete
@@ -20,15 +23,22 @@ class GTK3SpinButtonMixin(GTK3EntryMixin):
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
-    def do_get_value(self) -> float: ...
+    def do_get_value(self) -> float | int: ...
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None = None
     ) -> None: ...
+    def do_configure(
+        self, adjustment: GTK3Adjustment | None, climb_rate: float, digits: int
+    ) -> None: ...
+    @property
+    def increments(self) -> tuple[float | None, float | None]: ...
+    @property
+    def range(self) -> tuple[float | None, float | None]: ...
 
 class GTK3SpinButton(Gtk.SpinButton, GTK3SpinButtonMixin):
     def __init__(
         self,
-        adjustment: GTK3Adjustment | None = None,
+        adjustment: Gtk.Adjustment | None = None,
         climb_rate: float = 0.0,
         digits: int = 1,
     ) -> None: ...
