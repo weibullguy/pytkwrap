@@ -34,7 +34,7 @@ class PyTkWrapAttributes(TypedDict, total=False):
 
     axis: Axes | None
     canvas: FigureCanvasBase | None
-    data_type: type | None  # e.g. bool, date, float, int, str
+    data_type: type  # e.g. bool, date, float, int, str
     default_value: bool | date | float | int | str | None
     edit_signal: list[str] | str | None
     figure: Figure | None
@@ -58,7 +58,7 @@ class PyTkWrapMixin:
     _PYTKWRAP_ATTRIBUTES = PyTkWrapAttributes(
         axis=None,
         canvas=None,
-        data_type=None,
+        data_type=str,
         default_value=None,
         edit_signal=None,
         figure=None,

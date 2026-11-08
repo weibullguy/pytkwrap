@@ -11,11 +11,6 @@ from matplotlib.backend_bases import FigureCanvasBase
 from matplotlib.figure import Figure
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import NoValueError as NoValueError
-from pytkwrap.exceptions import PytkwrapError as PytkwrapError
-from pytkwrap.exceptions import UnkAttributeError as UnkAttributeError
-from pytkwrap.exceptions import UnkPropertyError as UnkPropertyError
-from pytkwrap.exceptions import WrongTypeError as WrongTypeError
 from pytkwrap.utilities import FontDescription as FontDescription
 
 _ = gettext.gettext
@@ -23,7 +18,7 @@ _ = gettext.gettext
 class PyTkWrapAttributes(TypedDict, total=False):
     axis: Axes | None
     canvas: FigureCanvasBase | None
-    data_type: type | None
+    data_type: type
     default_value: bool | date | float | int | str | None
     edit_signal: list[str] | str | None
     figure: Figure | None
