@@ -132,9 +132,12 @@ extra-dependencies = [
 [tool.hatch.envs.types.scripts]
 update = "pip install -U pip && pip install -U `pip list --outdated | tail -n +3 | cut -d ' ' -f1`"
 make-stub = "stubgen --include-private -o src {args}"
-all = [
+check = [
     "mypy --config ./pyproject.toml {args}",
     "ty check {args}",
+]
+all = [
+    "check",
     "make-stub",
 ]
 
@@ -408,6 +411,7 @@ root = [
 
 [tool.ty.rules]
 inconsistent-mro = "ignore"
+invalid-method-override = "ignore"
 
 [tool.ty.src]
 exclude = [
