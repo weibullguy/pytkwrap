@@ -487,7 +487,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     underline: Pango.Underline | None
     underline_set: bool
     unit: Gtk.Unit
-    update_policy: Gtk.SpinButtonUpdatePolicy | None
+    update_policy: Gtk.SpinButtonUpdatePolicy
     upper: float
     urgency_hint: bool
     use_alpha: bool
