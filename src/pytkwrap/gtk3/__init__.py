@@ -332,11 +332,11 @@ __all__ = [
     "GTK3WidgetProperties",
     "GTK3Window",
     "GTK3WindowGroup",
-    "set_widget_sensitivity",
     "GTK3WidgetMixin",
     "do_construct_assistant",
     "do_make_buttonbox",
     #    "do_construct_label_group",
     "do_construct_tooltip",
     "do_construct_treeview",
+    "set_widget_sensitivity",
 ]

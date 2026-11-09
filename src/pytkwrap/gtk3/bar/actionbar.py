@@ -4,12 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.widget import GTK3Widget, GTK3WidgetMixin, GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # noinspection unused-imports
+    # pytkwrap Local Imports
+    from ._protocols import _ActionBarHost
 
 
 class GTK3ActionBarMixin(GTK3WidgetMixin):
@@ -31,7 +39,7 @@ class GTK3ActionBarMixin(GTK3WidgetMixin):
         self.dic_properties.update(self._GTK3_ACTIONBAR_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _ActionBarHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3ActionBar-specific properties.
@@ -43,11 +51,13 @@ class GTK3ActionBarMixin(GTK3WidgetMixin):
             tuples with the property values to set for the GTK3HeaderBar.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_center_widget(self.dic_properties["center_widget"])
 
-    def do_add_child(self, child: GTK3Widget, start: bool = True) -> None:
+    def do_add_child(
+        self: _ActionBarHost, child: GTK3Widget, start: bool = True
+    ) -> None:
         """Add a child widget to the GTK3ActionBar.
 
         Parameters

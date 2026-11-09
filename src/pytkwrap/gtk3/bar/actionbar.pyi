@@ -10,6 +10,9 @@ from pytkwrap.gtk3.widget import GTK3Widget as GTK3Widget
 from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
 from pytkwrap.gtk3.widget import GTK3WidgetProperties as GTK3WidgetProperties
 
+# pytkwrap Local Imports
+from ._protocols import _ActionBarHost as _ActionBarHost
+
 class GTK3ActionBarMixin(GTK3WidgetMixin):
     _GTK3_ACTIONBAR_PROPERTIES: Incomplete
     def __init__(self, **kwargs) -> None: ...

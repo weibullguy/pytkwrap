@@ -1,0 +1,31 @@
+# pylint: disable=missing-function-docstring
+"""The pytkwrap bar protocols module.
+
+.. author:: Doyle Rowland
+.. copyright:: Since 2007, all rights reserved.
+"""
+
+# Standard Library Imports
+from collections.abc import Mapping
+from typing import Protocol
+
+# pytkwrap Package Imports
+from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+
+
+class _ActionBarHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_attributes: GTK3WidgetAttributes
+    dic_handler_id: dict[str, int]
+    dic_properties: GTK3WidgetProperties
+
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None: ...
+    def do_add_child(self, child: Gtk.Widget, start: bool = True) -> None: ...
+    def set_center_widget(self, center_widget: Gtk.Widget | None) -> None: ...
+    def pack_end(self, child: Gtk.Widget) -> None: ...
+    def pack_start(self, child: Gtk.Widget) -> None: ...

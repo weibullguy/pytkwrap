@@ -23,7 +23,6 @@ if TYPE_CHECKING:
     from ._protocols import _SpinButtonHost
 
 
-# pylint: enable=missing-function-docstring
 class GTK3SpinButtonMixin(GTK3EntryMixin):
     """Mixin for GTK3SpinButton.
 
