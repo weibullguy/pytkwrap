@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _InfoBarHost
 
 
 class GTK3InfoBarMixin(GTK3BoxMixin):
@@ -43,7 +50,7 @@ class GTK3InfoBarMixin(GTK3BoxMixin):
         self.dic_properties.update(self._GTK3_INFOBAR_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _InfoBarHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3InfoBar-specific properties.
@@ -55,7 +62,7 @@ class GTK3InfoBarMixin(GTK3BoxMixin):
             tuples with the property values to set for the GTK3InfoBar.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_default_response(self.dic_properties["default_response"])
         self.set_message_type(self.dic_properties["message_type"])
@@ -63,7 +70,7 @@ class GTK3InfoBarMixin(GTK3BoxMixin):
         self.set_show_close_button(self.dic_properties["show_close_button"])
 
     @property
-    def action_area(self) -> Gtk.Box:
+    def action_area(self: _InfoBarHost) -> Gtk.Box:
         """Get the action area of the GTK3InfoBar.
 
         Returns
@@ -74,7 +81,7 @@ class GTK3InfoBarMixin(GTK3BoxMixin):
         return self.get_action_area()
 
     @property
-    def content_area(self) -> Gtk.Box:
+    def content_area(self: _InfoBarHost) -> Gtk.Box:
         """Get the content area of the GTK3InfoBar.
 
         Returns
