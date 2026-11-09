@@ -9,7 +9,7 @@ except ImportError:
     print("Failed to import package gi; exiting.")
     sys.exit(1)
 # Third Party Imports
-from gi.repository import Gdk, GObject, Gtk, Pango
+from gi.repository import Gtk, Pango
 
 EXPECTED_ACTIONBAR_METHODS = [
     "get_center_widget",
@@ -18,6 +18,7 @@ EXPECTED_ACTIONBAR_METHODS = [
     "set_center_widget",
 ]
 EXPECTED_ACTIONBAR_PROPERTIES = {"center_widget": None}
+
 EXPECTED_HEADERBAR_METHODS = [
     "get_custom_title",
     "get_decoration_layout",

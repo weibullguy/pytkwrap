@@ -298,7 +298,7 @@ EXPECTED_WIDGET_ATTRIBUTES: dict[str, int | str | None] = {
     "axis": None,
     "canvas": None,
     "column_types": None,
-    "data_type": None,
+    "data_type": str,
     "default_value": None,
     "edit_signal": None,
     "figure": None,
