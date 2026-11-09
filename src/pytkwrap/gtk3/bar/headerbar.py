@@ -4,14 +4,21 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3Widget
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _HeaderBarHost
 
 
 class GTK3HeaderBarMixin(GTK3ContainerMixin):
@@ -42,7 +49,7 @@ class GTK3HeaderBarMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK3_HEADERBAR_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _HeaderBarHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3HeaderBar-specific properties.
@@ -54,7 +61,7 @@ class GTK3HeaderBarMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3HeaderBar.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_custom_title(self.dic_properties["custom_title"])
         self.set_decoration_layout(self.dic_properties["decoration_layout"])
@@ -63,12 +70,18 @@ class GTK3HeaderBarMixin(GTK3ContainerMixin):
         self.set_subtitle(self.dic_properties["subtitle"])
         self.set_title(self.dic_properties["title"])
 
-        for _property in ["decoration_layout_set", "spacing"]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
+        self.set_property(
+            "decoration-layout-set",
+            self.dic_properties["decoration_layout_set"],
+        )
+        self.set_property(
+            "spacing",
+            self.dic_properties["spacing"],
+        )
 
-    def do_add_child(self, child: GTK3Widget, start: bool = True) -> None:
+    def do_add_child(
+        self: _HeaderBarHost, child: GTK3Widget, start: bool = True
+    ) -> None:
         """Add a child widget to the GTK3HeaderBar.
 
         Parameters

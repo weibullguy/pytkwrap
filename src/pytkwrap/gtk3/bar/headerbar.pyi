@@ -10,6 +10,9 @@ from pytkwrap.gtk3.container import GTK3ContainerMixin as GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3Widget as GTK3Widget
 
+# pytkwrap Local Imports
+from ._protocols import _HeaderBarHost as _HeaderBarHost
+
 class GTK3HeaderBarMixin(GTK3ContainerMixin):
     _GTK3_HEADERBAR_PROPERTIES: Incomplete
     def __init__(self, **kwargs) -> None: ...
