@@ -12,6 +12,9 @@ from pytkwrap.gtk3.window.scrolledwindow import (
     GTK3ScrolledWindowMixin as GTK3ScrolledWindowMixin,
 )
 
+# pytkwrap Local Imports
+from ._protocols import _PlacesSidebarHost as _PlacesSidebarHost
+
 class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
     _GTK3_PLACESSIDEBAR_PROPERTIES: Incomplete
     _GTK3_PLACESSIDEBAR_SIGNALS: Incomplete

@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gio, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from pytkwrap.gtk3.window.scrolledwindow import GTK3ScrolledWindowMixin
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _PlacesSidebarHost
 
 
 class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
@@ -76,7 +83,7 @@ class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
         self.dic_properties.update(self._GTK3_PLACESSIDEBAR_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _PlacesSidebarHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3PlacesSidebar-specific properties.
@@ -88,7 +95,7 @@ class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
             tuples with the property values to set for the GTK3PlacesSidebar.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_local_only(self.dic_properties["local_only"])
 
@@ -103,13 +110,10 @@ class GTK3PlacesSidebarMixin(GTK3ScrolledWindowMixin):
         self.set_show_starred_location(self.dic_properties["show_starred_location"])
         self.set_show_trash(self.dic_properties["show_trash"])
 
-        for _property in ["populate_all"]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
+        self.set_property("populate-all", self.dic_properties["populate_all"])
 
     @property
-    def shortcuts(self) -> list[Gio.File]:
+    def shortcuts(self: _PlacesSidebarHost) -> list[Gio.File]:
         """Get a list of shortcuts in the GTK3PlacesSidebar.
 
         Returns

@@ -10,7 +10,7 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
-from ._protocols import _ActionBarHost, _HeaderBarHost, _InfoBarHost
+from ._protocols import _ActionBarHost, _HeaderBarHost, _InfoBarHost, _PlacesSidebarHost
 from .actionbar import GTK3ActionBar
 from .headerbar import GTK3HeaderBar
 from .infobar import GTK3InfoBar
@@ -34,4 +34,5 @@ __all__ = [
     "_ActionBarHost",
     "_HeaderBarHost",
     "_InfoBarHost",
+    "_PlacesSidebarHost",
 ]
