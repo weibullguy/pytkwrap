@@ -4,10 +4,19 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
+# Standard Library Imports
+from typing import TYPE_CHECKING
+
 # pytkwrap Package Imports
 from pytkwrap.exceptions import PytkwrapError
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.box import GTK3BoxMixin
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _StatusBarHost
 
 
 class GTK3StatusbarMixin(GTK3BoxMixin):
@@ -32,7 +41,7 @@ class GTK3StatusbarMixin(GTK3BoxMixin):
         self.dic_context_id: dict[str, int] = {}
         self.dic_message_id: dict[str, int] = {}
 
-    def do_add_message(self, context: str, message: str) -> None:
+    def do_add_message(self: _StatusBarHost, context: str, message: str) -> None:
         """Add the message to the GTK3Statusbar stack.
 
         Parameters
@@ -52,6 +61,7 @@ class GTK3StatusbarMixin(GTK3BoxMixin):
             self.dic_message_id[message] = self.push(
                 self.dic_context_id[context], message
             )
+        # TODO: Add pubsub messaging.
         except KeyError as err:
             raise PytkwrapError(
                 f"Context '{context}' not found in GTK3Statusbar."
@@ -62,7 +72,7 @@ class GTK3StatusbarMixin(GTK3BoxMixin):
             ) from err
 
     def do_remove_message(
-        self,
+        self: _StatusBarHost,
         context: str,
         message: str = "",
         remove_all: bool = False,
@@ -92,6 +102,7 @@ class GTK3StatusbarMixin(GTK3BoxMixin):
                 self.pop(self.dic_context_id[context])
             else:
                 self.remove(self.dic_context_id[context], self.dic_message_id[message])
+        # TODO: Add pubsub messaging.
         except KeyError as err:
             raise PytkwrapError(
                 f"Context '{context}' not found in GTK3Statusbar or message "

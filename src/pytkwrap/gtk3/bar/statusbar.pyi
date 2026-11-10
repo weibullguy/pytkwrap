@@ -1,15 +1,19 @@
 # Third Party Imports
-from _typeshed import Incomplete as Incomplete
+from _typeshed import Incomplete
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import PytkwrapError as PytkwrapError
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.container.box import GTK3BoxMixin as GTK3BoxMixin
+
+# pytkwrap Local Imports
+from ._protocols import _StatusBarHost as _StatusBarHost
 
 class GTK3StatusbarMixin(GTK3BoxMixin):
     _GTK3_STATUSBAR_SIGNALS: Incomplete
     dic_context_id: dict[str, int]
     dic_message_id: dict[str, int]
-    def __init__(self) -> None: ...
+    def __init__(self, **kwargs) -> None: ...
     def do_add_message(self, context: str, message: str) -> None: ...
     def do_remove_message(
         self, context: str, message: str = "", remove_all: bool = False
