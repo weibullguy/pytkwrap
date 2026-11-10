@@ -16,6 +16,7 @@ from ._protocols import (
     _InfoBarHost,
     _PlacesSidebarHost,
     _ProgressBarHost,
+    _SearchBarHost,
 )
 from .actionbar import GTK3ActionBar
 from .headerbar import GTK3HeaderBar
@@ -42,4 +43,5 @@ __all__ = [
     "_InfoBarHost",
     "_PlacesSidebarHost",
     "_ProgressBarHost",
+    "_SearchBarHost",
 ]

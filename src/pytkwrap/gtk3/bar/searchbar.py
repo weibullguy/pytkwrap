@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _SearchBarHost
 
 
 class GTK3SearchBarMixin(GTK3ContainerMixin):
@@ -46,7 +53,7 @@ class GTK3SearchBarMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK3_SEARCHBAR_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _SearchBarHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3SearchBar-specific properties.
@@ -58,7 +65,7 @@ class GTK3SearchBarMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3SearchBar.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_search_mode(self.dic_properties["search_mode_enabled"])
         self.set_show_close_button(self.dic_properties["show_close_button"])
