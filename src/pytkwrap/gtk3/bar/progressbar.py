@@ -4,14 +4,21 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
 from datetime import date
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GObject, Gtk, Pango
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3WidgetMixin
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ProgressBarHost
 
 
 class GTK3ProgressBarMixin(GTK3WidgetMixin):
@@ -58,7 +65,7 @@ class GTK3ProgressBarMixin(GTK3WidgetMixin):
         self.dic_properties.update(self._GTK3_PROGRESSBAR_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _ProgressBarHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3ProgressBar-specific properties.
@@ -70,7 +77,7 @@ class GTK3ProgressBarMixin(GTK3WidgetMixin):
             tuples with the property values to set for the GTK3ProgressBar.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_ellipsize(self.dic_properties["ellipsize"])
         self.set_fraction(self.dic_properties["fraction"])
@@ -79,7 +86,7 @@ class GTK3ProgressBarMixin(GTK3WidgetMixin):
         self.set_show_text(self.dic_properties["show_text"])
         self.set_text(self.dic_properties["text"])
 
-    def do_get_value(self) -> float | int | str | None:
+    def do_get_value(self: _ProgressBarHost) -> float | int | str | None:
         """Retrieve the text displayed in the GTK3ProgressBar.
 
         This method will return the correct datatype (float, int, str) associated with
@@ -90,12 +97,13 @@ class GTK3ProgressBarMixin(GTK3WidgetMixin):
         float | int | str | None
             The text displayed in the GTK3ProgressBar.
         """
-        _value: str | None = self.get_fraction()
+        _value: float | int | str | None = self.get_fraction()
 
         return self.dic_attributes["data_type"](_value)
 
     def do_set_value(
-        self, value: bool | date | float | int | object | str | tuple | None = None
+        self: _ProgressBarHost,
+        value: bool | date | float | int | object | str | tuple | None = None,
     ) -> None:
         """Set the GTK3ProgressBar active progress.
 
@@ -106,7 +114,7 @@ class GTK3ProgressBarMixin(GTK3WidgetMixin):
             value between 0.0 and 1.0, or as a percentage value between 0 and 100.
         """
         if not isinstance(value, (float, int, str)):
-            super().do_set_value(value)
+            super().do_set_value(value)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         _value = self.dic_attributes["data_type"](value)
 
