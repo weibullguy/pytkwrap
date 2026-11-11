@@ -9,8 +9,10 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
+from ._protocols import _NotebookHost
 from .notebook import GTK3Notebook
 
 __all__ = [
     "GTK3Notebook",
+    "_NotebookHost",
 ]

@@ -4,8 +4,11 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # Third Party Imports
 from pubsub import pub
@@ -15,6 +18,10 @@ from pytkwrap.exceptions import PytkwrapError, PytkwrapWarning
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _NotebookHost
 
 
 class GTK3NotebookMixin(GTK3ContainerMixin):
@@ -92,7 +99,7 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK3_NOTEBOOK_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _NotebookHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3Notebook-specific properties.
@@ -104,7 +111,7 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3Notebook.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_current_page(self.dic_properties["page"])
         self.set_group_name(self.dic_properties["group_name"])
@@ -113,13 +120,10 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         self.set_show_tabs(self.dic_properties["show_tabs"])
         self.set_tab_pos(self.dic_properties["tab_pos"])
 
-        for _property in ["enable_popup"]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
+        self.set_property("enable-popup", self.dic_properties["enable_popup"])
 
     def do_add_page(
-        self,
+        self: _NotebookHost,
         child: Gtk.Widget,
         tab_label: Gtk.Widget | None = None,
         menu_label: Gtk.Widget | None = None,
@@ -153,7 +157,7 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         else:
             self.insert_page_menu(child, tab_label, menu_label, position)
 
-    def do_remove_page(self, position: int) -> None:
+    def do_remove_page(self: _NotebookHost, position: int) -> None:
         """Remove a page from the notebook.
 
         Parameters
@@ -166,59 +170,26 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         PytkwrapError
             If the page number is invalid.
         """
-        if position > self.get_n_pages():
+        if position > self.n_pages:
             raise PytkwrapError(
                 f"Invalid GTK3Notebook page number: {position}.  There are only "
                 f"{self.get_n_pages()} pages."
             )
         self.remove_page(position)
 
-    @property
-    def n_pages(self) -> int:
-        """Get the total number of pages in the GTK3Notebook.
-
-        Returns
-        -------
-        int
-            The total number of pages in the GTK3Notebook.
-        """
-        return self.get_n_pages()
-
-
-class GTK3Notebook(Gtk.Notebook, GTK3NotebookMixin):
-    """Wrapper for version 3.0 Gtk.Notebook."""
-
-    def __init__(
-        self,
-        child_widgets: list[Gtk.Widget] | None,
-        tab_labels: list[str] | None = None,
-    ) -> None:
-        """Initialize an instance of the GTK3Notebook.
-
-        Parameters
-        ----------
-        child_widgets : list[Gtk.Widget] | None
-            List of Gtk.Widgets to use as contents of each page.
-        tab_labels : list[str] | None
-            List of tab labels to add to the notebook.
-        """
-        Gtk.Notebook.__init__(self)
-        GTK3NotebookMixin.__init__(self)
-
-        if child_widgets is not None and tab_labels is not None:
-            self.do_build_notebook(child_widgets, tab_labels)
-
     def do_build_notebook(
-        self, child_widgets: list[Gtk.Widget], tab_labels: list[str]
+        self: _NotebookHost,
+        child_widgets: list[Gtk.Widget],
+        tab_labels: list[Gtk.Widget],
     ) -> None:
         """Add pages to the GTK3Notebook.
 
         Parameters
         ----------
-        child_widgets : list[Gtk.Widget] | None
+        child_widgets : list[Gtk.Widget]
             List of Gtk.Widgets to use as contents of each page.
-        tab_labels : list[str] | None
-            List of tab labels to add to the notebook.
+        tab_labels : list[Gtk.Widget]
+            List of Gtk.Widgets to use as tab labels for each page.
 
         Raises
         ------
@@ -246,3 +217,40 @@ class GTK3Notebook(Gtk.Notebook, GTK3NotebookMixin):
 
         for _page in range(_n_pages):
             self.do_add_page(child_widgets[_page], tab_labels[_page])
+
+    @property
+    def n_pages(self: _NotebookHost) -> int:
+        """Get the total number of pages in the GTK3Notebook.
+
+        Returns
+        -------
+        int
+            The total number of pages in the GTK3Notebook.
+        """
+        return self.get_n_pages()
+
+
+class GTK3Notebook(Gtk.Notebook, GTK3NotebookMixin):
+    """Wrapper for version 3.0 Gtk.Notebook."""
+
+    def __init__(
+        self,
+        child_widgets: list[Gtk.Widget] | None,
+        tab_labels: list[Gtk.Widget] | None = None,
+    ) -> None:
+        """Initialize an instance of the GTK3Notebook.
+
+        Parameters
+        ----------
+        child_widgets : list[Gtk.Widget] | None
+            List of Gtk.Widgets to use as contents of each page.
+        tab_labels : list[Gtk.Widget] | None
+            List of Gtk.Widgets to use as the tab labels for each page.
+        """
+        Gtk.Notebook.__init__(self)
+        GTK3NotebookMixin.__init__(self)
+
+        if child_widgets is not None and tab_labels is not None:
+            self.do_build_notebook(
+                child_widgets, tab_labels
+            )  # ty: ignore[invalid-argument-type]

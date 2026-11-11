@@ -11,6 +11,9 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin as GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
+# pytkwrap Local Imports
+from ._protocols import _NotebookHost as _NotebookHost
+
 class GTK3NotebookMixin(GTK3ContainerMixin):
     _GTK3_NOTEBOOK_PROPERTIES: Incomplete
     _GTK3_NOTEBOOK_SIGNALS: Incomplete
@@ -26,6 +29,9 @@ class GTK3NotebookMixin(GTK3ContainerMixin):
         position: int = -1,
     ) -> None: ...
     def do_remove_page(self, position: int) -> None: ...
+    def do_build_notebook(
+        self, child_widgets: list[Gtk.Widget], tab_labels: list[Gtk.Widget]
+    ) -> None: ...
     @property
     def n_pages(self) -> int: ...
 
@@ -33,8 +39,5 @@ class GTK3Notebook(Gtk.Notebook, GTK3NotebookMixin):
     def __init__(
         self,
         child_widgets: list[Gtk.Widget] | None,
-        tab_labels: list[str] | None = None,
-    ) -> None: ...
-    def do_build_notebook(
-        self, child_widgets: list[Gtk.Widget], tab_labels: list[str]
+        tab_labels: list[Gtk.Widget] | None = None,
     ) -> None: ...
