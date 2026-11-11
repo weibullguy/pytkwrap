@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.io.combobox import GTK3ComboBoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _AppChooserButtonHost
 
 
 class GTK3AppChooserButtonMixin(GTK3ComboBoxMixin):
@@ -63,7 +70,7 @@ class GTK3AppChooserButtonMixin(GTK3ComboBoxMixin):
         self.dic_properties.update(self._GTK3_APPCHOOSERBUTTON_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _AppChooserButtonHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties of the GTK3AppChooserButton.
@@ -74,7 +81,7 @@ class GTK3AppChooserButtonMixin(GTK3ComboBoxMixin):
             The typed dict (preferred), non-typed dict, list of lists, or list of
             tuples with the property values to set for the GTK3AppChooserButton.
         """
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         if self.dic_properties["heading"] is not None:
             self.set_heading(self.dic_properties["heading"])

@@ -8,6 +8,16 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
+class _AppChooserButtonHost(Protocol):
+    dic_handler_id: dict[str, int]
+    dic_properties: GTK3WidgetProperties
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None: ...
+    def set_heading(self, heading: str) -> None: ...
+    def set_show_default_item(self, show_default_item: bool) -> None: ...
+    def set_show_dialog_item(self, show_dialog_item: bool) -> None: ...
+
 class _SpinButtonHost(Protocol):
     dic_attributes: GTK3WidgetAttributes
     dic_handler_id: dict[str, int]
