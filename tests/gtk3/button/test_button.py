@@ -104,7 +104,7 @@ class TestButton(BaseGTK3GObjectTests):
         assert dut.do_get_attribute("axis") is None
         assert dut.do_get_attribute("canvas") is None
         assert dut.do_get_attribute("column_types") is None
-        assert dut.do_get_attribute("data_type") is None
+        assert dut.do_get_attribute("data_type") == str
         assert dut.do_get_attribute("default_value") is None
         assert dut.do_get_attribute("edit_signal") is None
         assert dut.do_get_attribute("figure") is None
@@ -165,7 +165,7 @@ class TestButton(BaseGTK3GObjectTests):
         dut.do_set_properties(
             GTK3WidgetProperties(
                 always_show_image=True,
-                image=image_file,
+                file=image_file,
                 label="Test Label",
                 relief=Gtk.ReliefStyle.NONE,
                 use_underline=True,
@@ -176,8 +176,8 @@ class TestButton(BaseGTK3GObjectTests):
         assert dut.get_always_show_image()
         assert isinstance(dut.get_property("image"), Gtk.Image)
         assert isinstance(dut.get_image(), Gtk.Image)
-        assert dut.get_property("label") == ""
-        assert dut.get_label() == ""
+        assert dut.get_property("label") == "Test Label"
+        assert dut.get_label() == "Test Label"
         assert dut.get_property("relief") == Gtk.ReliefStyle.NONE
         assert dut.get_relief() == Gtk.ReliefStyle.NONE
         assert dut.get_property("use_underline")

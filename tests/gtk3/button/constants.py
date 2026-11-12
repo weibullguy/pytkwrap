@@ -9,7 +9,7 @@ except ImportError:
     print("Failed to import package gi; exiting.")
     sys.exit(1)
 # Third Party Imports
-from gi.repository import Gdk, GObject, Gtk, Pango
+from gi.repository import Gtk
 
 EXPECTED_APPCHOOSERBUTTON_HANDLER_IDS = {"custom-item-activated": -1}
 EXPECTED_APPCHOOSERBUTTON_METHODS = [
@@ -48,6 +48,7 @@ EXPECTED_BUTTON_METHODS = [
 ]
 EXPECTED_BUTTON_PROPERTIES = {
     "always_show_image": False,
+    "file": None,
     "image": None,
     "image_position": Gtk.PositionType.LEFT,
     "label": "...",

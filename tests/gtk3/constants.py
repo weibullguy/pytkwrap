@@ -100,11 +100,11 @@ EXPECTED_GLAREA_PROPERTIES = {
     "use_es": False,
 }
 
-EXPECTED_GOBJECT_ATTRIBUTES: dict[str, int | str | None] = {
+EXPECTED_GOBJECT_ATTRIBUTES: dict[str, int | str | type | None] = {
     "axis": None,
     "canvas": None,
     "column_types": None,
-    "data_type": None,
+    "data_type": str,
     "default_value": None,
     "edit_signal": None,
     "figure": None,
@@ -294,7 +294,7 @@ EXPECTED_TOOLTIP_METHODS = [
     "set_tip_area",
 ]
 
-EXPECTED_WIDGET_ATTRIBUTES: dict[str, int | str | None] = {
+EXPECTED_WIDGET_ATTRIBUTES: dict[str, int | str | type | None] = {
     "axis": None,
     "canvas": None,
     "column_types": None,
