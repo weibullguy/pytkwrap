@@ -1,5 +1,4 @@
 # Standard Library Imports
-# Standard Library Imports
 from datetime import date
 from types import EllipsisType, FunctionType
 from typing import TypedDict
@@ -10,6 +9,7 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.common import PyTkWrapAttributes as PyTkWrapAttributes
 from pytkwrap.common import PyTkWrapMixin as PyTkWrapMixin
+from pytkwrap.exceptions import UnkSignalError as UnkSignalError
 from pytkwrap.gtk3._libs import Gdk as Gdk
 from pytkwrap.gtk3._libs import GdkPixbuf as GdkPixbuf
 from pytkwrap.gtk3._libs import Gio as Gio
@@ -18,6 +18,10 @@ from pytkwrap.gtk3._libs import GObject as GObject
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3._libs import Pango as Pango
 from pytkwrap.gtk3._libs import cairo as cairo
+from pytkwrap.utilities import none_to_default as none_to_default
+
+_GdkScreen = object
+_GdkWindow = object
 
 class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
     column_types: list[EllipsisType] | list[GObject.GType] | None
@@ -135,7 +139,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     enable_search: bool
     enable_tree_lines: bool
     entry_text_column: int
-    events: Gdk.EventMask | None
+    events: int | None
     expand: bool
     expanded: bool
     expander_column: Gtk.TreeViewColumn | None
@@ -206,7 +210,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     icon_size_set: bool
     icon_widget: Gtk.Widget | None
     id_column: int
-    image: Gtk.Widget | None
+    image: Gtk.Widget | str | None
     image_position: Gtk.PositionType
     im_module: str | None
     inconsistent: bool
@@ -269,7 +273,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_width_chars: int
     menu: Gtk.Menu | None
     menu_model: Gio.MenuModel | None
-    menu_type_hint: Gdk.WindowTypeHint
+    menu_type_hint: int
     message_area: Gtk.Widget
     message_type: Gtk.MessageType
     min_children_per_line: int
@@ -347,7 +351,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     rect_anchor_dx: int
     rect_anchor_dy: int
     relative_to: Gtk.Widget | None
-    relief: Gtk.ReliefStyle | None
+    relief: Gtk.ReliefStyle
     reorderable: bool
     reserve_toggle_size: bool
     resizable: bool
@@ -370,7 +374,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     scale: float | int
     scale_factor: int
     scale_set: bool
-    screen: Gdk.Screen | None
+    screen: _GdkScreen | None
     scroll_offset: int
     scrollable: bool
     search_column: int
@@ -478,7 +482,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     translator_credits: str | None
     truncate_multiline: bool
     type: Gtk.WindowType
-    type_hint: Gdk.WindowTypeHint
+    type_hint: int
     underline: Pango.Underline | None
     underline_set: bool
     unit: Gtk.Unit
@@ -529,7 +533,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     width: int
     width_chars: int
     width_request: int
-    window: Gdk.Window | None
+    window: _GdkWindow | None
     window_placement: Gtk.CornerType | None
     window_position: Gtk.WindowPosition
     wrap: bool

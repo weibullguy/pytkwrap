@@ -15,6 +15,27 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 
+class _ButtonHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_handler_id: dict[str, int]
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None: ...
+
+    # Gtk3 API methods.
+    def set_always_show_image(self, always_show_image: bool) -> None: ...
+    def set_image(self, image: Gtk.Widget | None) -> None: ...
+    def set_image_position(self, image_position: Gtk.PositionType) -> None: ...
+    def set_label(self, label: str | None) -> None: ...
+    def set_relief(self, relief: Gtk.ReliefStyle) -> None: ...
+    def set_use_underline(self, use_underline: bool) -> None: ...
+
+
 class _AppChooserButtonHost(Protocol):
     """Methods the mixin expects the concrete widget to provide."""
 

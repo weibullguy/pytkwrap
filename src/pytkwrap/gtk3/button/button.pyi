@@ -7,10 +7,13 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf as GdkPixbuf
 from pytkwrap.gtk3._libs import Gtk as Gtk
-from pytkwrap.gtk3.container.bin import GTK3BinMixin as GTK3BinMixin
+from pytkwrap.gtk3.container.container import GTK3ContainerMixin as GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
-class GTK3ButtonMixin(GTK3BinMixin):
+# pytkwrap Local Imports
+from ._protocols import _ButtonHost as _ButtonHost
+
+class GTK3ButtonMixin(GTK3ContainerMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
     _GTK3_BUTTON_PROPERTIES: Incomplete
@@ -21,4 +24,4 @@ class GTK3ButtonMixin(GTK3BinMixin):
     ) -> None: ...
 
 class GTK3Button(Gtk.Button, GTK3ButtonMixin):
-    def __init__(self, label: str | None = "...") -> None: ...
+    def __init__(self, label: str = "...") -> None: ...

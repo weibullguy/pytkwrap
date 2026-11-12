@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ButtonHost
 
 
 class GTK3ButtonMixin(GTK3ContainerMixin):
@@ -50,6 +57,7 @@ class GTK3ButtonMixin(GTK3ContainerMixin):
     _DEFAULT_WIDTH = 200
     _GTK3_BUTTON_PROPERTIES = GTK3WidgetProperties(
         always_show_image=False,
+        file=None,
         image=None,
         image_position=Gtk.PositionType.LEFT,
         label="...",
@@ -73,7 +81,7 @@ class GTK3ButtonMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK3_BUTTON_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _ButtonHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties of the Button.
@@ -85,7 +93,7 @@ class GTK3ButtonMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3Button.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_always_show_image(self.dic_properties["always_show_image"])
         self.set_relief(self.dic_properties["relief"])
@@ -96,10 +104,9 @@ class GTK3ButtonMixin(GTK3ContainerMixin):
             self.dic_properties["label"] = ""
         self.set_label(self.dic_properties["label"])
 
-        if self.dic_properties["image"] is not None:
-            self.set_label("")
+        if self.dic_properties["file"] is not None:
             _icon = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                self.dic_properties["image"],
+                self.dic_properties["file"],
                 self.dic_properties["height_request"],
                 self.dic_properties["width_request"],
             )
@@ -114,15 +121,15 @@ class GTK3Button(Gtk.Button, GTK3ButtonMixin):
 
     def __init__(
         self,
-        label: str | None = "...",
+        label: str = "...",
     ) -> None:
         """Initialize an instance of the GTK3Button widget.
 
         Parameters
         ----------
-        label : str | None
+        label : str
             The text to display on the GTK3Button.  The default value is an ellipsis
-            (...).  Pass an empty string or None to clear the label.
+            (...).  Pass an empty string to clear the label.
         """
         Gtk.Button.__init__(self, label=label)
         GTK3ButtonMixin.__init__(self)

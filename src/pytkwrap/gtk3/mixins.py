@@ -7,7 +7,7 @@
 # Standard Library Imports
 from datetime import date
 from types import EllipsisType, FunctionType
-from typing import TypedDict
+from typing import TypedDict, cast
 
 # Third Party Imports
 from pubsub import pub
@@ -17,6 +17,11 @@ from pytkwrap.common import PyTkWrapAttributes, PyTkWrapMixin
 from pytkwrap.exceptions import UnkSignalError
 from pytkwrap.gtk3._libs import Gdk, GdkPixbuf, Gio, GLib, GObject, Gtk, Pango, cairo
 from pytkwrap.utilities import none_to_default
+
+# The Gdk stub files do not define these classes.  We need this hack so type
+# checkers don't complain with a name-defined error.
+_GdkScreen = object
+_GdkWindow = object
 
 
 class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
@@ -140,7 +145,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     enable_search: bool
     enable_tree_lines: bool
     entry_text_column: int
-    events: Gdk.EventMask | None
+    events: int | None  # The int comes from Gdk.EventMask.
     expand: bool
     expanded: bool
     expander_column: Gtk.TreeViewColumn | None
@@ -274,7 +279,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     max_width_chars: int
     menu: Gtk.Menu | None
     menu_model: Gio.MenuModel | None
-    menu_type_hint: Gdk.WindowTypeHint
+    menu_type_hint: int  # The int comes from Gdk.WindowTypeHint
     message_area: Gtk.Widget
     message_type: Gtk.MessageType
     min_children_per_line: int
@@ -352,7 +357,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     rect_anchor_dx: int
     rect_anchor_dy: int
     relative_to: Gtk.Widget | None
-    relief: Gtk.ReliefStyle | None
+    relief: Gtk.ReliefStyle
     reorderable: bool
     reserve_toggle_size: bool
     resizable: bool
@@ -375,7 +380,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     scale: float | int
     scale_factor: int
     scale_set: bool
-    screen: Gdk.Screen | None
+    screen: _GdkScreen | None
     scroll_offset: int
     scrollable: bool
     search_column: int
@@ -483,7 +488,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     translator_credits: str | None
     truncate_multiline: bool
     type: Gtk.WindowType
-    type_hint: Gdk.WindowTypeHint
+    type_hint: int  # The int comes from Gdk.WindowTypeHint
     underline: Pango.Underline | None
     underline_set: bool
     unit: Gtk.Unit
@@ -534,7 +539,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     width: int
     width_chars: int
     width_request: int
-    window: Gdk.Window | None
+    window: _GdkWindow | None
     window_placement: Gtk.CornerType | None
     window_position: Gtk.WindowPosition
     wrap: bool
@@ -709,7 +714,7 @@ class GTK3GObjectMixin(GObject.Object, PyTkWrapMixin):
         -------
         GTK3Widget
         """
-        return self
+        return cast(Gtk.Widget, self)
 
 
 def set_widget_sensitivity(widgets: list, sensitive: bool = True) -> None:

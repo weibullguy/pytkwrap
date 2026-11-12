@@ -2,6 +2,7 @@
 import gettext
 
 # Third Party Imports
+import cairo as cairo
 from gi.repository import Gdk as Gdk
 from gi.repository import GdkPixbuf as GdkPixbuf
 from gi.repository import Gio as Gio

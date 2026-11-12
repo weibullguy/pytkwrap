@@ -31,6 +31,6 @@ except (ImportError, ValueError):
     sys.exit(1)
 
 # Third Party Imports
-import cairo  # noqa
+import cairo as cairo  # noqa: F401 # pylint: disable=useless-import-alias, line-too-long # ruff: ignore[PLC0414]
 
 _ = gettext.gettext
