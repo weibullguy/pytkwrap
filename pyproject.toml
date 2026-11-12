@@ -160,6 +160,9 @@ clean = "cd docs && rm -fr _build/html/*"
 lint = "rstcheck --config ./pyproject.toml -r docs/requirements docs/api"
 api-docs = "sphinx-apidoc -f -o docs/api src/pytkwrap"
 make = "cd docs && make html -e"
+req-facts = "python tools/reqtool.py facts {args}"
+req-draft = "python tools/reqtool.py draft {args}"
+req-check = "python tools/reqtool.py check {args}"
 make-docs = [
     "clean",
     "make",
@@ -316,6 +319,13 @@ ignore_roles = [
     "numref",
 ]
 
+[tool.reqtool]
+# Source files that requirements extraction and checking should ignore.
+exclude = [
+    "src/pytkwrap/gtk3/dialog/databaseselectdialog.py",
+    "src/pytkwrap/gtk3/dialog/dateselectdialog.py",
+]
+
 [tool.ruff]
 builtins = [
     "_",
@@ -373,6 +383,15 @@ unfixable = []
 max-complexity = 8
 
 [tool.ruff.lint.per-file-ignores]
+"tools/*" = [
+    "D205",
+    "DOC201",
+    "DOC501",
+    "PLC0415",
+    "PLR0912",
+    "PLR0914",
+    "S404",
+]
 "tests/*" = [
     "D205",
     "DOC201",
