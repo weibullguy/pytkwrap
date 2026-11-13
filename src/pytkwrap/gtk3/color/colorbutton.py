@@ -22,12 +22,7 @@ if TYPE_CHECKING:
 
 
 class GTK3ColorButtonMixin(GTK3ButtonMixin):
-    """Mixin class for GTK3ColorButton.
-
-    Notes
-    -----
-    GTK3ColorButton passes a __gi__.GtkColorSwatch to its callback function.
-    """
+    """Mixin class for GTK3ColorButton."""
 
     # Define private class attributes.
     _DEFAULT_HEIGHT = 30
