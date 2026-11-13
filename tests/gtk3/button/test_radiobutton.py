@@ -10,7 +10,6 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.button import GTK3RadioButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.gtk3.button.constants import (
@@ -88,10 +87,10 @@ class TestRadioButton(BaseGTK3DataWidgetTests):
         assert self.expected_default_height == dut._DEFAULT_HEIGHT
         assert self.expected_default_width == dut._DEFAULT_WIDTH
         # GTK3RadioButton-specific properties should be registered.
-        for _property in GTK3RadioButton._GTK3_RADIO_BUTTON_PROPERTIES:
+        for _property in GTK3RadioButton._GTK3_RADIOBUTTON_PROPERTIES:
             assert _property in dut.dic_properties
         # GTK3RadioButton-specific signals should be registered.
-        for _signal in GTK3RadioButton._GTK3_RADIO_BUTTON_SIGNALS:
+        for _signal in GTK3RadioButton._GTK3_RADIOBUTTON_SIGNALS:
             assert _signal in dut.dic_handler_id
 
         assert dut.get_active()
@@ -141,7 +140,7 @@ class TestRadioButton(BaseGTK3DataWidgetTests):
         assert dut.do_get_attribute("axis") is None
         assert dut.do_get_attribute("canvas") is None
         assert dut.do_get_attribute("column_types") is None
-        assert dut.do_get_attribute("data_type") is None
+        assert dut.do_get_attribute("data_type") == str
         assert not dut.do_get_attribute("default_value")
         assert dut.do_get_attribute("edit_signal") == "toggled"
         assert dut.do_get_attribute("figure") is None
