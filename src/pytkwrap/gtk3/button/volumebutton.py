@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.button.scalebutton import GTK3ScaleButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _VolumeButtonHost
 
 
 class GTK3VolumeButtonMixin(GTK3ScaleButtonMixin):
@@ -36,7 +43,7 @@ class GTK3VolumeButtonMixin(GTK3ScaleButtonMixin):
         self.dic_properties.update(self._GTK3_VOLUME_BUTTON_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _VolumeButtonHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties of the GTK3VolumeButton.
@@ -48,7 +55,7 @@ class GTK3VolumeButtonMixin(GTK3ScaleButtonMixin):
             tuples with the property values to set for the GTK3VolumeButton.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_property("use-symbolic", self.dic_properties["use_symbolic"])
 
@@ -56,13 +63,13 @@ class GTK3VolumeButtonMixin(GTK3ScaleButtonMixin):
 class GTK3VolumeButton(Gtk.VolumeButton, GTK3VolumeButtonMixin):
     """Wrapper for version 3.0 Gtk.VolumeButton."""
 
-    def __init__(self, size: int = 4) -> None:
+    def __init__(self, size: Gtk.IconSize = Gtk.IconSize.BUTTON) -> None:
         """Initialize an instance of the GTK3VolumeButton widget.
 
         Parameters
         ----------
-        size : int
-            A stock icon size.  The default is 4.
+        size : Gtk.IconSize
+            A stock icon size.  The default is Gtk.IconSize.BUTTON.
         """
         Gtk.VolumeButton.__init__(self, size=size)
         GTK3VolumeButtonMixin.__init__(self)

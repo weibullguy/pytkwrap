@@ -11,6 +11,9 @@ from pytkwrap.gtk3.button.scalebutton import (
 )
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
+# pytkwrap Local Imports
+from ._protocols import _VolumeButtonHost as _VolumeButtonHost
+
 class GTK3VolumeButtonMixin(GTK3ScaleButtonMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
@@ -21,4 +24,4 @@ class GTK3VolumeButtonMixin(GTK3ScaleButtonMixin):
     ) -> None: ...
 
 class GTK3VolumeButton(Gtk.VolumeButton, GTK3VolumeButtonMixin):
-    def __init__(self, size: int = 4) -> None: ...
+    def __init__(self, size: Gtk.IconSize = ...) -> None: ...

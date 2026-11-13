@@ -201,3 +201,18 @@ class _ToggleButtonHost(Protocol):
     def set_active(self, active: bool) -> None: ...
     def set_inconsistent(self, inconsistent: bool) -> None: ...
     def set_mode(self, draw_indicator: bool) -> None: ...
+
+
+class _VolumeButtonHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None: ...
+
+    # Gtk3 API methods.
+    def set_property(self, property_name: str, value) -> None: ...
