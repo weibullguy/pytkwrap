@@ -1,4 +1,5 @@
 # Standard Library Imports
+# Standard Library Imports
 from datetime import date
 from types import EllipsisType, FunctionType
 from typing import TypedDict
@@ -9,7 +10,6 @@ from _typeshed import Incomplete
 # pytkwrap Package Imports
 from pytkwrap.common import PyTkWrapAttributes as PyTkWrapAttributes
 from pytkwrap.common import PyTkWrapMixin as PyTkWrapMixin
-from pytkwrap.exceptions import UnkSignalError as UnkSignalError
 from pytkwrap.gtk3._libs import Gdk as Gdk
 from pytkwrap.gtk3._libs import GdkPixbuf as GdkPixbuf
 from pytkwrap.gtk3._libs import Gio as Gio
@@ -18,7 +18,6 @@ from pytkwrap.gtk3._libs import GObject as GObject
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3._libs import Pango as Pango
 from pytkwrap.gtk3._libs import cairo as cairo
-from pytkwrap.utilities import none_to_default as none_to_default
 
 _GdkScreen = object
 _GdkWindow = object
@@ -42,7 +41,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     active: bool | int
     active_id: str | None
     activatable: bool
-    adjustment: Gtk.Adjustment | None
+    adjustment: Gtk.Adjustment
     align_set: bool
     align_widget: Gtk.Container | None
     alignment: float | Pango.Alignment | None

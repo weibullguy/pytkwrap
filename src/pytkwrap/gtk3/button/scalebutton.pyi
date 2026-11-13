@@ -1,5 +1,5 @@
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from datetime import date
 
 # Third Party Imports
@@ -11,6 +11,9 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment as GTK3Adjustment
 from pytkwrap.gtk3.button.button import GTK3ButtonMixin as GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
+
+# pytkwrap Local Imports
+from ._protocols import _ScaleButtonHost as _ScaleButtonHost
 
 class GTK3ScaleButtonMixin(GTK3ButtonMixin):
     _DEFAULT_HEIGHT: int
@@ -55,9 +58,9 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
 class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
     def __init__(
         self,
-        size: int,
+        icons: Sequence[str],
+        size: Gtk.IconSize,
         min_value: float = 0.0,
         max_value: float = 100.0,
         step: float = 2,
-        icons: list | None = None,
     ) -> None: ...

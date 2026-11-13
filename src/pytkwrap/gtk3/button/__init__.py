@@ -13,6 +13,7 @@ from ._protocols import (
     _AppChooserButtonHost,
     _ButtonHost,
     _RadioButtonHost,
+    _ScaleButtonHost,
     _SpinButtonHost,
 )
 from .appchooserbutton import GTK3AppChooserButton
@@ -37,5 +38,6 @@ __all__ = [
     "_AppChooserButtonHost",
     "_ButtonHost",
     "_RadioButtonHost",
+    "_ScaleButtonHost",
     "_SpinButtonHost",
 ]

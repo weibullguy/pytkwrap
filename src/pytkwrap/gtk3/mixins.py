@@ -48,7 +48,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     active: bool | int
     active_id: str | None
     activatable: bool
-    adjustment: Gtk.Adjustment | None
+    adjustment: Gtk.Adjustment
     align_set: bool
     align_widget: Gtk.Container | None
     alignment: float | Pango.Alignment | None

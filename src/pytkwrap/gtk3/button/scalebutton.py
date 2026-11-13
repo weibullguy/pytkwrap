@@ -4,9 +4,12 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from datetime import date
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
@@ -14,6 +17,10 @@ from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.button.button import GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ScaleButtonHost
 
 
 class GTK3ScaleButtonMixin(GTK3ButtonMixin):
@@ -41,7 +48,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         edit_signal="value-changed",
     )
     _GTK3_SCALEBUTTON_PROPERTIES = GTK3WidgetProperties(
-        adjustment=None,
+        adjustment=GTK3Adjustment(),
         icons=None,
         size=4,  # Button size.
         value=0.0,
@@ -64,7 +71,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         self.dic_properties.update(self._GTK3_SCALEBUTTON_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _ScaleButtonHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties of the GTK3ScaleButton.
@@ -76,7 +83,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
             tuples with the property values to set for the GTK3ScaleButton.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         if self.dic_properties["adjustment"] is not None:
             self.set_adjustment(self.dic_properties["adjustment"])
@@ -91,7 +98,9 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
 
         self.set_property("size", self.dic_properties["size"])
 
-    def do_get_value(self) -> bool | date | float | int | object | str | None:
+    def do_get_value(
+        self: _ScaleButtonHost,
+    ) -> bool | date | float | int | object | str | None:
         """Return the current value of the GTK3ScaleButton.
 
         Returns
@@ -102,7 +111,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         return self.get_value()
 
     def do_set_value(
-        self,
+        self: _ScaleButtonHost,
         value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
         """Set the current value of the GTK3ScaleButton.
@@ -113,12 +122,12 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
             The value to set for the GTK3ScaleButton.
         """
         if not isinstance(value, (float, int, str)):
-            super().do_set_value(value)
+            super().do_set_value(value)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
         self.dic_properties["value"] = float(value)  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
         self.set_value(float(value))  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
 
     def do_configure(
-        self,
+        self: _ScaleButtonHost,
         value: float,
         lower: float,
         upper: float,
@@ -155,7 +164,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         )
 
     @property
-    def lower(self) -> float:
+    def lower(self: _ScaleButtonHost) -> float:
         """Get the minimum value of the GTK3ScaleButton's GTK3Adjustment.
 
         Returns
@@ -166,7 +175,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         return self.dic_properties["adjustment"].get_lower()
 
     @property
-    def minus_button(self) -> Gtk.Button:
+    def minus_button(self: _ScaleButtonHost) -> Gtk.Button:
         """Get the minus button of the GTK3ScaleButton.
 
         Returns
@@ -177,7 +186,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         return self.get_minus_button()
 
     @property
-    def page_increment(self) -> float:
+    def page_increment(self: _ScaleButtonHost) -> float:
         """Get the page increment of the GTK3ScaleButton's GTK3Adjustment.
 
         Returns
@@ -188,7 +197,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         return self.dic_properties["adjustment"].get_page_increment()
 
     @property
-    def page_size(self) -> float:
+    def page_size(self: _ScaleButtonHost) -> float:
         """Get the page size of the GTK3ScaleButton's GTK3Adjustment.
 
         Returns
@@ -199,7 +208,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         return self.dic_properties["adjustment"].get_page_size()
 
     @property
-    def plus_button(self) -> Gtk.Button:
+    def plus_button(self: _ScaleButtonHost) -> Gtk.Button:
         """Get the plus button of the GTK3ScaleButton.
 
         Returns
@@ -210,7 +219,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         return self.get_plus_button()
 
     @property
-    def popup(self) -> Gtk.Widget:
+    def popup(self: _ScaleButtonHost) -> Gtk.Widget:
         """Get the popup of the GTK3ScaleButton.
 
         Returns
@@ -221,7 +230,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         return self.get_popup()
 
     @property
-    def step_increment(self) -> float:
+    def step_increment(self: _ScaleButtonHost) -> float:
         """Get the step increment of the GTK3ScaleButton's GTK3Adjustment.
 
         Returns
@@ -232,7 +241,7 @@ class GTK3ScaleButtonMixin(GTK3ButtonMixin):
         return self.dic_properties["adjustment"].get_step_increment()
 
     @property
-    def upper(self) -> float:
+    def upper(self: _ScaleButtonHost) -> float:
         """Get the maximum value of the GTK3ScaleButton's GTK3Adjustment.
 
         Returns
@@ -248,16 +257,20 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
 
     def __init__(
         self,
-        size: int,
+        icons: Sequence[str],
+        size: Gtk.IconSize,
         min_value: float = 0.0,
         max_value: float = 100.0,
         step: float = 2,
-        icons: list | None = None,
     ) -> None:
         """Initialize an instance of the GTK3ScaleButton widget.
 
         Parameters
         ----------
+        icons : Sequence[str]
+            A list of icon names to be used by the scale button.  The default is an
+            empty list which means the set_icons() method will have to be used to set
+            the icons after initialization.
         size : int
             A stock icon size.
         min_value : float
@@ -267,10 +280,6 @@ class GTK3ScaleButton(Gtk.ScaleButton, GTK3ScaleButtonMixin):
         step : float
             The stepping value when a scroll-wheel event, or up/down arrow event
             occurs.  The default is 2.0.
-        icons : list | None
-            A list of icon names to be used by the scale button.  The default is None
-            which means the set_icons() method will have to be used to set the icons
-            after initialization.
         """
         _adjustment = GTK3Adjustment(min_value, min_value, max_value, step)
 
