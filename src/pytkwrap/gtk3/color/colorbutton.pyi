@@ -12,6 +12,9 @@ from pytkwrap.gtk3.button.button import GTK3ButtonMixin as GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
+# pytkwrap Local Imports
+from ._protocols import _ColorButtonHost as _ColorButtonHost
+
 class GTK3ColorButtonMixin(GTK3ButtonMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int

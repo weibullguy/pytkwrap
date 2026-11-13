@@ -4,14 +4,21 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
 from datetime import date
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.button.button import GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ColorButtonHost
 
 
 class GTK3ColorButtonMixin(GTK3ButtonMixin):
@@ -52,7 +59,7 @@ class GTK3ColorButtonMixin(GTK3ButtonMixin):
         )
 
     def do_set_properties(
-        self,
+        self: _ColorButtonHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3ColorButton-specific properties.
@@ -64,20 +71,17 @@ class GTK3ColorButtonMixin(GTK3ButtonMixin):
             tuples with the property values to set for the GTK3ColorButton.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         if self.dic_properties["rgba"] is not None:
             self.set_rgba(self.dic_properties["rgba"])
         self.set_title(self.dic_properties["title"])
 
-        for _property in [
-            "show_editor",
-        ]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
+        self.set_property("show-editor", self.dic_properties["show_editor"])
 
-    def do_get_value(self) -> bool | date | float | int | object | str | None:
+    def do_get_value(
+        self: _ColorButtonHost,
+    ) -> bool | date | float | int | object | str | None:
         """Return the current value of the GTK3ColorButton.
 
         Returns
@@ -88,7 +92,7 @@ class GTK3ColorButtonMixin(GTK3ButtonMixin):
         return self.get_rgba()
 
     def do_set_value(
-        self,
+        self: _ColorButtonHost,
         value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
         """Set the current value of the GTK3ColorButton.
@@ -102,7 +106,7 @@ class GTK3ColorButtonMixin(GTK3ButtonMixin):
             value = Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
 
         if not isinstance(value, Gdk.RGBA):
-            super().do_set_value(value)
+            super().do_set_value(value)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
             return
 
         self.dic_properties["rgba"] = value
@@ -120,6 +124,9 @@ class GTK3ColorButton(Gtk.ColorButton, GTK3ColorButtonMixin):
         rgba : Gdk.RGBA, optional
             A Gdk.RGBA to set the current color with.  The default is None.
         """
+        if rgba is None:
+            rgba = Gdk.RGBA()
+
         Gtk.ColorButton.__init__(self, rgba=rgba)
         GTK3ColorButtonMixin.__init__(self)
 
