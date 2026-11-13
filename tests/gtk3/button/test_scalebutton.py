@@ -10,7 +10,7 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gdk, Gtk
+from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.button import GTK3ScaleButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
@@ -96,7 +96,7 @@ class TestGTK3ScaleButton(BaseGTK3DataWidgetTests):
         icons: list | None = None,
     ):
         """Create a device under test for the GTK3ScaleButton."""
-        return self.widget_class(size, min_value, max_value, step, icons)
+        return self.widget_class(icons, size, min_value, max_value, step)
 
     @pytest.mark.unit
     def test_init(self):
