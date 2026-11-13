@@ -4,15 +4,22 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
 from datetime import date
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.common.mixins import PyTkWrapAttributes
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.button.button import GTK3ButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ToggleButtonHost
 
 
 class GTK3ToggleButtonMixin(GTK3ButtonMixin):
@@ -51,7 +58,7 @@ class GTK3ToggleButtonMixin(GTK3ButtonMixin):
         )
 
     def do_set_properties(
-        self,
+        self: _ToggleButtonHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties of the GTK3ToggleButton.
@@ -63,13 +70,15 @@ class GTK3ToggleButtonMixin(GTK3ButtonMixin):
             tuples with the property values to set for the GTK3ToggleButton.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
-        self.set_active(self.dic_properties["active"])
+        self.set_active(self.dic_properties["active"])  # type: ignore[arg-type] # ty: ignore[invalid-argument-type] # pylint: disable=line-too-long
         self.set_inconsistent(self.dic_properties["inconsistent"])
         self.set_mode(self.dic_properties["draw_indicator"])
 
-    def do_get_value(self) -> bool | date | float | int | object | str | None:
+    def do_get_value(
+        self: _ToggleButtonHost,
+    ) -> bool | date | float | int | object | str | None:
         """Return the current value of the GTK3ToggleButton.
 
         Returns
@@ -80,7 +89,7 @@ class GTK3ToggleButtonMixin(GTK3ButtonMixin):
         return self.get_active()
 
     def do_set_value(
-        self,
+        self: _ToggleButtonHost,
         value: bool | date | float | int | object | str | tuple | None,
     ) -> None:
         """Set the current value of the GTK3ToggleButton.
@@ -91,7 +100,7 @@ class GTK3ToggleButtonMixin(GTK3ButtonMixin):
             The value to set for the GTK3ToggleButton.
         """
         if not isinstance(value, (bool, float, int)):
-            super().do_set_value(value)
+            super().do_set_value(value)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
         self.dic_properties["active"] = bool(value)
         self.set_active(bool(value))
 
