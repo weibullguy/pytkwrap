@@ -173,7 +173,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     gfile: Gio.File | None
     gicon: Gio.Icon | None
     gravity: Gdk.Gravity
-    group: Gtk.RadioButton | Gtk.RadioToolButton | None
+    group: Gtk.RadioButton | None
     group_name: str | None
     hadjustment: Gtk.Adjustment | None
     halign: Gtk.Align | None
@@ -474,6 +474,8 @@ class GTK3WidgetProperties(TypedDict, total=False):
     text_yalign: float
     title: str | None
     title_size_group: Gtk.SizeGroup | None
+    # tool_group is not a Gtk3 property, but added to prevent mypy errors.
+    tool_group: Gtk.RadioToolButton | None
     toolbar_style: Gtk.ToolbarStyle
     tooltip: str
     tooltip_column: int

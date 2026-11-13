@@ -54,6 +54,27 @@ class _AppChooserButtonHost(Protocol):
     def set_show_dialog_item(self, show_dialog_item: bool) -> None: ...
 
 
+class _RadioButtonHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_handler_id: dict[str, int]
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None: ...
+
+    # pytkwrap-specific managed attributes.
+    @property
+    def group(self) -> list[Gtk.RadioButton]: ...
+
+    # Gtk3 API methods.
+    def get_group(self) -> list[Gtk.RadioButton]: ...
+    def join_group(self, group: Gtk.RadioButton | None) -> None: ...
+
+
 class _SpinButtonHost(Protocol):
     """Methods the mixin expects the concrete widget to provide."""
 
@@ -61,7 +82,7 @@ class _SpinButtonHost(Protocol):
     dic_handler_id: dict[str, int]
     dic_properties: GTK3WidgetProperties
 
-    # pytkwrap-specific methods
+    # pytkwrap-specific methods.
     def configure(
         self,
         adjustment: Gtk.Adjustment | None,

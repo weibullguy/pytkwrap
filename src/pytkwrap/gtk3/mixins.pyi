@@ -167,7 +167,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     gfile: Gio.File | None
     gicon: Gio.Icon | None
     gravity: Gdk.Gravity
-    group: Gtk.RadioButton | Gtk.RadioToolButton | None
+    group: Gtk.RadioButton | None
     group_name: str | None
     hadjustment: Gtk.Adjustment | None
     halign: Gtk.Align | None
@@ -210,7 +210,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     icon_size_set: bool
     icon_widget: Gtk.Widget | None
     id_column: int
-    image: Gtk.Widget | str | None
+    image: Gtk.Widget | None
     image_position: Gtk.PositionType
     im_module: str | None
     inconsistent: bool
@@ -468,6 +468,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     text_yalign: float
     title: str | None
     title_size_group: Gtk.SizeGroup | None
+    tool_group: Gtk.RadioToolButton | None
     toolbar_style: Gtk.ToolbarStyle
     tooltip: str
     tooltip_column: int

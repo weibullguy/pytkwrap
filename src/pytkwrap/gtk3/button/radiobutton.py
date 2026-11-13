@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.button.checkbutton import GTK3CheckButtonMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _RadioButtonHost
 
 
 class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
@@ -41,10 +48,10 @@ class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
     # Define private class attributes.
     _DEFAULT_HEIGHT = 40
     _DEFAULT_WIDTH = 200
-    _GTK3_RADIO_BUTTON_PROPERTIES = GTK3WidgetProperties(
+    _GTK3_RADIOBUTTON_PROPERTIES = GTK3WidgetProperties(
         group=None,
     )
-    _GTK3_RADIO_BUTTON_SIGNALS = [
+    _GTK3_RADIOBUTTON_SIGNALS = [
         "group-changed",
     ]
 
@@ -53,13 +60,13 @@ class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
         super().__init__(**kwargs)
 
         # Initialize public instance attributes.
-        self.dic_properties.update(self._GTK3_RADIO_BUTTON_PROPERTIES)
+        self.dic_properties.update(self._GTK3_RADIOBUTTON_PROPERTIES)
         self.dic_handler_id.update(
-            {_signal: -1 for _signal in self._GTK3_RADIO_BUTTON_SIGNALS}
+            {_signal: -1 for _signal in self._GTK3_RADIOBUTTON_SIGNALS}
         )
 
     def do_set_properties(
-        self,
+        self: _RadioButtonHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the properties of the GTK3RadioButton.
@@ -71,12 +78,12 @@ class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
             tuples with the property values to set for the GTK3RadioButton.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.join_group(self.dic_properties["group"])
 
     @property
-    def group(self) -> list[Gtk.RadioButton]:
+    def group(self: _RadioButtonHost) -> list[Gtk.RadioButton]:
         """Get the list of GTK3RadioButtons in the same group as self.
 
         Returns

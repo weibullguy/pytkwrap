@@ -11,11 +11,14 @@ from pytkwrap.gtk3.button.checkbutton import (
 )
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
+# pytkwrap Local Imports
+from ._protocols import _RadioButtonHost as _RadioButtonHost
+
 class GTK3RadioButtonMixin(GTK3CheckButtonMixin):
     _DEFAULT_HEIGHT: int
     _DEFAULT_WIDTH: int
-    _GTK3_RADIO_BUTTON_PROPERTIES: Incomplete
-    _GTK3_RADIO_BUTTON_SIGNALS: Incomplete
+    _GTK3_RADIOBUTTON_PROPERTIES: Incomplete
+    _GTK3_RADIOBUTTON_SIGNALS: Incomplete
     def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
