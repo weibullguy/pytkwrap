@@ -10,7 +10,7 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gdk, Gtk
+from pytkwrap.gtk3._libs import Gdk
 from pytkwrap.gtk3.color import GTK3ColorButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.gtk3.button.constants import (
@@ -111,8 +111,12 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
         assert isinstance(dut, GTK3ColorButton)
         assert dut.dic_attributes == self.expected_attributes
         assert dut.dic_properties == self.expected_properties
-        assert dut.get_property("rgba") == Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
-        assert dut.get_rgba() == Gdk.RGBA(0.0, 0.0, 0.0, 1.0)
+        assert dut.get_property("rgba") == Gdk.RGBA(
+            red=1.000000, green=1.000000, blue=1.000000, alpha=1.000000
+        )
+        assert dut.get_rgba() == Gdk.RGBA(
+            red=1.000000, green=1.000000, blue=1.000000, alpha=1.000000
+        )
         assert not dut.get_property("show-editor")
         assert dut.get_property("title") == "Pick a Color"
         assert dut.get_title() == "Pick a Color"
@@ -159,12 +163,14 @@ class TestGTK3ColorButton(BaseGTK3DataWidgetTests):
         dut.do_set_properties(GTK3WidgetProperties())
 
         assert dut.dic_properties == self.expected_properties
-        assert dut.do_get_property("rgba") is None
+        assert dut.do_get_property("rgba") == Gdk.RGBA(
+            red=1.000000, green=1.000000, blue=1.000000, alpha=1.000000
+        )
         assert isinstance(dut.get_property("rgba"), Gdk.RGBA)
         assert dut.get_property("rgba").alpha == 1.0
-        assert dut.get_property("rgba").blue == 0.0
-        assert dut.get_property("rgba").green == 0.0
-        assert dut.get_property("rgba").red == 0.0
+        assert dut.get_property("rgba").blue == 1.0
+        assert dut.get_property("rgba").green == 1.0
+        assert dut.get_property("rgba").red == 1.0
         assert not dut.do_get_property("show_editor")
         assert dut.do_get_property("title") == "Pick a Color"
         assert dut.do_get_property("use_alpha")

@@ -9,7 +9,7 @@ except ImportError:
     print("Failed to import package gi; exiting.")
     sys.exit(1)
 # Third Party Imports
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
 
 EXPECTED_COLORBUTTON_ATTRIBUTES = {"default_value": None, "edit_signal": "color-set"}
 EXPECTED_COLORBUTTON_HANDLER_IDS = {"color-set": -1}
@@ -19,7 +19,7 @@ EXPECTED_COLORBUTTON_METHODS = [
 ]
 EXPECTED_COLORBUTTON_PROPERTIES = {
     "alpha": 65535,
-    "rgba": None,
+    "rgba": Gdk.RGBA(red=1.000000, green=1.000000, blue=1.000000, alpha=1.000000),
     "show_editor": False,
     "title": "Pick a Color",
     "use_alpha": True,
