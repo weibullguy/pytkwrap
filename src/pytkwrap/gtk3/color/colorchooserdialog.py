@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.dialog.dialog import GTK3DialogMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ColorChooserDialogHost
 
 
 class GTK3ColorChooserDialogMixin(GTK3DialogMixin):
@@ -28,7 +35,7 @@ class GTK3ColorChooserDialogMixin(GTK3DialogMixin):
         self.dic_properties.update(self._GTK3_COLORCHOOSERDIALOG_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _ColorChooserDialogHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3ColorChooserDialog-specific properties.
@@ -40,12 +47,9 @@ class GTK3ColorChooserDialogMixin(GTK3DialogMixin):
             tuples with the property values to set for the GTK3ColorChooserDialog.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
-        for _property in ["show_editor"]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
+        self.set_property("show-editor", self.dic_properties["show_editor"])
 
 
 class GTK3ColorChooserDialog(Gtk.ColorChooserDialog, GTK3ColorChooserDialogMixin):
@@ -53,7 +57,7 @@ class GTK3ColorChooserDialog(Gtk.ColorChooserDialog, GTK3ColorChooserDialogMixin
 
     def __init__(
         self,
-        title: str | None = None,
+        title: str = "",
         transient_for: Gtk.Window | None = None,
     ) -> None:
         """Initialize an instance of the GTK3ColorChooserDialog.

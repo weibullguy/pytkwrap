@@ -10,8 +10,8 @@ from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 class _ColorButtonHost(Protocol):
     dic_attributes: GTK3WidgetAttributes
-    dic_properties: GTK3WidgetProperties
     dic_handler_id: list[str]
+    dic_properties: GTK3WidgetProperties
     def do_set_properties(
         self, properties: Mapping[str, object] | list[list | tuple]
     ) -> None: ...
@@ -23,3 +23,10 @@ class _ColorButtonHost(Protocol):
     def set_property(self, property_name: str, value) -> None: ...
     def set_rgba(self, rgba: Gdk.RGBA) -> None: ...
     def set_title(self, title: str | None) -> None: ...
+
+class _ColorChooserDialogHost(Protocol):
+    dic_properties: GTK3WidgetProperties
+    def do_set_properties(
+        self, properties: Mapping[str, object] | list[list | tuple]
+    ) -> None: ...
+    def set_property(self, property_name: str, value) -> None: ...

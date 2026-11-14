@@ -9,6 +9,9 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.dialog.dialog import GTK3DialogMixin as GTK3DialogMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
+# pytkwrap Local Imports
+from ._protocols import _ColorChooserDialogHost as _ColorChooserDialogHost
+
 class GTK3ColorChooserDialogMixin(GTK3DialogMixin):
     _GTK3_COLORCHOOSERDIALOG_PROPERTIES: Incomplete
     def __init__(self, **kwargs) -> None: ...
@@ -18,5 +21,5 @@ class GTK3ColorChooserDialogMixin(GTK3DialogMixin):
 
 class GTK3ColorChooserDialog(Gtk.ColorChooserDialog, GTK3ColorChooserDialogMixin):
     def __init__(
-        self, title: str | None = None, transient_for: Gtk.Window | None = None
+        self, title: str = "", transient_for: Gtk.Window | None = None
     ) -> None: ...

@@ -19,8 +19,8 @@ class _ColorButtonHost(Protocol):
     """Methods the mixin expects the concrete widget to provide."""
 
     dic_attributes: GTK3WidgetAttributes
-    dic_properties: GTK3WidgetProperties
     dic_handler_id: list[str]
+    dic_properties: GTK3WidgetProperties
 
     # pytkwrap-specific methods.
     def do_set_properties(
@@ -38,3 +38,18 @@ class _ColorButtonHost(Protocol):
     def set_property(self, property_name: str, value) -> None: ...
     def set_rgba(self, rgba: Gdk.RGBA) -> None: ...
     def set_title(self, title: str | None) -> None: ...
+
+
+class _ColorChooserDialogHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None: ...
+
+    # Gtk3 API methods.
+    def set_property(self, property_name: str, value) -> None: ...
