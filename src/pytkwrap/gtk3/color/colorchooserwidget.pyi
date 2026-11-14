@@ -9,6 +9,9 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.container.box import GTK3BoxMixin as GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
+# pytkwrap Local Imports
+from ._protocols import _ColorChooserWidgetHost as _ColorChooserWidgetHost
+
 class GTK3ColorChooserWidgetMixin(GTK3BoxMixin):
     _GTK3_COLORCHOOSERWIDGET_PROPERTIES: Incomplete
     def __init__(self, **kwargs) -> None: ...

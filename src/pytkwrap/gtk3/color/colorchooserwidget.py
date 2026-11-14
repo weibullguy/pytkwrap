@@ -4,22 +4,24 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ColorChooserWidgetHost
+
 
 class GTK3ColorChooserWidgetMixin(GTK3BoxMixin):
-    """Mixin class for GTK3ColorChooserWidget.
-
-    Notes
-    -----
-    GTK3ColorChooserWidget passes a Gtk.Box to its callback function.
-    """
+    """Mixin class for GTK3ColorChooserWidget."""
 
     _GTK3_COLORCHOOSERWIDGET_PROPERTIES = GTK3WidgetProperties(
         show_editor=False,
@@ -33,7 +35,7 @@ class GTK3ColorChooserWidgetMixin(GTK3BoxMixin):
         self.dic_properties.update(self._GTK3_COLORCHOOSERWIDGET_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _ColorChooserWidgetHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3ColorChooserWidget-specific properties.
@@ -45,12 +47,9 @@ class GTK3ColorChooserWidgetMixin(GTK3BoxMixin):
             tuples with the property values to set for the GTK3ColorChooserWidget.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
-        for _property in ["show_editor"]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
+        self.set_property("show-editor", self.dic_properties["show_editor"])
 
 
 class GTK3ColorChooserWidget(Gtk.ColorChooserWidget, GTK3ColorChooserWidgetMixin):
