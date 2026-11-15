@@ -10,7 +10,7 @@ from pubsub import pub
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import GdkPixbuf, Gtk, Pango
+from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.adjustment import GTK3Adjustment
 from pytkwrap.gtk3.button import GTK3SpinButton
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
@@ -371,6 +371,22 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
         assert dut.increments[1] == 10.0
 
     @pytest.mark.unit
+    def test_lower(self):
+        """Should return the lower value of the spinbutton."""
+        _adjustment = GTK3Adjustment(0, 0.25, 2.5, 0.1, 0.5, 0)
+        dut = self.make_dut(_adjustment)
+
+        assert dut.lower == 0.25
+
+    @pytest.mark.unit
+    def test_page_increment(self):
+        """Should return the page increment value of the spinbutton."""
+        _adjustment = GTK3Adjustment(0, 0.25, 2.5, 0.1, 0.5, 0)
+        dut = self.make_dut(_adjustment)
+
+        assert dut.page_increment == 0.5
+
+    @pytest.mark.unit
     def test_range(self):
         """Should return the minimum and maximum values."""
         _adjustment = GTK3Adjustment(0, 0, 10, 1, 10, 0)
@@ -378,3 +394,19 @@ class TestGTK3SpinButton(BaseGTK3DataWidgetTests):
 
         assert dut.range[0] == 0.0
         assert dut.range[1] == 10.0
+
+    @pytest.mark.unit
+    def test_step_increment(self):
+        """Should return the step increment value of the GTK3SpinButton."""
+        _adjustment = GTK3Adjustment(0, 0.25, 2.5, 0.1, 0.5, 0)
+        dut = self.make_dut(_adjustment)
+
+        assert dut.step_increment == 0.1
+
+    @pytest.mark.unit
+    def test_upper(self):
+        """Should return the current maximum value for the GTK3SpinButton."""
+        _adjustment = GTK3Adjustment(0.3, 0.25, 2.5, 0.1, 0.5, 0)
+        dut = self.make_dut(_adjustment)
+
+        assert dut.upper == 2.5
