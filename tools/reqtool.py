@@ -1071,17 +1071,37 @@ def main(argv: list[str] | None = None) -> int:  # pylint: disable=too-many-loca
     p_facts.add_argument(
         "--json", action="store_true", help="emit JSON instead of Markdown"
     )
-    p_draft = sub.add_parser("draft", help="generate a skeleton requirements document")
+    p_draft = sub.add_parser(
+        "draft",
+        help="generate a skeleton requirements document",
+    )
     p_draft.add_argument("package")
     p_draft.add_argument(
-        "--prefix", required=True, help="ID series, e.g. FNT for PTW-GTK3-FNT-001"
+        "--prefix",
+        required=True,
+        help="ID series, e.g. FNT for PTW-GTK3-FNT-001",
     )
     p_draft.add_argument(
-        "--start", type=int, default=1, help="first ID number (default 1)"
+        "--start",
+        type=int,
+        default=1,
+        help="first ID number (default 1)",
     )
-    p_draft.add_argument("--label", help="document label (default gtk3_<package>)")
     p_draft.add_argument(
-        "-o", "--output", type=Path, help="write to a file (refuses to overwrite)"
+        "--label",
+        help="document label (default gtk3_<package>)",
+    )
+    p_draft.add_argument(
+        "-o",
+        "--output",
+        type=Path,
+        help="write to a file (refuses to overwrite " "without --clobber)",
+    )
+    p_draft.add_argument(
+        "-c",
+        "--clobber",
+        action="store_true",
+        help="clobbers (overwrites) output file if it already exists",
     )
     p_check = sub.add_parser("check", help="validate requirements documents and stubs")
     p_check.add_argument(
@@ -1110,7 +1130,7 @@ def main(argv: list[str] | None = None) -> int:  # pylint: disable=too-many-loca
         label = args.label or "gtk3_" + pkg.name.split("/")[-1]
         text = draft(pkg, args.prefix, args.start, label, tests)
         if args.output:
-            if args.output.exists():
+            if args.output.exists() and not args.clobber:
                 raise SystemExit(
                     f"reqtool: {args.output} exists; refusing to overwrite"
                 )
