@@ -33,6 +33,7 @@ EXPECTED_BOX_METHODS = [
 ]
 EXPECTED_BOX_PROPERTIES = {
     "baseline_position": Gtk.BaselinePosition.CENTER,
+    "center_widget": None,
     "homogeneous": False,
     "spacing": 0,
 }

@@ -11,6 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container import GTK3Box
+from pytkwrap.gtk3.io import GTK3Label
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -94,16 +95,20 @@ class TestGTK3Box(BaseGTK3GObjectTests):
 
         assert dut.dic_properties == self.expected_properties
         assert dut.do_get_property("baseline_position") == Gtk.BaselinePosition.CENTER
+        assert dut.do_get_property("center_widget") is None
         assert not dut.do_get_property("homogeneous")
         assert dut.do_get_property("spacing") == 0
 
     @pytest.mark.unit
     def test_do_set_properties(self):
         """Should set properties to the values passed in the GTK3WidgetProperties."""
+        _center_widget = GTK3Label()
+
         dut = self.make_dut()
         dut.do_set_properties(
             GTK3WidgetProperties(
                 baseline_position=Gtk.BaselinePosition.TOP,
+                center_widget=_center_widget,
                 homogeneous=True,
                 spacing=10,
             )
@@ -111,7 +116,34 @@ class TestGTK3Box(BaseGTK3GObjectTests):
 
         assert dut.get_property("baseline_position") == Gtk.BaselinePosition.TOP
         assert dut.get_baseline_position() == Gtk.BaselinePosition.TOP
+        assert dut.get_center_widget() == _center_widget
         assert dut.get_property("homogeneous")
         assert dut.get_homogeneous()
         assert dut.get_property("spacing") == 10
         assert dut.get_spacing() == 10
+
+    @pytest.mark.unit
+    def test_add_child_start(self):
+        """Should add a child to the start of the GTK3Box."""
+        _child1 = GTK3Label()
+        _child2 = GTK3Label()
+
+        dut = self.make_dut()
+        dut.do_add_child(_child1, True, True, 2)
+        dut.do_add_child(_child2, False, False, 3)
+
+        assert dut.get_children()[0] == _child1
+        assert dut.get_children()[1] == _child2
+
+    @pytest.mark.unit
+    def test_add_child_end(self):
+        """Should add a child to the end of the GTK3Box."""
+        _child1 = GTK3Label()
+        _child2 = GTK3Label()
+
+        dut = self.make_dut()
+        dut.do_add_child(_child1, True, True, 2, False)
+        dut.do_add_child(_child2, False, False, 3, False)
+
+        assert dut.get_children()[0] == _child2
+        assert dut.get_children()[1] == _child1
