@@ -28,6 +28,7 @@ class GTK3WidgetAttributes(PyTkWrapAttributes, total=False):
     """Type for GTK3 widget attributes."""
 
     column_types: list[EllipsisType] | list[GObject.GType] | None
+    orientation: Gtk.Orientation | None
 
 
 class GTK3WidgetProperties(TypedDict, total=False):
