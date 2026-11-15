@@ -24,6 +24,5 @@ __all__ = [
     "GTK3ColorChooserWidget",
     "_ColorButtonHost",
     "_ColorChooserDialogHost",
-    "_ColorChooserDialogHost",
     "_ColorChooserWidgetHost",
 ]
