@@ -57,7 +57,7 @@ class GTK3SpinButtonMixin(GTK3EntryMixin):
         format="{:3.1f}",
     )
     _GTK3_SPINBUTTON_PROPERTIES = GTK3WidgetProperties(
-        adjustment=None,
+        adjustment=GTK3Adjustment(),
         climb_rate=0.0,
         digits=0,
         lower=0.0,
@@ -199,6 +199,28 @@ class GTK3SpinButtonMixin(GTK3EntryMixin):
         return self.get_increments()
 
     @property
+    def lower(self: _SpinButtonHost) -> float:
+        """Get the current minimum value of the GTK3SpinButton.
+
+        Returns
+        -------
+        float
+            The current minimum value of the GTK3SpinButton.
+        """
+        return self.get_adjustment().get_lower()
+
+    @property
+    def page_increment(self: _SpinButtonHost) -> float:
+        """Get the current page increment value of the GTK3SpinButton.
+
+        Returns
+        -------
+        float
+            The current page increment value of the GTK3SpinButton.
+        """
+        return self.get_adjustment().get_page_increment()
+
+    @property
     def range(self: _SpinButtonHost) -> tuple[float | None, float | None]:
         """Get the minimum and maximum values for the embedded GTK3Adjustment.
 
@@ -208,6 +230,28 @@ class GTK3SpinButtonMixin(GTK3EntryMixin):
             The current minimum value, or None, and maximum value, or None.
         """
         return self.get_range()
+
+    @property
+    def step_increment(self: _SpinButtonHost) -> float:
+        """Get the current step increment value of the GTK3SpinButton.
+
+        Returns
+        -------
+        float
+            The current step increment value of the GTK3SpinButton.
+        """
+        return self.get_adjustment().get_step_increment()
+
+    @property
+    def upper(self: _SpinButtonHost) -> float:
+        """Get the current maximum value of the GTK3SpinButton.
+
+        Returns
+        -------
+        float
+            The current maximum value of the GTK3SpinButton.
+        """
+        return self.get_adjustment().get_upper()
 
 
 class GTK3SpinButton(Gtk.SpinButton, GTK3SpinButtonMixin):
