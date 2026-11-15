@@ -43,3 +43,18 @@ class _BoxHost(Protocol):
     def set_center_widget(self, center_widget: Gtk.Widget | None) -> None: ...
     def set_homogeneous(self, homogeneous: bool) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
+
+
+class _ButtonBoxHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: Mapping[str, object] | list[list | tuple],
+    ) -> None: ...
+
+    # Gtk3 API methods.
+    def set_layout(self, layout_style: Gtk.ButtonBoxStyle) -> None: ...

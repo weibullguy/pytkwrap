@@ -4,8 +4,11 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
 from collections.abc import Callable, Mapping
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
@@ -13,9 +16,27 @@ from pytkwrap.gtk3.button.button import GTK3Button
 from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ButtonBoxHost
+
 
 class GTK3ButtonBoxMixin(GTK3BoxMixin):
-    """Mixin class for GTK3ButtonBox."""
+    """Mixin class for GTK3ButtonBox.
+
+    Notes
+    -----
+    The following Gtk.Button methods are not wrapped in a convenience layer, but may be
+    called directly:
+
+                * get_child_nonhomogeneous(child)
+                * get_child_secondary(child)
+                * set_child_nonhomogeneous(child, non_homogeneous)
+                * set_child_secondary(child, is_secondary)
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/ButtonBox.html for
+    details on these methods.
+    """
 
     _GTK3_BUTTONBOX_PROPERTIES = GTK3WidgetProperties(
         layout_style=Gtk.ButtonBoxStyle.END,
@@ -29,7 +50,7 @@ class GTK3ButtonBoxMixin(GTK3BoxMixin):
         self.dic_properties.update(self._GTK3_BUTTONBOX_PROPERTIES)
 
     def do_set_properties(
-        self,
+        self: _ButtonBoxHost,
         properties: Mapping[str, object] | list[list | tuple],
     ) -> None:
         """Set the values of the GTK3ButtonBox-specific properties.
@@ -41,7 +62,7 @@ class GTK3ButtonBoxMixin(GTK3BoxMixin):
             tuples with the property values to set for the GTK3ButtonBox.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_layout(self.dic_properties["layout_style"])
 
