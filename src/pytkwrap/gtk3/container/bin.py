@@ -1,7 +1,8 @@
 """The pytkwrap GTK3Bin module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+Convenience wrapper for working with Gtk.Bin.
+
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
 # pytkwrap Package Imports

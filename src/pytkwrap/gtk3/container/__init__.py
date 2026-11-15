@@ -9,6 +9,7 @@ and never through this __init__.py to avoid circular imports.
 """
 
 # pytkwrap Local Imports
+from ._protocols import _BoxHost
 from .bin import GTK3Bin
 from .box import GTK3Box
 from .buttonbox import GTK3ButtonBox, do_make_buttonbox
@@ -41,4 +42,5 @@ __all__ = [
     "GTK3Viewport",
     "do_make_buttonbox",
     "GTK3ContainerMixin",
+    "_BoxHost",
 ]

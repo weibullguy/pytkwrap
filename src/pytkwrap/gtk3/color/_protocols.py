@@ -1,8 +1,7 @@
 # pylint: disable=missing-function-docstring
 """The pytkwrap button protocols module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
 # Standard Library Imports
