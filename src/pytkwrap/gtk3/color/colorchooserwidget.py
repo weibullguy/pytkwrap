@@ -1,7 +1,8 @@
 """The pytkwrap GTK3ColorChooserWidget module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+Convenience wrapper for working with Gtk.ColorChooserWidget.
+
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
 from __future__ import annotations

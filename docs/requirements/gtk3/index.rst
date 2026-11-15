@@ -17,19 +17,12 @@ GTK3 Widget Requirements
 .. toctree::
    :maxdepth: 2
 
-   container
    bar
    button
    color
+   container
    dialog
    file
    font
-   combo
-   entry
-   label
+   icon
    menu
-   matrixview
-   plotview
-   scrolledwindow
-   textview
-   treeviews
