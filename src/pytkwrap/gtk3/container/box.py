@@ -103,6 +103,17 @@ class GTK3BoxMixin(GTK3ContainerMixin):
             return self.pack_start(child, expand, fill, padding)
         return self.pack_end(child, expand, fill, padding)
 
+    @property
+    def children(self: _BoxHost) -> list[Gtk.Widget]:
+        """Get the list of child widgets for the GTK3Box.
+
+        Returns
+        -------
+        list[Gtk.Widget]
+            The list of widgets that are current children of the GTK3Box.
+        """
+        return self.get_children()
+
 
 class GTK3Box(Gtk.Box, GTK3BoxMixin):
     """Wrapper for version 3.0 Gtk.Box."""

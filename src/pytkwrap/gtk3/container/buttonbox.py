@@ -111,6 +111,16 @@ class GTK3ButtonBoxMixin(GTK3BoxMixin):
 
         self.set_layout(self.dic_properties["layout_style"])
 
+    @property
+    def children(self: _ButtonBoxHost) -> list[Gtk.Widget]:
+        """Get the list of child widgets in the GTK3ButtonBox.
+
+        Returns
+        -------
+            The list of current child widgets in the GTK3ButtonBox.
+        """
+        return self.get_children()
+
 
 class GTK3ButtonBox(Gtk.ButtonBox, GTK3ButtonBoxMixin):
     """Wrapper for version 3.0 Gtk.ButtonBox."""

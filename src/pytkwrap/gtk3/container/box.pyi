@@ -30,6 +30,8 @@ class GTK3BoxMixin(GTK3ContainerMixin):
         padding: int,
         start: bool = True,
     ) -> None: ...
+    @property
+    def children(self) -> list[Gtk.Widget]: ...
 
 class GTK3Box(Gtk.Box, GTK3BoxMixin):
     def __init__(
