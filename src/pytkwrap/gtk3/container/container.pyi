@@ -1,5 +1,5 @@
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 # Third Party Imports
 from _typeshed import Incomplete
@@ -9,12 +9,18 @@ from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3WidgetMixin as GTK3WidgetMixin
 
+# pytkwrap Local Imports
+from ._protocols import _ContainerHost as _ContainerHost
+
 class GTK3ContainerMixin(GTK3WidgetMixin):
     _GTK3_CONTAINER_PROPERTIES: Incomplete
     _GTK3_CONTAINER_SIGNALS: Incomplete
     def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None: ...
 
 class GTK3Container(Gtk.Container, GTK3ContainerMixin):

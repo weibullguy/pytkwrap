@@ -216,20 +216,20 @@ class PyTkWrapMixin(Generic[A]):
             else:
                 for _property in properties:
                     self.dic_properties[_property[0]] = _property[1]
-        except TypeError as exc:
+        except IndexError as exc:
             _error_msg = (
-                f"{type(self).__name__}.do_set_properties(): Properties are None or a "
-                f"non-iterable object: '{properties}'."
+                f"{type(self).__name__}.do_set_properties(): Properties are not valid "
+                f"key-value pairs: '{properties}'."
             )
             pub.sendMessage(
                 "do_log_error",
                 message=_error_msg,
             )
             raise PytkwrapError(_error_msg) from exc
-        except ValueError as exc:
+        except TypeError as exc:
             _error_msg = (
-                f"{type(self).__name__}.do_set_properties(): Properties are not valid "
-                f"key-value pairs: '{properties}'."
+                f"{type(self).__name__}.do_set_properties(): Properties are None or a "
+                f"non-iterable object: '{properties}'."
             )
             pub.sendMessage(
                 "do_log_error",

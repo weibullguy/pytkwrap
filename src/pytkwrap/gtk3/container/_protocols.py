@@ -36,7 +36,12 @@ class _BoxHost(Protocol):
         start: bool = True,
     ) -> None: ...
 
+    # pytkwrap-specific managed attributes.
+    @property
+    def children(self) -> list[Gtk.Widget]: ...
+
     # Gtk3 API methods.
+    def get_children(self) -> list[Gtk.Widget]: ...
     def pack_end(self, child, expand, fill, padding) -> None: ...
     def pack_start(self, child, expand, fill, padding) -> None: ...
     def set_baseline_position(
@@ -67,5 +72,29 @@ class _ButtonBoxHost(Protocol):
         ),
     ) -> None: ...
 
+    # pytkwrap-specific managed attributes.
+    @property
+    def children(self) -> list[Gtk.Widget]: ...
+
     # Gtk3 API methods.
+    def get_children(self) -> list[Gtk.Widget]: ...
     def set_layout(self, layout_style: Gtk.ButtonBoxStyle) -> None: ...
+
+
+class _ContainerHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_handler_id: dict[str, int]
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
+    ) -> None: ...
+
+    # Gtk3 API methods.
+    def get_children(self) -> list[Gtk.Widget]: ...
+    def set_border_width(self, border_width: int) -> None: ...
