@@ -88,7 +88,7 @@ class TestFrame(BaseGTK3GObjectTests):
         assert dut.do_get_attribute("axis") is None
         assert dut.do_get_attribute("canvas") is None
         assert dut.do_get_attribute("column_types") is None
-        assert dut.do_get_attribute("data_type") is None
+        assert dut.do_get_attribute("data_type") == str
         assert dut.do_get_attribute("default_value") is None
         assert dut.do_get_attribute("edit_signal") is None
         assert dut.do_get_attribute("figure") is None
