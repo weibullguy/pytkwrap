@@ -10,7 +10,7 @@ from datetime import date
 from typing import Protocol
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3Widget
 
@@ -187,3 +187,42 @@ class _ListBoxHost(Protocol):
     def set_selection_mode(self, selection_mode: Gtk.SelectionMode) -> None: ...
     def unselect_all(self) -> None: ...
     def unselect_row(self, row: Gtk.ListBoxRow) -> None: ...
+
+
+class _PanedHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_attributes: GTK3WidgetAttributes
+    dic_handler_id: dict[str, int]
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
+    ) -> None: ...
+    def do_add_child(
+        self,
+        child: Gtk.Widget,
+        resize: bool,
+        shrink: bool,
+        position: int = 1,
+    ) -> None: ...
+
+    # pytkwrap-specific managed attributes.
+    @property
+    def children(self) -> tuple[Gtk.Widget, Gtk.Widget]: ...
+    @property
+    def handle_window(self) -> Gdk.Window: ...
+
+    # Gtk3 API methods.
+    def get_child1(self) -> Gtk.Widget: ...
+    def get_child2(self) -> Gtk.Widget: ...
+    def get_handle_window(self) -> Gdk.Window: ...
+    def pack1(self, child: Gtk.Widget, resize: bool, shrink: bool) -> None: ...
+    def pack2(self, child: Gtk.Widget, resize: bool, shrink: bool) -> None: ...
+    def set_position(self, position: int) -> None: ...
+    def set_property(self, property_name: str, value) -> None: ...
+    def set_wide_handle(self, wide_handle: bool) -> None: ...

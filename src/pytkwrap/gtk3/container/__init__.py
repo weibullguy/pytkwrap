@@ -16,6 +16,7 @@ from ._protocols import (
     _ExpanderHost,
     _FrameHost,
     _ListBoxHost,
+    _PanedHost,
 )
 from .bin import GTK3Bin
 from .box import GTK3Box
@@ -55,4 +56,5 @@ __all__ = [
     "_ExpanderHost",
     "_FrameHost",
     "_ListBoxHost",
+    "_PanedHost",
 ]
