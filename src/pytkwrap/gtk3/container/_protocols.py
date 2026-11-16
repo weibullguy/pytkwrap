@@ -122,3 +122,26 @@ class _ExpanderHost(Protocol):
     def set_resize_toplevel(self, resize_toplevel: bool) -> None: ...
     def set_use_markup(self, use_markup: bool) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
+
+
+class _FrameHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
+    ) -> None: ...
+
+    # Gtk3 API methods.
+    def set_label(self, label: str | None) -> None: ...
+    def set_label_align(self, xalign: float, yalign: float) -> None: ...
+    def set_label_widget(self, label_widget: Gtk.Widget) -> None: ...
+    def set_shadow_type(
+        self,
+        type: Gtk.ShadowType,  # pylint: disable=redefined-builtin
+    ) -> None: ...

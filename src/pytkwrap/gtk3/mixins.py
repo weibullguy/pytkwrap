@@ -403,7 +403,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     selection_bound: int
     selection_mode: Gtk.SelectionMode
     sensitive: bool
-    shadow_type: Gtk.ShadowType | None
+    shadow_type: Gtk.ShadowType
     shortcut_type: Gtk.ShortcutType | None
     show_arrow: bool
     show_border: bool

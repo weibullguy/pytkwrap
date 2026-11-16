@@ -1,16 +1,24 @@
 """The pytkwrap GTK3Frame module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+Convenience wrapper for working with Gtk.Frame.
+
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _FrameHost
 
 
 class GTK3FrameMixin(GTK3ContainerMixin):
@@ -32,7 +40,10 @@ class GTK3FrameMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK3_FRAME_PROPERTIES)
 
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self: _FrameHost,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3Frame-specific properties.
 
@@ -43,7 +54,7 @@ class GTK3FrameMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3Frame.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         if self.dic_properties["label_widget"] is not None:
             self.set_label_widget(self.dic_properties["label_widget"])
