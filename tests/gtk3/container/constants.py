@@ -170,6 +170,7 @@ EXPECTED_LISTBOX_METHODS = [
 ]
 EXPECTED_LISTBOX_PROPERTIES = {
     "activate_on_single_click": True,
+    "adjustment": None,
     "selection_mode": Gtk.SelectionMode.SINGLE,
 }
 
