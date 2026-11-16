@@ -11,11 +11,6 @@ from matplotlib.backend_bases import FigureCanvasBase
 from matplotlib.figure import Figure
 
 # pytkwrap Package Imports
-from pytkwrap.exceptions import NoValueError as NoValueError
-from pytkwrap.exceptions import PytkwrapError as PytkwrapError
-from pytkwrap.exceptions import UnkAttributeError as UnkAttributeError
-from pytkwrap.exceptions import UnkPropertyError as UnkPropertyError
-from pytkwrap.exceptions import WrongTypeError as WrongTypeError
 from pytkwrap.utilities import FontDescription as FontDescription
 
 _ = gettext.gettext
@@ -46,7 +41,9 @@ class PyTkWrapMixin(Generic[A]):
     dic_attributes: Incomplete
     dic_error_message: dict[str, str]
     dic_handler_id: dict[str, int]
-    dic_properties: dict
+    dic_properties: (
+        Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+    )
     def __init__(self) -> None: ...
     def do_get_attribute(
         self, attribute: str

@@ -268,14 +268,14 @@ class GTK3SpinButton(Gtk.SpinButton, GTK3SpinButtonMixin):
         Parameters
         ----------
         adjustment : Gtk.Adjustment | None
-            The adjustment to use for the spin button.  The default is None.
+            The adjustment to use for the spin button.  The default is None in which
+            case the GTK3SpinButton will create one when it is initialized.
         climb_rate : float
             Specifies how much the rate of change in the value will accelerate if the
             user continues to hold down an up/down button or arrow key.  The default
             is 0.0.
         digits : int
-            The number of decimal places to display.  The
-            default is 1.
+            The number of decimal places to display.  The default is 1.
         """
         # None is valid for the adjustment argument per GTK API, so we suppress the
         # typing errors.

@@ -87,7 +87,9 @@ class PyTkWrapMixin(Generic[A]):
             "wrong_type": "{}: Wrong type for value '{}': {}.",
         }
         self.dic_handler_id: dict[str, int] = {}
-        self.dic_properties: dict = {}
+        self.dic_properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ) = {}
 
     def do_get_attribute(
         self,
