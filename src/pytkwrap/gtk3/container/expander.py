@@ -4,13 +4,20 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ExpanderHost
 
 
 class GTK3ExpanderMixin(GTK3ContainerMixin):
@@ -38,8 +45,10 @@ class GTK3ExpanderMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK_EXPANDER_PROPERTIES)
 
     def do_set_properties(
-        self,
-        properties: Mapping[str, object] | list[list | tuple],
+        self: _ExpanderHost,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3Expander-specific properties.
 
@@ -50,7 +59,7 @@ class GTK3ExpanderMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3Expander.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_expanded(self.dic_properties["expanded"])
         self.set_label(self.dic_properties["label"])
