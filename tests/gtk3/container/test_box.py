@@ -145,5 +145,5 @@ class TestGTK3Box(BaseGTK3GObjectTests):
         dut.do_add_child(_child1, True, True, 2, False)
         dut.do_add_child(_child2, False, False, 3, False)
 
-        assert dut.get_children()[0] == _child2
-        assert dut.get_children()[1] == _child1
+        assert dut.children[0] == _child2
+        assert dut.children[1] == _child1

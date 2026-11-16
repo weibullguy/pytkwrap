@@ -10,6 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3.button import GTK3Button
 from pytkwrap.gtk3.container import GTK3ButtonBox, do_make_buttonbox
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
@@ -150,6 +151,7 @@ class TestGTK3ButtonBox(BaseGTK3GObjectTests):
 
         assert isinstance(_buttonbox, GTK3ButtonBox)
         assert _buttonbox.get_layout() == Gtk.ButtonBoxStyle.START
+        assert isinstance(_buttonbox.children[0], GTK3Button)
 
     @pytest.mark.integration
     def test_do_make_buttonbox_no_tooltip(self, image_file):
