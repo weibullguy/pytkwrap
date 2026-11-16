@@ -38,6 +38,7 @@ EXPECTED_BOX_PROPERTIES = {
     "spacing": 0,
 }
 
+EXPECTED_BUTTONBOX_ATTRIBUTES = {"orientation": Gtk.Orientation.HORIZONTAL}
 EXPECTED_BUTTONBOX_METHODS = [
     "get_child_non_homogeneous",
     "get_child_secondary",

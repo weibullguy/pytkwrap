@@ -11,7 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container import GTK3ButtonBox, do_make_buttonbox
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
@@ -25,6 +25,7 @@ from tests.gtk3.constants import (
 from tests.gtk3.container.constants import (
     EXPECTED_BOX_METHODS,
     EXPECTED_BOX_PROPERTIES,
+    EXPECTED_BUTTONBOX_ATTRIBUTES,
     EXPECTED_BUTTONBOX_METHODS,
     EXPECTED_BUTTONBOX_PROPERTIES,
     EXPECTED_CONTAINER_HANDLER_IDS,
@@ -38,7 +39,11 @@ class TestGTK3ButtonBox(BaseGTK3GObjectTests):
     """Test class for the GTK3ButtonBox class."""
 
     widget_class = GTK3ButtonBox
-    expected_attributes = EXPECTED_GOBJECT_ATTRIBUTES | EXPECTED_WIDGET_ATTRIBUTES
+    expected_attributes = (
+        EXPECTED_GOBJECT_ATTRIBUTES
+        | EXPECTED_WIDGET_ATTRIBUTES
+        | EXPECTED_BUTTONBOX_ATTRIBUTES
+    )
     expected_default_height = -1
     expected_default_width = -1
     expected_handler_id = (
@@ -77,6 +82,26 @@ class TestGTK3ButtonBox(BaseGTK3GObjectTests):
         dut = self.make_dut(orientation=Gtk.Orientation.VERTICAL)
 
         assert dut.get_property("orientation") == Gtk.Orientation.VERTICAL
+
+    @pytest.mark.unit
+    def test_do_set_attributes_default(self):
+        """Should set attributes to default values when passed an empty
+        GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(GTK3WidgetAttributes())
+
+        assert dut.dic_attributes == self.expected_attributes
+        assert dut.do_get_attribute("orientation") == Gtk.Orientation.HORIZONTAL
+
+    @pytest.mark.unit
+    def test_do_set_attributes(self):
+        """Should set attributes to values passed in the GTK3WidgetAttributes."""
+        dut = self.make_dut()
+        dut.do_set_attributes(
+            GTK3WidgetAttributes(orientation=Gtk.Orientation.VERTICAL)
+        )
+
+        assert dut.do_get_attribute("orientation") == Gtk.Orientation.VERTICAL
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
