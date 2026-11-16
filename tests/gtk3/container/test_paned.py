@@ -10,7 +10,7 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container import GTK3Paned
+from pytkwrap.gtk3.container import GTK3Frame, GTK3Paned
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -65,13 +65,13 @@ class TestGTK3Paned(BaseGTK3GObjectTests):
     def test_init(self):
         dut = self.make_dut()
 
-        assert dut.orientation == Gtk.Orientation.HORIZONTAL
+        assert dut.dic_attributes["orientation"] == Gtk.Orientation.HORIZONTAL
 
     @pytest.mark.unit
     def test_init_vertical_paned(self):
         dut = self.make_dut(orientation=Gtk.Orientation.VERTICAL)
 
-        assert dut.orientation == Gtk.Orientation.VERTICAL
+        assert dut.dic_attributes["orientation"] == Gtk.Orientation.VERTICAL
 
     @pytest.mark.unit
     def test_do_set_properties_default(self):
@@ -102,3 +102,23 @@ class TestGTK3Paned(BaseGTK3GObjectTests):
         assert dut.get_property("position_set")
         assert dut.get_property("wide_handle")
         assert dut.get_wide_handle()
+
+    @pytest.mark.unit
+    def test_do_add_child(self):
+        """Should add a child widget to the top or left pane."""
+        _child1 = GTK3Frame()
+        _child2 = GTK3Frame()
+
+        dut = self.make_dut()
+        dut.do_add_child(_child1, False, False)
+        dut.do_add_child(_child2, False, True, 2)
+
+        assert dut.children[0] == _child1
+        assert dut.children[1] == _child2
+
+    @pytest.mark.unit
+    def test_handle_window(self):
+        """Should return the Gdk.Window of the handle."""
+        dut = self.make_dut()
+
+        assert dut.handle_window is None
