@@ -40,7 +40,7 @@ def non_iterable_property_error_handler(message):
     """Error handler for do_set_property() errors."""
     assert (
         message == "PyTkWrapMixin.do_set_properties(): Properties are not valid "
-        "key-value pairs: 'Non-iterable property'."
+        f"key-value pairs: 'Non-iterable property'."
     )
 
 
@@ -297,7 +297,7 @@ class TestPyTkWrapMixin:
 
     @pytest.mark.unit
     @pytest.mark.requirement("PTW-COM-X-006")
-    def test_do_set_properties_value_error(self):
+    def test_do_set_properties_index_error(self):
         """Should raise a PytkwrapError and send a do_log_error message when passed non-
         iterable properties."""
         dut = PyTkWrapMixin()

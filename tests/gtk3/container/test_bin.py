@@ -9,7 +9,6 @@ import pytest
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container import GTK3Bin
 from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
@@ -60,7 +59,7 @@ class TestGTK3Bin(BaseGTK3GObjectTests):
         assert dut.do_get_attribute("axis") is None
         assert dut.do_get_attribute("canvas") is None
         assert dut.do_get_attribute("column_types") is None
-        assert dut.do_get_attribute("data_type") is None
+        assert dut.do_get_attribute("data_type") == str
         assert dut.do_get_attribute("default_value") is None
         assert dut.do_get_attribute("edit_signal") is None
         assert dut.do_get_attribute("figure") is None
