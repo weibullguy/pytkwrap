@@ -7,14 +7,15 @@
 from __future__ import annotations
 
 # Standard Library Imports
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
+from datetime import date
 from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import GdkPixbuf, Gtk
 from pytkwrap.gtk3.button.button import GTK3Button
 from pytkwrap.gtk3.container.box import GTK3BoxMixin
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
 
 if TYPE_CHECKING:
     # pytkwrap Local Imports
@@ -38,6 +39,9 @@ class GTK3ButtonBoxMixin(GTK3BoxMixin):
     details on these methods.
     """
 
+    _GTK3_BUTTONBOX_ATTRIBUTES = GTK3WidgetAttributes(
+        orientation=Gtk.Orientation.HORIZONTAL
+    )
     _GTK3_BUTTONBOX_PROPERTIES = GTK3WidgetProperties(
         layout_style=Gtk.ButtonBoxStyle.END,
     )
@@ -47,11 +51,52 @@ class GTK3ButtonBoxMixin(GTK3BoxMixin):
         super().__init__(**kwargs)
 
         # Initialize public instance attributes.
+        self.dic_attributes.update(self._GTK3_BUTTONBOX_ATTRIBUTES)
         self.dic_properties.update(self._GTK3_BUTTONBOX_PROPERTIES)
+
+    def do_get_attribute(
+        self: _ButtonBoxHost,
+        attribute: str,
+    ) -> bool | date | float | int | object | str | None:
+        """Get the value of the requested GTK3TreeModel attribute.
+
+        Parameters
+        ----------
+        attribute : str
+            The name of the attribute to retrieve.
+
+        Returns
+        -------
+        bool | date | float | int | str | None
+            The value of the requested attribute.
+        """
+        if attribute in self.dic_attributes:
+            return self.dic_attributes.get(attribute)
+        return super().do_get_attribute(attribute)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
+
+    def do_set_attributes(
+        self: _ButtonBoxHost,
+        attributes: GTK3WidgetAttributes,
+    ) -> None:
+        """Set the GTK3ButtonBox attributes.
+
+        Parameters
+        ----------
+        attributes : GTK3WidgetAttributes
+            Typed dict with the attribute values to set for the widget.
+        """
+        super().do_set_attributes(attributes)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
+
+        self.dic_attributes["orientation"] = attributes.get(
+            "orientation",
+            self.dic_attributes["orientation"],
+        )
 
     def do_set_properties(
         self: _ButtonBoxHost,
-        properties: Mapping[str, object] | list[list | tuple],
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3ButtonBox-specific properties.
 

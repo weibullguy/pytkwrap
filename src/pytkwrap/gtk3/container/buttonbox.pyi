@@ -1,6 +1,7 @@
 # Standard Library Imports
 from collections.abc import Callable as Callable
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from datetime import date
 
 # Third Party Imports
 from _typeshed import Incomplete
@@ -10,16 +11,25 @@ from pytkwrap.gtk3._libs import GdkPixbuf as GdkPixbuf
 from pytkwrap.gtk3._libs import Gtk as Gtk
 from pytkwrap.gtk3.button.button import GTK3Button as GTK3Button
 from pytkwrap.gtk3.container.box import GTK3BoxMixin as GTK3BoxMixin
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 
 # pytkwrap Local Imports
 from ._protocols import _ButtonBoxHost as _ButtonBoxHost
 
 class GTK3ButtonBoxMixin(GTK3BoxMixin):
+    _GTK3_BUTTONBOX_ATTRIBUTES: Incomplete
     _GTK3_BUTTONBOX_PROPERTIES: Incomplete
     def __init__(self, **kwargs) -> None: ...
+    def do_get_attribute(
+        self, attribute: str
+    ) -> bool | date | float | int | object | str | None: ...
+    def do_set_attributes(self, attributes: GTK3WidgetAttributes) -> None: ...
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None: ...
 
 class GTK3ButtonBox(Gtk.ButtonBox, GTK3ButtonBoxMixin):

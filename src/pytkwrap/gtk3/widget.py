@@ -5,7 +5,7 @@
 """
 
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gdk, Gtk, Pango
@@ -108,7 +108,9 @@ class GTK3WidgetMixin(GTK3GObjectMixin):
 
     def do_set_properties(
         self,
-        properties: Mapping[str, object] | list[list | tuple],
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3Widget-specific properties.
 

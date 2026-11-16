@@ -1,5 +1,5 @@
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 # Third Party Imports
 from _typeshed import Incomplete
@@ -17,7 +17,10 @@ class GTK3BoxMixin(GTK3ContainerMixin):
     _GTK3_BOX_PROPERTIES: Incomplete
     def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None: ...
     def do_add_child(
         self,

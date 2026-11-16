@@ -1,16 +1,21 @@
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from datetime import date
 from typing import Protocol
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk as Gtk
+from pytkwrap.gtk3.mixins import GTK3WidgetAttributes as GTK3WidgetAttributes
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties as GTK3WidgetProperties
 from pytkwrap.gtk3.widget import GTK3Widget as GTK3Widget
 
 class _BoxHost(Protocol):
     dic_properties: GTK3WidgetProperties
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None: ...
     def do_add_child(
         self,
@@ -30,8 +35,16 @@ class _BoxHost(Protocol):
     def set_spacing(self, spacing: int) -> None: ...
 
 class _ButtonBoxHost(Protocol):
+    dic_attributes: GTK3WidgetAttributes
     dic_properties: GTK3WidgetProperties
+    def do_get_attribute(
+        self, attribute: str
+    ) -> bool | date | float | int | object | str | None: ...
+    def do_set_attributes(self, attributes: Mapping[str, object | None]) -> None: ...
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None: ...
     def set_layout(self, layout_style: Gtk.ButtonBoxStyle) -> None: ...

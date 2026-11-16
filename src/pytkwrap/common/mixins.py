@@ -6,9 +6,9 @@
 
 # Standard Library Imports
 import gettext
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from datetime import date
-from typing import TypedDict
+from typing import Generic, TypedDict, TypeVar
 
 # Third Party Imports
 from matplotlib.axes import Axes  # type: ignore[import-not-found]
@@ -27,6 +27,8 @@ from pytkwrap.exceptions import (
 from pytkwrap.utilities import FontDescription
 
 _ = gettext.gettext
+
+A = TypeVar("A", bound=Mapping[str, object | None])
 
 
 class PyTkWrapAttributes(TypedDict, total=False):
@@ -49,7 +51,7 @@ class PyTkWrapAttributes(TypedDict, total=False):
     y_pos: float | int | None
 
 
-class PyTkWrapMixin:
+class PyTkWrapMixin(Generic[A]):
     """Mixin that provides the base layer for exposing the underlying toolkit."""
 
     _DEFAULT_HEIGHT = -1
@@ -84,8 +86,8 @@ class PyTkWrapMixin:
             "unk_signal": "{}: Unknown signal '{}'.",
             "wrong_type": "{}: Wrong type for value '{}': {}.",
         }
-        self.dic_handler_id = {}
-        self.dic_properties = {}
+        self.dic_handler_id: dict[str, int] = {}
+        self.dic_properties: dict = {}
 
     def do_get_attribute(
         self,
@@ -173,7 +175,7 @@ class PyTkWrapMixin:
         )
         raise NoValueError(_error_msg)
 
-    def do_set_attributes(self, attributes: Mapping[str, object]) -> None:
+    def do_set_attributes(self, attributes: A) -> None:
         """Set the PyTkWrapMixin attributes.
 
         Parameters
@@ -189,13 +191,15 @@ class PyTkWrapMixin:
 
     def do_set_properties(
         self,
-        properties: Mapping[str, object] | list[list | tuple],
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the properties to the values in the passed dictionary.
 
         Parameters
         ----------
-        properties : dict | list
+        properties : dict | list[list[str | object]] | list[tuple[str, object]]
             The TypedDict (preferred) containing the properties to set. and their
             values.  It is also possible to pass a list of lists or tuples with each
             inner list or tuple containing the [key, value] or (key, value) pairs.
@@ -207,7 +211,11 @@ class PyTkWrapMixin:
             pairs.
         """
         try:
-            self.dic_properties.update(properties)
+            if isinstance(properties, Mapping):
+                self.dic_properties.update(properties)
+            else:
+                for _property in properties:
+                    self.dic_properties[_property[0]] = _property[1]
         except TypeError as exc:
             _error_msg = (
                 f"{type(self).__name__}.do_set_properties(): Properties are None or a "

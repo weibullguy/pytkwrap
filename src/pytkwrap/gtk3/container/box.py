@@ -8,7 +8,7 @@ Convenience wrapper for working with Gtk.Box.
 from __future__ import annotations
 
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
@@ -54,7 +54,9 @@ class GTK3BoxMixin(GTK3ContainerMixin):
 
     def do_set_properties(
         self: _BoxHost,
-        properties: Mapping[str, object] | list[list | tuple],
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3Box-specific properties.
 

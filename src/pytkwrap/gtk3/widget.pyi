@@ -1,5 +1,5 @@
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 # Third Party Imports
 from _typeshed import Incomplete
@@ -21,7 +21,10 @@ class GTK3WidgetMixin(GTK3GObjectMixin):
     dic_properties: Incomplete
     def __init__(self, **kwargs) -> None: ...
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None: ...
     @property
     def accessible(self) -> object: ...

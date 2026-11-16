@@ -1,8 +1,8 @@
 # Standard Library Imports
 import gettext
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from datetime import date
-from typing import TypedDict
+from typing import Generic, TypedDict, TypeVar
 
 # Third Party Imports
 from _typeshed import Incomplete
@@ -11,9 +11,15 @@ from matplotlib.backend_bases import FigureCanvasBase
 from matplotlib.figure import Figure
 
 # pytkwrap Package Imports
+from pytkwrap.exceptions import NoValueError as NoValueError
+from pytkwrap.exceptions import PytkwrapError as PytkwrapError
+from pytkwrap.exceptions import UnkAttributeError as UnkAttributeError
+from pytkwrap.exceptions import UnkPropertyError as UnkPropertyError
+from pytkwrap.exceptions import WrongTypeError as WrongTypeError
 from pytkwrap.utilities import FontDescription as FontDescription
 
 _ = gettext.gettext
+A = TypeVar("A", bound=Mapping[str, object | None])
 
 class PyTkWrapAttributes(TypedDict, total=False):
     axis: Axes | None
@@ -32,15 +38,15 @@ class PyTkWrapAttributes(TypedDict, total=False):
     x_pos: float | int | None
     y_pos: float | int | None
 
-class PyTkWrapMixin:
+class PyTkWrapMixin(Generic[A]):
     _DEFAULT_HEIGHT: int
     _DEFAULT_TOOLTIP: Incomplete
     _DEFAULT_WIDTH: int
     _PYTKWRAP_ATTRIBUTES: Incomplete
     dic_attributes: Incomplete
     dic_error_message: dict[str, str]
-    dic_handler_id: Incomplete
-    dic_properties: Incomplete
+    dic_handler_id: dict[str, int]
+    dic_properties: dict
     def __init__(self) -> None: ...
     def do_get_attribute(
         self, attribute: str
@@ -51,9 +57,12 @@ class PyTkWrapMixin:
     def do_get_value(
         self,
     ) -> bool | date | float | int | object | str | tuple | None: ...
-    def do_set_attributes(self, attributes: Mapping[str, object]) -> None: ...
+    def do_set_attributes(self, attributes: A) -> None: ...
     def do_set_properties(
-        self, properties: Mapping[str, object] | list[list | tuple]
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None: ...
     def do_set_value(
         self, value: bool | date | float | int | object | str | tuple | None
