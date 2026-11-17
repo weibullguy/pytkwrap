@@ -322,3 +322,21 @@ class _StackSidebarHost(Protocol):
 
     # Gtk3 API methods.
     def set_stack(self, stack: Gtk.Stack) -> None: ...
+
+
+class _StackSwitcherHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
+    ) -> None: ...
+
+    # Gtk3 API methods.
+    def set_property(self, property_name, value) -> None: ...
+    def set_stack(self, stack: Gtk.Stack | None) -> None: ...

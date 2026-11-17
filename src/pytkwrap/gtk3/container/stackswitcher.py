@@ -1,25 +1,28 @@
 """The pytkwrap GTK3StackSwitcher module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+Convenience wrapper for working with Gtk.StackSwitcher.
+
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.box import GTK3BoxMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _StackSwitcherHost
+
 
 class GTK3StackSwitcherMixin(GTK3BoxMixin):
-    """Mixin class for GTK3StackSwitcher.
-
-    Notes
-    -----
-    GTK3StackSwitcher passes no widgets to its callback function.
-    """
+    """Mixin class for GTK3StackSwitcher."""
 
     _GTK3_STACKSWITCHER_PROPERTIES = GTK3WidgetProperties(
         icon_size=1,
@@ -34,8 +37,10 @@ class GTK3StackSwitcherMixin(GTK3BoxMixin):
         self.dic_properties.update(self._GTK3_STACKSWITCHER_PROPERTIES)
 
     def do_set_properties(
-        self,
-        properties: Mapping[str, object] | list[list | tuple],
+        self: _StackSwitcherHost,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3StackSwitcher-specific properties.
 
@@ -46,14 +51,10 @@ class GTK3StackSwitcherMixin(GTK3BoxMixin):
             tuples with the property values to set for the GTK3StackSwitcher.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_stack(self.dic_properties["stack"])
-
-        for _property in ["icon_size"]:
-            self.set_property(
-                _property.replace("_", "-"), self.dic_properties[_property]
-            )
+        self.set_property("icon-size", self.dic_properties["icon_size"])
 
 
 class GTK3StackSwitcher(Gtk.StackSwitcher, GTK3StackSwitcherMixin):

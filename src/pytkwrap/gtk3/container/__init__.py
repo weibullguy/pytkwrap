@@ -21,6 +21,7 @@ from ._protocols import (
     _SocketHost,
     _StackHost,
     _StackSidebarHost,
+    _StackSwitcherHost,
 )
 from .bin import GTK3Bin
 from .box import GTK3Box
@@ -65,4 +66,5 @@ __all__ = [
     "_SocketHost",
     "_StackHost",
     "_StackSidebarHost",
+    "_StackSwitcherHost",
 ]
