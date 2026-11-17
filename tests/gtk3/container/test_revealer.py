@@ -11,6 +11,7 @@ import pytest
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container import GTK3Revealer
+from pytkwrap.gtk3.io import GTK3Label
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
@@ -91,3 +92,17 @@ class TestGTK3Revealer(BaseGTK3GObjectTests):
             dut.get_property("transition_type") == Gtk.RevealerTransitionType.SLIDE_LEFT
         )
         assert dut.get_transition_type() == Gtk.RevealerTransitionType.SLIDE_LEFT
+
+    @pytest.mark.unit
+    def test_child_revealed(self):
+        """Should return True when the child is fully revealed, False otherwise."""
+        _child = GTK3Label()
+
+        dut = self.make_dut()
+        dut.add(_child)
+
+        assert not dut.child_revealed
+
+        dut.set_reveal_child(True)
+
+        assert dut.child_revealed
