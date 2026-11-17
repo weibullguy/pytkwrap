@@ -305,3 +305,20 @@ class _StackHost(Protocol):
     def set_vhomogeneous(self, vhomogeneous: bool) -> None: ...
     def set_visible_child(self, visible_child: Gtk.Widget) -> None: ...
     def set_visible_child_name(self, visible_child_name: str) -> None: ...
+
+
+class _StackSidebarHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
+    ) -> None: ...
+
+    # Gtk3 API methods.
+    def set_stack(self, stack: Gtk.Stack) -> None: ...

@@ -1,25 +1,28 @@
 """The pytkwrap GTK3StackSidebar module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+Convenience wrapper for working with Gtk.StackSidebar.
+
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _StackSidebarHost
+
 
 class GTK3StackSidebarMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3StackSidebar.
-
-    Notes
-    -----
-    GTK3StackSidebar passes a Gtk.ScrolledWindow to its callback function.
-    """
+    """Mixin class for GTK3StackSidebar."""
 
     _GTK3_STACKSIDEBAR_PROPERTIES = GTK3WidgetProperties(
         stack=None,
@@ -33,8 +36,10 @@ class GTK3StackSidebarMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK3_STACKSIDEBAR_PROPERTIES)
 
     def do_set_properties(
-        self,
-        properties: Mapping[str, object] | list[list | tuple],
+        self: _StackSidebarHost,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3StackSidebar-specific properties.
 
@@ -45,7 +50,7 @@ class GTK3StackSidebarMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3StackSidebar.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         if self.dic_properties["stack"] is not None:
             self.set_stack(self.dic_properties["stack"])
