@@ -9,9 +9,9 @@ import pytest
 
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gdk
 from pytkwrap.gtk3.container import GTK3Socket
-from pytkwrap.gtk3.mixins import GTK3WidgetProperties
+from pytkwrap.gtk3.window import GTK3Plug, GTK3Window
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
@@ -52,3 +52,27 @@ class TestGTK3Socket(BaseGTK3GObjectTests):
         + EXPECTED_SOCKET_METHODS
     )
     expected_properties = EXPECTED_WIDGET_PROPERTIES | EXPECTED_CONTAINER_PROPERTIES
+
+    @pytest.mark.unit
+    def test_id(self):
+        """Should return the window ID of the GTK3Socket."""
+        _window = GTK3Window()
+        _plug = GTK3Plug()
+
+        dut = self.make_dut()
+        _window.add(dut)
+        dut.add_id(_plug.get_id())
+
+        assert isinstance(dut.id, int)
+
+    @pytest.mark.unit
+    def test_plug_window(self):
+        """Should return the Gdk.Window associated with the GTK3Plug."""
+        _window = GTK3Window()
+        _plug = GTK3Plug()
+
+        dut = self.make_dut()
+        _window.add(dut)
+        dut.add_id(_plug.get_id())
+
+        assert isinstance(dut.plug_window, Gdk.Window)
