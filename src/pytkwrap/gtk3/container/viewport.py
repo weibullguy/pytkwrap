@@ -1,25 +1,28 @@
 """The pytkwrap GTK3Viewport module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+Convenience wrapper for working with Gtk.Viewport.
+
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _ViewportHost
+
 
 class GTK3ViewportMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Viewport.
-
-    Notes
-    -----
-    GTK3Viewport passes no widgets to its callback function.
-    """
+    """Mixin class for GTK3Viewport."""
 
     _GTK3_VIEWPORT_PROPERTIES = GTK3WidgetProperties(
         shadow_type=Gtk.ShadowType.IN,
@@ -33,8 +36,10 @@ class GTK3ViewportMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK3_VIEWPORT_PROPERTIES)
 
     def do_set_properties(
-        self,
-        properties: Mapping[str, object] | list[list | tuple],
+        self: _ViewportHost,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3Viewport-specific properties.
 
@@ -45,9 +50,33 @@ class GTK3ViewportMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3Viewport.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
+        self.props.hadjustment = self.dic_properties["hadjustment"]  # type: ignore[attr-defined] # ty: ignore[unresolved-attribute] # pylint: disable=line-too-long
         self.set_shadow_type(self.dic_properties["shadow_type"])
+        self.props.vadjustment = self.dic_properties["vadjustment"]  # type: ignore[attr-defined] # ty: ignore[unresolved-attribute] # pylint: disable=line-too-long
+
+    @property
+    def bin_window(self: _ViewportHost) -> Gdk.Window | None:
+        """Get the bin window of the GTK3Viewport.
+
+        Returns
+        -------
+        Gdk.Window | None
+            The GTK3Viewport's bin window or None if there isn't one.
+        """
+        return self.get_bin_window()
+
+    @property
+    def view_window(self: _ViewportHost) -> Gdk.Window | None:
+        """Get the view window of the GTK3Viewport.
+
+        Returns
+        -------
+        Gdk.Window | None
+            The GTK3Viewport's view window or None if there isn't one.
+        """
+        return self.get_view_window()
 
 
 class GTK3Viewport(Gtk.Viewport, GTK3ViewportMixin):
@@ -69,3 +98,6 @@ class GTK3Viewport(Gtk.Viewport, GTK3ViewportMixin):
         """
         Gtk.Viewport.__init__(self, hadjustment=hadjustment, vadjustment=vadjustment)
         GTK3ViewportMixin.__init__(self)
+
+        self.dic_properties["hadjustment"] = hadjustment
+        self.dic_properties["vadjustment"] = vadjustment

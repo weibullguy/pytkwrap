@@ -340,3 +340,28 @@ class _StackSwitcherHost(Protocol):
     # Gtk3 API methods.
     def set_property(self, property_name, value) -> None: ...
     def set_stack(self, stack: Gtk.Stack | None) -> None: ...
+
+
+class _ViewportHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
+    ) -> None: ...
+
+    # pytkwrap-specific managed attributes.
+    @property
+    def bin_window(self) -> Gdk.Window: ...
+    @property
+    def view_window(self) -> Gdk.Window: ...
+
+    # Gtk3 API methods.
+    def get_bin_window(self) -> Gdk.Window | None: ...
+    def get_view_window(self) -> Gdk.Window | None: ...
+    def set_shadow_type(self, shadow_type: Gtk.ShadowType) -> None: ...
