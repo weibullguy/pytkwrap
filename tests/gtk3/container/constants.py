@@ -266,4 +266,8 @@ EXPECTED_VIEWPORT_METHODS = [
     "get_view_window",
     "set_shadow_type",
 ]
-EXPECTED_VIEWPORT_PROPERTIES = {"shadow_type": Gtk.ShadowType.IN}
+EXPECTED_VIEWPORT_PROPERTIES = {
+    "hadjustment": None,
+    "shadow_type": Gtk.ShadowType.IN,
+    "vadjustment": None,
+}
