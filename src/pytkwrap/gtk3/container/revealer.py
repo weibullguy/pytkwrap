@@ -4,22 +4,24 @@
 .. copyright:: Since 2007, all rights reserved.
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
 from pytkwrap.gtk3._libs import Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
 from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _RevealerHost
+
 
 class GTK3RevealerMixin(GTK3ContainerMixin):
-    """Mixin class for GTK3Revealer.
-
-    Notes
-    -----
-    GTK3Revealer passes no widgets to its callback function.
-    """
+    """Mixin class for GTK3Revealer."""
 
     _GTK3_REVEALER_PROPERTIES = GTK3WidgetProperties(
         reveal_child=False,
@@ -35,8 +37,10 @@ class GTK3RevealerMixin(GTK3ContainerMixin):
         self.dic_properties.update(self._GTK3_REVEALER_PROPERTIES)
 
     def do_set_properties(
-        self,
-        properties: Mapping[str, object] | list[list | tuple],
+        self: _RevealerHost,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
     ) -> None:
         """Set the values of the GTK3Revealer-specific properties.
 
@@ -47,11 +51,26 @@ class GTK3RevealerMixin(GTK3ContainerMixin):
             tuples with the property values to set for the GTK3Revealer.
         """
         # Update the property dictionary.
-        super().do_set_properties(properties)
+        super().do_set_properties(properties)  # type: ignore[safe-super] # ty: ignore[invalid-super-argument] # pylint: disable=line-too-long
 
         self.set_reveal_child(self.dic_properties["reveal_child"])
         self.set_transition_duration(self.dic_properties["transition_duration"])
-        self.set_transition_type(self.dic_properties["transition_type"])
+
+        if isinstance(
+            self.dic_properties["transition_type"], Gtk.RevealerTransitionType
+        ):
+            self.set_transition_type(self.dic_properties["transition_type"])
+
+    @property
+    def child_revealed(self: _RevealerHost) -> bool:
+        """Get whether the child is fully revealed.
+
+        Returns
+        -------
+        bool
+            True if the child is fully revealed.  False otherwise.
+        """
+        return self.get_child_revealed()
 
 
 class GTK3Revealer(Gtk.Revealer, GTK3RevealerMixin):

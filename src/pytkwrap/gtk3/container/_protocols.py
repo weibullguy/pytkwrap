@@ -226,3 +226,29 @@ class _PanedHost(Protocol):
     def set_position(self, position: int) -> None: ...
     def set_property(self, property_name: str, value) -> None: ...
     def set_wide_handle(self, wide_handle: bool) -> None: ...
+
+
+class _RevealerHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_properties: GTK3WidgetProperties
+
+    # pytkwrap-specific methods.
+    def do_set_properties(
+        self,
+        properties: (
+            Mapping[str, object] | Sequence[list[str | object] | tuple[str, object]]
+        ),
+    ) -> None: ...
+
+    # pytkwrap-specific managed attributes.
+    @property
+    def child_revealed(self) -> bool: ...
+
+    # Gtk3 API methods.
+    def get_child_revealed(self) -> bool: ...
+    def set_reveal_child(self, reveal_child: bool) -> None: ...
+    def set_transition_duration(self, transition_duration: int) -> None: ...
+    def set_transition_type(
+        self, transition_type: Gtk.RevealerTransitionType
+    ) -> None: ...

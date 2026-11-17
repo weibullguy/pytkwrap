@@ -1,5 +1,4 @@
 # Standard Library Imports
-# Standard Library Imports
 from datetime import date
 from types import EllipsisType, FunctionType
 from typing import TypedDict
@@ -479,7 +478,7 @@ class GTK3WidgetProperties(TypedDict, total=False):
     track_visited_links: bool
     transient_for: Gtk.Window | None
     transition_duration: int
-    transition_type: Gtk.StackTransitionType
+    transition_type: Gtk.RevealerTransitionType | Gtk.StackTransitionType
     translator_credits: str | None
     truncate_multiline: bool
     type: Gtk.WindowType
