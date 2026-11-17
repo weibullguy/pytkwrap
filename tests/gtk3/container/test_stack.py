@@ -10,8 +10,8 @@ import pytest
 # pytkwrap Package Imports
 # noinspection PyProtectedMember
 from pytkwrap.gtk3._libs import Gtk
-from pytkwrap.gtk3.container import GTK3Stack
-from pytkwrap.gtk3.mixins import GTK3WidgetAttributes, GTK3WidgetProperties
+from pytkwrap.gtk3.container import GTK3Frame, GTK3Stack
+from pytkwrap.gtk3.mixins import GTK3WidgetProperties
 from tests.gtk3.conftest import BaseGTK3GObjectTests
 from tests.gtk3.constants import (
     EXPECTED_GOBJECT_ATTRIBUTES,
@@ -110,3 +110,40 @@ class TestGTK3Stack(BaseGTK3GObjectTests):
         assert dut.get_visible_child() == _child
         assert dut.get_property("visible_child_name") == "Test Child"
         assert dut.get_visible_child_name() == "Test Child"
+
+    @pytest.mark.unit
+    def test_do_add_child_named(self):
+        """Should add a child widget by name to the GTK3Stack."""
+        _frame = GTK3Frame()
+
+        dut = self.make_dut()
+        dut.do_add_child(_frame, "Test Frame")
+
+        assert dut.get_child_by_name("Test Frame") == _frame
+
+    @pytest.mark.unit
+    def test_do_add_child_with_title(self):
+        """Should add a child widget by name to the GTK3Stack."""
+        _frame = GTK3Frame()
+
+        dut = self.make_dut()
+        dut.do_add_child(_frame, "Test Frame", "Frame 1")
+
+        assert dut.get_child_by_name("Test Frame") == _frame
+
+    @pytest.mark.unit
+    def test_transition_running(self):
+        """Should return True if the transition is in progress."""
+        _frame1 = GTK3Frame()
+        _frame2 = GTK3Frame()
+
+        dut = self.make_dut()
+        dut.do_add_child(_frame1, "Frame1")
+        dut.do_add_child(_frame2, "Frame2")
+
+        assert not dut.transition_running
+
+        # dut.set_transition_duration(500)
+        # dut.set_visible_child_name("Frame2")
+
+        # assert dut.transition_running
