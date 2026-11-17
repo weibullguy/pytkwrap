@@ -1,14 +1,22 @@
 """The pytkwrap GTK3Socket module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+Convenience wrapper for working with Gtk.Socket.
+
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
+from __future__ import annotations
+
 # Standard Library Imports
+from typing import TYPE_CHECKING
 
 # pytkwrap Package Imports
-from pytkwrap.gtk3._libs import Gtk
+from pytkwrap.gtk3._libs import Gdk, Gtk
 from pytkwrap.gtk3.container.container import GTK3ContainerMixin
+
+if TYPE_CHECKING:
+    # pytkwrap Local Imports
+    from ._protocols import _SocketHost
 
 
 class GTK3SocketMixin(GTK3ContainerMixin):
@@ -16,7 +24,13 @@ class GTK3SocketMixin(GTK3ContainerMixin):
 
     Notes
     -----
-    GTK3Socket passes no widgets to its callback function.
+    The following Gtk.Socket methods are not wrapped in a convenience layer, but may be
+    called directly:
+
+        * add_id(window)
+
+    Refer to https://lazka.github.io/pgi-docs/#Gtk-3.0/classes/Socket.html for details
+    on these methods.
     """
 
     _GTK3_SOCKET_SIGNALS = [
@@ -32,6 +46,28 @@ class GTK3SocketMixin(GTK3ContainerMixin):
         self.dic_handler_id.update(
             {_signal: -1 for _signal in self._GTK3_SOCKET_SIGNALS}
         )
+
+    @property
+    def id(self: _SocketHost) -> int:
+        """Get the window ID of the GTK3Socket.
+
+        Returns
+        -------
+        int
+            The GTK3Socket's window ID.
+        """
+        return self.get_id()
+
+    @property
+    def plug_window(self: _SocketHost) -> Gdk.Window | None:
+        """Get the window of the GTK3Plug.
+
+        Returns
+        -------
+        Gdk.Window | None
+            The Gdk.Window associated with the GTK3Plug or None.
+        """
+        return self.get_plug_window()
 
 
 class GTK3Socket(Gtk.Socket, GTK3SocketMixin):

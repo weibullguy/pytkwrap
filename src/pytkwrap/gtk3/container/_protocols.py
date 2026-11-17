@@ -252,3 +252,19 @@ class _RevealerHost(Protocol):
     def set_transition_type(
         self, transition_type: Gtk.RevealerTransitionType
     ) -> None: ...
+
+
+class _SocketHost(Protocol):
+    """Methods the mixin expects the concrete widget to provide."""
+
+    dic_handler_id: dict[str, int]
+
+    # pytkwrap-specific managed attributes.
+    @property
+    def id(self) -> int: ...
+    @property
+    def plug_window(self) -> Gdk.Window | None: ...
+
+    # Gtk3 API methods.
+    def get_id(self) -> int: ...
+    def get_plug_window(self) -> Gdk.Window | None: ...

@@ -1,7 +1,8 @@
 """The pytkwrap GTK3Revealer module.
 
-.. author:: Doyle Rowland
-.. copyright:: Since 2007, all rights reserved.
+Convenience wrapper for working with Gtk.Revealer.
+
+.. moduleauthor:: Doyle "weibullguy" Rowland
 """
 
 from __future__ import annotations
